@@ -13,7 +13,7 @@ export const en = {
     home: "Home",
   },
   hero: {
-    eyebrow: "Property management system + booking website",
+    eyebrow: "PROPERTY MANAGEMENT SYSTEM WITH YOUR OWN BOOKING WEBSITE\n\n",
     h1: "Software that *fits* the way your property already works",
     sub: "Hotels, cabins, guesthouses and apartments each run differently — and none of them run the way the software they were sold assumes. Revoo is a platform we shape to your operation, with a booking website that is genuinely yours.",
     primary: "Request a demo",
@@ -324,7 +324,7 @@ export const lt: typeof en = {
     home: "Pradžia",
   },
   hero: {
-    eyebrow: "Apgyvendinimo valdymo sistema + rezervacijų svetainė",
+    eyebrow: "APGYVENDINIMO VALDYMO SISTEMA SU JŪSŲ REZERVACIJŲ SVETAINE\n\n",
     h1: "Sistema, kuri *prisitaiko* prie jūsų objekto",
     sub: "Viešbučiai, nameliai, svečių namai ir apartamentai dirba skirtingai — ir nė vienas iš jų nedirba taip, kaip numano jiems parduota programa. Revoo yra platforma, kurią pritaikome jūsų veiklai, kartu su rezervacijų svetaine, kuri iš tikrųjų yra jūsų.",
     primary: "Užsisakyti demo",
