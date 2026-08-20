@@ -157,3 +157,8 @@ export const homeSeo: Record<Lang, { title: string; description: string }> = {
       "Apgyvendinimo valdymo sistema ir rezervacijų svetainė vienoje vietoje, pritaikyta tam, kaip jūsų objektas realiai dirba. Viešbučiams, nameliams, svečių namams ir apartamentams. Užsisakykite demo.",
   },
 };
+
+export const copyHead: Record<Lang, { home: string; blog: string }> = {
+  en: { home: copy.en.nav.home, blog: copy.en.blog.title },
+  lt: { home: copy.lt.nav.home, blog: copy.lt.blog.title },
+};
