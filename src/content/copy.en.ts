@@ -83,7 +83,7 @@ export const en: Copy = {
   channel: {
     eyebrow: "Your booking channel",
     h2: "A booking website, not a booking *widget*",
-    lede: "Every other system gives you a box to paste into your site. It looks borrowed, because it is. Revoo works the other way around: your website is the booking system — your design, your domain, your words, talking to the same engine your admin panel uses.",
+    lede: "Most systems give you a booking box to embed in whatever website you already have. It works, but it rarely looks like it belongs there — different typography, different spacing, sometimes a different language. Revoo works the other way around: your website is the booking system — your design, your domain, your words, talking to the same engine your admin panel uses.",
     note: "Under the hood this is a documented REST API with its own keys, origin allowlist and rate limits — so a mobile app, a partner integration or a second booking channel later is a configuration, not a rebuild.",
   },
   segments: {
