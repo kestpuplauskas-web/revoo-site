@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
+import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const LtIndexRoute = LtIndexRouteImport.update({
   path: '/lt/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LtBlogIndexRoute = LtBlogIndexRouteImport.update({
+  id: '/lt/blog/',
+  path: '/lt/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/lt/blog/': typeof LtBlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
+  '/lt/blog': typeof LtBlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/lt/blog/': typeof LtBlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blog/' | '/lt/'
+  fullPaths: '/' | '/blog/' | '/lt/' | '/lt/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blog' | '/lt'
-  id: '__root__' | '/' | '/blog/' | '/lt/'
+  to: '/' | '/blog' | '/lt' | '/lt/blog'
+  id: '__root__' | '/' | '/blog/' | '/lt/' | '/lt/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
   LtIndexRoute: typeof LtIndexRoute
+  LtBlogIndexRoute: typeof LtBlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LtIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lt/blog/': {
+      id: '/lt/blog/'
+      path: '/lt/blog'
+      fullPath: '/lt/blog/'
+      preLoaderRoute: typeof LtBlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogIndexRoute: BlogIndexRoute,
   LtIndexRoute: LtIndexRoute,
+  LtBlogIndexRoute: LtBlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
