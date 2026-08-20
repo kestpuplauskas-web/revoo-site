@@ -38,12 +38,12 @@ export const en = {
     h2: "Configuration is not *customisation*",
     lede: "Your property, chosen by your guests, has its own face. Our job is to make the system show it, not hide it under a template.",
     cardA: {
-      title: "We work with a few properties at a time",
-      body: "We look at how yours actually operates — what you sell alongside the room, who your guests invoice to, how your team works in the morning — and build the system around that. Then we launch it with you.",
+      title: "Our team's support",
+      body: "We look at how your property actually operates — what you sell in addition to the rented room, who you issue invoices to, how your team works — and launch the system together with you, which we constantly supervise.",
     },
     cardB: {
       title: "It costs more than a subscription",
-      body: "And it is worth more than a workaround. You are not buying seats in someone else's product. You are getting a platform shaped to your property, and a website that is genuinely yours.",
+      body: "In return, you get a system that does not require adapting to it and a website with a booking system that is actually yours.",
     },
   },
   week: {
@@ -349,12 +349,12 @@ export const lt: typeof en = {
     h2: "Konfigūracija nėra *pritaikymas*",
     lede: "Jūsų objektas, kurį renkasi jūsų klientai, turi savo veidą. Mūsų darbas — kad sistema jį parodytų, o ne paslėptų po šablonu.",
     cardA: {
-      title: "Vienu metu dirbame su keliais objektais",
-      body: "Pažiūrime, kaip jūsų objektas realiai veikia — ką parduodate šalia kambario, kam išrašote sąskaitas, kaip jūsų komanda dirba rytais — ir sistemą statome pagal tai. Tada kartu su jumis ją paleidžiame.",
+      title: "Mūsų komandos palaikymas",
+      body: "Pažiūrime, kaip jūsų objektas realiai veikia — ką parduodate papildomai prie išnuomoto kambario, kam išrašote sąskaitas, kaip jūsų komanda dirba — ir sistemą paleidžiame kartu su jumis, kurią nuolatos prižiūrime.",
     },
     cardB: {
       title: "Tai kainuoja daugiau nei prenumerata",
-      body: "Ir tai verta daugiau nei apėjimas. Jūs neperkate vietų svetimame produkte. Jūs gaunate platformą, pritaikytą jūsų objektui, ir svetainę, kuri iš tikrųjų yra jūsų.",
+      body: "Mainais gaunate sistemą, kuri nereikalauja prisitaikyti prie jos ir svetainę su rezervacijos sistema, kuri iš tikrųjų yra jūsų.",
     },
   },
   week: {
