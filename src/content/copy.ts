@@ -36,7 +36,7 @@ export const en = {
   approach: {
     eyebrow: "Our approach",
     h2: "Configuration is not *customisation*",
-    lede: "Large platforms serve thousands of properties at once. That is their strength, and it is exactly why the things that make your property yours end up wedged into a field designed for something else.",
+    lede: "Your property, chosen by your guests, has its own face. Our job is to make the system show it, not hide it under a template.",
     cardA: {
       title: "We work with a few properties at a time",
       body: "We look at how yours actually operates — what you sell alongside the room, who your guests invoice to, how your team works in the morning — and build the system around that. Then we launch it with you.",
@@ -347,7 +347,7 @@ export const lt: typeof en = {
   approach: {
     eyebrow: "Mūsų požiūris",
     h2: "Konfigūracija nėra *pritaikymas*",
-    lede: "Didelės platformos vienu metu aptarnauja tūkstančius objektų. Tai jų stiprybė — ir būtent todėl tai, kas jūsų objektą daro jūsų, galiausiai įgrūdama į laukelį, sukurtą visai kam kitam.",
+    lede: "Jūsų objektas, kurį renkasi jūsų klientai, turi savo veidą. Mūsų darbas — kad sistema jį parodytų, o ne paslėptų po šablonu.",
     cardA: {
       title: "Vienu metu dirbame su keliais objektais",
       body: "Pažiūrime, kaip jūsų objektas realiai veikia — ką parduodate šalia kambario, kam išrašote sąskaitas, kaip jūsų komanda dirba rytais — ir sistemą statome pagal tai. Tada kartu su jumis ją paleidžiame.",
