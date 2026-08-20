@@ -1,0 +1,312 @@
+import type { Copy } from "./copy.types";
+
+export const lt: Copy = {
+  nav: {
+    product: "Produktas",
+    approach: "Požiūris",
+    who: "Kam skirta",
+    blog: "Blogas",
+    faq: "DUK",
+    cta: "Užsisakyti demo",
+    langLabel: "Kalba",
+    skip: "Pereiti prie turinio",
+    home: "Pradžia",
+  },
+  hero: {
+    eyebrow: "APGYVENDINIMO VALDYMO SISTEMA SU JŪSŲ REZERVACIJŲ SVETAINE\n\n",
+    h1: "Sistema, kuri *prisitaiko* prie jūsų objekto",
+    sub: "Viešbučiai, nameliai, svečių namai ir apartamentai dirba skirtingai — ir nė vienas iš jų nedirba taip, kaip numano jiems parduota programa. Revoo yra platforma, kurią pritaikome jūsų veiklai, kartu su rezervacijų svetaine, kuri iš tikrųjų yra jūsų.",
+    primary: "Užsisakyti demo",
+    secondary: "Kaip tai veikia",
+    status: "Parašykite mums ir suteiksime prieigą išbandyti jau šiandien.",
+  },
+  carousel: {
+    label: "Produkto vaizdai",
+    prev: "Ankstesnė skaidrė",
+    next: "Kita skaidrė",
+    goTo: "Rodyti skaidrę",
+    slides: [
+      "Perkelkite rezervaciją. Visa kita seka paskui.",
+      "Šios dienos darbai, jau surikiuoti pagal skubumą.",
+      "Sąskaitos paruoštos dar svečiui neišvykus.",
+      "Visa veikla — pakeliui į darbą.",
+      "Visa savaitė, dar jai neprasidėjus.",
+    ],
+  },
+  approach: {
+    eyebrow: "Mūsų požiūris",
+    h2: "Konfigūracija nėra *pritaikymas*",
+    lede: "Jūsų objektas, kurį renkasi jūsų klientai, turi savo veidą. Mūsų darbas — kad sistema jį parodytų, o ne paslėptų po šablonu.",
+    cardA: {
+      title: "Mūsų komandos palaikymas",
+      body: "Pažiūrime, kaip jūsų objektas realiai veikia — ką parduodate papildomai prie išnuomoto kambario, kam išrašote sąskaitas, kaip jūsų komanda dirba — ir sistemą paleidžiame kartu su jumis, kurią nuolatos prižiūrime.",
+    },
+    cardB: {
+      title: "Tai kainuoja daugiau nei prenumerata",
+      body: "Mainais gaunate sistemą, kuri nereikalauja prisitaikyti prie jos ir svetainę su rezervacijos sistema, kuri iš tikrųjų yra jūsų.",
+    },
+  },
+  week: {
+    eyebrow: "Savaitė",
+    h2: "Visas mėnuo *viename* ekrane",
+    lede: "Vienetai eilutėse, dienos stulpeliuose. Nutempkite rezervaciją į kitą vienetą ar kitą savaitę — ir ji tiesiog persikelia.",
+    points: [
+      "Dviguba rezervacija atmetama dar prieš ją padarant — ne tada, kai svečias jau stovi prie durų.",
+      "Tos pačios dienos apyvarta leidžiama sąmoningai: vienas išvyksta, kitas atvyksta tą pačią dieną.",
+      "Spustelėjus tuščią langelį atsidaro rezervacija, jau užpildyta vienetu ir datomis.",
+      "Užimtumas, importuotas iš Booking.com ir Airbnb, matomas tame pačiame vaizde ir pažymėtas kaip išorinis.",
+    ],
+  },
+  morning: {
+    eyebrow: "Rytas",
+    h2: "Komanda žino, ką daryti, dar jums *nepaklausus*",
+    lede: "Revoo perskaito šios dienos rezervacijas, nustato, ko kiekvienam vienetui realiai reikia, ir surikiuoja sąrašą pagal skubumą. Niekas niekam nieko neaiškina.",
+    points: [
+      "Tos pačios dienos apyvartos rodomos pirmos — siauriausias dienos langas ir tas, kuris dažniausiai sugriūva.",
+      "Nesutvarkytas vienetas nedingsta tyliai iš rytojaus sąrašo.",
+      "Užsakytos papildomos paslaugos rodomos kaip paruošimo atmintinė, todėl niekas nepaaiškėja tik svečiui atvykus.",
+      "Gedimas pranešamas vienu paspaudimu ir iš karto matomas administratorei.",
+      "Kambarinės nemato svečių kontaktų, kainų ir mokėjimo būsenos. Tik darbą.",
+    ],
+  },
+  paperwork: {
+    eyebrow: "Popierizmas",
+    h2: "Svečias išvyko. Sąskaita jau *yra*",
+    lede: "Nuosekli numeracija, jūsų rekvizitai, su PVM arba be, paruošta PDF. Jokių lentelių, jokio perrašinėjimo ir jokių spragų serijoje, kai paklausia auditorius.",
+    points: [
+      "Verslo klientai — ne priedas: įmonės pavadinimas, kodas, PVM kodas ir adresas surenkami rezervuojant, o ne vaikomasi paskui.",
+      "Numeriai priskiriami griežta seka, todėl serijoje niekada nelieka skylės.",
+      "Kiekviena apmokėta papildoma paslauga tampa atskira eilute — kad ir ką parduotumėte šalia kambario.",
+      "Sąskaitos pritaikomos jūsų šalies taisyklėms kaip diegimo dalis.",
+    ],
+  },
+  channel: {
+    eyebrow: "Jūsų rezervacijų kanalas",
+    h2: "Rezervacijų svetainė, o ne rezervacijų *langelis*",
+    lede: "Visos kitos sistemos duoda langelį, kurį įklijuojate į savo svetainę. Jis atrodo svetimas, nes toks ir yra. Revoo veikia atvirkščiai: jūsų svetainė ir yra rezervacijų sistema — jūsų dizainas, jūsų domenas, jūsų žodžiai, kalbantys su tuo pačiu varikliu kaip ir jūsų administravimo skydelis.",
+    note: "Po gaubtu tai yra dokumentuotas REST API su savo raktais, domenų sąrašu ir užklausų ribojimu — todėl mobilioji programėlė, partnerio integracija ar antras rezervacijų kanalas vėliau yra konfigūracija, o ne perdarymas iš naujo.",
+  },
+  segments: {
+    eyebrow: "Sukurta jūsų objekto tipui",
+    h2: "Pritaikyta tam, kaip *jūs* dirbate",
+    prev: "Ankstesnis objekto tipas",
+    next: "Kitas objekto tipas",
+    goTo: "Rodyti objekto tipą",
+    slides: [
+      {
+        title: "Viešbučiai",
+        body: "Kambariai, kainos ir registratūra. Revoo duoda kalendorių, kambarinių sąrašą ir sąskaitas — be įmonėms skirtos kainos ir be šešių savaičių konfigūravimo projekto, kuris paprastai prie jų prisideda.",
+      },
+      {
+        title: "Nameliai",
+        body: "Nameliai laimimi ir pralaimimi ties apyvarta. Revoo nustato, kuriam nameliui ko šiandien reikia, durų kodą išsiunčia tik patvirtinus rezervaciją, ir laiko visą sezoną viename ekrane.",
+      },
+      {
+        title: "Svečių namai",
+        body: "Paprastai vienas žmogus daro viską. Rezervacijos, tvarkymas, laiškai svečiams ir sąskaitos gyvena vienoje vietoje, kad tas vienas žmogus kartais galėtų būti kitur.",
+      },
+      {
+        title: "Apartamentai",
+        body: "Jūsų vienetai nebūtinai yra viename pastate — ir neturi būti. Revoo kiekvieną vienetą traktuoja kaip atskirą objektą, todėl skirtingais adresais išsibarstę apartamentai valdomi iš vieno kalendoriaus.",
+      },
+    ],
+  },
+  ctaBand: {
+    text: "Įdomu, ar tai tinka jūsų objektui? Vienas 45 minučių pokalbis atsakys.",
+    button: "Užsisakyti demo",
+  },
+  included: {
+    eyebrow: "Ką gaunate",
+    h2: "Kas yra platformoje ir ką *sukuriame* jums",
+    lede: "Verčiau būsime tikslūs nei įspūdingi. Štai sąžiningas padalijimas.",
+    left: {
+      title: "Platformoje nuo pirmos dienos",
+      sub: "Veikia šiandien, realiai.",
+      items: [
+        "Kelių objektų skydelis su užimtumo, pajamų ir išlaidų rodikliais",
+        "Velkamas rezervacijų kalendorius su dvigubų rezervacijų prevencija",
+        "Kainų pakopos pagal naktų skaičių ir apmokamos papildomos paslaugos",
+        "Automatiniai laiškai svečiui — patvirtinimas, pakeitimas, atšaukimas, priminimas prieš atvykimą, atsiliepimo prašymas — svečio kalba",
+        "Sąskaitų generavimas su nuoseklia numeracija ir PDF",
+        "Kambarių tvarkymo modulis su automatiniu darbo tipo nustatymu ir mobilia programėle personalui",
+        "Rolės ir kvietimai el. paštu jūsų komandai",
+        "Užimtumo importas iš Booking.com ir Airbnb per iCal",
+        "Dokumentuotas viešas REST API su raktais, domenų sąrašu ir ribojimais",
+        "Teisinių dokumentų valdymas, tiekiamas tiesiai į svečių svetainę",
+      ],
+    },
+    right: {
+      title: "Sukuriama jūsų diegimo metu",
+      sub: "Apibrėžiama per pirmą pokalbį, statoma pagal jūsų objektą.",
+      items: [
+        "Jūsų rezervacijų svetainė — sukurta jūsų objektui, jūsų domene",
+        "Mokėjimai — prijungiame tą sprendimą, kurį realiai naudojate",
+        "Sąskaitos pagal jūsų šalies taisykles — identifikatoriai, tarifai ir numeracija, kurių tikisi mokesčių administratorius",
+        "Jūsų kalbos — sąsajoje ir laiškuose svečiams",
+        "Tos kanalų jungtys, kurių jūsų objektui realiai reikia",
+        "Kad ir ką parduotumėte šalia kambario",
+        "Esamų rezervacijų perkėlimas, vienetų, kainų ir taisyklių sukonfigūravimas",
+        "Komandos mokymai jų kalba",
+      ],
+    },
+  },
+  fit: {
+    eyebrow: "Kam skirta",
+    h2: "Kam tai tinka — ir kam *netinka*",
+    lede: "Pasakius tai garsiai, abu sutaupome skambutį.",
+    yesTitle: "Tinka, jei",
+    noTitle: "Netinka, jei",
+    yes: [
+      "6–30 vienetų, valdoma savininko arba mažos komandos",
+      "Viešbučiai, nameliai, svečių namai arba apartamentai keliais adresais",
+      "Parduodate ne tik kambarį — kad ir kas tai būtų jūsų objekte",
+      "Verslo klientai, kuriems reikia tikros sąskaitos įmonei",
+      "Tvarkymo komanda, šiuo metu derinama telefonu, popieriuje ar per WhatsApp",
+      "Per didelė pajamų dalis atitenka OTA komisiniams",
+      "Norite svetainės, kuri atrodo kaip jūsų objektas, o ne kaip programa",
+    ],
+    no: [
+      "Vienas objektas, valdomas kaip papildomos pajamos, o ne kaip verslas",
+      "Tinklai ir grupės virš maždaug 50 vienetų",
+      "Nuo pirmos dienos reikia pilno dvipusio kanalų valdymo per daug OTA",
+      "Norite užsiregistruoti šįvakar internetu ir susikonfigūruoti patys — mes taip nedirbame",
+    ],
+  },
+  start: {
+    eyebrow: "Kaip pradėti",
+    h2: "Kaip tai iš tikrųjų *prasideda*",
+    lede: "Jokios kortelės formos ir jokio 14 dienų bandymo, kurį mestumėte trečią dieną.",
+    steps: [
+      {
+        title: "Pokalbis",
+        body: "Apie 45 minutes. Kaip veikia jūsų objektas, ką parduodate šalia kambario, kas šiandien lūžta ir kaip turi atrodyti jūsų sąskaitos. Sąžiningai pasakome, ar tinkame vieni kitiems.",
+      },
+      {
+        title: "Diegimas",
+        body: "Sukonfigūruojame vienetus, kainas, papildomas paslaugas ir taisykles, sukuriame rezervacijų svetainę, prijungiame mokėjimų sprendimą ir pritaikome sąskaitas jūsų šaliai. Peržiūrite tai, kol darome.",
+      },
+      {
+        title: "Paleidimas",
+        body: "Esamos rezervacijos persikelia. Apmokome registratūrą ir kambarines jų kalba. Tada liekame šalia visą pirmą sezoną.",
+      },
+    ],
+    cta: "Užsisakyti demo",
+  },
+  demo: {
+    eyebrow: "Susisiekime",
+    h2: "Pažiūrėkime į jūsų *objektą*",
+    lede: "Papasakokite apie jį truputį, ir per vieną darbo dieną grįšime arba su demo laiku, arba su sąžiningu \u201Emes jums netinkame\u201C.",
+    facts: [
+      "hello@revoo.site",
+      "Dirbame anglų ir lietuvių kalbomis",
+      "Įsikūrę Lietuvoje · pradedame dirbti su objektais Islandijoje",
+    ],
+    form: {
+      name: "Vardas",
+      email: "El. paštas",
+      property: "Objekto pavadinimas",
+      country: "Šalis",
+      countries: ["Islandija", "Lietuva", "Latvija", "Estija", "Norvegija", "Vokietija", "Kita"],
+      type: "Objekto tipas",
+      types: ["Viešbutis", "Nameliai", "Svečių namai", "Apartamentai", "Kita"],
+      units: "Vienetų skaičius",
+      unitOptions: ["1–5", "6–15", "16–30", "31–50", "50+"],
+      current: "Ką naudojate šiandien",
+      currentOptions: [
+        "Lentelė ar popierius",
+        "Tik Booking.com extranet",
+        "Kita PMS",
+        "Rezervacijų langelis svetainėje",
+        "Kita",
+      ],
+      notes: "Ką dar turėtume žinoti?",
+      optional: "neprivaloma",
+      required: "privaloma",
+      submit: "Užsisakyti demo",
+      fineprint: "Atsakome per vieną darbo dieną. Jokių automatinių sekų.",
+      select: "Pasirinkite",
+    },
+    success: {
+      title: "Ačiū",
+      body: "Susisieksime per vieną darbo dieną.",
+    },
+  },
+  faq: {
+    eyebrow: "Klausimai",
+    h2: "Ką žmonės iš tikrųjų *klausia*",
+    items: [
+      {
+        q: "Kiek tai kainuoja?",
+        a: "Yra vienkartinis diegimo mokestis ir mėnesinė prenumerata. Diegimo mokestis priklauso nuo apimties — kiek vienetų, ką parduodate šalia kambario, ar reikia naujos svetainės, koks mokėjimų sprendimas, kurios šalies sąskaitos. Kainą pasakome po pirmo pokalbio, o ne prieš jį, nes akla kaina būtų neteisinga viena ar kita kryptimi.",
+      },
+      {
+        q: "Ar tvarkote mokėjimus?",
+        a: "Diegimo metu prijungiame tą mokėjimų sprendimą, kurį realiai naudojate. Tai nėra varnelė nustatymuose — tai apibrėžiama ir sukuriama jūsų atvejui, todėl veikia su ta įstaiga, su kuria jau turite sutartį.",
+      },
+      {
+        q: "Ar sinchronizuojasi su Booking.com ir Airbnb?",
+        a: "Užimtumo importas per iCal veikia šiandien, todėl išorinės rezervacijos matomos kalendoriuje ir užima vienetą. Gilesnės kanalų jungtys apibrėžiamos kaip diegimo dalis, kai objektui to reikia. Sąmoningai neteigiame, kad esame 200 kanalų channel manager — jei to reikia nuo pirmos dienos, didelė platforma jums tiks geriau, ir mes tai pasakysime.",
+      },
+      {
+        q: "Ar galiu pasilikti dabartinę svetainę?",
+        a: "Taip — ji gali jungtis prie Revoo per viešą API. Bet jei dabartinė svetainė negali priimti rezervacijos nenusiųsdama svečio kitur, jos pakeitimas paprastai yra tas vienas pokytis, kuris atsiperka už visą projektą.",
+      },
+      {
+        q: "Kodėl nėra registracijos mygtuko?",
+        a: "Nes kiekvienam objektui, kurį diegėme, reikėjo kažko, ko nereikėjo ankstesniam. Savitarnos registracija paduotų jums tuščią skydelį ir nustatymų puslapį, o diegimą darytumėte patys. Mes verčiau padarysime tai kaip reikia.",
+      },
+      {
+        q: "Kas bus, jei jus peraugsiu?",
+        a: "Platforma sukurta pagal API-first principą, o duomenys yra jūsų — objektai, rezervacijos, svečiai ir sąskaitos, viskas eksportuojama. Verčiau išeisite tvarkingai, nei jausitės įstrigę.",
+      },
+      {
+        q: "Kur esate įsikūrę?",
+        a: "Lietuvoje. Platforma šiandien veikia realiai, ir pradedame dirbti su objektais Islandijoje. Dirbame anglų ir lietuvių kalbomis.",
+      },
+    ],
+  },
+  footer: {
+    tagline:
+      "Apgyvendinimo valdymo sistema ir rezervacijų svetainė nepriklausomiems viešbučiams, nameliams, svečių namams ir apartamentams.",
+    linksTitle: "Svetainė",
+    langTitle: "Kalba",
+    rights: "© 2026 Revoo",
+    contact: "revoo.site · hello@revoo.site",
+  },
+  blog: {
+    title: "Blogas",
+    eyebrow: "Rašome",
+    h2: "Pastabos apie mažo *objekto* valdymą",
+    lede: "Praktiniai tekstai apie rezervacijas, sąskaitas ir kasdienį darbą — nepriklausomiems viešbučiams, nameliams, svečių namams ir apartamentams.",
+    readingTime: "min skaitymo",
+    back: "Grįžti į blogą",
+    metaTitle: "Revoo blogas — rezervacijos, sąskaitos ir mažo objekto valdymas",
+    metaDescription:
+      "Praktiniai straipsniai viešbučiams, nameliams, svečių namams ir apartamentams: apgyvendinimo valdymo sistemos pasirinkimas, PVM sąskaitos, kambarinių darbas ir tiesioginės rezervacijos.",
+    disclaimer:
+      "Šis straipsnis yra bendro pobūdžio informacija, o ne mokestinė ar teisinė konsultacija. Konkrečius atvejus derinkite su savo buhalteriu arba VMI.",
+    ctaTitle: "Įdomu, ar Revoo tinka jūsų objektui?",
+    ctaBody: "Vienas 45 minučių pokalbis ir sąžiningas atsakymas bet kuriuo atveju.",
+    ctaButton: "Užsisakyti demo",
+  },
+  notFound: {
+    title: "Puslapis nerastas",
+    body: "Tokio adreso nėra arba jis pasikeitė.",
+    cta: "Grįžti į pagrindinį puslapį",
+  },
+  media: {
+    missing: "Medžiagos failo nėra",
+    browserUrl: "app.revoo.site",
+    alt: {
+      calendar: "Revoo rezervacijų kalendorius: vienetai eilutėse, dienos stulpeliuose, velkamos rezervacijos",
+      housekeepingApp: "Revoo kambarinių programėlė telefone su šios dienos kambariais pagal skubumą",
+      housekeepingWeek: "Revoo savaitės tvarkymo lentelė su kiekvieno kambario darbo tipais",
+      invoice: "Revoo sugeneruota PVM sąskaita faktūra, paruošta PDF formatu",
+      bookingSite: "Su Revoo sukurta rezervacijų svetainė su laisvomis datomis ir kainomis",
+    },
+  },
+  mobileCta: {
+    text: "Užsisakyti demo",
+    dismiss: "Slėpti juostą",
+  },
+};
