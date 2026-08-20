@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LtIndexRoute = LtIndexRouteImport.update({
@@ -25,27 +31,31 @@ const LtIndexRoute = LtIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/lt/'
+  fullPaths: '/' | '/blog/' | '/lt/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/lt'
-  id: '__root__' | '/' | '/lt/'
+  to: '/' | '/blog' | '/lt'
+  id: '__root__' | '/' | '/blog/' | '/lt/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   LtIndexRoute: typeof LtIndexRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lt/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlogIndexRoute: BlogIndexRoute,
   LtIndexRoute: LtIndexRoute,
 }
 export const routeTree = rootRouteImport
