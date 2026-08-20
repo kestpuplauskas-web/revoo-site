@@ -329,7 +329,7 @@ export const lt: typeof en = {
     sub: "Viešbučiai, nameliai, svečių namai ir apartamentai dirba skirtingai — ir nė vienas iš jų nedirba taip, kaip numano jiems parduota programa. Revoo yra platforma, kurią pritaikome jūsų veiklai, kartu su rezervacijų svetaine, kuri iš tikrųjų yra jūsų.",
     primary: "Užsisakyti demo",
     secondary: "Kaip tai veikia",
-    status: "Veikia realiai. Šiuo metu pradedame dirbti su objektais Islandijoje.",
+    status: "Parašykite mums ir suteiksime prieigą išbandyti jau šiandien.",
   },
   carousel: {
     label: "Produkto vaizdai",
