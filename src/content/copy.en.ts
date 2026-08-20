@@ -1,0 +1,312 @@
+import type { Copy } from "./copy.types";
+
+export const en: Copy = {
+  nav: {
+    product: "Product",
+    approach: "Approach",
+    who: "Who it's for",
+    blog: "Blog",
+    faq: "FAQ",
+    cta: "Request a demo",
+    langLabel: "Language",
+    skip: "Skip to content",
+    home: "Home",
+  },
+  hero: {
+    eyebrow: "PROPERTY MANAGEMENT SYSTEM WITH YOUR OWN BOOKING WEBSITE\n\n",
+    h1: "Software that *fits* the way your property already works",
+    sub: "Hotels, cabins, guesthouses and apartments each run differently — and none of them run the way the software they were sold assumes. Revoo is a platform we shape to your operation, with a booking website that is genuinely yours.",
+    primary: "Request a demo",
+    secondary: "See how it works",
+    status: "Write to us, and we’ll give you access to try it out today.",
+  },
+  carousel: {
+    label: "Product screens",
+    prev: "Previous slide",
+    next: "Next slide",
+    goTo: "Go to slide",
+    slides: [
+      "Move a booking. Everything else follows.",
+      "Today's work, already sorted by urgency.",
+      "Invoices ready before the guest has left.",
+      "Your whole operation, on the way to work.",
+      "The whole week, before it starts.",
+    ],
+  },
+  approach: {
+    eyebrow: "Our approach",
+    h2: "Configuration is not *customisation*",
+    lede: "Your property, chosen by your guests, has its own face. Our job is to make the system show it, not hide it under a template.",
+    cardA: {
+      title: "Our team's support",
+      body: "We look at how your property actually operates — what you sell in addition to the rented room, who you issue invoices to, how your team works — and launch the system together with you, which we constantly supervise.",
+    },
+    cardB: {
+      title: "It costs more than a subscription",
+      body: "In return, you get a system that does not require adapting to it and a website with a booking system that is actually yours.",
+    },
+  },
+  week: {
+    eyebrow: "The week",
+    h2: "Your whole month, on one *screen*",
+    lede: "Units down the side, days across the top. Drag a booking to another unit or another week and it just moves.",
+    points: [
+      "Double bookings are refused before you make one — not discovered when the guest is standing at the door.",
+      "Same-day turnovers are allowed on purpose: one guest out, the next one in, same date.",
+      "Click an empty cell to create a booking already filled in with the unit and the dates.",
+      "Availability imported from Booking.com and Airbnb sits in the same view, marked as external.",
+    ],
+  },
+  morning: {
+    eyebrow: "The morning",
+    h2: "Your team knows what to do before you *ask*",
+    lede: "Revoo reads today's bookings and works out what each unit actually needs, then sorts the list by urgency. Nobody briefs anybody.",
+    points: [
+      "Same-day turnovers come first — the narrowest window in the day, and the one that goes wrong most often.",
+      "A unit that didn't get finished does not quietly vanish from tomorrow's list.",
+      "Ordered extras appear as a preparation checklist, so nothing is discovered at check-in.",
+      "Faults are reported in one tap and land in the manager's view instantly.",
+      "Cleaners never see guest contacts, prices or payment status. Only the work.",
+    ],
+  },
+  paperwork: {
+    eyebrow: "The paperwork",
+    h2: "The guest checks out. The invoice already *exists*",
+    lede: "Sequential numbering, your company details, VAT or non-VAT, ready as a PDF. No spreadsheet, no re-typing, no gaps in the series when the auditor asks.",
+    points: [
+      "Company guests are first-class: company name, registration number, VAT number and address are captured at booking, not chased afterwards.",
+      "Numbers are claimed in strict sequence, so the series never has a hole.",
+      "Every paid extra becomes its own line, whatever you sell alongside the room.",
+      "Invoicing is set up to your country's rules as part of your implementation.",
+    ],
+  },
+  channel: {
+    eyebrow: "Your booking channel",
+    h2: "A booking website, not a booking *widget*",
+    lede: "Every other system gives you a box to paste into your site. It looks borrowed, because it is. Revoo works the other way around: your website is the booking system — your design, your domain, your words, talking to the same engine your admin panel uses.",
+    note: "Under the hood this is a documented REST API with its own keys, origin allowlist and rate limits — so a mobile app, a partner integration or a second booking channel later is a configuration, not a rebuild.",
+  },
+  segments: {
+    eyebrow: "Built for your kind of property",
+    h2: "Designed for how *you* operate",
+    prev: "Previous property type",
+    next: "Next property type",
+    goTo: "Show property type",
+    slides: [
+      {
+        title: "Hotels",
+        body: "Rooms, rates and a front desk. Revoo gives you the calendar, the housekeeping list and the invoices, without the enterprise price tag or the six-week configuration project that usually comes with them.",
+      },
+      {
+        title: "Cabins",
+        body: "Cabins are won and lost on the turnover. Revoo works out which cabins need what today, releases the door code only once the booking is confirmed, and keeps the whole season on one screen.",
+      },
+      {
+        title: "Guesthouses",
+        body: "Usually one person doing everything. Bookings, cleaning, guest emails and invoices live in one place, so that one person can occasionally be somewhere else.",
+      },
+      {
+        title: "Apartments",
+        body: "Your units are not all in one building, and they do not need to be. Revoo treats every unit as its own property, so apartments scattered across different addresses still run from a single calendar.",
+      },
+    ],
+  },
+  ctaBand: {
+    text: "Curious whether this fits your property? One 45-minute conversation will tell you.",
+    button: "Request a demo",
+  },
+  included: {
+    eyebrow: "What you get",
+    h2: "What's in the platform, and what we *build* for you",
+    lede: "We would rather be precise than impressive. Here is the honest split.",
+    left: {
+      title: "In the platform from day one",
+      sub: "Working today, in production.",
+      items: [
+        "Multi-property dashboard with occupancy, revenue and expense figures",
+        "Drag-and-drop booking calendar with double-booking prevention",
+        "Rate tiers by length of stay, plus paid extras per property",
+        "Automated guest emails — confirmation, change, cancellation, pre-arrival reminder, review request — in the guest's own language",
+        "Invoice generation with sequential numbering and PDF output",
+        "Housekeeping module with automatic work-type detection and a mobile app for cleaning staff",
+        "Roles and email invitations for your team",
+        "Availability import from Booking.com and Airbnb via iCal",
+        "Documented public REST API with keys, origin allowlist and rate limits",
+        "Legal document management served straight to your guest site",
+      ],
+    },
+    right: {
+      title: "Built into your implementation",
+      sub: "Scoped in the first conversation, built for your property.",
+      items: [
+        "Your booking website — designed for your property, on your domain",
+        "Payments — we connect the provider you actually use",
+        "Invoicing to your country's rules — the identifiers, rates and numbering your tax authority expects",
+        "Your languages, in the interface and in guest emails",
+        "The channel connections your property actually needs",
+        "Whatever you sell alongside the room",
+        "Migration of your existing bookings, and setup of units, rates and policies",
+        "Training for your team, in their language",
+      ],
+    },
+  },
+  fit: {
+    eyebrow: "Fit",
+    h2: "Who this is for — and who it *isn't*",
+    lede: "Saying this out loud saves us both a call.",
+    yesTitle: "This is for you if",
+    noTitle: "This is not for you if",
+    yes: [
+      "6–30 units, owner-operated or run by a small team",
+      "Hotels, cabins, guesthouses, or apartments across several addresses",
+      "You sell more than the room, whatever that is at your property",
+      "Business guests who need a proper invoice to a company",
+      "A cleaning team currently coordinated by phone, paper or WhatsApp",
+      "Too much of your revenue goes to OTA commission",
+      "You want a website that looks like your property, not like software",
+    ],
+    no: [
+      "A single property run as a side income rather than a business",
+      "Chains and groups above roughly 50 units",
+      "You need full two-way channel management across many OTAs on day one",
+      "You want to sign up online tonight and configure it yourself — we don't work that way",
+    ],
+  },
+  start: {
+    eyebrow: "Getting started",
+    h2: "How it actually *starts*",
+    lede: "No credit card form, and no 14-day trial you would abandon on day three.",
+    steps: [
+      {
+        title: "A conversation",
+        body: "About 45 minutes. How your property runs, what you sell alongside the room, what breaks today, and what your invoices have to look like. We tell you honestly whether we are a fit.",
+      },
+      {
+        title: "Implementation",
+        body: "We set up your units, rates, extras and policies, build your booking website, connect your payment provider and adapt invoicing to your country. You review it as it takes shape.",
+      },
+      {
+        title: "Launch",
+        body: "Your existing bookings move across. We train reception and housekeeping in their own language. Then we stay close through the first season.",
+      },
+    ],
+    cta: "Request a demo",
+  },
+  demo: {
+    eyebrow: "Talk to us",
+    h2: "Let's look at your *property*",
+    lede: "Tell us a little about it and we will come back within one working day — with either a demo time or an honest \u201Cwe are not the right fit\u201D.",
+    facts: [
+      "hello@revoo.site",
+      "Working in English and Lithuanian",
+      "Based in Lithuania · onboarding properties in Iceland",
+    ],
+    form: {
+      name: "Name",
+      email: "Email",
+      property: "Property name",
+      country: "Country",
+      countries: ["Iceland", "Lithuania", "Latvia", "Estonia", "Norway", "Germany", "Other"],
+      type: "Property type",
+      types: ["Hotel", "Cabins", "Guesthouse", "Apartments", "Other"],
+      units: "Number of units",
+      unitOptions: ["1–5", "6–15", "16–30", "31–50", "50+"],
+      current: "What you use today",
+      currentOptions: [
+        "Spreadsheet or paper",
+        "Booking.com extranet only",
+        "Another PMS",
+        "A booking widget on our website",
+        "Other",
+      ],
+      notes: "Anything else we should know?",
+      optional: "optional",
+      required: "required",
+      submit: "Request a demo",
+      fineprint: "We reply within one working day. No automated sequences.",
+      select: "Select",
+    },
+    success: {
+      title: "Thank you",
+      body: "We will be in touch within one working day.",
+    },
+  },
+  faq: {
+    eyebrow: "Questions",
+    h2: "The things people actually *ask*",
+    items: [
+      {
+        q: "What does it cost?",
+        a: "There is a one-off implementation fee and a monthly subscription. The implementation fee depends on scope — how many units, what you sell alongside the room, whether you need a new website, which payment provider, which country's invoicing. We quote after the first conversation rather than before it, because a number quoted blind would be wrong in one direction or the other.",
+      },
+      {
+        q: "Do you handle payments?",
+        a: "We connect the payment provider you actually use as part of your implementation. It is not a checkbox on a settings page — it is scoped and built for your setup, which also means it works with the acquirer you already have a contract with.",
+      },
+      {
+        q: "Does it sync with Booking.com and Airbnb?",
+        a: "Availability import over iCal works today, so external bookings appear in your calendar and block the unit. Deeper channel connections are scoped as part of an implementation when a property needs them. We are deliberately not claiming to be a 200-channel channel manager — if that is what you need on day one, a large platform will serve you better, and we will say so.",
+      },
+      {
+        q: "Can I keep my current website?",
+        a: "Yes — it can connect to Revoo through the public API. But if your current site cannot take a booking without sending the guest somewhere else, replacing it is usually the single change that pays for the whole project.",
+      },
+      {
+        q: "Why isn't there a sign-up button?",
+        a: "Because every property we have set up has needed something the previous one did not. A self-service sign-up would hand you an empty dashboard and a settings page, and you would be doing the implementation yourself. We would rather do it properly.",
+      },
+      {
+        q: "What happens if I outgrow you?",
+        a: "The platform is API-first and your data is yours — properties, bookings, guests and invoices, all exportable. We would rather you left cleanly than felt locked in.",
+      },
+      {
+        q: "Where are you based?",
+        a: "Lithuania. The platform runs in production today, and we are onboarding properties in Iceland. We work in English and Lithuanian.",
+      },
+    ],
+  },
+  footer: {
+    tagline:
+      "A property management system and a booking website for independent hotels, cabins, guesthouses and apartments.",
+    linksTitle: "Site",
+    langTitle: "Language",
+    rights: "© 2026 Revoo",
+    contact: "revoo.site · hello@revoo.site",
+  },
+  blog: {
+    title: "Blog",
+    eyebrow: "Writing",
+    h2: "Notes on running a small *property*",
+    lede: "Practical writing about booking, invoicing and the operational day — for independent hotels, cabins, guesthouses and apartments.",
+    readingTime: "min read",
+    back: "Back to the blog",
+    metaTitle: "Revoo blog — booking, invoicing and running a small property",
+    metaDescription:
+      "Practical articles for independent hotels, cabins, guesthouses and apartments: choosing a property management system, invoicing rules, housekeeping and direct bookings.",
+    disclaimer:
+      "This article is general information, not tax or legal advice. Check specifics with your accountant or your national tax authority.",
+    ctaTitle: "Wondering whether Revoo fits your property?",
+    ctaBody: "One 45-minute conversation, and an honest answer either way.",
+    ctaButton: "Request a demo",
+  },
+  notFound: {
+    title: "Page not found",
+    body: "This address does not exist, or it has moved.",
+    cta: "Back to the homepage",
+  },
+  media: {
+    missing: "Media file not available",
+    browserUrl: "app.revoo.site",
+    alt: {
+      calendar: "Revoo booking calendar: units in rows, days in columns, bookings dragged between units",
+      housekeepingApp: "Revoo housekeeping app on a phone, showing today's rooms sorted by urgency",
+      housekeepingWeek: "Revoo weekly housekeeping table with work types for each room",
+      invoice: "A VAT invoice generated by Revoo, ready as a PDF",
+      bookingSite: "A booking website built with Revoo, showing availability and prices for chosen dates",
+    },
+  },
+  mobileCta: {
+    text: "Request a demo",
+    dismiss: "Hide this bar",
+  },
+};
