@@ -18,7 +18,7 @@ export const en = {
     sub: "Hotels, cabins, guesthouses and apartments each run differently — and none of them run the way the software they were sold assumes. Revoo is a platform we shape to your operation, with a booking website that is genuinely yours.",
     primary: "Request a demo",
     secondary: "See how it works",
-    status: "In production today. Now onboarding properties in Iceland.",
+    status: "Write to us, and we’ll give you access to try it out today.",
   },
   carousel: {
     label: "Product screens",
