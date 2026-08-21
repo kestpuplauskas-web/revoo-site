@@ -133,19 +133,28 @@ export function blogPostingLd(args: {
   description: string;
   datePublished: string;
   url: string;
+  image?: string;
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: args.headline,
     description: args.description,
+    image: [args.image ?? SITE_IMAGE],
     datePublished: args.datePublished,
+    dateModified: args.datePublished,
     inLanguage: args.lang === "lt" ? "lt-LT" : "en",
     mainEntityOfPage: args.url,
     author: { "@type": "Organization", name: "Revoo", url: SITE_URL },
-    publisher: { "@type": "Organization", name: "Revoo", url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: "Revoo",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.svg` },
+    },
   };
 }
+
 
 export function breadcrumbLd(items: { name: string; url: string }[]) {
   return {
