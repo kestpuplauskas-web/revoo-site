@@ -63,7 +63,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             </div>
           </div>
           <div className="relative min-h-[520px] bg-teal-900 lg:min-h-[660px]">
-            <HeroCarousel />
+            <HeroCarousel lang={lang} />
           </div>
 
         </section>
