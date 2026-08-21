@@ -4,7 +4,7 @@ import { DemoForm } from "./DemoForm";
 import { Faq } from "./Faq";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { HeroCarousel } from "./HeroCarousel";
+import { HeroCarousel } from "../HeroCarousel";
 import { MobileCtaBar } from "./MobileCtaBar";
 import { SegmentsCarousel } from "./SegmentsCarousel";
 import {
