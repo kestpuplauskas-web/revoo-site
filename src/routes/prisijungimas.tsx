@@ -16,6 +16,7 @@ export const Route = createFileRoute("/prisijungimas")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -30,7 +31,14 @@ function LoginPage() {
     event.preventDefault();
     setBusy(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } =
+        mode === "signin"
+          ? await supabase.auth.signInWithPassword({ email, password })
+          : await supabase.auth.signUp({
+              email,
+              password,
+              options: { emailRedirectTo: `${window.location.origin}/prisijungimas` },
+            });
       if (error) throw error;
       await navigate({ to: "/admin/uzklausos", replace: true });
     } catch (error) {
@@ -41,6 +49,7 @@ function LoginPage() {
       setBusy(false);
     }
   };
+
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-ink px-4 py-16">
