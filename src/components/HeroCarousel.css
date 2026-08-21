@@ -36,6 +36,8 @@
 .rc-card.d2{--o:.42;--s:.76;z-index:3;filter:blur(2.2px) saturate(.85)}
 .rc-card.d3{--o:.22;--s:.64;z-index:1;filter:blur(4.2px) saturate(.7)}
 
+.rc-card.d1 .rc-browser,.rc-card.d1 .rc-plain,.rc-card.d1 .rc-phone{box-shadow:0 46px 96px -28px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.12)}
+
 /* šviesos blyksnis per pagrindinę kortelę scenai atsidarant */
 .rc-card.lead .rc-browser,.rc-card.lead .rc-phone,.rc-card.lead .rc-plain{position:relative;overflow:hidden}
 .rc-scene.on .rc-card.lead .rc-browser::after,
