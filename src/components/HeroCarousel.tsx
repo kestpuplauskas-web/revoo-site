@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 
 import "./HeroCarousel.css";
-import { media } from "@/content/media";
 
 type Vars = Record<string, string | number>;
 
