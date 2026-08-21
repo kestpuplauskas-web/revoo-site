@@ -11,5 +11,4 @@ export const media = {
   invoice: { url: invoice.url, width: 1275, height: 1233 },
   bookingSite: { url: bookingSite.url, width: 1705, height: 946 },
   /** Not delivered with the material set — rendered as a labelled empty block. */
-  adminApp: null as null | { url: string; width: number; height: number },
 };
