@@ -59,7 +59,11 @@ function LoginPage() {
       >
         <p className="eyebrow text-ink-soft">Revoo</p>
         <h1 className="mt-2 font-display text-3xl text-ink">Administravimas</h1>
-        <p className="mt-2 text-sm text-ink-soft">Prisijunkite, kad matytumėte užklausas.</p>
+        <p className="mt-2 text-sm text-ink-soft">
+          {mode === "signin"
+            ? "Prisijunkite, kad matytumėte užklausas."
+            : "Susikurkite paskyrą. Administratoriaus teises suteiks Revoo komanda."}
+        </p>
 
         <label htmlFor="email" className="eyebrow mt-7 mb-2 block text-ink-soft">
           El. paštas
@@ -81,7 +85,8 @@ function LoginPage() {
           id="password"
           type="password"
           required
-          autoComplete="current-password"
+          minLength={8}
+          autoComplete={mode === "signin" ? "current-password" : "new-password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full rounded-xl border border-ink/15 bg-cream/40 px-4 py-3 text-[0.95rem] text-ink outline-none transition-colors focus:border-teal-500"
@@ -92,8 +97,23 @@ function LoginPage() {
           disabled={busy}
           className="mt-7 w-full rounded-full bg-teal-700 px-6 py-3.5 font-medium text-cream transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-900 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {busy ? "Jungiamasi…" : "Prisijungti"}
+          {busy
+            ? mode === "signin"
+              ? "Jungiamasi…"
+              : "Kuriama…"
+            : mode === "signin"
+              ? "Prisijungti"
+              : "Sukurti paskyrą"}
         </button>
+
+        <button
+          type="button"
+          onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+          className="mt-4 w-full text-center text-sm text-ink-soft underline underline-offset-2 hover:text-ink"
+        >
+          {mode === "signin" ? "Neturite paskyros? Susikurti" : "Jau turite paskyrą? Prisijungti"}
+        </button>
+
       </form>
     </main>
   );
