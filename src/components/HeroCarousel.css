@@ -51,8 +51,8 @@
 
 /* gyliai — priekinė kortelė be jokių filtrų (max kokybė), fonas nublankintas */
 /* priekinė kortelė didinama per plotį (ne transform:scale) — nėra rasterizacijos blur */
-.rc-card.d1{--o:1;--s:1;z-index:6;filter:none;width:calc(var(--w)*1.1);margin-left:calc(var(--w)*-.05);margin-top:calc(var(--w)*-.02)}
-.rc-stage:hover .rc-scene.on .rc-card.d1{width:calc(var(--w)*1.15);margin-left:calc(var(--w)*-.075)}
+.rc-card.d1{--o:1;--s:1;z-index:6;filter:none;width:calc(var(--w)*1.05);margin-left:calc(var(--w)*-.025);margin-top:calc(var(--w)*-.02)}
+.rc-stage:hover .rc-scene.on .rc-card.d1{width:calc(var(--w)*1.09);margin-left:calc(var(--w)*-.045)}
 .rc-stage:hover .rc-scene.on .rc-card.d2{--o:.6}
 .rc-stage:hover .rc-scene.on .rc-card.d3{--o:.34}
 .rc-card.d1 .rc-browser,.rc-card.d1 .rc-plain,.rc-card.d1 .rc-phone,
