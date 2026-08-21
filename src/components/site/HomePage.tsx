@@ -62,9 +62,10 @@ export function HomePage({ lang }: { lang: Lang }) {
               </p>
             </div>
           </div>
-          <div className="bg-teal-900">
-            <HeroCarousel lang={lang} />
+          <div className="relative min-h-[520px] bg-teal-900 lg:min-h-[660px]">
+            <HeroCarousel />
           </div>
+
         </section>
 
         {/* 2. Approach */}
