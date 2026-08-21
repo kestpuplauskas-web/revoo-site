@@ -22,6 +22,14 @@ function Browser({ url, children }: { url: string; children: React.ReactNode }) 
   );
 }
 
+function PhoneVideo({ src, poster }: { src: string; poster: string }) {
+  return (
+    <div className="rc-phone">
+      <video src={src} poster={poster} muted loop playsInline preload="metadata" />
+    </div>
+  );
+}
+
 export function HeroCarousel({ lang }: { lang: Lang }) {
   const c = t(lang);
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -231,9 +239,10 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         >
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-4s" })}>
-              <div className="rc-phone">
-                <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
-              </div>
+              <PhoneVideo
+                src="/media/7_housekeeping_app.mp4"
+                poster="/media/7_housekeeping_app.webp"
+              />
             </div>
           </div>
         </div>
@@ -259,9 +268,10 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         >
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
-              <div className="rc-phone">
-                <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
-              </div>
+              <PhoneVideo
+                src="/media/7_housekeeping_app.mp4"
+                poster="/media/7_housekeeping_app.webp"
+              />
             </div>
           </div>
         </div>
@@ -347,9 +357,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         >
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-6s" })}>
-              <div className="rc-phone">
-                <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
-              </div>
+              <PhoneVideo src="/media/5_admin_app.mp4" poster="/media/5_admin_app.webp" />
             </div>
           </div>
         </div>
