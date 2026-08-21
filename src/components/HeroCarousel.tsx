@@ -223,7 +223,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "9s", "--del": "0s" })}>
               <Browser url="app.revoo.site / bookings">
-                <img src="/media/6_booking.png" alt="" loading="eager" />
+                <Vid src="/media/10_new_booking.mp4" poster="/media/6_booking.png" />
               </Browser>
             </div>
           </div>
@@ -247,13 +247,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-4s" })}>
               <div className="rc-phone">
-                <img
-                  src={media.housekeepingApp.url}
-                  alt=""
-                  width={media.housekeepingApp.width}
-                  height={media.housekeepingApp.height}
-                  loading="lazy"
-                />
+                <Vid src="/media/7_housekeeping_app.mp4" poster={media.housekeepingApp.url} />
               </div>
             </div>
           </div>
@@ -281,13 +275,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <div className="rc-phone">
-                <img
-                  src={media.housekeepingApp.url}
-                  alt=""
-                  width={media.housekeepingApp.width}
-                  height={media.housekeepingApp.height}
-                  loading="lazy"
-                />
+                <Vid src="/media/7_housekeeping_app.mp4" poster={media.housekeepingApp.url} />
               </div>
             </div>
           </div>
@@ -375,13 +363,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-6s" })}>
               <div className="rc-phone">
-                <img
-                  src="/media/5_admin_app.webp"
-                  alt=""
-                  width={384}
-                  height={848}
-                  loading="lazy"
-                />
+                <Vid src="/media/5_admin_app.mp4" poster="/media/5_admin_app.webp" />
               </div>
             </div>
           </div>
