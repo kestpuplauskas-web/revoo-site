@@ -9,6 +9,20 @@ type Vars = Record<string, string | number>;
 
 const v = (o: Vars) => o as React.CSSProperties;
 
+function Vid({ src, poster }: { src: string; poster?: string }) {
+  return (
+    <video
+      src={src}
+      {...(poster ? { poster } : {})}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      // eslint-disable-next-line jsx-a11y/media-has-caption
+    />
+  );
+}
+
 function Browser({ url, children }: { url: string; children: React.ReactNode }) {
   return (
     <div className="rc-browser">
