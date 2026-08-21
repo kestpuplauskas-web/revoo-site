@@ -1,4 +1,19 @@
-.rc-stage{position:absolute;inset:0;overflow:hidden;background:#0B302E;perspective:1500px;--mx:0;--my:0}
+.rc-stage{position:absolute;inset:0;overflow:hidden;background:#0B302E;perspective:1500px;
+  --mx:0;--my:0;--px:50%;--py:40%;touch-action:pan-y}
+
+/* kursoriaus prožektorius + tinklelis + vinjetė */
+.rc-spot{position:absolute;inset:0;pointer-events:none;z-index:7;opacity:0;transition:opacity .5s ease;
+  background:radial-gradient(240px 240px at var(--px) var(--py),rgba(255,255,255,.10),transparent 70%);
+  mix-blend-mode:screen}
+.rc-stage:hover .rc-spot{opacity:1}
+.rc-grid{position:absolute;inset:-10%;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(247,242,231,.10) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(247,242,231,.10) 1px,transparent 1px);
+  background-size:64px 64px;
+  transform:translate3d(calc(var(--mx)*.35px),calc(var(--my)*.35px),0);
+  mask-image:radial-gradient(70% 60% at 50% 45%,#000,transparent 78%)}
+.rc-vig{position:absolute;inset:0;pointer-events:none;z-index:8;
+  background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(0,0,0,.42))}
 
 /* fono švytėjimai — persislenka su kiekviena scena */
 .rc-glow,.rc-glow2{position:absolute;aspect-ratio:1;border-radius:50%;pointer-events:none;
@@ -33,6 +48,11 @@
 
 /* gyliai — priekinė kortelė didesnė ir ryškesnė, fonas gerokai nublankintas */
 .rc-card.d1{--o:1;--s:1.1;z-index:6;filter:contrast(1.06) saturate(1.05)}
+.rc-stage:hover .rc-scene.on .rc-card.d1{--s:1.14}
+.rc-stage:hover .rc-scene.on .rc-card.d2{--o:.6}
+.rc-stage:hover .rc-scene.on .rc-card.d3{--o:.34}
+.rc-card.d1 .rc-browser,.rc-card.d1 .rc-plain,.rc-card.d1 .rc-phone,
+.rc-slot.pos-c .rc-browser{image-rendering:auto;backface-visibility:hidden}
 .rc-card.d2{--o:.72;--s:.8;z-index:3;filter:blur(.8px) saturate(.95)}
 .rc-card.d3{--o:.45;--s:.68;z-index:1;filter:blur(1.8px) saturate(.85)}
 
@@ -77,15 +97,22 @@
   opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
 .rc-cap p.on{opacity:1;transform:none;position:relative}
 .rc-prog{position:absolute;left:36px;right:36px;bottom:28px;display:flex;gap:7px;z-index:9}
-.rc-prog button{flex:1;height:3px;border:0;padding:0;border-radius:3px;background:rgba(247,242,231,.22);
+.rc-prog button{flex:1;height:3px;transition:height .2s ease,background .2s ease;border:0;padding:0;border-radius:3px;background:rgba(247,242,231,.22);
   cursor:pointer;position:relative}
 .rc-prog button::before{content:"";position:absolute;left:0;right:0;top:-11px;bottom:-10px}
 .rc-prog button i{position:absolute;inset:0;width:0;background:#E3A143;border-radius:3px;display:block;overflow:hidden}
 .rc-prog button.on i{animation:rc-fill var(--t,7500ms) linear forwards}
 @keyframes rc-fill{from{width:0}to{width:100%}}
+.rc-prog button:hover,.rc-prog button:focus-visible{height:6px;background:rgba(247,242,231,.38);outline:none}
+
+/* scenos pasikeitimo blyksnis */
+.rc-scene.on{animation:rc-scene-in .9s cubic-bezier(.4,0,.2,1) both}
+@keyframes rc-scene-in{from{opacity:.35}to{opacity:1}}
 
 @media(prefers-reduced-motion:reduce){
   .rc-float{animation:none}
+  .rc-scene.on{animation:none}
+  .rc-spot,.rc-grid{display:none}
   .rc-par{transform:none}
   .rc-card,.rc-slot,.rc-cap p{transition-duration:.01ms}
   .rc-prog button.on i{animation:none;width:100%}
