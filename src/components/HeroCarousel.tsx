@@ -198,7 +198,7 @@ export function HeroCarousel() {
           <div className="rc-par" style={v({ "--p": 1 })}>
             <div className="rc-float" style={v({ "--dur": "9s", "--del": "0s" })}>
               <Browser url="app.revoo.site / bookings">
-                <video src={media.bookingCalendar.url} muted loop playsInline preload="metadata" />
+                <img src="/media/6_booking.png" alt="" loading="eager" />
               </Browser>
             </div>
           </div>
