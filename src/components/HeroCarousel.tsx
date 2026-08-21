@@ -371,7 +371,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       <div className="rc-scene" data-s="2">
         <div
           className="rc-card rc-sw sw-front lead"
-          style={v({ "--x": "26%", "--y": "18%", "--w": "46%", "--ex": -24, "--ey": 24, "--i": 0 })}
+          style={v({ "--x": "19%", "--y": "14%", "--w": "62%", "--ex": -24, "--ey": 24, "--i": 0 })}
         >
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
