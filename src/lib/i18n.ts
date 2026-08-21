@@ -22,6 +22,8 @@ export function absUrl(lang: Lang, path = ""): string {
   return clean ? `${SITE_URL}${prefix}${clean}/` : `${SITE_URL}${prefix}`;
 }
 
+export const SITE_IMAGE = `${SITE_URL}/media/11_dashboard.png`;
+
 type HeadArgs = {
   lang: Lang;
   title: string;
@@ -30,9 +32,21 @@ type HeadArgs = {
   /** Path of the same page in the other language; omit when there is no pair. */
   altPath?: string | null;
   jsonLd?: object[];
+  /** "article" for blog posts, "website" elsewhere. */
+  ogType?: "website" | "article";
+  image?: string;
 };
 
-export function buildHead({ lang, title, description, path = "", altPath, jsonLd = [] }: HeadArgs) {
+export function buildHead({
+  lang,
+  title,
+  description,
+  path = "",
+  altPath,
+  jsonLd = [],
+  ogType = "website",
+  image = SITE_IMAGE,
+}: HeadArgs) {
   const canonical = absUrl(lang, path);
   const other: Lang = lang === "en" ? "lt" : "en";
   const links: Array<Record<string, string>> = [{ rel: "canonical", href: canonical }];
@@ -59,13 +73,15 @@ export function buildHead({ lang, title, description, path = "", altPath, jsonLd
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
+      { property: "og:type", content: ogType },
       { property: "og:url", content: canonical },
       { property: "og:locale", content: lang === "lt" ? "lt_LT" : "en_GB" },
       { property: "og:site_name", content: "Revoo" },
+      { property: "og:image", content: image },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
+      { name: "twitter:image", content: image },
     ],
     links,
     scripts: jsonLd.map((data) => ({
@@ -74,6 +90,7 @@ export function buildHead({ lang, title, description, path = "", altPath, jsonLd
     })),
   };
 }
+
 
 export function organizationLd() {
   return {
@@ -116,19 +133,28 @@ export function blogPostingLd(args: {
   description: string;
   datePublished: string;
   url: string;
+  image?: string;
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: args.headline,
     description: args.description,
+    image: [args.image ?? SITE_IMAGE],
     datePublished: args.datePublished,
+    dateModified: args.datePublished,
     inLanguage: args.lang === "lt" ? "lt-LT" : "en",
     mainEntityOfPage: args.url,
     author: { "@type": "Organization", name: "Revoo", url: SITE_URL },
-    publisher: { "@type": "Organization", name: "Revoo", url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: "Revoo",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.svg` },
+    },
   };
 }
+
 
 export function breadcrumbLd(items: { name: string; url: string }[]) {
   return {

@@ -19,6 +19,7 @@ export const Route = createFileRoute("/blog/$slug")({
       description: loaderData.metaDescription,
       path: `blog/${loaderData.slug}`,
       altPath: null,
+      ogType: "article",
       jsonLd: [
         organizationLd(),
         blogPostingLd({
