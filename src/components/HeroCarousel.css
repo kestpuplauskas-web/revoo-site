@@ -31,10 +31,10 @@
   0%,100%{transform:translateY(-7px) rotate(var(--r0,-.5deg))}
   50%    {transform:translateY(7px)  rotate(var(--r1,.5deg))}}
 
-/* gyliai */
-.rc-card.d1{--o:1;--s:1;z-index:6}
-.rc-card.d2{--o:.6;--s:.84;z-index:3;filter:blur(1.4px)}
-.rc-card.d3{--o:.34;--s:.72;z-index:1;filter:blur(3.2px)}
+/* gyliai — priekinė kortelė didesnė ir ryškesnė, fonas gerokai nublankintas */
+.rc-card.d1{--o:1;--s:1.07;z-index:6}
+.rc-card.d2{--o:.42;--s:.76;z-index:3;filter:blur(2.2px) saturate(.85)}
+.rc-card.d3{--o:.22;--s:.64;z-index:1;filter:blur(4.2px) saturate(.7)}
 
 /* šviesos blyksnis per pagrindinę kortelę scenai atsidarant */
 .rc-card.lead .rc-browser,.rc-card.lead .rc-phone,.rc-card.lead .rc-plain{position:relative;overflow:hidden}
