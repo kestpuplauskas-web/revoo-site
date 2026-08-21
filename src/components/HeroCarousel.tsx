@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+import { t, type Lang } from "@/lib/i18n";
+
 import "./HeroCarousel.css";
 
 type Vars = Record<string, string | number>;
@@ -20,7 +22,8 @@ function Browser({ url, children }: { url: string; children: React.ReactNode }) 
   );
 }
 
-export function HeroCarousel() {
+export function HeroCarousel({ lang }: { lang: Lang }) {
+  const c = t(lang);
   const stageRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -70,6 +73,8 @@ export function HeroCarousel() {
       });
       bars.forEach(function (b, k) {
         b.classList.remove("on");
+        if (k === i) b.setAttribute("aria-current", "true");
+        else b.removeAttribute("aria-current");
         if (k === i) {
           void b.offsetWidth;
           b.classList.add("on");
@@ -184,17 +189,23 @@ export function HeroCarousel() {
   }, []);
 
   return (
-    <div className="rc-stage" ref={stageRef} aria-hidden="true">
+    <div
+      className="rc-stage"
+      ref={stageRef}
+      role="group"
+      aria-roledescription="carousel"
+      aria-label={c.carousel.label}
+    >
       <div className="rc-glow g1" />
       <div className="rc-glow2 g1" />
 
       {/* Scene 1 — bookings */}
-      <div className="rc-scene">
+      <div className="rc-scene" data-s="0">
         <div
           className="rc-card d1 lead"
-          style={v({ "--x": "8%", "--y": "16%", "--w": "78%", "--ex": -30, "--ey": 18, "--i": 0 })}
+          style={v({ "--x": "8%", "--y": "16%", "--w": "87%", "--ex": -30, "--ey": 18, "--i": 0 })}
         >
-          <div className="rc-par" style={v({ "--p": 1 })}>
+          <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "9s", "--del": "0s" })}>
               <Browser url="app.revoo.site / bookings">
                 <img src="/media/6_booking.png" alt="" loading="eager" />
@@ -206,7 +217,7 @@ export function HeroCarousel() {
           className="rc-card d2"
           style={v({ "--x": "48%", "--y": "56%", "--w": "50%", "--ex": 30, "--ey": 24, "--i": 1 })}
         >
-          <div className="rc-par" style={v({ "--p": 1.7 })}>
+          <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-2s" })}>
               <Browser url="app.revoo.site / housekeeping">
                 <img src="/media/8_housekeeping.png" alt="" loading="lazy" />
@@ -215,10 +226,10 @@ export function HeroCarousel() {
           </div>
         </div>
         <div
-          className="rc-card d3"
+          className="rc-card d2"
           style={v({ "--x": "2%", "--y": "60%", "--w": "24%", "--ex": -24, "--ey": 20, "--i": 2 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.4 })}>
+          <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-4s" })}>
               <div className="rc-phone">
                 <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
@@ -230,10 +241,10 @@ export function HeroCarousel() {
           className="rc-card d3"
           style={v({ "--x": "62%", "--y": "2%", "--w": "30%", "--ex": 26, "--ey": -18, "--i": 3 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.1 })}>
+          <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-6s" })}>
               <div className="rc-plain">
-                <img src="/media/9_invoice.png" alt="" loading="lazy" />
+                <img src="/media/9_invoice.webp" alt="" loading="lazy" />
               </div>
             </div>
           </div>
@@ -241,12 +252,12 @@ export function HeroCarousel() {
       </div>
 
       {/* Scene 2 — housekeeping */}
-      <div className="rc-scene">
+      <div className="rc-scene" data-s="1">
         <div
           className="rc-card d1 lead"
           style={v({ "--x": "36%", "--y": "6%", "--w": "29%", "--ex": -26, "--ey": 26, "--i": 0 })}
         >
-          <div className="rc-par" style={v({ "--p": 1 })}>
+          <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <div className="rc-phone">
                 <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
@@ -258,7 +269,7 @@ export function HeroCarousel() {
           className="rc-card d2"
           style={v({ "--x": "38%", "--y": "20%", "--w": "58%", "--ex": 34, "--ey": -16, "--i": 1 })}
         >
-          <div className="rc-par" style={v({ "--p": 1.6 })}>
+          <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-3s" })}>
               <Browser url="app.revoo.site / housekeeping">
                 <img src="/media/8_housekeeping.png" alt="" loading="lazy" />
@@ -270,7 +281,7 @@ export function HeroCarousel() {
           className="rc-card d3"
           style={v({ "--x": "44%", "--y": "66%", "--w": "44%", "--ex": 22, "--ey": 26, "--i": 2 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.3 })}>
+          <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "14s", "--del": "-5s" })}>
               <Browser url="app.revoo.site / bookings">
                 <img src="/media/6_booking.png" alt="" loading="lazy" />
@@ -279,10 +290,10 @@ export function HeroCarousel() {
           </div>
         </div>
         <div
-          className="rc-card d3"
+          className="rc-card d2"
           style={v({ "--x": "0%", "--y": "62%", "--w": "26%", "--ex": -28, "--ey": 18, "--i": 3 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.6 })}>
+          <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-7s" })}>
               <div className="rc-plain">
                 <img src="/media/4_notification_for_client.png" alt="" loading="lazy" />
@@ -293,15 +304,15 @@ export function HeroCarousel() {
       </div>
 
       {/* Scene 3 — invoices */}
-      <div className="rc-scene">
+      <div className="rc-scene" data-s="2">
         <div
           className="rc-card d1 lead"
           style={v({ "--x": "24%", "--y": "8%", "--w": "48%", "--ex": -24, "--ey": 24, "--i": 0 })}
         >
-          <div className="rc-par" style={v({ "--p": 1 })}>
+          <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <div className="rc-plain">
-                <img src="/media/9_invoice.png" alt="" loading="lazy" />
+                <img src="/media/9_invoice.webp" alt="" loading="lazy" />
               </div>
             </div>
           </div>
@@ -310,7 +321,7 @@ export function HeroCarousel() {
           className="rc-card d2"
           style={v({ "--x": "50%", "--y": "12%", "--w": "48%", "--ex": 32, "--ey": -20, "--i": 1 })}
         >
-          <div className="rc-par" style={v({ "--p": 1.8 })}>
+          <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-3s" })}>
               <div className="rc-plain">
                 <img src="/media/4_notification_for_client.png" alt="" loading="lazy" />
@@ -322,7 +333,7 @@ export function HeroCarousel() {
           className="rc-card d3"
           style={v({ "--x": "40%", "--y": "64%", "--w": "52%", "--ex": 26, "--ey": 24, "--i": 2 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.2 })}>
+          <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-5s" })}>
               <Browser url="app.revoo.site / bookings">
                 <img src="/media/6_booking.png" alt="" loading="lazy" />
@@ -331,10 +342,10 @@ export function HeroCarousel() {
           </div>
         </div>
         <div
-          className="rc-card d3"
+          className="rc-card d2"
           style={v({ "--x": "0%", "--y": "58%", "--w": "24%", "--ex": -26, "--ey": 20, "--i": 3 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.5 })}>
+          <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-6s" })}>
               <div className="rc-phone">
                 <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
@@ -345,12 +356,12 @@ export function HeroCarousel() {
       </div>
 
       {/* Scene 4 — your website */}
-      <div className="rc-scene">
+      <div className="rc-scene" data-s="3">
         <div
           className="rc-card rc-slot pos-c"
           style={v({ "--x": "50%", "--y": "20%", "--w": "42%", "--ex": 0, "--ey": 20, "--i": 0 })}
         >
-          <div className="rc-par" style={v({ "--p": 1 })}>
+          <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <Browser url="yourhotel.com">
                 <img src="/media/1_homepage_calendar.png" alt="" loading="lazy" />
@@ -362,7 +373,7 @@ export function HeroCarousel() {
           className="rc-card rc-slot pos-l"
           style={v({ "--x": "-4%", "--y": "20%", "--w": "42%", "--ex": -28, "--ey": 20, "--i": 1 })}
         >
-          <div className="rc-par" style={v({ "--p": 1.6 })}>
+          <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-3s" })}>
               <Browser url="yourhotel.com">
                 <img src="/media/2_homepage_1.png" alt="" loading="lazy" />
@@ -374,7 +385,7 @@ export function HeroCarousel() {
           className="rc-card rc-slot pos-r"
           style={v({ "--x": "68%", "--y": "20%", "--w": "42%", "--ex": 28, "--ey": 20, "--i": 2 })}
         >
-          <div className="rc-par" style={v({ "--p": 1.6 })}>
+          <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-5s" })}>
               <Browser url="yourhotel.com">
                 <img src="/media/3_homepage_2.png" alt="" loading="lazy" />
@@ -386,7 +397,7 @@ export function HeroCarousel() {
           className="rc-card d3"
           style={v({ "--x": "26%", "--y": "70%", "--w": "46%", "--ex": 0, "--ey": 26, "--i": 3 })}
         >
-          <div className="rc-par" style={v({ "--p": 2.4 })}>
+          <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "14s", "--del": "-7s" })}>
               <Browser url="app.revoo.site / bookings">
                 <img src="/media/6_booking.png" alt="" loading="lazy" />
@@ -397,25 +408,17 @@ export function HeroCarousel() {
       </div>
 
       <div className="rc-cap">
-        <p>Move a booking. Everything else follows.</p>
-        <p>Today&rsquo;s work, already sorted by urgency.</p>
-        <p>Invoices ready before the guest has left.</p>
-        <p>Your website, your numbers, your rules.</p>
+        {c.carousel.slides.map((line, i) => (
+          <p key={i}>{line}</p>
+        ))}
       </div>
 
       <div className="rc-prog">
-        <button type="button">
-          <i />
-        </button>
-        <button type="button">
-          <i />
-        </button>
-        <button type="button">
-          <i />
-        </button>
-        <button type="button">
-          <i />
-        </button>
+        {c.carousel.slides.map((_, i) => (
+          <button key={i} type="button" aria-label={`${c.carousel.goTo} ${i + 1}`}>
+            <i />
+          </button>
+        ))}
       </div>
     </div>
   );

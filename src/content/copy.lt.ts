@@ -29,8 +29,7 @@ export const lt: Copy = {
       "Perkelkite rezervaciją. Visa kita seka paskui.",
       "Šios dienos darbai, jau surikiuoti pagal skubumą.",
       "Sąskaitos paruoštos dar svečiui neišvykus.",
-      "Visa veikla — pakeliui į darbą.",
-      "Visa savaitė, dar jai neprasidėjus.",
+      "Jūsų svetainė, jūsų skaičiai, jūsų taisyklės.",
     ],
   },
   approach: {

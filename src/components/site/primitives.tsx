@@ -174,28 +174,3 @@ export function PhoneFrame({ children, className }: { children: ReactNode; class
     </div>
   );
 }
-
-export function MissingMedia({
-  filename,
-  label,
-  ratio = "9 / 19",
-  className,
-}: {
-  filename: string;
-  label: string;
-  ratio?: string;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-cream/30 bg-teal-800 px-6 text-center",
-        className,
-      )}
-      style={{ aspectRatio: ratio }}
-    >
-      <span className="eyebrow text-amber">{label}</span>
-      <span className="font-mono text-[0.8rem] text-cream/70">{filename}</span>
-    </div>
-  );
-}
