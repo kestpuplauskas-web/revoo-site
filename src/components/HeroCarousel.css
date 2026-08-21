@@ -78,8 +78,9 @@
 .rc-cap p.on{opacity:1;transform:none;position:relative}
 .rc-prog{position:absolute;left:36px;right:36px;bottom:28px;display:flex;gap:7px;z-index:9}
 .rc-prog button{flex:1;height:3px;border:0;padding:0;border-radius:3px;background:rgba(247,242,231,.22);
-  cursor:pointer;position:relative;overflow:hidden}
-.rc-prog button i{position:absolute;inset:0;width:0;background:#E3A143;border-radius:3px;display:block}
+  cursor:pointer;position:relative}
+.rc-prog button::before{content:"";position:absolute;left:0;right:0;top:-11px;bottom:-10px}
+.rc-prog button i{position:absolute;inset:0;width:0;background:#E3A143;border-radius:3px;display:block;overflow:hidden}
 .rc-prog button.on i{animation:rc-fill var(--t,7500ms) linear forwards}
 @keyframes rc-fill{from{width:0}to{width:100%}}
 

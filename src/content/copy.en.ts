@@ -29,8 +29,7 @@ export const en: Copy = {
       "Move a booking. Everything else follows.",
       "Today's work, already sorted by urgency.",
       "Invoices ready before the guest has left.",
-      "Your whole operation, on the way to work.",
-      "The whole week, before it starts.",
+      "Your website, your numbers, your rules.",
     ],
   },
   approach: {
