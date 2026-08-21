@@ -1,11 +1,6 @@
-import housekeepingApp from "@/assets/housekeeping-app.jpg.asset.json";
-import housekeepingWeek from "@/assets/housekeeping-week.png.asset.json";
-import invoice from "@/assets/invoice.png.asset.json";
-import bookingSite from "@/assets/booking-site.png.asset.json";
-
 export const media = {
-  housekeepingApp: { url: housekeepingApp.url, width: 738, height: 1600 },
-  housekeepingWeek: { url: housekeepingWeek.url, width: 1863, height: 895 },
-  invoice: { url: invoice.url, width: 1275, height: 1233 },
-  bookingSite: { url: bookingSite.url, width: 1705, height: 946 },
+  housekeepingApp: { url: "/media/7_housekeeping_app.jpg", width: 738, height: 1600 },
+  housekeepingWeek: { url: "/media/8_housekeeping.png", width: 1863, height: 895 },
+  invoice: { url: "/media/9_invoice.webp", width: 1275, height: 1233 },
+  bookingSite: { url: "/media/1_homepage_calendar.png", width: 1705, height: 946 },
 };
