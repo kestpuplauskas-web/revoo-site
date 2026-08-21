@@ -109,17 +109,13 @@ export function HomePage({ lang }: { lang: Lang }) {
             </Reveal>
             <Reveal delay={60}>
               <BrowserFrame url={c.media.browserUrl}>
-                <video
+                <img
                   className="block h-auto w-full"
-                  src={media.bookingCalendar.url}
-                  width={media.bookingCalendar.width}
-                  height={media.bookingCalendar.height}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label={c.media.alt.calendar}
+                  src="/media/6_booking.png"
+                  alt={c.media.alt.calendar}
+                  width={1867}
+                  height={937}
+                  loading="lazy"
                 />
               </BrowserFrame>
             </Reveal>
