@@ -2,9 +2,12 @@
   --mx:0;--my:0;--px:50%;--py:40%;touch-action:pan-y}
 
 /* kursoriaus prožektorius + tinklelis + vinjetė */
-.rc-spot{position:absolute;inset:0;pointer-events:none;z-index:7;opacity:0;transition:opacity .5s ease;
-  background:radial-gradient(240px 240px at var(--px) var(--py),rgba(255,255,255,.10),transparent 70%);
+.rc-spot{position:absolute;inset:0;pointer-events:none;z-index:7;opacity:0;transition:opacity .45s ease;
+  background:radial-gradient(260px 260px at var(--px) var(--py),rgba(90,240,255,.34),rgba(44,190,220,.16) 42%,transparent 72%);
   mix-blend-mode:screen}
+.rc-spot::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(90px 90px at var(--px) var(--py),rgba(180,255,255,.42),transparent 70%);
+  filter:blur(6px)}
 .rc-stage:hover .rc-spot{opacity:1}
 .rc-grid{position:absolute;inset:-10%;pointer-events:none;opacity:.16;
   background-image:linear-gradient(rgba(247,242,231,.10) 1px,transparent 1px),
@@ -90,13 +93,20 @@
 .rc-scene.on .rc-slot.pos-l{--o:.68;--s:.76;left:-6%;margin-left:0;z-index:2;filter:blur(1px) saturate(.9)}
 .rc-scene.on .rc-slot.pos-r{--o:.68;--s:.76;left:70%;margin-left:0;z-index:2;filter:blur(1px) saturate(.9)}
 
+.rc-sw{transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1),
+  filter .8s ease,left .8s cubic-bezier(.4,0,.2,1),top .8s cubic-bezier(.4,0,.2,1),width .8s cubic-bezier(.4,0,.2,1)}
+.rc-scene.on .rc-sw.sw-front{left:26%;top:18%;width:46%;--o:1;--s:1.08;z-index:6;filter:contrast(1.06) saturate(1.05)}
+.rc-scene.on .rc-sw.sw-back{left:2%;top:66%;width:22%;--o:.62;--s:.78;z-index:2;filter:blur(1px) saturate(.9)}
+
 /* antraštė ir progresas */
-.rc-cap{position:absolute;left:0;right:0;bottom:max(96px,calc(100% - 100svh + 128px));text-align:center;padding:0 36px;z-index:9}
+.rc-cap{position:absolute;left:0;right:0;bottom:max(58px,calc(100% - 100svh + 86px));text-align:center;padding:0 36px;z-index:9}
+.rc-cap::before{content:"";position:absolute;left:-36px;right:-36px;top:-56px;bottom:-120px;z-index:-1;
+  pointer-events:none;background:linear-gradient(to top,rgba(11,48,46,.96),rgba(11,48,46,.82) 48%,transparent)}
 .rc-cap p{margin:0;position:absolute;left:36px;right:36px;
   font-family:"Cormorant Garamond",Georgia,serif;font-size:1.36rem;color:rgba(247,242,231,.92);
   opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
 .rc-cap p.on{opacity:1;transform:none;position:relative}
-.rc-prog{position:absolute;left:36px;right:36px;bottom:max(64px,calc(100% - 100svh + 96px));display:flex;gap:7px;z-index:9}
+.rc-prog{position:absolute;left:36px;right:36px;bottom:max(26px,calc(100% - 100svh + 50px));display:flex;gap:7px;z-index:9}
 .rc-prog button{flex:1;height:3px;transition:height .2s ease,background .2s ease;border:0;padding:0;border-radius:3px;background:rgba(247,242,231,.22);
   cursor:pointer;position:relative}
 .rc-prog button::before{content:"";position:absolute;left:0;right:0;top:-11px;bottom:-10px}
