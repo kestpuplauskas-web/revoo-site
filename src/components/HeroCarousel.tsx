@@ -9,6 +9,20 @@ type Vars = Record<string, string | number>;
 
 const v = (o: Vars) => o as React.CSSProperties;
 
+function Vid({ src, poster }: { src: string; poster?: string }) {
+  return (
+    <video
+      src={src}
+      {...(poster ? { poster } : {})}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      // eslint-disable-next-line jsx-a11y/media-has-caption
+    />
+  );
+}
+
 function Browser({ url, children }: { url: string; children: React.ReactNode }) {
   return (
     <div className="rc-browser">
@@ -114,6 +128,8 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       const ny = (e.clientY - r.top) / r.height - 0.5;
       stage.style.setProperty("--mx", (nx * -22).toFixed(2));
       stage.style.setProperty("--my", (ny * -16).toFixed(2));
+      stage.style.setProperty("--px", (e.clientX - r.left).toFixed(0) + "px");
+      stage.style.setProperty("--py", (e.clientY - r.top).toFixed(0) + "px");
     };
     const onLeavePointer = () => {
       stage.style.setProperty("--mx", "0");
@@ -154,6 +170,32 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       return h;
     });
 
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        show(i + 1);
+        schedule();
+      } else if (e.key === "ArrowLeft") {
+        show(i - 1);
+        schedule();
+      }
+    };
+    stage.setAttribute("tabindex", "0");
+    stage.addEventListener("keydown", onKey);
+
+    let sx = 0;
+    const onDown = (e: PointerEvent) => {
+      sx = e.clientX;
+    };
+    const onUp = (e: PointerEvent) => {
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 60) {
+        show(i + (dx < 0 ? 1 : -1));
+        schedule();
+      }
+    };
+    stage.addEventListener("pointerdown", onDown);
+    stage.addEventListener("pointerup", onUp);
+
     const onVis = () => {
       visible = !document.hidden;
     };
@@ -183,6 +225,9 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       stage.removeEventListener("pointerleave", onLeavePointer);
       stage.removeEventListener("mouseenter", onEnter);
       stage.removeEventListener("mouseleave", onLeave);
+      stage.removeEventListener("keydown", onKey);
+      stage.removeEventListener("pointerdown", onDown);
+      stage.removeEventListener("pointerup", onUp);
       bars.forEach((b, k) => b.removeEventListener("click", clickHandlers[k]!));
       document.removeEventListener("visibilitychange", onVis);
       io?.disconnect();
@@ -199,6 +244,9 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
     >
       <div className="rc-glow g1" />
       <div className="rc-glow2 g1" />
+      <div className="rc-grid" />
+      <div className="rc-spot" />
+      <div className="rc-vig" />
 
       {/* Scene 1 — bookings */}
       <div className="rc-scene" data-s="0">
@@ -209,7 +257,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "9s", "--del": "0s" })}>
               <Browser url="app.revoo.site / bookings">
-                <img src="/media/6_booking.png" alt="" loading="eager" />
+                <Vid src="/media/10_new_booking.mp4" poster="/media/6_booking.png" />
               </Browser>
             </div>
           </div>
@@ -233,13 +281,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-4s" })}>
               <div className="rc-phone">
-                <img
-                  src={media.housekeepingApp.url}
-                  alt=""
-                  width={media.housekeepingApp.width}
-                  height={media.housekeepingApp.height}
-                  loading="lazy"
-                />
+                <Vid src="/media/7_housekeeping_app.mp4" poster={media.housekeepingApp.url} />
               </div>
             </div>
           </div>
@@ -267,13 +309,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <div className="rc-phone">
-                <img
-                  src={media.housekeepingApp.url}
-                  alt=""
-                  width={media.housekeepingApp.width}
-                  height={media.housekeepingApp.height}
-                  loading="lazy"
-                />
+                <Vid src="/media/7_housekeeping_app.mp4" poster={media.housekeepingApp.url} />
               </div>
             </div>
           </div>
@@ -361,13 +397,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-6s" })}>
               <div className="rc-phone">
-                <img
-                  src="/media/5_admin_app.webp"
-                  alt=""
-                  width={384}
-                  height={848}
-                  loading="lazy"
-                />
+                <Vid src="/media/5_admin_app.mp4" poster="/media/5_admin_app.webp" />
               </div>
             </div>
           </div>
