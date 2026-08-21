@@ -91,12 +91,12 @@
 .rc-scene.on .rc-slot.pos-r{--o:.68;--s:.76;left:70%;margin-left:0;z-index:2;filter:blur(1px) saturate(.9)}
 
 /* antraštė ir progresas */
-.rc-cap{position:absolute;left:0;right:0;bottom:54px;text-align:center;padding:0 36px;z-index:9}
+.rc-cap{position:absolute;left:0;right:0;bottom:96px;text-align:center;padding:0 36px;z-index:9}
 .rc-cap p{margin:0;position:absolute;left:36px;right:36px;
   font-family:"Cormorant Garamond",Georgia,serif;font-size:1.36rem;color:rgba(247,242,231,.92);
   opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
 .rc-cap p.on{opacity:1;transform:none;position:relative}
-.rc-prog{position:absolute;left:36px;right:36px;bottom:28px;display:flex;gap:7px;z-index:9}
+.rc-prog{position:absolute;left:36px;right:36px;bottom:64px;display:flex;gap:7px;z-index:9}
 .rc-prog button{flex:1;height:3px;transition:height .2s ease,background .2s ease;border:0;padding:0;border-radius:3px;background:rgba(247,242,231,.22);
   cursor:pointer;position:relative}
 .rc-prog button::before{content:"";position:absolute;left:0;right:0;top:-11px;bottom:-10px}
