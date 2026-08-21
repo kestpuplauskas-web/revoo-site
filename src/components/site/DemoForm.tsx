@@ -140,9 +140,11 @@ export function DemoForm({ lang }: { lang: Lang }) {
 
       <button
         type="submit"
-        className="mt-7 w-full rounded-full bg-teal-700 px-6 py-3.5 font-medium text-cream transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-900"
+        disabled={busy}
+        className="mt-7 w-full rounded-full bg-teal-700 px-6 py-3.5 font-medium text-cream transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-900 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {f.submit}
+        {busy ? (lang === "lt" ? "Siunčiama…" : "Sending…") : f.submit}
+
       </button>
       <p className="mt-3 text-center text-[0.8rem] text-ink-soft">{f.fineprint}</p>
     </form>
