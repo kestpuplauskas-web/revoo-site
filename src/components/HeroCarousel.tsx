@@ -244,7 +244,7 @@ export function HeroCarousel() {
       <div className="rc-scene">
         <div
           className="rc-card d1 lead"
-          style={v({ "--x": "10%", "--y": "10%", "--w": "26%", "--ex": -26, "--ey": 26, "--i": 0 })}
+          style={v({ "--x": "36%", "--y": "6%", "--w": "29%", "--ex": -26, "--ey": 26, "--i": 0 })}
         >
           <div className="rc-par" style={v({ "--p": 1 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
@@ -296,7 +296,7 @@ export function HeroCarousel() {
       <div className="rc-scene">
         <div
           className="rc-card d1 lead"
-          style={v({ "--x": "14%", "--y": "8%", "--w": "44%", "--ex": -24, "--ey": 24, "--i": 0 })}
+          style={v({ "--x": "24%", "--y": "8%", "--w": "48%", "--ex": -24, "--ey": 24, "--i": 0 })}
         >
           <div className="rc-par" style={v({ "--p": 1 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>

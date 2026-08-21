@@ -31,10 +31,12 @@
   0%,100%{transform:translateY(-7px) rotate(var(--r0,-.5deg))}
   50%    {transform:translateY(7px)  rotate(var(--r1,.5deg))}}
 
-/* gyliai */
-.rc-card.d1{--o:1;--s:1;z-index:6}
-.rc-card.d2{--o:.6;--s:.84;z-index:3;filter:blur(1.4px)}
-.rc-card.d3{--o:.34;--s:.72;z-index:1;filter:blur(3.2px)}
+/* gyliai — priekinė kortelė didesnė ir ryškesnė, fonas gerokai nublankintas */
+.rc-card.d1{--o:1;--s:1.07;z-index:6}
+.rc-card.d2{--o:.42;--s:.76;z-index:3;filter:blur(2.2px) saturate(.85)}
+.rc-card.d3{--o:.22;--s:.64;z-index:1;filter:blur(4.2px) saturate(.7)}
+
+.rc-card.d1 .rc-browser,.rc-card.d1 .rc-plain,.rc-card.d1 .rc-phone{box-shadow:0 46px 96px -28px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.12)}
 
 /* šviesos blyksnis per pagrindinę kortelę scenai atsidarant */
 .rc-card.lead .rc-browser,.rc-card.lead .rc-phone,.rc-card.lead .rc-plain{position:relative;overflow:hidden}
@@ -64,9 +66,9 @@
 /* 4-os scenos besisukantis trejetas */
 .rc-slot{transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1),
   filter .65s ease,left .65s cubic-bezier(.4,0,.2,1),margin-left .65s ease}
-.rc-scene.on .rc-slot.pos-c{--o:1;--s:1;left:50%;margin-left:-21%;z-index:6;filter:none}
-.rc-scene.on .rc-slot.pos-l{--o:.52;--s:.78;left:-4%;margin-left:0;z-index:2;filter:blur(1.5px)}
-.rc-scene.on .rc-slot.pos-r{--o:.52;--s:.78;left:68%;margin-left:0;z-index:2;filter:blur(1.5px)}
+.rc-scene.on .rc-slot.pos-c{--o:1;--s:1.07;left:50%;margin-left:-21%;z-index:6;filter:none}
+.rc-scene.on .rc-slot.pos-l{--o:.4;--s:.72;left:-6%;margin-left:0;z-index:2;filter:blur(2.4px) saturate(.8)}
+.rc-scene.on .rc-slot.pos-r{--o:.4;--s:.72;left:70%;margin-left:0;z-index:2;filter:blur(2.4px) saturate(.8)}
 
 /* antraštė ir progresas */
 .rc-cap{position:absolute;left:0;right:0;bottom:54px;text-align:center;padding:0 36px;z-index:9}
