@@ -56,7 +56,8 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       paused = false,
       visible = true,
       tId: number | undefined,
-      rId: number | undefined;
+      rId: number | undefined,
+      sId: number | undefined;
 
     bars.forEach(function (b) {
       b.style.setProperty("--t", SCENE_MS + "ms");
@@ -99,6 +100,16 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       if (glow2) glow2.className = "rc-glow2 g" + (i + 1);
       window.clearInterval(rId);
       if (i === 3 && !reduce) rId = window.setInterval(rotate, ROT_MS);
+      window.clearInterval(sId);
+      if (i === 2 && !reduce) sId = window.setInterval(swap, 3000);
+    }
+
+    function swap() {
+      ([] as HTMLElement[]).slice.call(stage!.querySelectorAll(".rc-sw")).forEach(function (el) {
+        const front = el.classList.contains("sw-front");
+        el.classList.toggle("sw-front", !front);
+        el.classList.toggle("sw-back", front);
+      });
     }
 
     const ORDER = ["pos-c", "pos-l", "pos-r"];
@@ -144,6 +155,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       paused = true;
       window.clearTimeout(tId);
       window.clearInterval(rId);
+      window.clearInterval(sId);
       bars.forEach(function (b) {
         const bar = b.querySelector("i");
         if (bar) (bar as HTMLElement).style.animationPlayState = "paused";
@@ -156,6 +168,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         if (bar) (bar as HTMLElement).style.animationPlayState = "running";
       });
       if (i === 3 && !reduce) rId = window.setInterval(rotate, ROT_MS);
+      if (i === 2 && !reduce) sId = window.setInterval(swap, 3000);
       schedule();
     };
     stage.addEventListener("mouseenter", onEnter);
@@ -221,6 +234,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
     return () => {
       window.clearTimeout(tId);
       window.clearInterval(rId);
+      window.clearInterval(sId);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerleave", onLeavePointer);
       stage.removeEventListener("mouseenter", onEnter);
@@ -355,8 +369,8 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       {/* Scene 3 — invoices */}
       <div className="rc-scene" data-s="2">
         <div
-          className="rc-card d1 lead"
-          style={v({ "--x": "24%", "--y": "8%", "--w": "48%", "--ex": -24, "--ey": 24, "--i": 0 })}
+          className="rc-card rc-sw sw-front lead"
+          style={v({ "--x": "26%", "--y": "18%", "--w": "46%", "--ex": -24, "--ey": 24, "--i": 0 })}
         >
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
@@ -391,8 +405,8 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           </div>
         </div>
         <div
-          className="rc-card d2"
-          style={v({ "--x": "0%", "--y": "58%", "--w": "24%", "--ex": -26, "--ey": 20, "--i": 3 })}
+          className="rc-card rc-sw sw-back"
+          style={v({ "--x": "2%", "--y": "66%", "--w": "22%", "--ex": -26, "--ey": 20, "--i": 3 })}
         >
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-6s" })}>
