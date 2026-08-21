@@ -1,12 +1,17 @@
 import { Check } from "lucide-react";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 
+import { submitLead } from "@/lib/leads.functions";
 import { t, type Lang } from "@/lib/i18n";
 
 export function DemoForm({ lang }: { lang: Lang }) {
   const c = t(lang);
   const f = c.demo.form;
   const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const send = useServerFn(submitLead);
 
   if (sent) {
     return (
@@ -20,14 +25,53 @@ export function DemoForm({ lang }: { lang: Lang }) {
     );
   }
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (busy) return;
+    const form = new FormData(event.currentTarget);
+    const value = (key: string) => (form.get(key) as string | null)?.trim() ?? "";
+
+    setBusy(true);
+    try {
+      await send({
+        data: {
+          name: value("name"),
+          email: value("email"),
+          property_name: value("property"),
+          country: value("country"),
+          property_type: value("type"),
+          units: value("units"),
+          current_system: value("current"),
+          notes: value("notes"),
+          lang,
+          user_agent: typeof navigator === "undefined" ? "" : navigator.userAgent.slice(0, 500),
+          company_website: value("company_website"),
+        },
+      });
+      setSent(true);
+    } catch (error) {
+      toast.error(
+        error instanceof Error && error.message
+          ? error.message
+          : lang === "lt"
+            ? "Nepavyko išsiųsti. Bandykite dar kartą."
+            : "Could not send. Please try again.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        setSent(true);
-      }}
+      onSubmit={onSubmit}
       className="rounded-3xl bg-white p-6 shadow-[0_20px_60px_-45px_rgba(8,32,30,0.6)] sm:p-8"
     >
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="demo-company-website">Company website</label>
+        <input id="demo-company-website" name="company_website" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="demo-name" label={f.name} hint={f.required}>
           <input id="demo-name" name="name" required autoComplete="name" className={inputClass} />
@@ -96,9 +140,11 @@ export function DemoForm({ lang }: { lang: Lang }) {
 
       <button
         type="submit"
-        className="mt-7 w-full rounded-full bg-teal-700 px-6 py-3.5 font-medium text-cream transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-900"
+        disabled={busy}
+        className="mt-7 w-full rounded-full bg-teal-700 px-6 py-3.5 font-medium text-cream transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-900 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {f.submit}
+        {busy ? (lang === "lt" ? "Siunčiama…" : "Sending…") : f.submit}
+
       </button>
       <p className="mt-3 text-center text-[0.8rem] text-ink-soft">{f.fineprint}</p>
     </form>

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /prisijungimas
+Disallow: /admin
 
 Sitemap: https://revoo.site/sitemap.xml
