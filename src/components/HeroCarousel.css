@@ -64,9 +64,9 @@
 /* 4-os scenos besisukantis trejetas */
 .rc-slot{transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1),
   filter .65s ease,left .65s cubic-bezier(.4,0,.2,1),margin-left .65s ease}
-.rc-scene.on .rc-slot.pos-c{--o:1;--s:1;left:50%;margin-left:-21%;z-index:6;filter:none}
-.rc-scene.on .rc-slot.pos-l{--o:.52;--s:.78;left:-4%;margin-left:0;z-index:2;filter:blur(1.5px)}
-.rc-scene.on .rc-slot.pos-r{--o:.52;--s:.78;left:68%;margin-left:0;z-index:2;filter:blur(1.5px)}
+.rc-scene.on .rc-slot.pos-c{--o:1;--s:1.07;left:50%;margin-left:-21%;z-index:6;filter:none}
+.rc-scene.on .rc-slot.pos-l{--o:.4;--s:.72;left:-6%;margin-left:0;z-index:2;filter:blur(2.4px) saturate(.8)}
+.rc-scene.on .rc-slot.pos-r{--o:.4;--s:.72;left:70%;margin-left:0;z-index:2;filter:blur(2.4px) saturate(.8)}
 
 /* antraštė ir progresas */
 .rc-cap{position:absolute;left:0;right:0;bottom:54px;text-align:center;padding:0 36px;z-index:9}
