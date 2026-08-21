@@ -268,9 +268,10 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         >
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
-              <div className="rc-phone">
-                <img src="/media/7.1_Housekeeping_app.jpeg" alt="" loading="lazy" />
-              </div>
+              <PhoneVideo
+                src="/media/7_housekeeping_app.mp4"
+                poster="/media/7_housekeeping_app.webp"
+              />
             </div>
           </div>
         </div>
