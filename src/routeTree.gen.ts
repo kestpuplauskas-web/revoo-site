@@ -10,16 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as PrisijungimasRouteImport } from './routes/prisijungimas'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrisijungimasRoute = PrisijungimasRouteImport.update({
+  id: '/prisijungimas',
+  path: '/prisijungimas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -42,6 +55,17 @@ const LtIndexRoute = LtIndexRouteImport.update({
   path: '/lt/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminUzklausosRoute =
+  AuthenticatedAdminUzklausosRouteImport.update({
+    id: '/admin/uzklausos',
+    path: '/admin/uzklausos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const LtBlogIndexRoute = LtBlogIndexRouteImport.update({
   id: '/lt/blog/',
   path: '/lt/blog/',
@@ -55,64 +79,86 @@ const LtBlogSlugRoute = LtBlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
+  '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/prisijungimas'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
     | '/lt/'
+    | '/admin/uzklausos'
     | '/lt/blog/$slug'
+    | '/admin/'
     | '/lt/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/prisijungimas'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog'
     | '/lt'
+    | '/admin/uzklausos'
     | '/lt/blog/$slug'
+    | '/admin'
     | '/lt/blog'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/prisijungimas'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
     | '/lt/'
+    | '/_authenticated/admin/uzklausos'
     | '/lt/blog/$slug'
+    | '/_authenticated/admin/'
     | '/lt/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  PrisijungimasRoute: typeof PrisijungimasRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -128,6 +174,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prisijungimas': {
+      id: '/prisijungimas'
+      path: '/prisijungimas'
+      fullPath: '/prisijungimas'
+      preLoaderRoute: typeof PrisijungimasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -158,6 +218,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LtIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/uzklausos': {
+      id: '/_authenticated/admin/uzklausos'
+      path: '/admin/uzklausos'
+      fullPath: '/admin/uzklausos'
+      preLoaderRoute: typeof AuthenticatedAdminUzklausosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/lt/blog/': {
       id: '/lt/blog/'
       path: '/lt/blog'
@@ -175,8 +249,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  PrisijungimasRoute: PrisijungimasRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
