@@ -375,9 +375,9 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         >
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
-              <div className="rc-plain">
-                <img src="/media/9_invoice.webp" alt="" loading="eager" decoding="async" fetchPriority="high" />
-              </div>
+              <Browser url="app.revoo.site / dashboard">
+                <img src="/media/11_dashboard.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+              </Browser>
             </div>
           </div>
         </div>
