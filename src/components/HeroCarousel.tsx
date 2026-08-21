@@ -22,6 +22,14 @@ function Browser({ url, children }: { url: string; children: React.ReactNode }) 
   );
 }
 
+function PhoneVideo({ src, poster }: { src: string; poster: string }) {
+  return (
+    <div className="rc-phone">
+      <video src={src} poster={poster} muted loop playsInline preload="metadata" />
+    </div>
+  );
+}
+
 export function HeroCarousel({ lang }: { lang: Lang }) {
   const c = t(lang);
   const stageRef = useRef<HTMLDivElement | null>(null);
