@@ -4,7 +4,7 @@ import { DemoForm } from "./DemoForm";
 import { Faq } from "./Faq";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { HeroCarousel } from "./HeroCarousel";
+import { HeroCarousel } from "../HeroCarousel";
 import { MobileCtaBar } from "./MobileCtaBar";
 import { SegmentsCarousel } from "./SegmentsCarousel";
 import {
@@ -62,9 +62,10 @@ export function HomePage({ lang }: { lang: Lang }) {
               </p>
             </div>
           </div>
-          <div className="bg-teal-900">
-            <HeroCarousel lang={lang} />
+          <div className="relative min-h-[520px] bg-teal-900 lg:min-h-[660px]">
+            <HeroCarousel />
           </div>
+
         </section>
 
         {/* 2. Approach */}

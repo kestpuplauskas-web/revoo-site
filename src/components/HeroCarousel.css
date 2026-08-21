@@ -1,0 +1,95 @@
+.rc-stage{position:absolute;inset:0;overflow:hidden;background:#0B302E;perspective:1500px;--mx:0;--my:0}
+
+/* fono švytėjimai — persislenka su kiekviena scena */
+.rc-glow,.rc-glow2{position:absolute;aspect-ratio:1;border-radius:50%;pointer-events:none;
+  transition:left 1.1s cubic-bezier(.4,0,.2,1),top 1.1s cubic-bezier(.4,0,.2,1)}
+.rc-glow{width:76%;background:radial-gradient(circle,rgba(44,128,117,.40),transparent 66%);left:12%;top:8%}
+.rc-glow.g1{left:6%;top:2%}   .rc-glow.g2{left:26%;top:16%}
+.rc-glow.g3{left:2%;top:22%}  .rc-glow.g4{left:22%;top:6%}
+.rc-glow2{width:36%;background:radial-gradient(circle,rgba(227,161,67,.16),transparent 68%);left:60%;top:52%;
+  transition-duration:1.3s}
+.rc-glow2.g1{left:64%;top:8%} .rc-glow2.g2{left:8%;top:56%}
+.rc-glow2.g3{left:62%;top:14%}.rc-glow2.g4{left:10%;top:50%}
+
+.rc-scene{position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d}
+
+/* kortelė: pozicija + įėjimo/išėjimo animacija */
+.rc-card{display:block;position:absolute;left:var(--x);top:var(--y);width:var(--w);opacity:0;
+  transform:translate(calc(var(--ex)*1px),calc(var(--ey)*1px)) scale(.93);
+  transition:opacity .85s cubic-bezier(.4,0,.2,1),transform .85s cubic-bezier(.4,0,.2,1),filter .85s ease;
+  transition-delay:calc(var(--i,0)*90ms);will-change:opacity,transform}
+.rc-scene.on .rc-card{opacity:var(--o,1);transform:translate(0,0) scale(var(--s,1))}
+
+/* parallax nuo pelės + 3D pasukimas (--mx/--my nustato JS ant .rc-stage) */
+.rc-par{transform:translate3d(calc(var(--mx)*var(--p,1)*1px),calc(var(--my)*var(--p,1)*1px),0)
+  rotateY(calc(var(--mx)*var(--p,1)*.05deg)) rotateX(calc(var(--my)*var(--p,1)*-.04deg));
+  transition:transform .5s cubic-bezier(.2,0,.2,1);transform-style:preserve-3d}
+
+/* nuolatinis plūduriavimas */
+.rc-float{animation:rc-float var(--dur,9s) ease-in-out infinite;animation-delay:var(--del,0s)}
+@keyframes rc-float{
+  0%,100%{transform:translateY(-7px) rotate(var(--r0,-.5deg))}
+  50%    {transform:translateY(7px)  rotate(var(--r1,.5deg))}}
+
+/* gyliai */
+.rc-card.d1{--o:1;--s:1;z-index:6}
+.rc-card.d2{--o:.6;--s:.84;z-index:3;filter:blur(1.4px)}
+.rc-card.d3{--o:.34;--s:.72;z-index:1;filter:blur(3.2px)}
+
+/* šviesos blyksnis per pagrindinę kortelę scenai atsidarant */
+.rc-card.lead .rc-browser,.rc-card.lead .rc-phone,.rc-card.lead .rc-plain{position:relative;overflow:hidden}
+.rc-scene.on .rc-card.lead .rc-browser::after,
+.rc-scene.on .rc-card.lead .rc-phone::after,
+.rc-scene.on .rc-card.lead .rc-plain::after{
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(100deg,transparent 32%,rgba(255,255,255,.42) 48%,transparent 62%);
+  transform:translateX(-130%);animation:rc-sheen 1.5s cubic-bezier(.3,0,.3,1) .55s 1 both}
+@keyframes rc-sheen{to{transform:translateX(130%)}}
+
+/* rėmeliai */
+.rc-browser{background:#fff;border-radius:13px;overflow:hidden;
+  box-shadow:0 34px 74px -26px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.08)}
+.rc-bbar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#f1f4f3;border-bottom:1px solid #e2e6e5}
+.rc-bbar i{width:8px;height:8px;border-radius:50%;background:#d5dad9}
+.rc-bbar span{margin-left:8px;font-size:.6rem;color:#8b9997;background:#fff;border:1px solid #e2e6e5;
+  border-radius:5px;padding:2px 10px;white-space:nowrap}
+.rc-browser img,.rc-browser video{display:block;width:100%;height:auto}
+.rc-phone{background:#0a1c1b;border-radius:30px;padding:8px;
+  box-shadow:0 36px 74px -24px rgba(0,0,0,.82),0 0 0 1px rgba(255,255,255,.1)}
+.rc-phone video,.rc-phone img{display:block;width:100%;height:auto;border-radius:23px}
+.rc-plain{border-radius:13px;overflow:hidden;background:#fff;
+  box-shadow:0 30px 64px -24px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.08)}
+.rc-plain img{display:block;width:100%;height:auto}
+
+/* 4-os scenos besisukantis trejetas */
+.rc-slot{transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1),
+  filter .65s ease,left .65s cubic-bezier(.4,0,.2,1),margin-left .65s ease}
+.rc-scene.on .rc-slot.pos-c{--o:1;--s:1;left:50%;margin-left:-21%;z-index:6;filter:none}
+.rc-scene.on .rc-slot.pos-l{--o:.52;--s:.78;left:-4%;margin-left:0;z-index:2;filter:blur(1.5px)}
+.rc-scene.on .rc-slot.pos-r{--o:.52;--s:.78;left:68%;margin-left:0;z-index:2;filter:blur(1.5px)}
+
+/* antraštė ir progresas */
+.rc-cap{position:absolute;left:0;right:0;bottom:54px;text-align:center;padding:0 36px;z-index:9}
+.rc-cap p{margin:0;position:absolute;left:36px;right:36px;
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:1.36rem;color:rgba(247,242,231,.92);
+  opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
+.rc-cap p.on{opacity:1;transform:none;position:relative}
+.rc-prog{position:absolute;left:36px;right:36px;bottom:28px;display:flex;gap:7px;z-index:9}
+.rc-prog button{flex:1;height:3px;border:0;padding:0;border-radius:3px;background:rgba(247,242,231,.22);
+  cursor:pointer;position:relative;overflow:hidden}
+.rc-prog button i{position:absolute;inset:0;width:0;background:#E3A143;border-radius:3px;display:block}
+.rc-prog button.on i{animation:rc-fill var(--t,7500ms) linear forwards}
+@keyframes rc-fill{from{width:0}to{width:100%}}
+
+@media(prefers-reduced-motion:reduce){
+  .rc-float{animation:none}
+  .rc-par{transform:none}
+  .rc-card,.rc-slot,.rc-cap p{transition-duration:.01ms}
+  .rc-prog button.on i{animation:none;width:100%}
+  .rc-scene.on .rc-card.lead .rc-browser::after,
+  .rc-scene.on .rc-card.lead .rc-phone::after,
+  .rc-scene.on .rc-card.lead .rc-plain::after{display:none}}
+
+@media(max-width:980px){
+  .rc-stage{position:relative;min-height:520px}
+  .rc-cap p{font-size:1.1rem}}
