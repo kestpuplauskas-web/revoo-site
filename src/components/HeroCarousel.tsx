@@ -128,6 +128,8 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       const ny = (e.clientY - r.top) / r.height - 0.5;
       stage.style.setProperty("--mx", (nx * -22).toFixed(2));
       stage.style.setProperty("--my", (ny * -16).toFixed(2));
+      stage.style.setProperty("--px", (e.clientX - r.left).toFixed(0) + "px");
+      stage.style.setProperty("--py", (e.clientY - r.top).toFixed(0) + "px");
     };
     const onLeavePointer = () => {
       stage.style.setProperty("--mx", "0");
@@ -168,6 +170,32 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       return h;
     });
 
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        show(i + 1);
+        schedule();
+      } else if (e.key === "ArrowLeft") {
+        show(i - 1);
+        schedule();
+      }
+    };
+    stage.setAttribute("tabindex", "0");
+    stage.addEventListener("keydown", onKey);
+
+    let sx = 0;
+    const onDown = (e: PointerEvent) => {
+      sx = e.clientX;
+    };
+    const onUp = (e: PointerEvent) => {
+      const dx = e.clientX - sx;
+      if (Math.abs(dx) > 60) {
+        show(i + (dx < 0 ? 1 : -1));
+        schedule();
+      }
+    };
+    stage.addEventListener("pointerdown", onDown);
+    stage.addEventListener("pointerup", onUp);
+
     const onVis = () => {
       visible = !document.hidden;
     };
@@ -197,6 +225,9 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
       stage.removeEventListener("pointerleave", onLeavePointer);
       stage.removeEventListener("mouseenter", onEnter);
       stage.removeEventListener("mouseleave", onLeave);
+      stage.removeEventListener("keydown", onKey);
+      stage.removeEventListener("pointerdown", onDown);
+      stage.removeEventListener("pointerup", onUp);
       bars.forEach((b, k) => b.removeEventListener("click", clickHandlers[k]!));
       document.removeEventListener("visibilitychange", onVis);
       io?.disconnect();
@@ -213,6 +244,9 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
     >
       <div className="rc-glow g1" />
       <div className="rc-glow2 g1" />
+      <div className="rc-grid" />
+      <div className="rc-spot" />
+      <div className="rc-vig" />
 
       {/* Scene 1 — bookings */}
       <div className="rc-scene" data-s="0">
