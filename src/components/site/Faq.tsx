@@ -32,8 +32,12 @@ export function Faq({ lang }: { lang: Lang }) {
                 />
               </button>
             </h3>
-            <div id={`faq-panel-${i}`} hidden={!isOpen} className="pb-6">
-              <p className="measure text-[0.98rem] leading-relaxed text-ink-soft">{item.a}</p>
+            <div id={`faq-panel-${i}`} hidden={!isOpen} className="pb-6 space-y-3">
+              {item.a.split("\n\n").map((para, pi) => (
+                <p key={pi} className="measure text-[0.98rem] leading-relaxed text-ink-soft">
+                  {para}
+                </p>
+              ))}
             </div>
           </div>
         );
