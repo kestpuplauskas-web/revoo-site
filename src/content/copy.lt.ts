@@ -275,7 +275,7 @@ export const lt: Copy = {
   },
   footer: {
     tagline:
-      "Apgyvendinimo valdymo sistema ir rezervacijų svetainė nepriklausomiems viešbučiams, nameliams, svečių namams ir apartamentams.",
+      "Apgyvendinimo vietų valdymo sistema ir rezervacijų svetainė nepriklausomiems viešbučiams, nameliams, svečių namams ir aparatamentams.",
     linksTitle: "Svetainė",
     langTitle: "Kalba",
     rights: "© 2026 Revoo",
