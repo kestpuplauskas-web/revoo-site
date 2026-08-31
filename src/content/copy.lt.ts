@@ -26,7 +26,7 @@ export const lt: Copy = {
     next: "Kita skaidrė",
     goTo: "Rodyti skaidrę",
     slides: [
-      "Perkelkite rezervaciją. Visa kita seka paskui.",
+      "Perkelkite rezervaciją.Visa kita seka paskui.",
       "Šios dienos darbai, jau surikiuoti pagal skubumą.",
       "Sąskaitos paruoštos dar svečiui neišvykus.",
       "Jūsų svetainė, jūsų skaičiai, jūsų taisyklės.",
