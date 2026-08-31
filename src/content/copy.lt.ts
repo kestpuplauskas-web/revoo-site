@@ -159,11 +159,11 @@ export const lt: Copy = {
     },
   },
   fit: {
-    eyebrow: "Kam skirta",
-    h2: "Kam tai tinka — ir kam *netinka*",
-    lede: "Pasakius tai garsiai, abu sutaupome skambutį.",
-    yesTitle: "Tinka, jei",
-    noTitle: "Netinka, jei",
+    eyebrow: "KAS RENKASI REVOO",
+    h2: "Kam Revoo tinka — ir kam *ne.*",
+    lede: "Geriau tai pasakyti iš karto - taip sutaupysime laiko ir jums, ir mums.",
+    yesTitle: "Šis produktas jums, jei:",
+    noTitle: "Produktas gali jums netikti, jei:",
     yes: [
       "6–30 vienetų, valdoma savininko arba mažos komandos",
       "Viešbučiai, nameliai, svečių namai arba apartamentai keliais adresais",
