@@ -27,7 +27,7 @@ export const lt: Copy = {
     goTo: "Rodyti skaidrę",
     slides: [
       "Perkelkite rezervaciją vos keliais paspaudimais.",
-      "Šios dienos darbai, jau surikiuoti pagal skubumą.",
+      "Kambarių priežiūros programa, padedanti prioritetizuoti ir sklandžiai perduoti užduotis.",
       "Sąskaitos paruoštos dar svečiui neišvykus.",
       "Jūsų svetainė, jūsų skaičiai, jūsų taisyklės.",
     ],
