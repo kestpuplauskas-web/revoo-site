@@ -27,7 +27,7 @@ export const en: Copy = {
     goTo: "Go to slide",
     slides: [
       "Move a booking. Everything else follows.",
-      "Today's work, already sorted by urgency.",
+      "Manage housekeeping tasks and keep team in sync with one smart app.",
       "Invoices ready before the guest has left.",
       "Your website, your numbers, your rules.",
     ],
