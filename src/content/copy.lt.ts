@@ -110,8 +110,8 @@ export const lt: Copy = {
         body: "Namelio nuoma dažnai priklauso nuo to, kaip greitai ir sklandžiai jis paruošiamas kitam svečiui. Revoo automatiškai parodo, kuriuos namelius šiandien reikia sutvarkyti ir paruošti, durų kodą išsiunčia tik patvirtinus rezervaciją, o visą sezoną galite matyti viename ekrane.",
       },
       {
-        title: "Svečių namai",
-        body: "Paprastai vienas žmogus daro viską. Rezervacijos, tvarkymas, laiškai svečiams ir sąskaitos gyvena vienoje vietoje, kad tas vienas žmogus kartais galėtų būti kitur.",
+        title: "Svečių namams",
+        body: "Dažnai visus darbus atlieka vienas žmogus - nuo rezervacijų ir svečių aptarnavimo iki valymo organizavimo, bei sąskaitų išrašymo. Revoo viską sujungia vienoje vietoje, todėl net ir vienam žmogui lengviau susitvarkyti su kasdieniais darbais ir ne visada būti vietoje.",
       },
       {
         title: "Apartamentai",
