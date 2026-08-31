@@ -12,7 +12,7 @@ export function t(lang: Lang) {
 export function href(lang: Lang, path = ""): string {
   const clean = path.replace(/^\/+|\/+$/g, "");
   const prefix = lang === "lt" ? "/lt" : "";
-  return clean ? `${prefix}/${clean}` : prefix || "/";
+  return clean ? `${prefix}/${clean}/` : `${prefix}/` || "/";
 }
 
 /** Absolute, canonical URL with trailing slash, as required for hreflang/canonical. */
@@ -58,11 +58,6 @@ export function buildHead({
       { rel: "alternate", hrefLang: "en", href: enHref },
       { rel: "alternate", hrefLang: "lt", href: ltHref },
       { rel: "alternate", hrefLang: "x-default", href: enHref },
-    );
-  } else {
-    links.push(
-      { rel: "alternate", hrefLang: lang, href: canonical },
-      { rel: "alternate", hrefLang: "x-default", href: absUrl("en") },
     );
   }
   void other;
