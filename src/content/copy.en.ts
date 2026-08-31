@@ -56,7 +56,7 @@ export const en: Copy = {
     },
   },
   week: {
-    eyebrow: "The week",
+    eyebrow: "BOOKING MANAGEMENT",
     h2: "Your whole month, on one *screen*",
     lede: "Units down the side, days across the top. Drag a booking to another unit or another week and it just moves.",
     points: [
