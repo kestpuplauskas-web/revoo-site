@@ -59,7 +59,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                   {c.hero.secondary}
                 </CtaLink>
               </div>
-              <p className="mt-10 flex items-center gap-3 text-[0.88rem] text-cream/75">
+              <p className="mt-10 flex items-center gap-3 whitespace-nowrap text-[0.78rem] text-cream/75">
                 <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-100 opacity-70" />
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-teal-100" />
