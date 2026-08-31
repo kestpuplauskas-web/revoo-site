@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/prisijungimas/")({
+export const Route = createFileRoute("/prisijungimas")({
   head: () => ({
     meta: [
       { title: "Prisijungimas — Revoo administravimas" },
