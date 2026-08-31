@@ -90,9 +90,9 @@ export const lt: Copy = {
   },
   channel: {
     eyebrow: "Jūsų rezervacijų kanalas",
-    h2: "Rezervacijų svetainė, o ne rezervacijų *langelis*",
-    lede: "Visos kitos sistemos duoda langelį, kurį įklijuojate į savo svetainę. Jis atrodo svetimas, nes toks ir yra. Revoo veikia atvirkščiai: jūsų svetainė ir yra rezervacijų sistema — jūsų dizainas, jūsų domenas, jūsų žodžiai, kalbantys su tuo pačiu varikliu kaip ir jūsų administravimo skydelis.",
-    note: "Po gaubtu tai yra dokumentuotas REST API su savo raktais, domenų sąrašu ir užklausų ribojimu — todėl mobilioji programėlė, partnerio integracija ar antras rezervacijų kanalas vėliau yra konfigūracija, o ne perdarymas iš naujo.",
+    h2: "Ne rezervacijų langelis, o tikra jūsų rezervacijų svetainė",
+    lede: "Dauguma sistemų siūlo rezervacijų modulį, kurį tiesiog įdedate į savo jau turimą svetainę. Jis veikia, bet dažnai atrodo kaip svetimas elementas - skiriasi dizainas, šriftai, tarpai ar net kalba.\nRevoo veikia kitaip. Jūsų svetainė yra rezervacijų sistema. Viskas atrodo taip, kaip ir turi atrodyti - jūsų dizainas, jūsų domenas, jūsų tekstai. O už viso to veikia ta pati sistema, kurią naudojate rezervacijoms ir administravimui.",
+    note: "Visa tai veikia per dokumentuotą REST API, todėl Revoo lengva prijungti prie kitų sistemų. API turi atskirus prieigos raktus, leidžiamų domenų sąrašą ir užklausų limitus.",
   },
   segments: {
     eyebrow: "Sukurta jūsų objekto tipui",
