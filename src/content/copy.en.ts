@@ -66,11 +66,11 @@ export const en: Copy = {
     ],
   },
   morning: {
-    eyebrow: "The morning",
+    eyebrow: "HOUSEKEEPING",
     h2: "Your team knows what to do before you *ask*",
     lede: "Revoo reads today's bookings and works out what each unit actually needs, then sorts the list by urgency. Nobody briefs anybody.",
     points: [
-      "Same-day turnovers come first — the narrowest window in the day, and the one that goes wrong most often.",
+      "Same-day turnovers come first — they have the tightest time window.",
       "A unit that didn't get finished does not quietly vanish from tomorrow's list.",
       "Ordered extras appear as a preparation checklist, so nothing is discovered at check-in.",
       "Faults are reported in one tap and land in the manager's view instantly.",
