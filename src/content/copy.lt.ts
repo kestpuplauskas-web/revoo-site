@@ -61,7 +61,6 @@ export const lt: Copy = {
     lede: "Objektai kairėje, dienos viršuje. Perkelkite rezervaciją į kitą dieną ar kitą savaitę - ji tiesiog persikels.",
     points: [
       "Dvigubos rezervacijos identifikuojamos dar prieš jas sukuriant, o ne pastebimos tik tada, kai svečias jau stovi prie durų.",
-      "",
       "Spustelėkite tuščią langelį ir sukurkite rezervaciją - objektas ir datos bus užpildyti automatiškai.",
       "Užimtumas, importuotas iš Booking.com ir Airbnb, matomas tame pačiame lange ir pažymimas kaip išorinė rezervacija.",
     ],
