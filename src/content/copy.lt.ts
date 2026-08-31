@@ -120,12 +120,12 @@ export const lt: Copy = {
     ],
   },
   ctaBand: {
-    text: "Įdomu, ar Revoo tiktų",
+    text: "Įdomu, ar Revoo tiktų jūsų apgyvendimo vietai?\u00a0\n45 minučių pokalbio pakaks, kad tai išsiaiškintume.",
     button: "Užsisakyti demo",
   },
   included: {
     eyebrow: "Ką gaunate",
-    h2: "Kas yra platformoje ir ką *sukuriame* jums",
+    h2: "Kas jau yra platformoje ir tai ką *sukuriame* jums",
     lede: "Verčiau būsime tikslūs nei įspūdingi. Štai sąžiningas padalijimas.",
     left: {
       title: "Platformoje nuo pirmos dienos",
