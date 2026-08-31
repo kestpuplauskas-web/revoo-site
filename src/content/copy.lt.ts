@@ -78,14 +78,14 @@ export const lt: Copy = {
     ],
   },
   paperwork: {
-    eyebrow: "Popierizmas",
-    h2: "Svečias išvyko. Sąskaita jau *yra*",
-    lede: "Nuosekli numeracija, jūsų rekvizitai, su PVM arba be, paruošta PDF. Jokių lentelių, jokio perrašinėjimo ir jokių spragų serijoje, kai paklausia auditorius.",
+    eyebrow: "SĄSKAITOS",
+    h2: "Svečias išvyksta. Sąskaita jau *paruošta.*",
+    lede: "Sąskaita sugeneruojama automatiškai: su nuosekliu numeriu, jūsų įmonės rekvizitais, PVM arba ne PVM sąskaitos formatu, bei paruošiama PDF formatu. Jokių \"Excel\" lentelių, duomenų perrašinėjimo ar spragų sąskaitų numeracijoje, dėl kurių vėliau kyla rūpesčių.",
     points: [
-      "Verslo klientai — ne priedas: įmonės pavadinimas, kodas, PVM kodas ir adresas surenkami rezervuojant, o ne vaikomasi paskui.",
-      "Numeriai priskiriami griežta seka, todėl serijoje niekada nelieka skylės.",
-      "Kiekviena apmokėta papildoma paslauga tampa atskira eilute — kad ir ką parduotumėte šalia kambario.",
-      "Sąskaitos pritaikomos jūsų šalies taisyklėms kaip diegimo dalis.",
+      "Verslo klientų duomenys surenkami iš anksto: įmonės pavadinimas, įmonės kodas, PVM mokėtojo kodas ir adresas nurodomi užsakymo metu - nereikia jų ieškoti po viešnagės.",
+      "Sąskaitų numeriai suteikiami iš eilės, todėl numeracijoje nelieka praleistų numerių.",
+      "\u00a0Kiekviena papildomai užsakyta ir apmokėta paslauga įtraukiama kaip atskira eilutė sąskaitoje.",
+      "Sąskaitų išrašymas pritaikomos pagal jūsų šalies reikalavimus.",
     ],
   },
   channel: {
