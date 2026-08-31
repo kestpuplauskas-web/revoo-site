@@ -144,8 +144,8 @@ export const lt: Copy = {
       ],
     },
     right: {
-      title: "Sukuriama jūsų diegimo metu",
-      sub: "Apibrėžiama per pirmą pokalbį, statoma pagal jūsų objektą.",
+      title: "Pritaikome pagal jūsų poreikius.",
+      sub: "Viską aptariame iš anksto ir pritaikome konkrečiai jūsų apgyvendinimo vietai.",
       items: [
         "Jūsų rezervacijų svetainė — sukurta jūsų objektui, jūsų domene",
         "Mokėjimai — prijungiame tą sprendimą, kurį realiai naudojate",
