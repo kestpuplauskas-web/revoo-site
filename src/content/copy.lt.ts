@@ -240,8 +240,8 @@ export const lt: Copy = {
     },
   },
   faq: {
-    eyebrow: "Klausimai",
-    h2: "Ką žmonės iš tikrųjų *klausia*",
+    eyebrow: "DAŽNIAUSIAI UŽDUODAMI KLAUSIMAI",
+    h2: "Tai, ko iš tikrųjų klausia žmonės",
     items: [
       {
         q: "Kiek tai kainuoja?",
