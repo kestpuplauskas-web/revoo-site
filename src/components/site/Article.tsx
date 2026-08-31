@@ -6,7 +6,7 @@ import { href, t, type Lang } from "@/lib/i18n";
 
 export function Article({ lang, post }: { lang: Lang; post: Post }) {
   const c = t(lang);
-  const altHref = lang === "en" ? "/lt/blog" : "/blog";
+  const altHref = lang === "en" ? "/lt/blog/" : "/blog/";
 
   return (
     <div className="min-h-screen bg-cream">

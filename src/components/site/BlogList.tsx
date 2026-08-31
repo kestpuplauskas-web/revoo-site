@@ -7,7 +7,7 @@ import { href, t, type Lang } from "@/lib/i18n";
 export function BlogList({ lang }: { lang: Lang }) {
   const c = t(lang);
   const items = postsFor(lang);
-  const altHref = lang === "en" ? "/lt/blog" : "/blog";
+  const altHref = lang === "en" ? "/lt/blog/" : "/blog/";
 
   return (
     <div className="min-h-screen bg-cream">
