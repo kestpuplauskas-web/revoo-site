@@ -61,7 +61,7 @@ function buildSitemap(): string {
   for (const post of posts) {
     const loc = absUrl(post.lang, `blog/${post.slug}`);
     // A page that exists in only one language gets no hreflang annotations.
-    const translations = posts.filter((p) => p.slug === post.slug || p.translationOf === post.slug);
+    const translations = posts.filter((p) => p.slug === post.slug);
     const alternates =
       translations.length > 1
         ? translations.map((p) => ({ lang: p.lang, href: absUrl(p.lang, `blog/${p.slug}`) }))
