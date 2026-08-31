@@ -195,7 +195,7 @@ export const en: Copy = {
       },
       {
         title: "Launch",
-        body: "Your existing bookings move across. We train reception and housekeeping in their own language. Then we stay close through the first season.",
+        body: "Your existing bookings move across. We train reception and housekeeping teams, so everyone knows how to use the system from day one.",
       },
     ],
     cta: "Request a demo",
