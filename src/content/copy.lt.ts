@@ -31,6 +31,16 @@ export const lt: Copy = {
       "Sąskaitų generavimas Jūsų klientui.",
       "Sukurta pagal Jūsų verslą. Veikia pagal Jūsų taisykles.",
     ],
+    alts: {
+      booking: "Revoo rezervacijų kalendorius, rodantis rezervacijas pagal vienetus ir datas",
+      housekeeping: "Revoo kambarių priežiūros tvarkaraštis su užduotimis, surikiuotomis pagal skubumą",
+      invoice: "Svečiui sugeneruota sąskaita Revoo sistemoje",
+      notification: "Automatinis el. laiškas, išsiųstas svečiui",
+      dashboard: "Revoo administravimo skydelis su rezervacijų ir pajamų apžvalga",
+      websiteCalendar: "Rezervacijų svetainė su užimtumo kalendoriumi svečiams",
+      website1: "Viešbučio rezervacijų svetainės pradžios puslapis su rezervacijos lauku",
+      website2: "Viešbučio rezervacijų svetainės kambarių pasirinkimo ir apmokėjimo puslapis",
+    },
   },
   approach: {
     eyebrow: "Mūsų požiūris",

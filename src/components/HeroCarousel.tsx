@@ -284,7 +284,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-2s" })}>
               <Browser url="app.revoo.site / housekeeping">
-                <img src="/media/8_housekeeping.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/8_housekeeping.png" alt={c.carousel.alts.housekeeping} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -308,7 +308,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-6s" })}>
               <div className="rc-plain">
-                <img src="/media/9_invoice.webp" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/9_invoice.webp" alt={c.carousel.alts.invoice} loading="eager" decoding="async" fetchPriority="high" />
               </div>
             </div>
           </div>
@@ -336,7 +336,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-3s" })}>
               <Browser url="app.revoo.site / housekeeping">
-                <img src="/media/8_housekeeping.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/8_housekeeping.png" alt={c.carousel.alts.housekeeping} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -348,7 +348,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "14s", "--del": "-5s" })}>
               <Browser url="app.revoo.site / bookings">
-                <img src="/media/6_booking.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/6_booking.png" alt={c.carousel.alts.booking} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -360,7 +360,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-7s" })}>
               <div className="rc-plain">
-                <img src="/media/4_notification_for_client.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/4_notification_for_client.png" alt={c.carousel.alts.notification} loading="eager" decoding="async" fetchPriority="high" />
               </div>
             </div>
           </div>
@@ -376,7 +376,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <Browser url="app.revoo.site / dashboard">
-                <img src="/media/11_dashboard.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/11_dashboard.png" alt={c.carousel.alts.dashboard} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -388,7 +388,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-3s" })}>
               <div className="rc-plain">
-                <img src="/media/4_notification_for_client.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/4_notification_for_client.png" alt={c.carousel.alts.notification} loading="eager" decoding="async" fetchPriority="high" />
               </div>
             </div>
           </div>
@@ -400,7 +400,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-5s" })}>
               <Browser url="app.revoo.site / dashboard">
-                <img src="/media/11_dashboard.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/11_dashboard.png" alt={c.carousel.alts.dashboard} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -428,7 +428,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
               <Browser url="yourhotel.com">
-                <img src="/media/1_homepage_calendar.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/1_homepage_calendar.png" alt={c.carousel.alts.websiteCalendar} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -440,7 +440,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-3s" })}>
               <Browser url="yourhotel.com">
-                <img src="/media/2_homepage_1.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/2_homepage_1.png" alt={c.carousel.alts.website1} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -452,7 +452,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "13s", "--del": "-5s" })}>
               <Browser url="yourhotel.com">
-                <img src="/media/3_homepage_2.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/3_homepage_2.png" alt={c.carousel.alts.website2} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>
@@ -464,7 +464,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "14s", "--del": "-7s" })}>
               <Browser url="app.revoo.site / bookings">
-                <img src="/media/6_booking.png" alt="" loading="eager" decoding="async" fetchPriority="high" />
+                <img src="/media/6_booking.png" alt={c.carousel.alts.booking} loading="eager" decoding="async" fetchPriority="high" />
               </Browser>
             </div>
           </div>

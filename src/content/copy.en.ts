@@ -31,6 +31,16 @@ export const en: Copy = {
       "Invoices ready before the guest has left.",
       "Your website, your numbers, your rules.",
     ],
+    alts: {
+      booking: "Revoo booking calendar showing reservations across units and dates",
+      housekeeping: "Revoo housekeeping schedule with tasks sorted by urgency",
+      invoice: "Invoice generated for a guest in Revoo",
+      notification: "Automated email notification sent to a guest",
+      dashboard: "Revoo admin dashboard with reservations and revenue overview",
+      websiteCalendar: "Booking website with an availability calendar for guests",
+      website1: "Hotel booking website homepage with a reservation widget",
+      website2: "Hotel booking website room selection and checkout page",
+    },
   },
   approach: {
     eyebrow: "Our approach",
