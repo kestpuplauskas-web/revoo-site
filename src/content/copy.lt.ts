@@ -96,14 +96,14 @@ export const lt: Copy = {
   },
   segments: {
     eyebrow: "Sukurta jūsų objekto tipui",
-    h2: "Pritaikyta tam, kaip *jūs* dirbate",
+    h2: "Sukurta pagal tai, kaip dirbate jūs.",
     prev: "Ankstesnis objekto tipas",
     next: "Kitas objekto tipas",
     goTo: "Rodyti objekto tipą",
     slides: [
       {
-        title: "Viešbučiai",
-        body: "Kambariai, kainos ir registratūra. Revoo duoda kalendorių, kambarinių sąrašą ir sąskaitas — be įmonėms skirtos kainos ir be šešių savaičių konfigūravimo projekto, kuris paprastai prie jų prisideda.",
+        title: "Viešbučiams",
+        body: "Kambariai, kainos ir registratūra - viskas, ko reikia kasdieniam viešbučio darbui. Revoo suteikia jums patogų rezervacijų kalendorių, valymo darbų sistemą ir sąskaitų išrašymą, be brangių viešbučių valdymų sistemų ir mėnesius trunkančio sudėtingo diegimo.",
       },
       {
         title: "Nameliai",
