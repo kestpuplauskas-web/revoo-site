@@ -126,10 +126,10 @@ export const lt: Copy = {
   included: {
     eyebrow: "Ką gaunate",
     h2: "Kas jau yra platformoje ir tai ką *sukuriame* jums",
-    lede: "Verčiau būsime tikslūs nei įspūdingi. Štai sąžiningas padalijimas.",
+    lede: "Mums svarbiau aiškumas nei įspūdis. Todėl atvirai parodome, kas jau yra Revoo platformoje, o ką papildomai pritaikome būtent jums.",
     left: {
-      title: "Platformoje nuo pirmos dienos",
-      sub: "Veikia šiandien, realiai.",
+      title: "Jau paruošta naudoti.",
+      sub: "Visos šios funkcijos jau yra paruoštos naudoti.",
       items: [
         "Kelių objektų skydelis su užimtumo, pajamų ir išlaidų rodikliais",
         "Velkamas rezervacijų kalendorius su dvigubų rezervacijų prevencija",
