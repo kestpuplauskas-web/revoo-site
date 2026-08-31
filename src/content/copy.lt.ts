@@ -45,14 +45,14 @@ export const lt: Copy = {
   approach: {
     eyebrow: "Mūsų požiūris",
     h2: "Konfigūracija nėra *pritaikymas*",
-    lede: "Jūsų objektas, kurį renkasi jūsų klientai, turi savo veidą. Mūsų darbas — kad sistema jį parodytų, o ne paslėptų po šablonu.",
+    lede: "Jūsų sukurtas verslas turi savo charakterį. Mes pasirūpinsime, kad jį matytų ir Jūsų klientai.",
     cardA: {
-      title: "Mūsų komandos palaikymas",
-      body: "Pažiūrime, kaip jūsų objektas realiai veikia — ką parduodate papildomai prie išnuomoto kambario, kam išrašote sąskaitas, kaip jūsų komanda dirba — ir sistemą paleidžiame kartu su jumis, kurią nuolatos prižiūrime.",
+      title: "Esame šalia nuo pirmos dienos",
+      body: "Įsigiliname į jūsų veiklą - nuo papildomų paslaugų ir atsiskaitymų iki kasdienių komandos procesų. Kartu su jumis įdiegiame ir paleidžiame sistemą, o vėliau nuolat ją prižiūrime, kad ji sklandžiai veiktų ir prisitaikytų prie jūsų poreikių.",
     },
     cardB: {
-      title: "Tai kainuoja daugiau nei prenumerata",
-      body: "Mainais gaunate sistemą, kuri nereikalauja prisitaikyti prie jos ir svetainę su rezervacijos sistema, kuri iš tikrųjų yra jūsų.",
+      title: "Tai daugiau nei mėnesinė prenumerata",
+      body: "Gaunate ne standartinį sprendimą, prie kurio turi prisitaikyti jūsų verslas, o sistemą, kuri prisitaiko prie jūsų. Negana to ir rezervacijų svetainę, kuri priklauso tik jums.",
     },
   },
   week: {
