@@ -28,8 +28,8 @@ export const lt: Copy = {
     slides: [
       "Perkelkite rezervaciją vos keliais paspaudimais.",
       "Kambarių priežiūros programa, padedanti prioritetizuoti ir sklandžiai perduoti užduotis.",
-      "Sąskaitos paruoštos dar svečiui neišvykus.",
-      "Jūsų svetainė, jūsų skaičiai, jūsų taisyklės.",
+      "Sąskaitų generavimas Jūsų klientui.",
+      "Sukurta pagal Jūsų verslą. Veikia pagal Jūsų taisykles.",
     ],
   },
   approach: {
