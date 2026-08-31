@@ -13,7 +13,7 @@ export const lt: Copy = {
     home: "Pradžia",
   },
   hero: {
-    eyebrow: "APGYVENDINIMO VALDYMO SISTEMA SU JŪSŲ REZERVACIJŲ SVETAINE\n\n",
+    eyebrow: "PROGRAMINĖ ĮRANGA SU NUOSAVA REZERVACIJŲ SVETAINE JŪSŲ APGYVENDINIMO VERSLUI\n\n",
     h1: "Sistema, kuri *prisitaiko* prie jūsų objekto",
     sub: "Viešbučiai, nameliai, svečių namai ir apartamentai dirba skirtingai — ir nė vienas iš jų nedirba taip, kaip numano jiems parduota programa. Revoo yra platforma, kurią pritaikome jūsų veiklai, kartu su rezervacijų svetaine, kuri iš tikrųjų yra jūsų.",
     primary: "Užsisakyti demo",
