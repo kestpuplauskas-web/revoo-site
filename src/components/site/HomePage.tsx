@@ -41,7 +41,13 @@ export function HomePage({ lang }: { lang: Lang }) {
           <div className="flex flex-col justify-center bg-teal-700 px-6 pb-16 pt-28 sm:px-10 lg:px-14 lg:py-32">
             <div className="mx-auto w-full max-w-[640px]">
               <p className="eyebrow mb-5 whitespace-pre-wrap text-amber">{c.hero.eyebrow}</p>
-              <h1 className="text-cream">
+              <h1
+                className={
+                  lang === "lt"
+                    ? "text-[clamp(1.6rem,4.2vw,2.8rem)] text-cream"
+                    : "text-cream"
+                }
+              >
                 <SignatureUnderlined text={c.hero.h1} />
               </h1>
               <p className="measure mt-7 text-[1.02rem] leading-relaxed text-cream/85">{c.hero.sub}</p>
