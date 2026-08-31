@@ -45,7 +45,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 className={
                   lang === "lt"
                     ? "text-[clamp(1.6rem,4.2vw,2.8rem)] text-cream"
-                    : "text-cream"
+                    : "text-[clamp(1.7rem,4vw,2.8rem)] text-cream"
                 }
               >
                 <SignatureUnderlined text={c.hero.h1} />
