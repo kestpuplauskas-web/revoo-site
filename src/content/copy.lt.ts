@@ -202,12 +202,12 @@ export const lt: Copy = {
   },
   demo: {
     eyebrow: "Susisiekime",
-    h2: "Pažiūrėkime į jūsų *objektą*",
-    lede: "Papasakokite apie jį truputį, ir per vieną darbo dieną grįšime arba su demo laiku, arba su sąžiningu \u201Emes jums netinkame\u201C.",
+    h2: "Papasakokite apie savo apgyvendimo vietą",
+    lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirtai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
     facts: [
       "hello@revoo.site",
-      "Dirbame anglų ir lietuvių kalbomis",
-      "Įsikūrę Lietuvoje · pradedame dirbti su objektais Islandijoje",
+      "Bendraujame anglų ir lietuvių kalbomis",
+      "Esame Lietuvoje · šiuo metu diegiame Revoo produktos Islandijoje",
     ],
     form: {
       name: "Vardas",
