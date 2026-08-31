@@ -61,7 +61,6 @@ export const en: Copy = {
     lede: "Units down the side, days across the top. Drag a booking to another unit or another week and it just moves.",
     points: [
       "Double bookings are refused before you make one — not discovered when the guest is standing at the door.",
-      "Same-day turnovers are allowed on purpose: one guest out, the next one in, same date.",
       "Click an empty cell to create a booking already filled in with the unit and the dates.",
       "Availability imported from Booking.com and Airbnb sits in the same view, marked as external.",
     ],
