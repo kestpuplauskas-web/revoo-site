@@ -66,15 +66,15 @@ export const lt: Copy = {
     ],
   },
   morning: {
-    eyebrow: "Rytas",
-    h2: "Komanda žino, ką daryti, dar jums *nepaklausus*",
-    lede: "Revoo perskaito šios dienos rezervacijas, nustato, ko kiekvienam vienetui realiai reikia, ir surikiuoja sąrašą pagal skubumą. Niekas niekam nieko neaiškina.",
+    eyebrow: "KAMBARIŲ PRIEŽIŪROS VALDYMAS",
+    h2: "Jūsų komanda iš karto žino, ką ir kada reikia padaryti.",
+    lede: "Revoo automatiškai patikrina šiandienos rezervacijas ir kiekvienai patalpai sudėlioja reikalingus darbus pagal svarbumą.",
     points: [
-      "Tos pačios dienos apyvartos rodomos pirmos — siauriausias dienos langas ir tas, kuris dažniausiai sugriūva.",
-      "Nesutvarkytas vienetas nedingsta tyliai iš rytojaus sąrašo.",
-      "Užsakytos papildomos paslaugos rodomos kaip paruošimo atmintinė, todėl niekas nepaaiškėja tik svečiui atvykus.",
-      "Gedimas pranešamas vienu paspaudimu ir iš karto matomas administratorei.",
-      "Kambarinės nemato svečių kontaktų, kainų ir mokėjimo būsenos. Tik darbą.",
+      "Pirmiausia rodomos patalpos, kurias reikia paruošti tą pačią dieną.",
+      "Jei patalpos nebuvo sutvarkytos laiku, užduotis nep,irštama - ji lieka sistemoje, kol bus atlikta.",
+      "Jei svečias užsisakė papildomų paslaugų, valdytojas jas mato savo užduočių sąraše, tad tai neliks pamiršta.",
+      "Pastebėjus gedimą, apie jį galima pranešti vienu paspaudimu. Vadovas informaciją iš karto mato savo sistemoje.",
+      "Valytojas mato tik tai, ko reikia darbuo atlikti. Svečių kontaktai, kainos, mokėjimų informacija ir kita konfidenciali informacija, nėra atvaizduojama.",
     ],
   },
   paperwork: {
