@@ -56,13 +56,13 @@ export const lt: Copy = {
     },
   },
   week: {
-    eyebrow: "Savaitė",
+    eyebrow: "REZERVACIJŲ VALDYMAS",
     h2: "Visas mėnuo *viename* ekrane",
-    lede: "Vienetai eilutėse, dienos stulpeliuose. Nutempkite rezervaciją į kitą vienetą ar kitą savaitę — ir ji tiesiog persikelia.",
+    lede: "Objektai kairėje, dienos viršuje. Perkelkite rezervaciją į kitą dieną ar kitą savaitę - ji tiesiog persikels.",
     points: [
-      "Dviguba rezervacija atmetama dar prieš ją padarant — ne tada, kai svečias jau stovi prie durų.",
-      "Tos pačios dienos apyvarta leidžiama sąmoningai: vienas išvyksta, kitas atvyksta tą pačią dieną.",
-      "Spustelėjus tuščią langelį atsidaro rezervacija, jau užpildyta vienetu ir datomis.",
+      "Dvigubos rezervacijos identifikuojamos dar prieš jas sukuriant, o ne pastebimos tik tada, kai svečias jau stovi prie durų.",
+      "",
+      "Spustelėkite tuščią langelį ir sukurkite rezervacij",
       "Užimtumas, importuotas iš Booking.com ir Airbnb, matomas tame pačiame vaizde ir pažymėtas kaip išorinis.",
     ],
   },
