@@ -26,7 +26,7 @@ function LoginPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) void navigate({ to: "/admin/uzklausos", replace: true });
+      if (data.session) void navigate({ to: "/admin/uzklausos/", replace: true });
     });
   }, [navigate]);
 
@@ -43,7 +43,7 @@ function LoginPage() {
               options: { emailRedirectTo: `${window.location.origin}/prisijungimas` },
             });
       if (error) throw error;
-      await navigate({ to: "/admin/uzklausos", replace: true });
+      await navigate({ to: "/admin/uzklausos/", replace: true });
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Prisijungti nepavyko. Patikrinkite duomenis.",

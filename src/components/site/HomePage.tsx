@@ -23,7 +23,7 @@ export function HomePage({ lang }: { lang: Lang }) {
   const c = t(lang);
   const home = href(lang);
   const demoHref = `${home}#demo`;
-  const altHref = lang === "en" ? "/lt" : "/";
+  const altHref = lang === "en" ? "/lt/" : "/";
 
   return (
     <div className="min-h-screen bg-cream">
