@@ -3,9 +3,9 @@ import type { Copy } from "./copy.types";
 export const lt: Copy = {
   nav: {
     product: "Produktas",
-    approach: "Požiūris",
-    who: "Kam skirta",
-    blog: "Blogas",
+    approach: "Mūsų požiūris",
+    who: "Kas renkasi Revoo",
+    blog: "Naujienos",
     faq: "DUK",
     cta: "Užsisakyti demo",
     langLabel: "Kalba",
