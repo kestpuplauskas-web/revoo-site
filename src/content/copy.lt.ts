@@ -245,31 +245,23 @@ export const lt: Copy = {
     items: [
       {
         q: "Kiek tai kainuoja?",
-        a: "Yra vienkartinis diegimo mokestis ir mėnesinė prenumerata. Diegimo mokestis priklauso nuo apimties — kiek vienetų, ką parduodate šalia kambario, ar reikia naujos svetainės, koks mokėjimų sprendimas, kurios šalies sąskaitos. Kainą pasakome po pirmo pokalbio, o ne prieš jį, nes akla kaina būtų neteisinga viena ar kita kryptimi.",
+        a: "Yra vienkartinis sistemos įdiegimo mokestis ir mėnesinis abonementas.\n\nĮdiegimo kaina priklauso nuo to, ko jums reikia: kiek turite būstų, kokias papildomas paslaugas parduodate, ar reikia naujos svetainės, kokį mokėjimų tiekėją naudojate ir pagal kurios šalies reikalavimus turi būti išrašomos sąskaitos.\n\nTikslią kainą pateikiame po pirmo pokalbio, o ne iš anksto. Nenorime pateikti kainos nežinodami Jūsų poreikių.",
       },
       {
-        q: "Ar tvarkote mokėjimus?",
-        a: "Diegimo metu prijungiame tą mokėjimų sprendimą, kurį realiai naudojate. Tai nėra varnelė nustatymuose — tai apibrėžiama ir sukuriama jūsų atvejui, todėl veikia su ta įstaiga, su kuria jau turite sutartį.",
+        q: "Ar „Revoo“ tvarko mokėjimus?",
+        a: "Taip. Diegimo metu prijungiame jūsų naudojamą mokėjimų tiekėją.\n\nTai nėra tiesiog funkcija, kurią įjungiate nustatymuose. Mokėjimus sukonfigūruojame pagal jūsų veiklą ir naudojamą sistemą, todėl galite toliau naudoti jau turimą sutartį su savo mokėjimų paslaugų teikėju.",
       },
       {
-        q: "Ar sinchronizuojasi su Booking.com ir Airbnb?",
-        a: "Užimtumo importas per iCal veikia šiandien, todėl išorinės rezervacijos matomos kalendoriuje ir užima vienetą. Gilesnės kanalų jungtys apibrėžiamos kaip diegimo dalis, kai objektui to reikia. Sąmoningai neteigiame, kad esame 200 kanalų channel manager — jei to reikia nuo pirmos dienos, didelė platforma jums tiks geriau, ir mes tai pasakysime.",
+        q: "Ar „Revoo“ sinchronizuojasi su „Booking.com“ ir „Airbnb“?",
+        a: "Taip. Šiuo metu per iCal galime importuoti rezervacijų prieinamumą, todėl išoriniuose kanaluose gautos rezervacijos atsiranda jūsų „Revoo“ kalendoriuje ir automatiškai užblokuoja būstą.\n\nJei reikia išsamesnės integracijos su rezervacijų kanalais, ją galime pritaikyti diegimo metu pagal jūsų poreikius.\n\nNenorime apsimesti sistema, kuri vienu metu valdo šimtus rezervacijų kanalų. Jei būtent to jums reikia nuo pirmos dienos, didesnė specializuota platforma greičiausiai bus geresnis pasirinkimas – ir mes tai pasakysime atvirai.",
       },
       {
-        q: "Ar galiu pasilikti dabartinę svetainę?",
-        a: "Taip — ji gali jungtis prie Revoo per viešą API. Bet jei dabartinė svetainė negali priimti rezervacijos nenusiųsdama svečio kitur, jos pakeitimas paprastai yra tas vienas pokytis, kuris atsiperka už visą projektą.",
+        q: "Ar galiu pasilikti savo dabartinę svetainę?",
+        a: "Taip. Ją galima prijungti prie sistemos per viešąją API.\n\nTačiau jei dabartinėje svetainėje svečias negali atlikti rezervacijos ir yra nukreipiamas kitur, nauja rezervacijų svetainė dažnai būna vienas naudingiausių pakeitimų, kuriuos verta atlikti.",
       },
       {
         q: "Kodėl nėra registracijos mygtuko?",
-        a: "Nes kiekvienam objektui, kurį diegėme, reikėjo kažko, ko nereikėjo ankstesniam. Savitarnos registracija paduotų jums tuščią skydelį ir nustatymų puslapį, o diegimą darytumėte patys. Mes verčiau padarysime tai kaip reikia.",
-      },
-      {
-        q: "Kas bus, jei jus peraugsiu?",
-        a: "Platforma sukurta pagal API-first principą, o duomenys yra jūsų — objektai, rezervacijos, svečiai ir sąskaitos, viskas eksportuojama. Verčiau išeisite tvarkingai, nei jausitės įstrigę.",
-      },
-      {
-        q: "Kur esate įsikūrę?",
-        a: "Lietuvoje. Platforma šiandien veikia realiai, ir pradedame dirbti su objektais Islandijoje. Dirbame anglų ir lietuvių kalbomis.",
+        a: "Nes kiekviena apgyvendinimo vieta turi skirtingų poreikių. Tai, ko reikia vienam verslui, nebūtinai tiks kitam.\n\nRegistracija pačiam reikštų, kad gautumėte tuščią sistemą su nustatymų puslapiu ir viską turėtumėte susikonfigūruoti patys.\n\nMes pasirenkame kitą kelią – pirmiausia išsiaiškiname jūsų poreikius, o tada tinkamai paruošiame sistemą jūsų veiklai.",
       },
     ],
   },
