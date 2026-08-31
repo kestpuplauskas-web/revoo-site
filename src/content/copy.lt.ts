@@ -263,6 +263,14 @@ export const lt: Copy = {
         q: "Kodėl nėra registracijos mygtuko?",
         a: "Nes kiekviena apgyvendinimo vieta turi skirtingų poreikių. Tai, ko reikia vienam verslui, nebūtinai tiks kitam.\n\nRegistracija pačiam reikštų, kad gautumėte tuščią sistemą su nustatymų puslapiu ir viską turėtumėte susikonfigūruoti patys.\n\nMes pasirenkame kitą kelią – pirmiausia išsiaiškiname jūsų poreikius, o tada tinkamai paruošiame sistemą jūsų veiklai.",
       },
+      {
+        q: "Kas nutiks, jei nuspręsiu pereiti prie kito sprendimo?",
+        a: "Sistema sukurta taip, kad ją būtų galima lengvai integruoti su kitomis sistemomis, o jūsų duomenys visada priklauso jums – būstai, rezervacijos, svečių duomenys ir sąskaitos gali būti eksportuojami.\n\nNenorime jūsų „pririšti“ prie sistemos. Jei ateis laikas pereiti prie kito sprendimo, galėsite tai padaryti paprastai ir pasiimti savo duomenis kartu.",
+      },
+      {
+        q: "Kur jūs įsikūrę?",
+        a: "Lietuvoje. Platforma jau veikia realiose apgyvendinimo vietose, o šiuo metu pradedame diegti sistemą Islandijoje.\n\nBendraujame lietuvių ir anglų kalbomis.",
+      },
     ],
   },
   footer: {
