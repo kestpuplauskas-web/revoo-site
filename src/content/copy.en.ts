@@ -175,7 +175,7 @@ export const en: Copy = {
     ],
     no: [
       "A single property run as a side income rather than a business",
-      "Chains and groups above roughly 50 units",
+      "You're a larger hotel group",
       "You need full two-way channel management across many OTAs on day one",
       "You want to sign up online tonight and configure it yourself — we don't work that way",
     ],
