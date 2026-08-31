@@ -28,6 +28,16 @@ export type Copy = {
     next: string;
     goTo: string;
     slides: string[];
+    alts: {
+      booking: string;
+      housekeeping: string;
+      invoice: string;
+      notification: string;
+      dashboard: string;
+      websiteCalendar: string;
+      website1: string;
+      website2: string;
+    };
   };
   approach: {
     eyebrow: string;
