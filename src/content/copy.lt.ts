@@ -114,8 +114,8 @@ export const lt: Copy = {
         body: "Dažnai visus darbus atlieka vienas žmogus - nuo rezervacijų ir svečių aptarnavimo iki valymo organizavimo, bei sąskaitų išrašymo. Revoo viską sujungia vienoje vietoje, todėl net ir vienam žmogui lengviau susitvarkyti su kasdieniais darbais ir ne visada būti vietoje.",
       },
       {
-        title: "Apartamentai",
-        body: "Jūsų vienetai nebūtinai yra viename pastate — ir neturi būti. Revoo kiekvieną vienetą traktuoja kaip atskirą objektą, todėl skirtingais adresais išsibarstę apartamentai valdomi iš vieno kalendoriaus.",
+        title: "Apartamentams",
+        body: "Jūsų apartamentai nebūtinai turi būti viename pastate ar net vienoje vietoje. Revoo kiekvieną apartamentą valdo kaip atskirą būstą, todėl net skirtingais adresais esančiųs apartamentus galite patogiai valdyti iš vieno bendro kalendoriaus.",
       },
     ],
   },
