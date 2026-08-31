@@ -150,7 +150,7 @@ export const lt: Copy = {
         "Jūsų rezervacijų svetainė – sukurta pagal jūsų poreikius ir veikianti jūsų domene.",
         "Mokėjimai – prijungiame tą mokėjimų tiekėją, kurį iš tikrųjų naudojate.",
         "Sąskaitų išrašymas pagal jūsų šalies reikalavimus – naudojami reikalingi rekvizitai, PVM tarifai ir sąskaitų numeracija.",
-        "Jūsų kalbos – tiek sistemos aplinkoje, tiek laiškuose svečiams.",
+        "Jūsų tekstai – tiek sistemos aplinkoje, tiek laiškuose svečiams.",
         "Reikalingi rezervacijų kanalai – prijungiame būtent tuos kanalus, kuriuos naudojate savo veikloje.",
         "Papildomos paslaugos – įdiegiame galimybę parduoti ir valdyti tai, ką siūlote kartu su apgyvendinimu.",
         "Esamų rezervacijų perkėlimas – perkeliame turimas rezervacijas ir paruošiame būstus, kainas bei taisykles.",
