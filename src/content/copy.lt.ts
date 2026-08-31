@@ -106,8 +106,8 @@ export const lt: Copy = {
         body: "Kambariai, kainos ir registratūra - viskas, ko reikia kasdieniam viešbučio darbui. Revoo suteikia jums patogų rezervacijų kalendorių, valymo darbų sistemą ir sąskaitų išrašymą, be brangių viešbučių valdymų sistemų ir mėnesius trunkančio sudėtingo diegimo.",
       },
       {
-        title: "Nameliai",
-        body: "Nameliai laimimi ir pralaimimi ties apyvarta. Revoo nustato, kuriam nameliui ko šiandien reikia, durų kodą išsiunčia tik patvirtinus rezervaciją, ir laiko visą sezoną viename ekrane.",
+        title: "Nameliams",
+        body: "Namelio nuoma dažnai priklauso nuo to, kaip greitai ir sklandžiai jis paruošiamas kitam svečiui. Revoo automatiškai parodo, kuriuos namelius šiandien reikia sutvarkyti ir paruošti, durų kodą išsiunčia tik patvirtinus rezervaciją, o visą sezoną galite matyti viename ekrane.",
       },
       {
         title: "Svečių namai",
