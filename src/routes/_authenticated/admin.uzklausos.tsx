@@ -63,7 +63,7 @@ function LeadsPage() {
     await queryClient.cancelQueries();
     queryClient.clear();
     await supabase.auth.signOut();
-    await navigate({ to: "/prisijungimas", replace: true });
+    await navigate({ to: "/prisijungimas/", replace: true });
   };
 
   const openLead = (lead: LeadRow) => {
