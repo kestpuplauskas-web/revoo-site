@@ -264,7 +264,7 @@ export const en: Copy = {
         a: "Because every property we have set up has needed something the previous one did not. A self-service sign-up would hand you an empty dashboard and a settings page, and you would be doing the implementation yourself. We would rather do it properly.",
       },
       {
-        q: "What happens if I outgrow you?",
+        q: "What happens if I decide to move to another solution?",
         a: "The platform is API-first and your data is yours — properties, bookings, guests and invoices, all exportable. We would rather you left cleanly than felt locked in.",
       },
       {
