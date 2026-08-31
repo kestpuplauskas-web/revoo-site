@@ -231,7 +231,7 @@ export const en: Copy = {
       optional: "optional",
       required: "required",
       submit: "Request a demo",
-      fineprint: "We reply within one working day. No automated sequences.",
+      fineprint: "We reply within one working day. No automated emails - we reply personally.",
       select: "Select",
     },
     success: {
