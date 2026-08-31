@@ -74,9 +74,9 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
         sc.classList.toggle("on", on);
         vids(sc).forEach(function (vid) {
           if (on && !reduce) {
-            if (!vid.getAttribute("src") && vid.dataset.src) {
-              vid.setAttribute("src", vid.dataset.src);
-            }
+          if (!vid.getAttribute("src") && vid.dataset["src"]) {
+            vid.setAttribute("src", vid.dataset["src"]);
+          }
             void vid.play().catch(function () {});
           } else {
             vid.pause();
