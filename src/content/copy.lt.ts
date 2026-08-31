@@ -181,21 +181,21 @@ export const lt: Copy = {
     ],
   },
   start: {
-    eyebrow: "Kaip pradėti",
-    h2: "Kaip tai iš tikrųjų *prasideda*",
-    lede: "Jokios kortelės formos ir jokio 14 dienų bandymo, kurį mestumėte trečią dieną.",
+    eyebrow: "PRADŽIA",
+    h2: "Nuo ko pradedame",
+    lede: "Jokių kredito kortelės duomenų įvedimo ir jokių 14 dienų bandomųjų versijų, kurias po kelių dienų pamirštumėte.",
     steps: [
       {
         title: "Pokalbis",
-        body: "Apie 45 minutes. Kaip veikia jūsų objektas, ką parduodate šalia kambario, kas šiandien lūžta ir kaip turi atrodyti jūsų sąskaitos. Sąžiningai pasakome, ar tinkame vieni kitiems.",
+        body: "Apie 45 minutes skiriame tam, kad geriau suprastume jūsų veiklą: kaip valdote apgyvendimo vietą, ką siūlote svečiams be apgyvendimo, su kokiomis problemomis susiduriate šiandien ir kaip turi atrodyti jūsų sąskaitos.",
       },
       {
-        title: "Diegimas",
-        body: "Sukonfigūruojame vienetus, kainas, papildomas paslaugas ir taisykles, sukuriame rezervacijų svetainę, prijungiame mokėjimų sprendimą ir pritaikome sąskaitas jūsų šaliai. Peržiūrite tai, kol darome.",
+        title: "Sistemos diegimas",
+        body: "Sukonfigūruojame jūsų būstus ar patalpas, kainas, papildomas paslaugas ir taisykles, sukuriame rezervacijų svetainę, prijungiame jūsų naudojamą mokėjimų tiekėją ir pritaikome sąskaitų išrašymą pagal jūsų šalies reikalavimus.",
       },
       {
         title: "Paleidimas",
-        body: "Esamos rezervacijos persikelia. Apmokome registratūrą ir kambarines jų kalba. Tada liekame šalia visą pirmą sezoną.",
+        body: "Perkeliame jūsų esamas rezervacijas į Revoo ir apmokome registratūros bei valymo komandas jomis naudotis.",
       },
     ],
     cta: "Užsisakyti demo",
