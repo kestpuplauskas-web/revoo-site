@@ -231,7 +231,7 @@ export const lt: Copy = {
       optional: "neprivaloma",
       required: "privaloma",
       submit: "Užsisakyti demo",
-      fineprint: "Atsakome per vieną darbo dieną. Jokių automatinių sekų.",
+      fineprint: "Atsakome per vieną darbo dieną. Jokių automatinių laiškų - atsakome asmeniškai.",
       select: "Pasirinkite",
     },
     success: {
