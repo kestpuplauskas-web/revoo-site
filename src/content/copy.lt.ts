@@ -63,7 +63,7 @@ export const lt: Copy = {
       "Dvigubos rezervacijos identifikuojamos dar prieš jas sukuriant, o ne pastebimos tik tada, kai svečias jau stovi prie durų.",
       "",
       "Spustelėkite tuščią langelį ir sukurkite rezervaciją - objektas ir datos bus užpildyti automatiškai.",
-      "Užimtumas, importuotas iš Booking.com ir Airbnb, matomas tame pačiame vaizde ir pažymėtas kaip išorinis.",
+      "Užimtumas, importuotas iš Booking.com ir Airbnb, matomas tame pačiame lange ir pažymimas kaip išorinė rezervacija.",
     ],
   },
   morning: {
