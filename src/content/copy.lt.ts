@@ -120,7 +120,7 @@ export const lt: Copy = {
     ],
   },
   ctaBand: {
-    text: "Įdomu, ar tai tinka jūsų objektui? Vienas 45 minučių pokalbis atsakys.",
+    text: "Įdomu, ar Revoo tiktų",
     button: "Užsisakyti demo",
   },
   included: {
