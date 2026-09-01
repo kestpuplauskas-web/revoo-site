@@ -5,7 +5,14 @@ export type Block =
   | { type: "p"; text: string }
   | { type: "ul"; items: string[] }
   | { type: "ol"; items: string[] }
-  | { type: "image"; src: string; alt: string; caption?: string };
+  | {
+      type: "image";
+      src: string;
+      alt: string;
+      caption?: string;
+      width?: number;
+      height?: number;
+    };
 
 export type Post = {
   id: string;

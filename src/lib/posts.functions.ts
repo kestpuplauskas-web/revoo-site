@@ -16,6 +16,8 @@ const blockSchema = z.discriminatedUnion("type", [
     src: z.string().trim().min(1).max(500),
     alt: z.string().trim().min(1).max(300),
     caption: z.string().trim().max(300).optional(),
+    width: z.number().int().positive().max(10000).optional(),
+    height: z.number().int().positive().max(10000).optional(),
   }),
 ]);
 
@@ -49,6 +51,7 @@ const savePostSchema = z.object({
   status: z.enum(["draft", "published"]),
   published_at: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/),
   blocks: z.array(blockSchema).min(1),
+  translation_partner_id: z.string().uuid().nullable().optional(),
 });
 
 /* ---------------- Public (no auth, SSR-safe) ---------------- */
