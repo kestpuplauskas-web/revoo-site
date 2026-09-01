@@ -54,6 +54,9 @@ export function Article({ lang, post }: { lang: Lang; post: Post }) {
                           src={block.src}
                           alt={block.alt}
                           loading="lazy"
+                          decoding="async"
+                          {...(block.width ? { width: block.width } : {})}
+                          {...(block.height ? { height: block.height } : {})}
                           className="w-full rounded-2xl border border-ink/10"
                         />
                         {block.caption ? (
