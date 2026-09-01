@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
 import { BlogList } from "@/components/site/BlogList";
 import { copy } from "@/content/copy";
@@ -6,11 +6,7 @@ import { buildHead, organizationLd } from "@/lib/i18n";
 import { listPublishedPosts } from "@/lib/posts.functions";
 
 export const Route = createFileRoute("/lt/blog/")({
-  loader: async () => {
-    const r = await listPublishedPosts({ data: { lang: "lt" } });
-    console.log("LOADER RESULT", JSON.stringify(r).slice(0, 200));
-    return r;
-  },
+  loader: () => listPublishedPosts({ data: { lang: "lt" } }),
   head: () =>
     buildHead({
       lang: "lt",
@@ -25,7 +21,7 @@ export const Route = createFileRoute("/lt/blog/")({
 });
 
 function RouteComponent() {
-  const { posts } = Route.useLoaderData();
+  const { posts } = getRouteApi("/lt/blog/").useLoaderData();
   return <BlogList lang="lt" items={posts} />;
 }
 
