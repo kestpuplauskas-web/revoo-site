@@ -1,4 +1,18 @@
 @import "tailwindcss" source(none);
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-ext-400.css";
+@import "@fontsource/cormorant-garamond/latin-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-ext-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-600.css";
+@import "@fontsource/cormorant-garamond/latin-ext-600.css";
+@import "@fontsource/cormorant-garamond/latin-600-italic.css";
+@import "@fontsource/cormorant-garamond/latin-ext-600-italic.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-ext-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-ext-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-ext-600.css";
 @source "../src";
 @import "tw-animate-css";
 
@@ -26,6 +40,7 @@
   --color-cream: var(--cream);
   --color-cream-deep: var(--cream-deep);
   --color-amber: var(--amber);
+  --color-amber-light: var(--amber-light);
   --color-amber-deep: var(--amber-deep);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
@@ -60,6 +75,7 @@
   --cream: #f7f2e7;
   --cream-deep: #efe7d6;
   --amber: #e3a143;
+  --amber-light: #f0be77;
   --amber-deep: #c4832a;
   --ink: #08201e;
   --ink-soft: #3b5350;
