@@ -23,6 +23,7 @@ import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authe
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
 import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
+import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -96,6 +97,12 @@ const AuthenticatedAdminStraipsniaiIndexRoute =
     path: '/straipsniai/',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminStraipsniaiIdRoute =
+  AuthenticatedAdminStraipsniaiIdRouteImport.update({
+    id: '/straipsniai/$id',
+    path: '/straipsniai/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesByTo {
@@ -124,6 +132,7 @@ export interface FileRoutesByTo {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
+  '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesById {
@@ -141,6 +150,7 @@ export interface FileRoutesById {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRouteTypes {
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/admin/'
     | '/lt/blog/'
+    | '/admin/straipsniai/$id'
     | '/admin/straipsniai/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/admin'
     | '/lt/blog'
+    | '/admin/straipsniai/$id'
     | '/admin/straipsniai'
   id:
     | '__root__'
@@ -188,6 +200,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
+    | '/_authenticated/admin/straipsniai/$id'
     | '/_authenticated/admin/straipsniai/'
   fileRoutesById: FileRoutesById
 }
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStraipsniaiIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/straipsniai/$id': {
+      id: '/_authenticated/admin/straipsniai/$id'
+      path: '/straipsniai/$id'
+      fullPath: '/admin/straipsniai/$id'
+      preLoaderRoute: typeof AuthenticatedAdminStraipsniaiIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
@@ -310,6 +330,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProjektaiRoute: typeof AuthenticatedAdminProjektaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminStraipsniaiIdRoute: typeof AuthenticatedAdminStraipsniaiIdRoute
   AuthenticatedAdminStraipsniaiIndexRoute: typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 
@@ -317,6 +338,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminProjektaiRoute: AuthenticatedAdminProjektaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminStraipsniaiIdRoute: AuthenticatedAdminStraipsniaiIdRoute,
   AuthenticatedAdminStraipsniaiIndexRoute:
     AuthenticatedAdminStraipsniaiIndexRoute,
 }
