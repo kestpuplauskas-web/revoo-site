@@ -1,12 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { Archive, ArchiveRestore, Loader2, Mail, MailOpen, Search } from "lucide-react";
 import { toast } from "sonner";
 
-import { supabase } from "@/integrations/supabase/client";
-import { getMyRole, listLeads, updateLead, type LeadRow } from "@/lib/leads.functions";
+import { listLeads, updateLead, type LeadRow } from "@/lib/leads.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/uzklausos")({
   head: () => ({
@@ -28,9 +27,7 @@ const FILTERS: { key: Filter; label: string }[] = [
 ];
 
 function LeadsPage() {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const fetchRole = useServerFn(getMyRole);
   const fetchLeads = useServerFn(listLeads);
   const patchLead = useServerFn(updateLead);
 
@@ -38,18 +35,18 @@ function LeadsPage() {
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const role = useQuery({ queryKey: ["my-role"], queryFn: () => fetchRole() });
-
   const leads = useQuery({
     queryKey: ["leads", filter, search],
     queryFn: () => fetchLeads({ data: { filter, search } }),
-    enabled: role.data?.isAdmin === true,
   });
 
   const mutate = useMutation({
     mutationFn: (input: { id: string; read?: boolean; archived?: boolean }) =>
       patchLead({ data: input }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["leads"] }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["leads"] });
+      void queryClient.invalidateQueries({ queryKey: ["leads-unread"] });
+    },
     onError: (error) => toast.error(error instanceof Error ? error.message : "Klaida"),
   });
 
@@ -59,50 +56,17 @@ function LeadsPage() {
     [rows, selectedId],
   );
 
-  const signOut = async () => {
-    await queryClient.cancelQueries();
-    queryClient.clear();
-    await supabase.auth.signOut();
-    await navigate({ to: "/prisijungimas/", replace: true });
-  };
-
   const openLead = (lead: LeadRow) => {
     setSelectedId(lead.id);
     if (!lead.read_at) mutate.mutate({ id: lead.id, read: true });
   };
 
-  if (role.isLoading) {
-    return <CenteredState>Kraunama…</CenteredState>;
-  }
-
-  if (!role.data?.isAdmin) {
-    return (
-      <CenteredState>
-        <p className="font-display text-2xl text-ink">Neturite administratoriaus teisių</p>
-        <p className="mt-2 text-sm text-ink-soft">
-          Susisiekite su Revoo komanda, kad jūsų paskyrai būtų suteikta „admin“ rolė.
-        </p>
-        <button onClick={signOut} className="mt-6 text-sm text-teal-700 underline">
-          Atsijungti
-        </button>
-      </CenteredState>
-    );
-  }
-
   return (
-    <main className="min-h-screen bg-cream/60 px-4 py-8 sm:px-8">
+    <main className="px-4 py-8 sm:px-8">
       <div className="mx-auto max-w-6xl">
-        <header className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="eyebrow text-ink-soft">Revoo administravimas</p>
-            <h1 className="mt-1 font-display text-4xl text-ink">Užklausos</h1>
-          </div>
-          <button
-            onClick={signOut}
-            className="rounded-full border border-ink/15 px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream"
-          >
-            Atsijungti
-          </button>
+        <header>
+          <p className="eyebrow text-ink-soft">Revoo administravimas</p>
+          <h1 className="mt-1 font-display text-4xl text-ink">Užklausos</h1>
         </header>
 
         <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -255,14 +219,6 @@ function Detail({ label, value }: { label: string; value: string | null | undefi
       <dt className="w-36 shrink-0 text-ink-soft">{label}</dt>
       <dd className="min-w-0 flex-1 text-ink">{value}</dd>
     </div>
-  );
-}
-
-function CenteredState({ children }: { children: React.ReactNode }) {
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-cream/60 px-4 text-center">
-      <div>{children}</div>
-    </main>
   );
 }
 

@@ -1,12 +1,11 @@
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { CtaLink, Eyebrow, Reveal, Signature } from "./primitives";
-import { postsFor } from "@/content/posts";
+import type { PostListItem } from "@/content/posts";
 import { href, t, type Lang } from "@/lib/i18n";
 
-export function BlogList({ lang }: { lang: Lang }) {
+export function BlogList({ lang, items }: { lang: Lang; items: PostListItem[] }) {
   const c = t(lang);
-  const items = postsFor(lang);
   const altHref = lang === "en" ? "/lt/blog/" : "/blog/";
 
   return (

@@ -13,13 +13,17 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PrisijungimasRouteImport } from './routes/prisijungimas'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminProjektaiRouteImport } from './routes/_authenticated/admin.projektai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
+import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
+import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +44,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -56,15 +65,21 @@ const LtIndexRoute = LtIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminProjektaiRoute =
+  AuthenticatedAdminProjektaiRouteImport.update({
+    id: '/projektai',
+    path: '/projektai',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminUzklausosRoute =
   AuthenticatedAdminUzklausosRouteImport.update({
-    id: '/admin/uzklausos',
-    path: '/admin/uzklausos',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/uzklausos',
+    path: '/uzklausos',
+    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const LtBlogIndexRoute = LtBlogIndexRouteImport.update({
   id: '/lt/blog/',
@@ -76,18 +91,34 @@ const LtBlogSlugRoute = LtBlogSlugRouteImport.update({
   path: '/lt/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminStraipsniaiIndexRoute =
+  AuthenticatedAdminStraipsniaiIndexRouteImport.update({
+    id: '/straipsniai/',
+    path: '/straipsniai/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminStraipsniaiIdRoute =
+  AuthenticatedAdminStraipsniaiIdRouteImport.update({
+    id: '/straipsniai/$id',
+    path: '/straipsniai/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/admin/projektai': typeof AuthenticatedAdminProjektaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
+  '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -96,10 +127,13 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
+  '/admin/projektai': typeof AuthenticatedAdminProjektaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
+  '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
+  '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,13 +141,17 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/_authenticated/admin/projektai': typeof AuthenticatedAdminProjektaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
+  '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,13 +159,17 @@ export interface FileRouteTypes {
     | '/'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/admin'
     | '/blog/$slug'
     | '/blog/'
     | '/lt/'
+    | '/admin/projektai'
     | '/admin/uzklausos'
     | '/lt/blog/$slug'
     | '/admin/'
     | '/lt/blog/'
+    | '/admin/straipsniai/$id'
+    | '/admin/straipsniai/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,23 +178,30 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog'
     | '/lt'
+    | '/admin/projektai'
     | '/admin/uzklausos'
     | '/lt/blog/$slug'
     | '/admin'
     | '/lt/blog'
+    | '/admin/straipsniai/$id'
+    | '/admin/straipsniai'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/_authenticated/admin'
     | '/blog/$slug'
     | '/blog/'
     | '/lt/'
+    | '/_authenticated/admin/projektai'
     | '/_authenticated/admin/uzklausos'
     | '/lt/blog/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
+    | '/_authenticated/admin/straipsniai/$id'
+    | '/_authenticated/admin/straipsniai/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +246,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -220,17 +276,24 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/projektai': {
+      id: '/_authenticated/admin/projektai'
+      path: '/projektai'
+      fullPath: '/admin/projektai'
+      preLoaderRoute: typeof AuthenticatedAdminProjektaiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/uzklausos': {
       id: '/_authenticated/admin/uzklausos'
-      path: '/admin/uzklausos'
+      path: '/uzklausos'
       fullPath: '/admin/uzklausos'
       preLoaderRoute: typeof AuthenticatedAdminUzklausosRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/lt/blog/': {
       id: '/lt/blog/'
@@ -246,17 +309,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LtBlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/straipsniai/': {
+      id: '/_authenticated/admin/straipsniai/'
+      path: '/straipsniai'
+      fullPath: '/admin/straipsniai/'
+      preLoaderRoute: typeof AuthenticatedAdminStraipsniaiIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/straipsniai/$id': {
+      id: '/_authenticated/admin/straipsniai/$id'
+      path: '/straipsniai/$id'
+      fullPath: '/admin/straipsniai/$id'
+      preLoaderRoute: typeof AuthenticatedAdminStraipsniaiIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
-interface AuthenticatedRouteRouteChildren {
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminProjektaiRoute: typeof AuthenticatedAdminProjektaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminStraipsniaiIdRoute: typeof AuthenticatedAdminStraipsniaiIdRoute
+  AuthenticatedAdminStraipsniaiIndexRoute: typeof AuthenticatedAdminStraipsniaiIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminProjektaiRoute: AuthenticatedAdminProjektaiRoute,
+  AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminStraipsniaiIdRoute: AuthenticatedAdminStraipsniaiIdRoute,
+  AuthenticatedAdminStraipsniaiIndexRoute:
+    AuthenticatedAdminStraipsniaiIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
-  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
