@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Plus } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Loader2, Plus, Search } from "lucide-react";
 
 import { listAllPosts } from "@/lib/posts.functions";
 
@@ -15,10 +16,27 @@ export const Route = createFileRoute("/_authenticated/admin/straipsniai/")({
   component: PostsListPage,
 });
 
+const selectClass =
+  "rounded-full border border-ink/15 bg-white px-4 py-2 text-sm text-ink outline-none focus:border-teal-500";
+
 function PostsListPage() {
   const fetchPosts = useServerFn(listAllPosts);
   const posts = useQuery({ queryKey: ["admin-posts"], queryFn: () => fetchPosts() });
-  const rows = posts.data?.posts ?? [];
+
+  const [lang, setLang] = useState<"all" | "lt" | "en">("all");
+  const [status, setStatus] = useState<"all" | "draft" | "published">("all");
+  const [query, setQuery] = useState("");
+
+  const rows = useMemo(() => {
+    const all = posts.data?.posts ?? [];
+    const needle = query.trim().toLowerCase();
+    return all.filter(
+      (post) =>
+        (lang === "all" || post.lang === lang) &&
+        (status === "all" || post.status === status) &&
+        (needle === "" || post.title.toLowerCase().includes(needle)),
+    );
+  }, [posts.data, lang, status, query]);
 
   return (
     <main className="px-4 py-8 sm:px-8">
@@ -37,13 +55,53 @@ function PostsListPage() {
           </Link>
         </header>
 
-        <div className="mt-7 overflow-hidden rounded-3xl bg-white shadow-[0_20px_60px_-50px_rgba(8,32,30,0.6)]">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <label className="relative">
+            <span className="sr-only">Ieškoti pagal antraštę</span>
+            <Search
+              className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-ink-soft"
+              aria-hidden="true"
+            />
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Ieškoti pagal antraštę"
+              className="w-64 rounded-full border border-ink/15 bg-white py-2 pr-4 pl-10 text-sm text-ink outline-none focus:border-teal-500"
+            />
+          </label>
+          <label className="flex items-center gap-2 text-xs text-ink-soft">
+            Kalba
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value as typeof lang)}
+              className={selectClass}
+            >
+              <option value="all">Visos</option>
+              <option value="lt">Lietuvių</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+          <label className="flex items-center gap-2 text-xs text-ink-soft">
+            Būsena
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value as typeof status)}
+              className={selectClass}
+            >
+              <option value="all">Visos</option>
+              <option value="draft">Juodraščiai</option>
+              <option value="published">Paskelbti</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="mt-5 overflow-hidden rounded-3xl bg-white shadow-[0_20px_60px_-50px_rgba(8,32,30,0.6)]">
           {posts.isLoading ? (
             <div className="flex items-center gap-2 p-8 text-sm text-ink-soft">
               <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin" /> Kraunama…
             </div>
           ) : rows.length === 0 ? (
-            <p className="p-8 text-sm text-ink-soft">Straipsnių dar nėra.</p>
+            <p className="p-8 text-sm text-ink-soft">Straipsnių pagal šią atranką nėra.</p>
           ) : (
             <ul className="divide-y divide-ink/8">
               {rows.map((post) => (
@@ -72,6 +130,7 @@ function PostsListPage() {
                       {post.status === "published" ? "Paskelbtas" : "Juodraštis"}
                     </span>
                     <span className="text-xs text-ink-soft">{post.date}</span>
+                    <span className="text-xs text-teal-700">Redaguoti →</span>
                   </Link>
                 </li>
               ))}
