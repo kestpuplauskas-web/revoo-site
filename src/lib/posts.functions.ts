@@ -16,6 +16,8 @@ const blockSchema = z.discriminatedUnion("type", [
     src: z.string().trim().min(1).max(500),
     alt: z.string().trim().min(1).max(300),
     caption: z.string().trim().max(300).optional(),
+    width: z.number().int().positive().max(10000).optional(),
+    height: z.number().int().positive().max(10000).optional(),
   }),
 ]);
 
@@ -49,6 +51,7 @@ const savePostSchema = z.object({
   status: z.enum(["draft", "published"]),
   published_at: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/),
   blocks: z.array(blockSchema).min(1),
+  translation_partner_id: z.string().uuid().nullable().optional(),
 });
 
 /* ---------------- Public (no auth, SSR-safe) ---------------- */
@@ -115,8 +118,37 @@ export const savePost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => savePostSchema.parse(input))
   .handler(async ({ data, context }): Promise<{ id: string }> => {
-    const { id, ...values } = data;
-    const payload = { ...values, blocks: values.blocks as unknown as never };
+    const { id, translation_partner_id, ...values } = data;
+
+    let group = values.translation_group;
+    if (translation_partner_id) {
+      const { data: partner, error: partnerError } = await context.supabase
+        .from("posts")
+        .select("id, lang, translation_group")
+        .eq("id", translation_partner_id)
+        .maybeSingle();
+      if (partnerError || !partner) throw new Error("Nepavyko rasti susieto straipsnio");
+      if (partner.lang === values.lang) {
+        throw new Error("Susieti galima tik su kitos kalbos straipsniu");
+      }
+      group = partner.translation_group ?? `tg-${crypto.randomUUID().slice(0, 12)}`;
+      if (partner.translation_group !== group) {
+        const { error: linkError } = await context.supabase
+          .from("posts")
+          .update({ translation_group: group })
+          .eq("id", partner.id);
+        if (linkError) throw new Error("Nepavyko susieti straipsnių");
+      }
+    } else {
+      group = null;
+    }
+
+    const payload = {
+      ...values,
+      translation_group: group,
+      blocks: values.blocks as unknown as never,
+    };
+
 
     if (id) {
       const { error } = await context.supabase.from("posts").update(payload).eq("id", id);

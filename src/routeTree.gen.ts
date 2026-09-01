@@ -22,6 +22,7 @@ import { Route as AuthenticatedAdminProjektaiRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
+import { Route as AuthenticatedAdminPerziuraIdRouteImport } from './routes/_authenticated/admin.perziura.$id'
 import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
 import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
 
@@ -91,6 +92,12 @@ const LtBlogSlugRoute = LtBlogSlugRouteImport.update({
   path: '/lt/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminPerziuraIdRoute =
+  AuthenticatedAdminPerziuraIdRouteImport.update({
+    id: '/perziura/$id',
+    path: '/perziura/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminStraipsniaiIndexRoute =
   AuthenticatedAdminStraipsniaiIndexRouteImport.update({
     id: '/straipsniai/',
@@ -117,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesByTo {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
+  '/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
@@ -150,6 +159,7 @@ export interface FileRoutesById {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/_authenticated/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/admin/'
     | '/lt/blog/'
+    | '/admin/perziura/$id'
     | '/admin/straipsniai/$id'
     | '/admin/straipsniai/'
   fileRoutesByTo: FileRoutesByTo
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/admin'
     | '/lt/blog'
+    | '/admin/perziura/$id'
     | '/admin/straipsniai/$id'
     | '/admin/straipsniai'
   id:
@@ -200,6 +212,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
+    | '/_authenticated/admin/perziura/$id'
     | '/_authenticated/admin/straipsniai/$id'
     | '/_authenticated/admin/straipsniai/'
   fileRoutesById: FileRoutesById
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LtBlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/perziura/$id': {
+      id: '/_authenticated/admin/perziura/$id'
+      path: '/perziura/$id'
+      fullPath: '/admin/perziura/$id'
+      preLoaderRoute: typeof AuthenticatedAdminPerziuraIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/straipsniai/': {
       id: '/_authenticated/admin/straipsniai/'
       path: '/straipsniai'
@@ -330,6 +350,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProjektaiRoute: typeof AuthenticatedAdminProjektaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminPerziuraIdRoute: typeof AuthenticatedAdminPerziuraIdRoute
   AuthenticatedAdminStraipsniaiIdRoute: typeof AuthenticatedAdminStraipsniaiIdRoute
   AuthenticatedAdminStraipsniaiIndexRoute: typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
@@ -338,6 +359,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminProjektaiRoute: AuthenticatedAdminProjektaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminPerziuraIdRoute: AuthenticatedAdminPerziuraIdRoute,
   AuthenticatedAdminStraipsniaiIdRoute: AuthenticatedAdminStraipsniaiIdRoute,
   AuthenticatedAdminStraipsniaiIndexRoute:
     AuthenticatedAdminStraipsniaiIndexRoute,
