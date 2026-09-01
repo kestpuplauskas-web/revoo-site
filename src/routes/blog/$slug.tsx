@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, getRouteApi, notFound } from "@tanstack/react-router";
 
 import { Article } from "@/components/site/Article";
 import { absUrl, blogPostingLd, breadcrumbLd, buildHead, copyHead, organizationLd } from "@/lib/i18n";
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function RouteComponent() {
-  const { post } = Route.useLoaderData();
+  const { post } = getRouteApi("/blog/$slug").useLoaderData();
   return <Article lang="en" post={post} />;
 }
 

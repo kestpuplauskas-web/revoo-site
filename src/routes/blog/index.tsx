@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, getRouteApi } from "@tanstack/react-router";
 
 import { BlogList } from "@/components/site/BlogList";
 import { copy } from "@/content/copy";
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function RouteComponent() {
-  const { posts } = Route.useLoaderData();
+  const { posts } = getRouteApi("/blog/").useLoaderData();
   return <BlogList lang="en" items={posts} />;
 }
 
