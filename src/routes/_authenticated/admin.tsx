@@ -60,7 +60,7 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-cream/60 lg:flex">
       <aside className="border-b border-ink/10 bg-white px-4 py-5 lg:min-h-screen lg:w-64 lg:shrink-0 lg:border-r lg:border-b-0 lg:px-5 lg:py-8">
-        <p className="eyebrow text-ink-soft">Revoo</p>
+        <p className="eyebrow text-ink-soft">REVOO.</p>
         <p className="mt-1 font-display text-xl text-ink">Administravimas</p>
 
         <nav className="mt-6 flex flex-wrap gap-1 lg:flex-col">
