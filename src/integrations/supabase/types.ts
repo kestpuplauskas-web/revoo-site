@@ -14,6 +14,139 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_settings: {
+        Row: {
+          base_currency: Database["public"]["Enums"]["currency_code"]
+          default_hourly_internal_cost: number
+          id: string
+          singleton: boolean
+          updated_at: string
+        }
+        Insert: {
+          base_currency?: Database["public"]["Enums"]["currency_code"]
+          default_hourly_internal_cost?: number
+          id?: string
+          singleton?: boolean
+          updated_at?: string
+        }
+        Update: {
+          base_currency?: Database["public"]["Enums"]["currency_code"]
+          default_hourly_internal_cost?: number
+          id?: string
+          singleton?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      client_contracts: {
+        Row: {
+          client_id: string
+          contract_end_date: string | null
+          contract_start_date: string | null
+          created_at: string
+          currency: Database["public"]["Enums"]["currency_code"]
+          id: string
+          monthly_subscription: number | null
+          next_payment_date: string | null
+          setup_fee: number | null
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          currency?: Database["public"]["Enums"]["currency_code"]
+          id?: string
+          monthly_subscription?: number | null
+          next_payment_date?: string | null
+          setup_fee?: number | null
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          currency?: Database["public"]["Enums"]["currency_code"]
+          id?: string
+          monthly_subscription?: number | null
+          next_payment_date?: string | null
+          setup_fee?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_contracts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          city: string | null
+          company_name: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          country: string | null
+          created_at: string
+          id: string
+          name: string
+          notes: string | null
+          property_type: string | null
+          source_lead_id: string | null
+          status: Database["public"]["Enums"]["client_status"]
+          units_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          city?: string | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string | null
+          property_type?: string | null
+          source_lead_id?: string | null
+          status?: Database["public"]["Enums"]["client_status"]
+          units_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          city?: string | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          property_type?: string | null
+          source_lead_id?: string | null
+          status?: Database["public"]["Enums"]["client_status"]
+          units_count?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clients_source_lead_id_fkey"
+            columns: ["source_lead_id"]
+            isOneToOne: true
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           archived_at: string | null
@@ -67,6 +200,63 @@ export type Database = {
           user_agent?: string | null
         }
         Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          client_id: string
+          created_at: string
+          currency: Database["public"]["Enums"]["currency_code"]
+          id: string
+          invoice_number: string | null
+          notes: string | null
+          payment_date: string
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          project_id: string | null
+          status: Database["public"]["Enums"]["payment_status"]
+        }
+        Insert: {
+          amount: number
+          client_id: string
+          created_at?: string
+          currency?: Database["public"]["Enums"]["currency_code"]
+          id?: string
+          invoice_number?: string | null
+          notes?: string | null
+          payment_date: string
+          payment_type: Database["public"]["Enums"]["payment_type"]
+          project_id?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Update: {
+          amount?: number
+          client_id?: string
+          created_at?: string
+          currency?: Database["public"]["Enums"]["currency_code"]
+          id?: string
+          invoice_number?: string | null
+          notes?: string | null
+          payment_date?: string
+          payment_type?: Database["public"]["Enums"]["payment_type"]
+          project_id?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       posts: {
         Row: {
@@ -128,6 +318,177 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          client_id: string
+          created_at: string
+          github_url: string | null
+          id: string
+          launch_date: string | null
+          lovable_url: string | null
+          notes: string | null
+          project_name: string
+          project_status: Database["public"]["Enums"]["project_status"]
+          supabase_url: string | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          github_url?: string | null
+          id?: string
+          launch_date?: string | null
+          lovable_url?: string | null
+          notes?: string | null
+          project_name: string
+          project_status?: Database["public"]["Enums"]["project_status"]
+          supabase_url?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          github_url?: string | null
+          id?: string
+          launch_date?: string | null
+          lovable_url?: string | null
+          notes?: string | null
+          project_name?: string
+          project_status?: Database["public"]["Enums"]["project_status"]
+          supabase_url?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          category: Database["public"]["Enums"]["ticket_category"]
+          client_id: string
+          created_at: string
+          description: string | null
+          id: string
+          internal_notes: string | null
+          priority: Database["public"]["Enums"]["ticket_priority"]
+          project_id: string | null
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["ticket_status"]
+          title: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["ticket_category"]
+          client_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          internal_notes?: string | null
+          priority?: Database["public"]["Enums"]["ticket_priority"]
+          project_id?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"]
+          title: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["ticket_category"]
+          client_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          internal_notes?: string | null
+          priority?: Database["public"]["Enums"]["ticket_priority"]
+          project_id?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["ticket_status"]
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_tickets_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "support_tickets_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      time_entries: {
+        Row: {
+          category: Database["public"]["Enums"]["time_category"]
+          client_id: string
+          created_at: string
+          description: string | null
+          duration_minutes: number
+          entry_date: string
+          hourly_internal_cost: number | null
+          id: string
+          project_id: string | null
+          support_ticket_id: string | null
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["time_category"]
+          client_id: string
+          created_at?: string
+          description?: string | null
+          duration_minutes: number
+          entry_date: string
+          hourly_internal_cost?: number | null
+          id?: string
+          project_id?: string | null
+          support_ticket_id?: string | null
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["time_category"]
+          client_id?: string
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          entry_date?: string
+          hourly_internal_cost?: number | null
+          id?: string
+          project_id?: string | null
+          support_ticket_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "time_entries_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_entries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_entries_support_ticket_id_fkey"
+            columns: ["support_ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -164,6 +525,46 @@ export type Database = {
     }
     Enums: {
       app_role: "admin"
+      client_status:
+        | "lead"
+        | "negotiation"
+        | "onboarding"
+        | "active"
+        | "paused"
+        | "cancelled"
+      currency_code: "EUR" | "USD" | "GBP" | "PLN" | "ISK" | "OTHER"
+      payment_status: "pending" | "paid" | "overdue" | "cancelled"
+      payment_type: "setup" | "subscription" | "additional" | "refund"
+      project_status:
+        | "planning"
+        | "development"
+        | "onboarding"
+        | "active"
+        | "paused"
+        | "cancelled"
+      ticket_category:
+        | "bug"
+        | "question"
+        | "feature_request"
+        | "configuration"
+        | "content"
+        | "billing"
+        | "technical"
+        | "other"
+      ticket_priority: "low" | "normal" | "high" | "urgent"
+      ticket_status:
+        | "new"
+        | "in_progress"
+        | "waiting_for_client"
+        | "resolved"
+        | "closed"
+      time_category:
+        | "support"
+        | "development"
+        | "onboarding"
+        | "maintenance"
+        | "meeting"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -292,6 +693,51 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin"],
+      client_status: [
+        "lead",
+        "negotiation",
+        "onboarding",
+        "active",
+        "paused",
+        "cancelled",
+      ],
+      currency_code: ["EUR", "USD", "GBP", "PLN", "ISK", "OTHER"],
+      payment_status: ["pending", "paid", "overdue", "cancelled"],
+      payment_type: ["setup", "subscription", "additional", "refund"],
+      project_status: [
+        "planning",
+        "development",
+        "onboarding",
+        "active",
+        "paused",
+        "cancelled",
+      ],
+      ticket_category: [
+        "bug",
+        "question",
+        "feature_request",
+        "configuration",
+        "content",
+        "billing",
+        "technical",
+        "other",
+      ],
+      ticket_priority: ["low", "normal", "high", "urgent"],
+      ticket_status: [
+        "new",
+        "in_progress",
+        "waiting_for_client",
+        "resolved",
+        "closed",
+      ],
+      time_category: [
+        "support",
+        "development",
+        "onboarding",
+        "maintenance",
+        "meeting",
+        "other",
+      ],
     },
   },
 } as const
