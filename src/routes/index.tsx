@@ -16,7 +16,6 @@ export const Route = createFileRoute("/")({
       ...h,
       links: [
         ...h.links,
-        { rel: "preload", as: "image", href: "/media/6_booking.webp", fetchpriority: "high" },
       ],
     };
   },
