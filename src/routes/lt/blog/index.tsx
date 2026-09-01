@@ -6,7 +6,11 @@ import { buildHead, organizationLd } from "@/lib/i18n";
 import { listPublishedPosts } from "@/lib/posts.functions";
 
 export const Route = createFileRoute("/lt/blog/")({
-  loader: () => listPublishedPosts({ data: { lang: "lt" } }),
+  loader: async () => {
+    const r = await listPublishedPosts({ data: { lang: "lt" } });
+    console.log("LOADER RESULT", JSON.stringify(r).slice(0, 200));
+    return r;
+  },
   head: () =>
     buildHead({
       lang: "lt",
