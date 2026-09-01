@@ -249,7 +249,23 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
     show(0);
     schedule();
 
+    // First scene video waits for the page to finish loading; the poster covers it.
+    const enableMedia = () => {
+      if (mediaReady) return;
+      mediaReady = true;
+      if (i === 0) show(0);
+    };
+    const onWindowLoad = () => {
+      const ric = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+        .requestIdleCallback;
+      if (ric) ric(enableMedia);
+      else window.setTimeout(enableMedia, 200);
+    };
+    if (document.readyState === "complete") onWindowLoad();
+    else window.addEventListener("load", onWindowLoad, { once: true });
+
     return () => {
+      window.removeEventListener("load", onWindowLoad);
       window.clearTimeout(tId);
       window.clearInterval(rId);
       window.clearInterval(sId);
