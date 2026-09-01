@@ -1,23 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { posts } from "@/content/posts";
 import { absUrl } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
+import { fetchPublishedForSitemap, type SitemapPost } from "@/lib/posts.server";
 
 type Entry = { loc: string; lastmod: string; alternates: { lang: string; href: string }[] };
 
-function latestDate(filter?: Lang): string {
-  const dates = posts.filter((p) => !filter || p.lang === filter).map((p) => p.date).sort();
-  return dates[dates.length - 1]!;
+const day = (value: string) => value.slice(0, 10);
+
+function latestDate(posts: SitemapPost[], filter?: Lang): string {
+  const dates = posts
+    .filter((p) => !filter || p.lang === filter)
+    .map((p) => day(p.updatedAt || p.date))
+    .sort();
+  return dates[dates.length - 1] ?? new Date().toISOString().slice(0, 10);
 }
 
-function buildSitemap(): string {
+function buildSitemap(posts: SitemapPost[]): string {
   const enHome = absUrl("en");
   const ltHome = absUrl("lt");
   const enBlog = absUrl("en", "blog");
   const ltBlog = absUrl("lt", "blog");
 
-  const anyLatest = latestDate();
+  const anyLatest = latestDate(posts);
 
   const entries: Entry[] = [
     {
@@ -40,7 +45,7 @@ function buildSitemap(): string {
     },
     {
       loc: enBlog,
-      lastmod: latestDate("en"),
+      lastmod: latestDate(posts, "en"),
       alternates: [
         { lang: "en", href: enBlog },
         { lang: "lt", href: ltBlog },
@@ -49,7 +54,7 @@ function buildSitemap(): string {
     },
     {
       loc: ltBlog,
-      lastmod: latestDate("lt"),
+      lastmod: latestDate(posts, "lt"),
       alternates: [
         { lang: "en", href: enBlog },
         { lang: "lt", href: ltBlog },
@@ -61,12 +66,14 @@ function buildSitemap(): string {
   for (const post of posts) {
     const loc = absUrl(post.lang, `blog/${post.slug}`);
     // A page that exists in only one language gets no hreflang annotations.
-    const translations = posts.filter((p) => p.slug === post.slug);
+    const translations = post.translationGroup
+      ? posts.filter((p) => p.translationGroup === post.translationGroup)
+      : [post];
     const alternates =
       translations.length > 1
         ? translations.map((p) => ({ lang: p.lang, href: absUrl(p.lang, `blog/${p.slug}`) }))
         : [];
-    entries.push({ loc, lastmod: post.date, alternates });
+    entries.push({ loc, lastmod: day(post.updatedAt || post.date), alternates });
   }
 
   const body = entries
@@ -84,13 +91,15 @@ function buildSitemap(): string {
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: () =>
-        new Response(buildSitemap(), {
+      GET: async () => {
+        const posts = await fetchPublishedForSitemap();
+        return new Response(buildSitemap(posts), {
           headers: {
             "content-type": "application/xml; charset=utf-8",
             "cache-control": "public, max-age=3600",
           },
-        }),
+        });
+      },
     },
   },
 });

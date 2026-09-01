@@ -68,6 +68,66 @@ export type Database = {
         }
         Relationships: []
       }
+      posts: {
+        Row: {
+          blocks: Json
+          cover_alt: string | null
+          cover_image: string | null
+          created_at: string
+          excerpt: string
+          h1: string
+          id: string
+          lang: string
+          meta_description: string
+          meta_title: string
+          published_at: string
+          reading_time: number
+          slug: string
+          status: string
+          title: string
+          translation_group: string | null
+          updated_at: string
+        }
+        Insert: {
+          blocks?: Json
+          cover_alt?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt: string
+          h1: string
+          id?: string
+          lang: string
+          meta_description: string
+          meta_title: string
+          published_at?: string
+          reading_time?: number
+          slug: string
+          status?: string
+          title: string
+          translation_group?: string | null
+          updated_at?: string
+        }
+        Update: {
+          blocks?: Json
+          cover_alt?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string
+          h1?: string
+          id?: string
+          lang?: string
+          meta_description?: string
+          meta_title?: string
+          published_at?: string
+          reading_time?: number
+          slug?: string
+          status?: string
+          title?: string
+          translation_group?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

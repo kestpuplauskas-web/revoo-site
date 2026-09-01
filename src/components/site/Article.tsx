@@ -47,6 +47,23 @@ export function Article({ lang, post }: { lang: Lang; post: Post }) {
                       </p>
                     );
                   }
+                  if (block.type === "image") {
+                    return (
+                      <figure key={i} className="my-8">
+                        <img
+                          src={block.src}
+                          alt={block.alt}
+                          loading="lazy"
+                          className="w-full rounded-2xl border border-ink/10"
+                        />
+                        {block.caption ? (
+                          <figcaption className="mt-3 text-[0.85rem] text-ink-soft">
+                            {block.caption}
+                          </figcaption>
+                        ) : null}
+                      </figure>
+                    );
+                  }
                   const items = block.items.map((item, j) => (
                     <li key={j} className="text-[1.02rem] leading-[1.7] text-ink-soft">
                       {item}
@@ -63,6 +80,7 @@ export function Article({ lang, post }: { lang: Lang; post: Post }) {
                   );
                 })}
               </div>
+
 
               <p className="mt-10 border-l-2 border-amber pl-4 text-[0.88rem] italic text-ink-soft">
                 {c.blog.disclaimer}
