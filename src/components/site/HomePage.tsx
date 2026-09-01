@@ -117,7 +117,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               <BrowserFrame url={c.media.browserUrl}>
                 <img
                   className="block h-auto w-full"
-                  src="/media/6_booking.png"
+                  src="/media/6_booking.webp"
                   alt={c.media.alt.calendar}
                   width={1867}
                   height={937}
