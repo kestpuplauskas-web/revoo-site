@@ -6,6 +6,8 @@ import { Archive, ArchiveRestore, Loader2, Mail, MailOpen, Search } from "lucide
 import { toast } from "sonner";
 
 import { listLeads, updateLead, type LeadRow } from "@/lib/leads.functions";
+import { listLeadConversions } from "@/lib/clients.functions";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/admin/uzklausos")({
   head: () => ({
@@ -38,6 +40,12 @@ function LeadsPage() {
   const leads = useQuery({
     queryKey: ["leads", filter, search],
     queryFn: () => fetchLeads({ data: { filter, search } }),
+  });
+
+  const fetchConversions = useServerFn(listLeadConversions);
+  const conversions = useQuery({
+    queryKey: ["lead-conversions"],
+    queryFn: () => fetchConversions(),
   });
 
   const mutate = useMutation({
@@ -133,6 +141,11 @@ function LeadsPage() {
                           <span className="text-xs text-ink-soft">{lead.email}</span>
                         </span>
                         <span className="mt-0.5 block truncate text-sm text-ink-soft">
+                          {conversions.data?.conversions.some((c) => c.lead_id === lead.id) ? (
+                            <span className="mr-2 rounded-full bg-teal-700 px-2 py-0.5 text-xs text-cream">
+                              Konvertuota
+                            </span>
+                          ) : null}
                           {lead.property_name}
                           {lead.country ? ` · ${lead.country}` : ""}
                         </span>
@@ -174,6 +187,27 @@ function LeadsPage() {
                     {selected.notes}
                   </div>
                 ) : null}
+
+                {(() => {
+                  const conv = conversions.data?.conversions.find(
+                    (c) => c.lead_id === selected.id,
+                  );
+                  if (!conv) return null;
+                  return (
+                    <div className="mt-5 flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-teal-700 px-3 py-1 text-xs font-medium text-cream">
+                        Konvertuota į klientą
+                      </span>
+                      <Link
+                        to="/admin/projektai/$id/"
+                        params={{ id: conv.client_id }}
+                        className="rounded-full border border-ink/15 px-4 py-1.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream"
+                      >
+                        Atidaryti {conv.client_name}
+                      </Link>
+                    </div>
+                  );
+                })()}
 
                 <div className="mt-6 flex flex-wrap gap-2">
                   <button
