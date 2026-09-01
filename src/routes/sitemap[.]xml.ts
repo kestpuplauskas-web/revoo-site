@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { absUrl } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
-import { fetchPublishedForSitemap, type SitemapPost } from "@/lib/posts.server";
+import type { SitemapPost } from "@/lib/posts.server";
 
 type Entry = { loc: string; lastmod: string; alternates: { lang: string; href: string }[] };
 
@@ -92,6 +92,7 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const { fetchPublishedForSitemap } = await import("@/lib/posts.server");
         const posts = await fetchPublishedForSitemap();
         return new Response(buildSitemap(posts), {
           headers: {
