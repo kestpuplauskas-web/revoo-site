@@ -71,7 +71,7 @@ export const lt: Copy = {
     lede: "Revoo automatiškai patikrina šiandienos rezervacijas ir kiekvienai patalpai sudėlioja reikalingus darbus pagal svarbumą.",
     points: [
       "Pirmiausia rodomos patalpos, kurias reikia paruošti tą pačią dieną.",
-      "Jei patalpos nebuvo sutvarkytos laiku, užduotis nep,irštama - ji lieka sistemoje, kol bus atlikta.",
+      "Jei patalpos nebuvo sutvarkytos laiku, užduotis nepamirštama - ji lieka sistemoje, kol bus atlikta.",
       "Jei svečias užsisakė papildomų paslaugų, valdytojas jas mato savo užduočių sąraše, tad tai neliks pamiršta.",
       "Pastebėjus gedimą, apie jį galima pranešti vienu paspaudimu. Vadovas informaciją iš karto mato savo sistemoje.",
       "Valytojas mato tik tai, ko reikia darbuo atlikti. Svečių kontaktai, kainos, mokėjimų informacija ir kita konfidenciali informacija, nėra atvaizduojama.",
