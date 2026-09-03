@@ -1,51 +1,81 @@
-# Tekstų atnaujinimas pagal Revoo_site_text.docx
+# Klientų registras — pardavimų piltuvėlis admin dalyje
 
-Atnaujinami tik tekstų failai: `src/content/copy.en.ts` ir `src/content/copy.lt.ts`.
-Kiekviena kalba redaguojama nepriklausomai — LT keitimai neverčiami į EN ir atvirkščiai.
-Dizainas, komponentai ir logika nekeičiami.
+Nauja meniu skiltis „Klientų registras“ šalia „Valdomi projektai“. Ta pati `clients` lentelė, tie patys klientai — bet registras rodo visą piltuvėlį (ir tuos, su kuriais dar tik bandome susisiekti), su veiksmų istorija, kito veiksmo sekimu ir CSV importu.
 
-## EN pakeitimai (tik tai, kas dokumente pažymėta „EN keičiame“)
+## 1. Būsenos
 
-- Herojaus antraštė: „Software that adapts to your business — not the other way around.“
-- Herojaus paantraštė: „Hotels, cabins, guesthouses and apartments each run differently — yet most software expects them to work the same way. Revoo is a platform we shape around your operation, with a booking website that is genuinely yours.“
-- Karuselės 2 skaidrė: „Manage housekeeping tasks and keep team in sync with one smart app.“
-- Sekcijos etiketė „The week“ → „Booking management“.
-- Iš rezervacijų sekcijos punktų išmetamas punktas apie „Same-day turnovers are allowed on purpose…“.
-- Sekcijos etiketė „The morning“ → „Housekeeping“.
-- Kambarių priežiūros 1 punktas: „Same-day turnovers come first — they have the tightest time window.“
-- „This is not for you if“ sąraše: „Chains and groups above roughly 50 units“ → „You’re a larger hotel group.“
-- Paleidimo (Launch) žingsnio tekstas: „Your existing bookings move across. We train your reception and housekeeping teams, so everyone knows how to use the system from day one.“
-- Formos smulkus tekstas: „We reply within one working day. No automated emails — we reply personally.“
-- DUK klausimas: „What happens if I outgrow you?“ → „What happens if I decide to move to another solution?“ (atsakymas EN nekeičiamas — dokumente nurodyta keisti tik klausimą).
+Prie esamo būsenų sąrašo pridedamos naujos reikšmės. Nė viena esama nešalinama ir nepervadinama, todėl realūs klientai su sutartimis, projektais ir mokėjimais lieka nepaliesti.
 
-Visa kita EN dalis paliekama kaip yra.
+Pardavimo eiga sąsajoje:
 
-## LT pakeitimai
+```text
+Naujas (lead) → Susisiekta → Laukiama atsakymo → Gautas atsakymas →
+Demo suderinta → Pasiūlymas išsiųstas → Derybos (negotiation) →
+Laimėta / Prarasta
+```
 
-- Meniu ir poraštės nuorodos: Požiūris → Mūsų požiūris, Kam skirta → Kas renkasi Revoo, Blogas → Naujienos.
-- Herojus: nauja etiketė, antraštė, paantraštė ir „Parašykite mums…“ eilutė.
-- Karuselės skaidrių tekstai (4 nauji lietuviški tekstai).
-- „Mūsų požiūris“ sekcija: nauja antraštė, įvadas ir abi kortelės („Esame šalia nuo pirmos dienos“, „Tai daugiau nei mėnesinė prenumerata“).
-- Rezervacijų valdymo sekcija: nauja etiketė („Rezervacijų valdymas“), antraštė, įvadas ir 3 punktai (išmetamas punktas apie tos pačios dienos apyvartą).
-- Kambarių priežiūros sekcija: nauja etiketė („Kambarių priežiūros valdymas“), antraštė, įvadas ir 5 nauji punktai.
-- Sąskaitų sekcija: nauja etiketė, antraštė, įvadas ir 4 punktai.
-- Rezervacijų kanalo sekcija: nauja antraštė, įvadas ir pastaba po nuotrauka apie REST API.
-- Objektų tipų karuselė: antraštė „Sukurta pagal tai, kaip dirbate Jūs.“ ir 4 nauji tekstai (viešbučiams, nameliams, svečių namams, apartamentams).
-- CTA juosta: „Įdomu, ar „Revoo“ tiktų jūsų apgyvendinimo vietai? …“
-- „Ką gaunate“ sekcija: nauja antraštė, įvadas, abiejų stulpelių pavadinimai ir visi punktai (10 + 8).
-- „Kas renkasi Revoo“ sekcija: nauja etiketė, antraštė, įvadas, 7 „tinka“ ir 4 „netinka“ punktai.
-- „Nuo ko pradedame“ sekcija: nauja etiketė, antraštė, įvadas ir 3 žingsniai.
-- „Susisiekime“ sekcija: nauja antraštė, įvadas, kontaktų faktai ir formos smulkus tekstas.
-- DUK: nauja etiketė, antraštė ir visi 7 klausimai su atsakymais (įskaitant „Kas nutiks, jei nuspręsiu pereiti prie kito sprendimo?“).
-- Poraštė: atnaujintas aprašymas.
+Po laimėjimo klientas natūraliai pereina į esamas būsenas: Diegimas, Aktyvus, Pristabdytas, Nutrauktas. Duomenų bazėje reikšmės angliškos, lietuviški pavadinimai — tik viename sąsajos žodyne (`src/lib/admin-format.ts`).
 
-## Techninės detalės
+## 2. Kliento kortelės laukai
 
-- `copy.types.ts` struktūra nekeičiama, išskyrus tai, kad `week.points` sąrašas trumpėja nuo 4 iki 3 elementų — tipas naudoja masyvą, todėl schemos keisti nereikia.
-- Antraštėse naudojama `*žodis*` sintaksė paryškinimui — ji išlaikoma naujuose tekstuose.
-- Po pakeitimų paleidžiamas tipų tikrinimas ir peržiūroje patikrinami abu puslapiai (`/` ir `/lt`).
+Jau yra: pavadinimas, įmonė, miestas, šalis, tipas, kambarių skaičius, kontaktinis asmuo, el. paštas, telefonas, pastaba, būsena.
 
-## Ko šis planas neapima
+Pridedama: pastato plotas, statytojas/vystytojas, svetainė, kito veiksmo aprašymas, kito veiksmo data, atsakingas mūsų komandos žmogus, sukūrimo autorius.
 
-- Dokumente minimi „gif“ vaizdai — keičiami tik jų tekstai, patys vaizdai nekeičiami.
-- SEO meta tekstai (`homeSeo`) nekeičiami, nes dokumente jų nėra. Jei norite, kad LT meta tekstas atitiktų naują antraštę, pasakykite.
+Kontaktinis asmuo (dirba objekte) ir atsakingas žmogus (dirba pas mus) — atskiri laukai.
+
+## 3. Veiksmų istorija
+
+Viena chronologinė juosta kortelėje, naujausia viršuje, su data, laiku ir autoriaus vardu. Filtrai: viskas / tik veiksmai / tik pakeitimai.
+
+**Rankiniai įrašai** (skambutis, laiškas, susitikimas, demo, pasiūlymas, pastaba, užduotis) — galima įvesti su praėjusia data; juostoje rikiuojami pagal įvykio, ne įrašymo laiką. Autorių galima taisyti tik savo įrašus.
+
+**Automatiniai įrašai** rašomi pačios duomenų bazės, kai keičiasi prasmingas laukas: būsena, atsakingas, kontaktai, kambarių skaičius, kito veiksmo data, pavadinimas, svetainė, statytojas. Techniniai laukai (atnaujinimo laikas, atnaujintojas) neįrašomi. Matoma sena ir nauja reikšmė. Šių įrašų negali redaguoti ar trinti niekas, įskaitant administratorių.
+
+Rodoma žmogaus kalba: „Kęstutis priskyrė objektą Rasai“, „Būsena: Susisiekta → Demo suderinta“. Vartotojų identifikatoriai keičiami vardais, laukų pavadinimai — lietuviškais, būsenos — tomis pačiomis etiketėmis kaip kortelėje.
+
+Vardams reikia mažos `profiles` lentelės (vardas + el. paštas), pildomos prisijungus; be jos juostoje matytųsi identifikatoriai.
+
+## 4. Sąrašas ir filtrai
+
+Filtrų juosta: būsena, atsakingas, kambarių rėžis (iki 20 / 20–50 / virš 50), kito veiksmo būklė (vėluoja / šiandien / būsimi) ir laisva paieška per pavadinimą, el. paštą, statytoją ir pastabą. Filtrai veikia kartu.
+
+Pradelsti objektai žymimi ryškiai ir keliami į sąrašo viršų.
+
+Virš sąrašo — suvestinė: kiek objektų kiekvienoje būsenoje, kiek pradelstų, kiek be atsakingo.
+
+Renkamės sąrašą, ne Kanban — praktiškiau su penkiais filtrais ir telefone.
+
+## 5. CSV importas
+
+Įkeliamas failas, tada rodoma stulpelių priskyrimo lentelė — pats pasirenki, kuris CSV stulpelis atitinka kurį lauką (veikia su bet kokiu failu).
+
+Valymas: „nežinoma“, „-“, „n/a“ → laukas lieka tuščias; „~50“, „50 kamb.“ → įrašoma 50; netaisyklingas el. paštas ignoruojamas, eilutė nenulūžta.
+
+Dublikatų atpažinimas pakopomis: svetainės domenas → el. paštas → pavadinimas + miestas. Radus sutapimą eilutė praleidžiama ir parodoma ataskaitoje („sukurta X, praleista Y, klaidų Z“). Antras to paties failo importas nesukuria nė vieno naujo objekto.
+
+## 6. Ko neliečiame
+
+Esama `clients` lentelė nekuriama iš naujo; projektų, mokėjimų, laiko įrašų ir tikietų laukai nekeičiami. Prisijungimas ir rolės patikra — esami. Vieša svetainė, blogas, sitemap, robots — nepaliesti. Admin sąsaja lietuviška.
+
+## Techninė dalis
+
+**Migracijos (atskiromis pakopomis — PostgreSQL neleidžia naudoti naujos enum reikšmės toje pačioje transakcijoje):**
+
+1. `ALTER TYPE client_status ADD VALUE` naujoms reikšmėms: `contacted`, `awaiting_reply`, `replied`, `demo_scheduled`, `proposal_sent`, `won`, `lost`. Atskira migracija, nieko daugiau.
+2. `public.profiles` (`id` → auth.users, `full_name`, `email`) + GRANT + RLS (visi autentifikuoti gali skaityti vardus, redaguoti tik savo).
+3. `clients` naujos kolonos: `building_area_sqm numeric`, `developer text`, `website_url text`, `next_action text`, `next_action_date date`, `assigned_to uuid`, `created_by uuid`, `updated_by uuid`.
+4. `public.client_activities`: `client_id`, `kind` (`manual` / `system`), `activity_type` enum (call, email, meeting, demo, proposal, note, task), `occurred_at timestamptz`, `body text`, `field text`, `old_value text`, `new_value text`, `author_id`, `created_at`. GRANT + RLS: admin skaito visus; INSERT/UPDATE/DELETE leidžiama tik `kind = 'manual'` ir tik savo įrašams — sisteminių eilučių negali keisti niekas.
+5. Trigeris `clients_log_changes` (AFTER INSERT/UPDATE, SECURITY DEFINER, `search_path = public`): sukūrus rašo „objektas sukurtas“, atnaujinus lygina tik sekamų laukų sąrašą ir kiekvienam pakeitimui rašo atskirą eilutę su `auth.uid()` kaip autoriumi. Nepakitus nieko — nė vieno įrašo. Tas pats trigeris nustato `updated_by`.
+
+**Kodas:**
+
+- `src/lib/registry.functions.ts` — `listRegistry` (su suvestine), `getRegistryClient`, `saveRegistryClient`, `addActivity`, `listTeam`, `importClientsCsv`; visos per `requireSupabaseAuth`.
+- `src/lib/admin-format.ts` — papildomas būsenų žodynas ir laukų pavadinimų vertimai istorijai (vienas žodynas, be dublikatų).
+- `src/routes/_authenticated/admin.registras.index.tsx` — sąrašas, filtrai, suvestinė.
+- `src/routes/_authenticated/admin.registras.$id.tsx` — kortelė su laukais ir veiksmų juosta.
+- `src/routes/_authenticated/admin.registras.importas.tsx` — CSV su stulpelių priskyrimu.
+- `src/routes/_authenticated/admin.tsx` — nauja nuoroda meniu.
+- Profilio vardas užpildomas prisijungus (upsert per serverio funkciją), be jokių trigerių `auth` schemoje.
+
+**Patikros po įgyvendinimo:** objekto sukūrimas, dvigubas pakeitimas vienu išsaugojimu, tuščias išsaugojimas, vakarykštės datos skambutis, priskyrimas kolegai, pradelsimo kėlimas į viršų, sudėtinis filtravimas, CSV su „nežinoma“ / „~50“, pakartotinis to paties failo importas, „Valdomi projektai“ nepakitę, neprisijungusio nukreipimas į prisijungimą.
