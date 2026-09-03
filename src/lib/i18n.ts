@@ -166,10 +166,9 @@ export function breadcrumbLd(items: { name: string; url: string }[]) {
 
 export const homeSeo: Record<Lang, { title: string; description: string }> = {
   en: {
-    title:
-      "Revoo — property management system and booking website for small hotels, cabins and guesthouses",
+    title: "Revoo | Property Management System & Booking Website",
     description:
-      "A property management system and a booking website in one, built around how your property actually works. For independent hotels, cabins, guesthouses and apartments. Request a demo.",
+      "Revoo is a property management system and booking website in one. Manage bookings, invoices and housekeeping for small hotels and guesthouses.",
   },
   lt: {
     title: "Revoo | Apgyvendinimo & Nuomos Valdymo Sistema",

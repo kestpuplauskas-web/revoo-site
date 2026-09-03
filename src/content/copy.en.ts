@@ -288,9 +288,9 @@ export const en: Copy = {
     lede: "Practical writing about booking, invoicing and the operational day — for independent hotels, cabins, guesthouses and apartments.",
     readingTime: "min read",
     back: "Back to the blog",
-    metaTitle: "Revoo blog — booking, invoicing and running a small property",
+    metaTitle: "Revoo Blog | Booking, Invoicing & Property Management",
     metaDescription:
-      "Practical articles for independent hotels, cabins, guesthouses and apartments: choosing a property management system, invoicing rules, housekeeping and direct bookings.",
+      "Practical articles for independent hotels, cabins and guesthouses: choosing a property management system, invoicing, housekeeping and direct bookings.",
     disclaimer:
       "This article is general information, not tax or legal advice. Check specifics with your accountant or your national tax authority.",
     ctaTitle: "Wondering whether Revoo fits your property?",

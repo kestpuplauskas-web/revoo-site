@@ -288,9 +288,9 @@ export const lt: Copy = {
     lede: "Praktiniai tekstai apie rezervacijas, sąskaitas ir kasdienį darbą — nepriklausomiems viešbučiams, nameliams, svečių namams ir apartamentams.",
     readingTime: "min skaitymo",
     back: "Grįžti į blogą",
-    metaTitle: "Revoo blogas — rezervacijos, sąskaitos ir mažo objekto valdymas",
+    metaTitle: "Revoo blogas | Rezervacijos, sąskaitos ir valdymas",
     metaDescription:
-      "Praktiniai straipsniai viešbučiams, nameliams, svečių namams ir apartamentams: apgyvendinimo valdymo sistemos pasirinkimas, PVM sąskaitos, kambarinių darbas ir tiesioginės rezervacijos.",
+      "Praktiniai straipsniai viešbučiams, nameliams ir svečių namams: valdymo sistemos pasirinkimas, PVM sąskaitos, kambarinių darbas ir rezervacijos.",
     disclaimer:
       "Šis straipsnis yra bendro pobūdžio informacija, o ne mokestinė ar teisinė konsultacija. Konkrečius atvejus derinkite su savo buhalteriu arba VMI.",
     ctaTitle: "Įdomu, ar Revoo tinka jūsų objektui?",
