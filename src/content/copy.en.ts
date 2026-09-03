@@ -14,7 +14,7 @@ export const en: Copy = {
   },
   hero: {
     eyebrow: "PROPERTY MANAGEMENT SYSTEM WITH YOUR OWN BOOKING WEBSITE\n\n",
-    h1: "Software that *adapts* to your bussiness — not the other way around.",
+    h1: "Software that *adapts* to your business — not the other way around.",
     sub: "Hotels, cabins, guesthouses and apartments each run differently — and none of them run the way the software they were sold assumes. Revoo is a platform we shape to your operation, with a booking website that is genuinely yours.",
     primary: "Request a demo",
     secondary: "See how it works",
