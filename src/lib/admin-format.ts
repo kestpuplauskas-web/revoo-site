@@ -33,13 +33,52 @@ export function formatHours(minutes: number | null | undefined) {
 }
 
 export const CLIENT_STATUS_LABELS: Record<string, string> = {
-  lead: "Užklausa",
+  lead: "Naujas",
+  contacted: "Susisiekta",
+  awaiting_reply: "Laukiama atsakymo",
+  replied: "Gautas atsakymas",
+  demo_scheduled: "Demo suderinta",
+  proposal_sent: "Pasiūlymas išsiųstas",
   negotiation: "Derybos",
+  won: "Laimėta",
+  lost: "Prarasta",
   onboarding: "Diegimas",
   active: "Aktyvus",
   paused: "Pristabdytas",
   cancelled: "Nutrauktas",
 };
+
+export const ACTIVITY_TYPE_LABELS: Record<string, string> = {
+  call: "Skambutis",
+  email: "Laiškas",
+  meeting: "Susitikimas",
+  demo: "Demo",
+  proposal: "Pasiūlymas",
+  note: "Pastaba",
+  task: "Užduotis",
+};
+
+export const CLIENT_FIELD_LABELS: Record<string, string> = {
+  created: "Objektas sukurtas",
+  status: "Būsena",
+  assigned_to: "Atsakingas",
+  contact_name: "Kontaktinis asmuo",
+  contact_email: "Kontaktinis el. paštas",
+  contact_phone: "Telefonas",
+  units_count: "Kambarių skaičius",
+  next_action: "Kitas veiksmas",
+  next_action_date: "Kito veiksmo data",
+  name: "Pavadinimas",
+  website_url: "Svetainė",
+  developer: "Statytojas",
+  city: "Miestas",
+  country: "Šalis",
+  property_type: "Tipas",
+  building_area_sqm: "Pastato plotas",
+  notes: "Pastaba",
+  company_name: "Įmonė",
+};
+
 
 export const PROJECT_STATUS_LABELS: Record<string, string> = {
   planning: "Planavimas",

@@ -38,6 +38,56 @@ export type Database = {
         }
         Relationships: []
       }
+      client_activities: {
+        Row: {
+          activity_type: Database["public"]["Enums"]["activity_type"] | null
+          author_id: string | null
+          body: string | null
+          client_id: string
+          created_at: string
+          field: string | null
+          id: string
+          kind: Database["public"]["Enums"]["activity_kind"]
+          new_value: string | null
+          occurred_at: string
+          old_value: string | null
+        }
+        Insert: {
+          activity_type?: Database["public"]["Enums"]["activity_type"] | null
+          author_id?: string | null
+          body?: string | null
+          client_id: string
+          created_at?: string
+          field?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["activity_kind"]
+          new_value?: string | null
+          occurred_at?: string
+          old_value?: string | null
+        }
+        Update: {
+          activity_type?: Database["public"]["Enums"]["activity_type"] | null
+          author_id?: string | null
+          body?: string | null
+          client_id?: string
+          created_at?: string
+          field?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["activity_kind"]
+          new_value?: string | null
+          occurred_at?: string
+          old_value?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_activities_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_contracts: {
         Row: {
           client_id: string
@@ -87,6 +137,8 @@ export type Database = {
       }
       clients: {
         Row: {
+          assigned_to: string | null
+          building_area_sqm: number | null
           city: string | null
           company_name: string | null
           contact_email: string | null
@@ -94,16 +146,24 @@ export type Database = {
           contact_phone: string | null
           country: string | null
           created_at: string
+          created_by: string | null
+          developer: string | null
           id: string
           name: string
+          next_action: string | null
+          next_action_date: string | null
           notes: string | null
           property_type: string | null
           source_lead_id: string | null
           status: Database["public"]["Enums"]["client_status"]
           units_count: number | null
           updated_at: string
+          updated_by: string | null
+          website_url: string | null
         }
         Insert: {
+          assigned_to?: string | null
+          building_area_sqm?: number | null
           city?: string | null
           company_name?: string | null
           contact_email?: string | null
@@ -111,16 +171,24 @@ export type Database = {
           contact_phone?: string | null
           country?: string | null
           created_at?: string
+          created_by?: string | null
+          developer?: string | null
           id?: string
           name: string
+          next_action?: string | null
+          next_action_date?: string | null
           notes?: string | null
           property_type?: string | null
           source_lead_id?: string | null
           status?: Database["public"]["Enums"]["client_status"]
           units_count?: number | null
           updated_at?: string
+          updated_by?: string | null
+          website_url?: string | null
         }
         Update: {
+          assigned_to?: string | null
+          building_area_sqm?: number | null
           city?: string | null
           company_name?: string | null
           contact_email?: string | null
@@ -128,14 +196,20 @@ export type Database = {
           contact_phone?: string | null
           country?: string | null
           created_at?: string
+          created_by?: string | null
+          developer?: string | null
           id?: string
           name?: string
+          next_action?: string | null
+          next_action_date?: string | null
           notes?: string | null
           property_type?: string | null
           source_lead_id?: string | null
           status?: Database["public"]["Enums"]["client_status"]
           units_count?: number | null
           updated_at?: string
+          updated_by?: string | null
+          website_url?: string | null
         }
         Relationships: [
           {
@@ -314,6 +388,30 @@ export type Database = {
           status?: string
           title?: string
           translation_group?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
           updated_at?: string
         }
         Relationships: []
@@ -524,6 +622,15 @@ export type Database = {
       }
     }
     Enums: {
+      activity_kind: "manual" | "system"
+      activity_type:
+        | "call"
+        | "email"
+        | "meeting"
+        | "demo"
+        | "proposal"
+        | "note"
+        | "task"
       app_role: "admin"
       client_status:
         | "lead"
@@ -532,6 +639,13 @@ export type Database = {
         | "active"
         | "paused"
         | "cancelled"
+        | "contacted"
+        | "awaiting_reply"
+        | "replied"
+        | "demo_scheduled"
+        | "proposal_sent"
+        | "won"
+        | "lost"
       currency_code: "EUR" | "USD" | "GBP" | "PLN" | "ISK" | "OTHER"
       payment_status: "pending" | "paid" | "overdue" | "cancelled"
       payment_type: "setup" | "subscription" | "additional" | "refund"
@@ -692,6 +806,16 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      activity_kind: ["manual", "system"],
+      activity_type: [
+        "call",
+        "email",
+        "meeting",
+        "demo",
+        "proposal",
+        "note",
+        "task",
+      ],
       app_role: ["admin"],
       client_status: [
         "lead",
@@ -700,6 +824,13 @@ export const Constants = {
         "active",
         "paused",
         "cancelled",
+        "contacted",
+        "awaiting_reply",
+        "replied",
+        "demo_scheduled",
+        "proposal_sent",
+        "won",
+        "lost",
       ],
       currency_code: ["EUR", "USD", "GBP", "PLN", "ISK", "OTHER"],
       payment_status: ["pending", "paid", "overdue", "cancelled"],

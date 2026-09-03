@@ -1,10 +1,11 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { FileText, FolderKanban, Inbox } from "lucide-react";
+import { Building2, FileText, FolderKanban, Inbox } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { getMyRole, getUnreadCount } from "@/lib/leads.functions";
+import { ensureProfile } from "@/lib/registry.functions";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ name: "robots", content: "noindex, nofollow" }] }),
@@ -16,11 +17,17 @@ function AdminLayout() {
   const queryClient = useQueryClient();
   const fetchRole = useServerFn(getMyRole);
   const fetchUnread = useServerFn(getUnreadCount);
+  const bootstrapProfile = useServerFn(ensureProfile);
 
   const role = useQuery({ queryKey: ["my-role"], queryFn: () => fetchRole() });
   const unread = useQuery({
     queryKey: ["leads-unread"],
     queryFn: () => fetchUnread(),
+    enabled: role.data?.isAdmin === true,
+  });
+  useQuery({
+    queryKey: ["my-profile"],
+    queryFn: () => bootstrapProfile(),
     enabled: role.data?.isAdmin === true,
   });
 
@@ -73,6 +80,9 @@ function AdminLayout() {
           <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
             Valdomi projektai
           </NavItem>
+          <NavItem to="/admin/registras/" icon={<Building2 className="h-4 w-4" aria-hidden="true" />}>
+            Klientų registras
+          </NavItem>
         </nav>
 
         <button
@@ -96,7 +106,7 @@ function NavItem({
   badge,
   children,
 }: {
-  to: "/admin/uzklausos/" | "/admin/straipsniai/" | "/admin/projektai/";
+  to: "/admin/uzklausos/" | "/admin/straipsniai/" | "/admin/projektai/" | "/admin/registras/";
   icon: React.ReactNode;
   badge?: number;
   children: React.ReactNode;
