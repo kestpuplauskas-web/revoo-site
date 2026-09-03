@@ -25,6 +25,7 @@ import { Route as AuthenticatedAdminPerziuraIdRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminProjektaiIndexRouteImport } from './routes/_authenticated/admin.projektai.index'
 import { Route as AuthenticatedAdminProjektaiIdRouteImport } from './routes/_authenticated/admin.projektai.$id'
 import { Route as AuthenticatedAdminProjektaiNustatymaiRouteImport } from './routes/_authenticated/admin.projektai.nustatymai'
+import { Route as AuthenticatedAdminRegistrasIndexRouteImport } from './routes/_authenticated/admin.registras.index'
 import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
 import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
 
@@ -112,6 +113,12 @@ const AuthenticatedAdminProjektaiNustatymaiRoute =
     path: '/projektai/nustatymai',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminRegistrasIndexRoute =
+  AuthenticatedAdminRegistrasIndexRouteImport.update({
+    id: '/registras/',
+    path: '/registras/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminStraipsniaiIndexRoute =
   AuthenticatedAdminStraipsniaiIndexRouteImport.update({
     id: '/straipsniai/',
@@ -142,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
+  '/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesByTo {
@@ -160,6 +168,7 @@ export interface FileRoutesByTo {
   '/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/admin/projektai': typeof AuthenticatedAdminProjektaiIndexRoute
+  '/admin/registras': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesById {
@@ -181,6 +190,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
   '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/_authenticated/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
+  '/_authenticated/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRouteTypes {
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/admin/projektai/nustatymai'
     | '/admin/straipsniai/$id'
     | '/admin/projektai/'
+    | '/admin/registras/'
     | '/admin/straipsniai/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/admin/projektai/nustatymai'
     | '/admin/straipsniai/$id'
     | '/admin/projektai'
+    | '/admin/registras'
     | '/admin/straipsniai'
   id:
     | '__root__'
@@ -240,6 +252,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/projektai/nustatymai'
     | '/_authenticated/admin/straipsniai/$id'
     | '/_authenticated/admin/projektai/'
+    | '/_authenticated/admin/registras/'
     | '/_authenticated/admin/straipsniai/'
   fileRoutesById: FileRoutesById
 }
@@ -369,6 +382,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProjektaiNustatymaiRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/registras/': {
+      id: '/_authenticated/admin/registras/'
+      path: '/registras'
+      fullPath: '/admin/registras/'
+      preLoaderRoute: typeof AuthenticatedAdminRegistrasIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/straipsniai/': {
       id: '/_authenticated/admin/straipsniai/'
       path: '/straipsniai'
@@ -394,6 +414,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProjektaiNustatymaiRoute: typeof AuthenticatedAdminProjektaiNustatymaiRoute
   AuthenticatedAdminStraipsniaiIdRoute: typeof AuthenticatedAdminStraipsniaiIdRoute
   AuthenticatedAdminProjektaiIndexRoute: typeof AuthenticatedAdminProjektaiIndexRoute
+  AuthenticatedAdminRegistrasIndexRoute: typeof AuthenticatedAdminRegistrasIndexRoute
   AuthenticatedAdminStraipsniaiIndexRoute: typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 
@@ -406,6 +427,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
     AuthenticatedAdminProjektaiNustatymaiRoute,
   AuthenticatedAdminStraipsniaiIdRoute: AuthenticatedAdminStraipsniaiIdRoute,
   AuthenticatedAdminProjektaiIndexRoute: AuthenticatedAdminProjektaiIndexRoute,
+  AuthenticatedAdminRegistrasIndexRoute: AuthenticatedAdminRegistrasIndexRoute,
   AuthenticatedAdminStraipsniaiIndexRoute:
     AuthenticatedAdminStraipsniaiIndexRoute,
 }
