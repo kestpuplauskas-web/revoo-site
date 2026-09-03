@@ -532,6 +532,13 @@ export type Database = {
         | "active"
         | "paused"
         | "cancelled"
+        | "contacted"
+        | "awaiting_reply"
+        | "replied"
+        | "demo_scheduled"
+        | "proposal_sent"
+        | "won"
+        | "lost"
       currency_code: "EUR" | "USD" | "GBP" | "PLN" | "ISK" | "OTHER"
       payment_status: "pending" | "paid" | "overdue" | "cancelled"
       payment_type: "setup" | "subscription" | "additional" | "refund"
@@ -700,6 +707,13 @@ export const Constants = {
         "active",
         "paused",
         "cancelled",
+        "contacted",
+        "awaiting_reply",
+        "replied",
+        "demo_scheduled",
+        "proposal_sent",
+        "won",
+        "lost",
       ],
       currency_code: ["EUR", "USD", "GBP", "PLN", "ISK", "OTHER"],
       payment_status: ["pending", "paid", "overdue", "cancelled"],
