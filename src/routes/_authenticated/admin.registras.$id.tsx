@@ -22,7 +22,7 @@ import {
 } from "@/lib/admin-format";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
 
-export const Route = createFileRoute("/_authenticated/admin/registras/$id/")({
+export const Route = createFileRoute("/_authenticated/admin/registras/$id")({
   head: () => ({
     meta: [
       { title: "Objekto kortelė — Revoo administravimas" },
@@ -71,7 +71,7 @@ const EMPTY: FormState = {
 };
 
 function RegistryClientPage() {
-  const { id } = useParams({ from: "/_authenticated/admin/registras/$id/" });
+  const { id } = useParams({ from: "/_authenticated/admin/registras/$id" });
   const isNew = id === "naujas";
   const navigate = useNavigate();
   const queryClient = useQueryClient();
