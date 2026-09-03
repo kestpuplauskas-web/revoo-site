@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { importClientsCsv, type ImportRow } from "@/lib/registry.functions";
 import { BTN, BTN_GHOST, CARD, Field, INPUT } from "@/components/admin/ui";
 
-export const Route = createFileRoute("/_authenticated/admin/registras/importas/")({
+export const Route = createFileRoute("/_authenticated/admin/registras/importas")({
   head: () => ({
     meta: [
       { title: "CSV importas — Revoo administravimas" },
