@@ -204,54 +204,55 @@ function RegistryPage() {
               {rows.map((c) => {
                 const isOverdue = Boolean(c.next_action_date && c.next_action_date < today);
                 return (
-                  <li
-                    key={c.id}
-                    className={`${CARD} p-5 ${isOverdue ? "ring-2 ring-amber" : ""}`}
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <Link
-                          to="/admin/registras/$id/"
-                          params={{ id: c.id }}
-                          className="font-display text-2xl text-ink hover:underline"
-                        >
-                          {c.name}
-                        </Link>
-                        <p className="mt-0.5 text-sm text-ink-soft">
-                          {[c.city, c.country].filter(Boolean).join(", ") || "—"}
-                          {c.property_type ? ` · ${c.property_type}` : ""}
-                          {c.units_count ? ` · ${c.units_count} kamb.` : ""}
-                          {c.developer ? ` · ${c.developer}` : ""}
-                        </p>
+                  <li key={c.id}>
+                    <Link
+                      to="/admin/registras/$id/"
+                      params={{ id: c.id }}
+                      className={`${CARD} block p-5 transition-shadow hover:shadow-[0_20px_60px_-40px_rgba(8,32,30,0.7)] ${
+                        isOverdue ? "ring-2 ring-amber" : ""
+                      }`}
+                    >
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-display text-2xl text-ink hover:underline">
+                            {c.name}
+                          </p>
+                          <p className="mt-0.5 text-sm text-ink-soft">
+                            {[c.city, c.country].filter(Boolean).join(", ") || "—"}
+                            {c.property_type ? ` · ${c.property_type}` : ""}
+                            {c.units_count ? ` · ${c.units_count} kamb.` : ""}
+                            {c.developer ? ` · ${c.developer}` : ""}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          {isOverdue ? <Pill tone="warn">Pradelsta</Pill> : null}
+                          <Pill tone={c.status === "won" ? "accent" : "muted"}>
+                            {CLIENT_STATUS_LABELS[c.status]}
+                          </Pill>
+                        </div>
                       </div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        {isOverdue ? <Pill tone="warn">Pradelsta</Pill> : null}
-                        <Pill tone={c.status === "won" ? "accent" : "muted"}>
-                          {CLIENT_STATUS_LABELS[c.status]}
-                        </Pill>
-                      </div>
-                    </div>
 
-                    <dl className="mt-4 grid gap-x-4 gap-y-2 text-sm sm:grid-cols-3">
-                      <div>
-                        <dt className="text-xs tracking-wide text-ink-soft uppercase">
-                          Kitas veiksmas
-                        </dt>
-                        <dd className="text-ink">{c.next_action || "—"}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-xs tracking-wide text-ink-soft uppercase">Data</dt>
-                        <dd className={isOverdue ? "font-medium text-ink" : "text-ink"}>
-                          {c.next_action_date ? formatDate(c.next_action_date) : "—"}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="text-xs tracking-wide text-ink-soft uppercase">
-                          Atsakingas
-                        </dt>
-                        <dd className="text-ink">{teamName(c.assigned_to) ?? "—"}</dd>
-                      </div>
-                    </dl>
+                      <dl className="mt-4 grid gap-x-4 gap-y-2 text-sm sm:grid-cols-3">
+                        <div>
+                          <dt className="text-xs tracking-wide text-ink-soft uppercase">
+                            Kitas veiksmas
+                          </dt>
+                          <dd className="text-ink">{c.next_action || "—"}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-xs tracking-wide text-ink-soft uppercase">Data</dt>
+                          <dd className={isOverdue ? "font-medium text-ink" : "text-ink"}>
+                            {c.next_action_date ? formatDate(c.next_action_date) : "—"}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="text-xs tracking-wide text-ink-soft uppercase">
+                            Atsakingas
+                          </dt>
+                          <dd className="text-ink">{teamName(c.assigned_to) ?? "—"}</dd>
+                        </div>
+                      </dl>
+                    </Link>
                   </li>
                 );
               })}
