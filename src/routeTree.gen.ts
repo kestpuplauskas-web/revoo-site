@@ -19,6 +19,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
@@ -81,6 +82,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminAnalitikaRoute =
+  AuthenticatedAdminAnalitikaRouteImport.update({
+    id: '/analitika',
+    path: '/analitika',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminUzklausosRoute =
   AuthenticatedAdminUzklausosRouteImport.update({
     id: '/uzklausos',
@@ -161,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -183,6 +191,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
+  '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -208,6 +217,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
+  '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -233,6 +243,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/'
     | '/lt/'
+    | '/admin/analitika'
     | '/admin/uzklausos'
     | '/lt/blog/$slug'
     | '/admin/'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog'
     | '/lt'
+    | '/admin/analitika'
     | '/admin/uzklausos'
     | '/lt/blog/$slug'
     | '/admin'
@@ -279,6 +291,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/blog/'
     | '/lt/'
+    | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/uzklausos'
     | '/lt/blog/$slug'
     | '/_authenticated/admin/'
@@ -379,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/analitika': {
+      id: '/_authenticated/admin/analitika'
+      path: '/analitika'
+      fullPath: '/admin/analitika'
+      preLoaderRoute: typeof AuthenticatedAdminAnalitikaRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/uzklausos': {
       id: '/_authenticated/admin/uzklausos'
       path: '/uzklausos'
@@ -467,6 +487,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminPerziuraIdRoute: typeof AuthenticatedAdminPerziuraIdRoute
@@ -481,6 +502,7 @@ interface AuthenticatedAdminRouteChildren {
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminPerziuraIdRoute: AuthenticatedAdminPerziuraIdRoute,

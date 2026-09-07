@@ -12,6 +12,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
+import { usePageTracking } from "@/hooks/usePageTracking";
 
 
 import appCss from "../styles.css?url";
@@ -133,6 +134,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  usePageTracking();
 
   return (
     <QueryClientProvider client={queryClient}>
