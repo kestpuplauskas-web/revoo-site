@@ -37,12 +37,7 @@ export const getAnalyticsSummary = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => rangeSchema.parse(input))
   .handler(async ({ data, context }): Promise<AnalyticsSummary> => {
-    const rpc = context.supabase.rpc as unknown as (
-      fn: string,
-      args: Record<string, unknown>,
-    ) => Promise<{ data: unknown; error: { message: string } | null }>;
-
-    const { data: result, error } = await rpc("analytics_summary", {
+    const { data: result, error } = await context.supabase.rpc("analytics_summary", {
       _from: isoDay(data.range - 1),
       _to: isoDay(0),
     });
