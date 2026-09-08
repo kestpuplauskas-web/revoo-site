@@ -41,6 +41,10 @@ function UsersPage() {
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState<AppUserRole>("admin");
 
+  const fetchAccess = useServerFn(getMyAccess);
+  const access = useQuery({ queryKey: ["admin-users-access"], queryFn: () => fetchAccess() });
+  const canManageRoles = access.data?.isDeveloper === true;
+
   const users = useQuery({ queryKey: ["admin-users"], queryFn: () => fetchUsers() });
   const refresh = () => qc.invalidateQueries({ queryKey: ["admin-users"] });
 
@@ -160,28 +164,32 @@ function UsersPage() {
 
                 <Pill tone={u.role === "developer" ? "accent" : "muted"}>{ROLE_LABEL[u.role]}</Pill>
 
-                <select
-                  value={u.role}
-                  onChange={(e) =>
-                    roleM.mutate({ userId: u.userId, role: e.target.value as AppUserRole })
-                  }
-                  className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-xs text-ink"
-                  aria-label="Pakeisti rolę"
-                >
-                  <option value="admin">Administratorius</option>
-                  <option value="developer">Programuotojas</option>
-                </select>
+                {canManageRoles ? (
+                  <>
+                    <select
+                      value={u.role}
+                      onChange={(e) =>
+                        roleM.mutate({ userId: u.userId, role: e.target.value as AppUserRole })
+                      }
+                      className="rounded-2xl border border-ink/10 bg-white px-3 py-2 text-xs text-ink"
+                      aria-label="Pakeisti rolę"
+                    >
+                      <option value="admin">Administratorius</option>
+                      <option value="developer">Programuotojas</option>
+                    </select>
 
-                <button
-                  type="button"
-                  className={`${BTN_GHOST} px-3 py-2`}
-                  aria-label="Pašalinti naudotoją"
-                  onClick={() => {
-                    if (window.confirm(`Pašalinti ${u.email}?`)) deleteM.mutate(u.userId);
-                  }}
-                >
-                  <Trash2 className="h-4 w-4" aria-hidden="true" />
-                </button>
+                    <button
+                      type="button"
+                      className={`${BTN_GHOST} px-3 py-2`}
+                      aria-label="Pašalinti naudotoją"
+                      onClick={() => {
+                        if (window.confirm(`Pašalinti ${u.email}?`)) deleteM.mutate(u.userId);
+                      }}
+                    >
+                      <Trash2 className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </>
+                ) : null}
               </li>
             ))}
           </ul>
