@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { getMyRole, getUnreadCount } from "@/lib/leads.functions";
 import { ensureProfile } from "@/lib/registry.functions";
 
+type AuthUser = { email?: string; full_name?: string } | null;
+
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ name: "robots", content: "noindex, nofollow" }] }),
   component: AdminLayout,
