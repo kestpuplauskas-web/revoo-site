@@ -35,12 +35,14 @@ function AdminLayout() {
 
   const authUser = useQuery({
     queryKey: ["my-auth-user"],
-    queryFn: async (): Promise<AuthUser> => {
+    queryFn: async () => {
       const { data } = await supabase.auth.getUser();
       const u = data.user;
-      if (!u) return null;
-      const fullName = ((u.user_metadata as { full_name?: string } | null)?.full_name ?? "").trim();
-      return { email: u.email ?? undefined, full_name: fullName || undefined };
+      const fullName = ((u?.user_metadata as { full_name?: string } | null)?.full_name ?? "").trim();
+      return {
+        fullName: fullName || (u?.email ?? ""),
+        email: u?.email ?? "",
+      };
     },
     enabled: role.data?.isAdmin === true,
   });
