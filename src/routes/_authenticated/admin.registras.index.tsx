@@ -79,7 +79,15 @@ function RegistryPage() {
       if (ad !== bd) return ad.localeCompare(bd);
       return b.created_at.localeCompare(a.created_at);
     });
-  }, [clients, search, status, assignee, units, nextState, today]);
+  }, [clients, search, status, country, assignee, units, nextState, today]);
+
+  const countries = useMemo(
+    () =>
+      [...new Set(clients.map((c) => c.country).filter((v): v is string => Boolean(v)))].sort(
+        (a, b) => a.localeCompare(b, "lt"),
+      ),
+    [clients],
+  );
 
   return (
     <main className="px-4 py-8 sm:px-8">
