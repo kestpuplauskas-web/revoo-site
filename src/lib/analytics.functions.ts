@@ -13,6 +13,7 @@ export interface AnalyticsSummary {
   devices: { device: string; views: number }[];
   countries: { country: string; views: number; visitors: number }[];
   leads: number;
+  bots: number;
 }
 
 const EMPTY: AnalyticsSummary = {
@@ -24,6 +25,7 @@ const EMPTY: AnalyticsSummary = {
   devices: [],
   countries: [],
   leads: 0,
+  bots: 0,
 };
 
 const rangeSchema = z.object({ range: z.union([z.literal(7), z.literal(30), z.literal(90)]) });
