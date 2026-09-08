@@ -28,6 +28,7 @@ function RegistryPage() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [assignee, setAssignee] = useState("");
+  const [country, setCountry] = useState("");
   const [units, setUnits] = useState<UnitsRange>("");
   const [nextState, setNextState] = useState<NextState>("");
 
