@@ -120,7 +120,7 @@ export const lt: Copy = {
     ],
   },
   ctaBand: {
-    text: "Įdomu, ar Revoo tiktų jūsų apgyvendimo vietai?\u00a0\n45 minučių pokalbio pakaks, kad tai išsiaiškintume.",
+    text: "Įdomu, ar Revoo tiktų jūsų apgyvendinimo vietai?\u00a0 45 minučių pokalbio pakaks, kad tai išsiaiškintume.",
     button: "Užsisakyti demo",
   },
   included: {
@@ -187,7 +187,7 @@ export const lt: Copy = {
     steps: [
       {
         title: "Pokalbis",
-        body: "Apie 45 minutes skiriame tam, kad geriau suprastume jūsų veiklą: kaip valdote apgyvendimo vietą, ką siūlote svečiams be apgyvendimo, su kokiomis problemomis susiduriate šiandien ir kaip turi atrodyti jūsų sąskaitos.",
+         body: "Apie 45 minutes skiriame tam, kad geriau suprastume jūsų veiklą: kaip valdote apgyvendinimo vietą, ką siūlote svečiams be apgyvendinimo, su kokiomis problemomis susiduriate šiandien ir kaip turi atrodyti jūsų sąskaitos.",
       },
       {
         title: "Sistemos diegimas",
@@ -202,7 +202,7 @@ export const lt: Copy = {
   },
   demo: {
     eyebrow: "Susisiekime",
-    h2: "Papasakokite apie savo apgyvendimo vietą",
+    h2: "Papasakokite apie savo apgyvendinimo vietą",
     lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirtai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
     facts: [
       "hello@revoo.site",
