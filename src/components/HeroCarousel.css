@@ -137,4 +137,11 @@
 
 @media(max-width:980px){
   .rc-stage{position:relative;min-height:520px}
-  .rc-cap p{font-size:1.1rem}}
+  .rc-cap p{font-size:1.1rem}
+  /* telefone atsisakome brangaus piešimo: blur sluoksnių, tinklelio, prožektoriaus */
+  .rc-spot,.rc-grid,.rc-glow2{display:none}
+  .rc-card.d2,.rc-card.d3,
+  .rc-scene.on .rc-slot.pos-l,.rc-scene.on .rc-slot.pos-r,
+  .rc-scene.on .rc-sw.sw-back{filter:none}
+  .rc-card.d1 .rc-browser,.rc-card.d1 .rc-plain,.rc-card.d1 .rc-phone,
+  .rc-browser,.rc-plain,.rc-phone{box-shadow:0 18px 40px -24px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.1)}}
