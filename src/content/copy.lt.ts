@@ -27,7 +27,7 @@ export const lt: Copy = {
     goTo: "Rodyti skaidrę",
     slides: [
       "Perkelkite rezervaciją vos keliais paspaudimais.",
-      "Kambarių priežiūros programa, padedanti prioritetizuoti ir sklandžiai perduoti užduotis.",
+      "Kambarių priežiūros programa, padedanti užduotis surikiuoti pagal svarbą ir sklandžiai jas perduoti vykdymui.",
       "Sąskaitų generavimas Jūsų klientui.",
       "Sukurta pagal Jūsų verslą. Veikia pagal Jūsų taisykles.",
     ],
@@ -85,7 +85,7 @@ export const lt: Copy = {
       "Verslo klientų duomenys surenkami iš anksto: įmonės pavadinimas, įmonės kodas, PVM mokėtojo kodas ir adresas nurodomi užsakymo metu - nereikia jų ieškoti po viešnagės.",
       "Sąskaitų numeriai suteikiami iš eilės, todėl numeracijoje nelieka praleistų numerių.",
       "\u00a0Kiekviena papildomai užsakyta ir apmokėta paslauga įtraukiama kaip atskira eilutė sąskaitoje.",
-      "Sąskaitų išrašymas pritaikomos pagal jūsų šalies reikalavimus.",
+      "Sąskaitų išrašymas pritaikomas pagal jūsų šalies reikalavimus.",
     ],
   },
   channel: {
@@ -203,11 +203,11 @@ export const lt: Copy = {
   demo: {
     eyebrow: "Susisiekime",
     h2: "Papasakokite apie savo apgyvendinimo vietą",
-    lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirtai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
+    lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
     facts: [
       "hello@revoo.site",
       "Bendraujame anglų ir lietuvių kalbomis",
-      "Esame Lietuvoje · šiuo metu diegiame Revoo produktos Islandijoje",
+      "Esame Lietuvoje · šiuo metu diegiame Revoo produktus ir Islandijoje",
     ],
     form: {
       name: "Vardas",
