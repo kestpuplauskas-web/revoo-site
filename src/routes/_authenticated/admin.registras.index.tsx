@@ -45,6 +45,7 @@ function RegistryPage() {
     const term = search.trim().toLowerCase();
     const filtered = clients.filter((c) => {
       if (status && c.status !== status) return false;
+      if (country && (c.country ?? "") !== country) return false;
       if (assignee === "none" ? Boolean(c.assigned_to) : assignee && c.assigned_to !== assignee)
         return false;
       if (units) {
