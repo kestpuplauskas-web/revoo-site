@@ -92,13 +92,13 @@ function RegistryPage() {
               <Upload className="h-4 w-4" aria-hidden="true" /> Importuoti CSV
             </Link>
             <Link to="/admin/registras/$id/" params={{ id: "naujas" }} className={BTN}>
-              Pridėti objektą
+              Pridėti klientą
             </Link>
           </div>
         </header>
 
         <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Iš viso objektų" value={summary?.total} />
+          <KpiCard label="IŠ VISO KLIENTŲ" value={summary?.total} />
           <KpiCard label="Pradelsti veiksmai" value={summary?.overdue} />
           <KpiCard label="Be atsakingo" value={summary?.unassigned} />
           <KpiCard
