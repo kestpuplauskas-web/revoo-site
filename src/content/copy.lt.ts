@@ -74,7 +74,7 @@ export const lt: Copy = {
       "Jei patalpos nebuvo sutvarkytos laiku, užduotis nepamirštama - ji lieka sistemoje, kol bus atlikta.",
       "Jei svečias užsisakė papildomų paslaugų, valdytojas jas mato savo užduočių sąraše, tad tai neliks pamiršta.",
       "Pastebėjus gedimą, apie jį galima pranešti vienu paspaudimu. Vadovas informaciją iš karto mato savo sistemoje.",
-      "Valytojas mato tik tai, ko reikia darbuo atlikti. Svečių kontaktai, kainos, mokėjimų informacija ir kita konfidenciali informacija, nėra atvaizduojama.",
+      "Valytojas mato tik tai, ko reikia darbui atlikti. Svečių kontaktai, kainos, mokėjimų informacija ir kita konfidenciali informacija, nėra atvaizduojama.",
     ],
   },
   paperwork: {
