@@ -28,6 +28,7 @@ function RegistryPage() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [assignee, setAssignee] = useState("");
+  const [country, setCountry] = useState("");
   const [units, setUnits] = useState<UnitsRange>("");
   const [nextState, setNextState] = useState<NextState>("");
 
@@ -44,6 +45,7 @@ function RegistryPage() {
     const term = search.trim().toLowerCase();
     const filtered = clients.filter((c) => {
       if (status && c.status !== status) return false;
+      if (country && (c.country ?? "") !== country) return false;
       if (assignee === "none" ? Boolean(c.assigned_to) : assignee && c.assigned_to !== assignee)
         return false;
       if (units) {
@@ -77,7 +79,15 @@ function RegistryPage() {
       if (ad !== bd) return ad.localeCompare(bd);
       return b.created_at.localeCompare(a.created_at);
     });
-  }, [clients, search, status, assignee, units, nextState, today]);
+  }, [clients, search, status, country, assignee, units, nextState, today]);
+
+  const countries = useMemo(
+    () =>
+      [...new Set(clients.map((c) => c.country).filter((v): v is string => Boolean(v)))].sort(
+        (a, b) => a.localeCompare(b, "lt"),
+      ),
+    [clients],
+  );
 
   return (
     <main className="px-4 py-8 sm:px-8">
@@ -159,6 +169,13 @@ function RegistryPage() {
               </option>
             ))}
           </Select>
+          <Select value={country} onChange={setCountry} label="Šalis">
+            {countries.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </Select>
           <Select value={units} onChange={(v) => setUnits(v as UnitsRange)} label="Kambariai">
             <option value="lt20">iki 20</option>
             <option value="20to50">20–50</option>
@@ -200,63 +217,79 @@ function RegistryPage() {
               />
             </div>
           ) : (
-            <ul className="space-y-3">
-              {rows.map((c) => {
-                const isOverdue = Boolean(c.next_action_date && c.next_action_date < today);
-                return (
-                  <li key={c.id}>
-                    <Link
-                      to="/admin/registras/$id/"
-                      params={{ id: c.id }}
-                      className={`${CARD} block p-5 transition-shadow hover:shadow-[0_20px_60px_-40px_rgba(8,32,30,0.7)] ${
-                        isOverdue ? "ring-2 ring-amber" : ""
-                      }`}
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div className="min-w-0">
-                          <p className="font-display text-2xl text-ink hover:underline">
+            <div className={`${CARD} overflow-x-auto`}>
+              <table className="w-full min-w-[820px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
+                    <th className="px-4 py-3 font-medium">Klientas</th>
+                    <th className="px-4 py-3 font-medium">Šalis</th>
+                    <th className="px-4 py-3 font-medium">Telefonas</th>
+                    <th className="px-4 py-3 font-medium">Būsena</th>
+                    <th className="px-4 py-3 font-medium">Kitas veiksmas</th>
+                    <th className="px-4 py-3 font-medium">Atsakingas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((c) => {
+                    const isOverdue = Boolean(c.next_action_date && c.next_action_date < today);
+                    return (
+                      <tr
+                        key={c.id}
+                        className="group border-b border-ink/5 transition-colors last:border-0 hover:bg-cream/60"
+                      >
+                        <td className="px-4 py-3">
+                          <Link
+                            to="/admin/registras/$id/"
+                            params={{ id: c.id }}
+                            className="block font-medium text-ink group-hover:underline"
+                          >
                             {c.name}
-                          </p>
-                          <p className="mt-0.5 text-sm text-ink-soft">
-                            {[c.city, c.country].filter(Boolean).join(", ") || "—"}
-                            {c.property_type ? ` · ${c.property_type}` : ""}
-                            {c.units_count ? ` · ${c.units_count} kamb.` : ""}
-                            {c.developer ? ` · ${c.developer}` : ""}
-                          </p>
-                        </div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          {isOverdue ? <Pill tone="warn">Pradelsta</Pill> : null}
-                          <Pill tone={c.status === "won" ? "accent" : "muted"}>
-                            {CLIENT_STATUS_LABELS[c.status]}
-                          </Pill>
-                        </div>
-                      </div>
-
-                      <dl className="mt-4 grid gap-x-4 gap-y-2 text-sm sm:grid-cols-3">
-                        <div>
-                          <dt className="text-xs tracking-wide text-ink-soft uppercase">
-                            Kitas veiksmas
-                          </dt>
-                          <dd className="text-ink">{c.next_action || "—"}</dd>
-                        </div>
-                        <div>
-                          <dt className="text-xs tracking-wide text-ink-soft uppercase">Data</dt>
-                          <dd className={isOverdue ? "font-medium text-ink" : "text-ink"}>
-                            {c.next_action_date ? formatDate(c.next_action_date) : "—"}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt className="text-xs tracking-wide text-ink-soft uppercase">
-                            Atsakingas
-                          </dt>
-                          <dd className="text-ink">{teamName(c.assigned_to) ?? "—"}</dd>
-                        </div>
-                      </dl>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+                            <span className="mt-0.5 block text-xs font-normal text-ink-soft">
+                              {[c.city, c.property_type, c.units_count ? `${c.units_count} kamb.` : null]
+                                .filter(Boolean)
+                                .join(" · ") || " "}
+                            </span>
+                          </Link>
+                        </td>
+                        <td className="px-4 py-3 text-ink">{c.country ?? "—"}</td>
+                        <td className="px-4 py-3 text-ink">
+                          {c.contact_phone ? (
+                            <a
+                              href={`tel:${c.contact_phone}`}
+                              className="hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {c.contact_phone}
+                            </a>
+                          ) : (
+                            "—"
+                          )}
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            {isOverdue ? <Pill tone="warn">Pradelsta</Pill> : null}
+                            <Pill tone={c.status === "won" ? "accent" : "muted"}>
+                              {CLIENT_STATUS_LABELS[c.status]}
+                            </Pill>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <Link to="/admin/registras/$id/" params={{ id: c.id }} className="block">
+                            <span className={isOverdue ? "font-medium text-ink" : "text-ink"}>
+                              {c.next_action || "—"}
+                            </span>
+                            <span className="mt-0.5 block text-xs text-ink-soft">
+                              {c.next_action_date ? formatDate(c.next_action_date) : "—"}
+                            </span>
+                          </Link>
+                        </td>
+                        <td className="px-4 py-3 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>
