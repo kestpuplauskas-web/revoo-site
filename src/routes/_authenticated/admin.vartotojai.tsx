@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
 import {
   deleteUser,
+  getMyAccess,
   inviteUser,
   listUsers,
   setUserRole,
