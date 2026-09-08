@@ -31,6 +31,20 @@ function AdminLayout() {
     enabled: role.data?.isAdmin === true,
   });
 
+  const authUser = useQuery({
+    queryKey: ["my-auth-user"],
+    queryFn: async () => {
+      const { data } = await supabase.auth.getUser();
+      const u = data.user;
+      const fullName = ((u?.user_metadata as { full_name?: string } | null)?.full_name ?? "").trim();
+      return {
+        fullName: fullName || (u?.email ?? ""),
+        email: u?.email ?? "",
+      };
+    },
+    enabled: role.data?.isAdmin === true,
+  });
+
   const signOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -93,10 +107,13 @@ function AdminLayout() {
 
         <button
           onClick={signOut}
-          className="mt-8 w-full rounded-full border border-ink/15 px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream lg:w-auto"
+          className="mt-12 w-full rounded-full border border-ink/15 px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream lg:w-auto"
         >
           Atsijungti
         </button>
+        {authUser.data ? (
+          <p className="mt-3 text-sm text-ink-soft">{authUser.data.fullName}</p>
+        ) : null}
       </aside>
 
       <div className="min-w-0 flex-1">
