@@ -41,6 +41,31 @@ async function assertAdmin(context: { supabase: { rpc: Function }; userId: strin
   if (data !== true) throw new Error("Neturite teisių valdyti naudotojų.");
 }
 
+async function isDeveloper(context: { supabase: { rpc: Function }; userId: string }) {
+  const { data, error } = await (context.supabase.rpc as (
+    fn: string,
+    args: Record<string, unknown>,
+  ) => Promise<{ data: unknown; error: { message: string } | null }>)("has_role", {
+    _user_id: context.userId,
+    _role: "developer",
+  });
+  if (error) throw new Error(error.message);
+  return data === true;
+}
+
+async function assertDeveloper(context: { supabase: { rpc: Function }; userId: string }) {
+  if (!(await isDeveloper(context))) {
+    throw new Error("Rolės keisti ir naudotojų šalinti gali tik programuotojas.");
+  }
+}
+
+export const getMyAccess = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await assertAdmin(context);
+    return { isDeveloper: await isDeveloper(context) };
+  });
+
 export const listUsers = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<ManagedUser[]> => {
@@ -144,7 +169,7 @@ export const setUserRole = createServerFn({ method: "POST" })
     z.object({ userId: z.string().uuid(), role: z.enum(["admin", "developer"]) }).parse(d),
   )
   .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+    await assertDeveloper(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     await supabaseAdmin.from("user_roles").delete().eq("user_id", data.userId);
     const { error } = await supabaseAdmin
@@ -158,7 +183,7 @@ export const deleteUser = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => z.object({ userId: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
-    await assertAdmin(context);
+    await assertDeveloper(context);
     if (data.userId === context.userId) throw new Error("Negalite ištrinti savo paskyros.");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     await supabaseAdmin.from("user_roles").delete().eq("user_id", data.userId);
