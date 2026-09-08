@@ -11,5 +11,9 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    // Pagrindiniai puslapiai paruošiami statiškai (greitesnis FCP/LCP).
+    // Admin ir kiti maršrutai lieka renderinami užklausos metu.
+    pages: [{ path: "/" }, { path: "/lt/" }],
+    prerender: { enabled: true, autoStaticPathsDiscovery: false },
   },
 });
