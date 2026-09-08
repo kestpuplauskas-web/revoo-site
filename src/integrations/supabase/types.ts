@@ -282,9 +282,11 @@ export type Database = {
           day: string
           device: string
           id: string
+          is_bot: boolean
           path: string
           referrer_host: string | null
           source: string
+          user_agent: string | null
           visitor_hash: string
         }
         Insert: {
@@ -293,9 +295,11 @@ export type Database = {
           day?: string
           device?: string
           id?: string
+          is_bot?: boolean
           path: string
           referrer_host?: string | null
           source?: string
+          user_agent?: string | null
           visitor_hash: string
         }
         Update: {
@@ -304,9 +308,11 @@ export type Database = {
           day?: string
           device?: string
           id?: string
+          is_bot?: boolean
           path?: string
           referrer_host?: string | null
           source?: string
+          user_agent?: string | null
           visitor_hash?: string
         }
         Relationships: []

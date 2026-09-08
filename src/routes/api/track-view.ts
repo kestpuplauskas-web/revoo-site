@@ -55,7 +55,9 @@ export const Route = createFileRoute("/api/track-view")({
           if (!originAllowed(request)) return noContent();
 
           const userAgent = request.headers.get("user-agent") ?? "";
-          if (!userAgent || BOT_PATTERN.test(userAgent)) return noContent();
+          if (!userAgent) return noContent();
+          // Robotus vis tiek įrašome, tik pažymime — statistikoje jie neskaičiuojami.
+          const isBot = BOT_PATTERN.test(userAgent);
 
           const raw = await request.text().catch(() => "");
           let body: { path?: unknown; referrer?: unknown } | null = null;
@@ -100,6 +102,8 @@ export const Route = createFileRoute("/api/track-view")({
             country: request.headers.get("cf-ipcountry") ?? null,
             visitor_hash: visitorHash,
             day: utcDay,
+            user_agent: userAgent.slice(0, 500),
+            is_bot: isBot,
           });
           if (error) console.error("track-view insert failed:", error.message);
         } catch (err) {
