@@ -169,6 +169,13 @@ function RegistryPage() {
               </option>
             ))}
           </Select>
+          <Select value={country} onChange={setCountry} label="Šalis">
+            {countries.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </Select>
           <Select value={units} onChange={(v) => setUnits(v as UnitsRange)} label="Kambariai">
             <option value="lt20">iki 20</option>
             <option value="20to50">20–50</option>
