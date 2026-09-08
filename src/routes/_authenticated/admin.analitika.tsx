@@ -49,6 +49,17 @@ const DEVICE_LABEL: Record<string, string> = {
   unknown: "Nežinoma",
 };
 
+const countryNames = new Intl.DisplayNames(["lt"], { type: "region" });
+
+function countryLabel(code: string): string {
+  if (!code || code === "unknown") return "Nežinoma";
+  try {
+    return countryNames.of(code.toUpperCase()) ?? code.toUpperCase();
+  } catch {
+    return code.toUpperCase();
+  }
+}
+
 const shortDay = (iso: string) =>
   new Date(`${iso}T00:00:00Z`).toLocaleDateString("lt-LT", {
     month: "short",
@@ -267,7 +278,16 @@ function AnalyticsPage() {
             </div>
           </div>
 
-          <div className="mt-6 grid gap-4 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <BreakdownList
+              title="Šalys"
+              total={totalViews}
+              empty="Šalių duomenų dar nėra."
+              rows={(data?.countries ?? []).map((c) => ({
+                label: countryLabel(c.country),
+                views: Number(c.views),
+              }))}
+            />
             <BreakdownList
               title="Populiariausi puslapiai"
               total={totalViews}
