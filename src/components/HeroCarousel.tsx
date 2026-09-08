@@ -317,7 +317,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 1.1 })}>
             <div className="rc-float" style={v({ "--dur": "11s", "--del": "-2s" })}>
               <Browser url="app.revoo.site / housekeeping">
-                <img src="/media/8_housekeeping.webp" width={1863} height={895} alt={c.carousel.alts.housekeeping} loading="eager" decoding="async" />
+                <img src="/media/8_housekeeping.webp" width={1863} height={895} alt={c.carousel.alts.housekeeping} loading="lazy" decoding="async" />
               </Browser>
             </div>
           </div>
