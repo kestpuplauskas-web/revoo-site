@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PrisijungimasRouteImport } from './routes/prisijungimas'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SlaptazodisRouteImport } from './routes/slaptazodis'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiTrackViewRouteImport } from './routes/api/track-view'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
@@ -50,6 +51,11 @@ const PrisijungimasRoute = PrisijungimasRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlaptazodisRoute = SlaptazodisRouteImport.update({
+  id: '/slaptazodis',
+  path: '/slaptazodis',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/slaptazodis': typeof SlaptazodisRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/slaptazodis': typeof SlaptazodisRoute
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/slaptazodis': typeof SlaptazodisRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/slaptazodis'
     | '/admin'
     | '/api/track-view'
     | '/blog/$slug'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/slaptazodis'
     | '/api/track-view'
     | '/blog/$slug'
     | '/blog'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/slaptazodis'
     | '/_authenticated/admin'
     | '/api/track-view'
     | '/blog/$slug'
@@ -312,6 +324,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   PrisijungimasRoute: typeof PrisijungimasRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SlaptazodisRoute: typeof SlaptazodisRoute
   ApiTrackViewRoute: typeof ApiTrackViewRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -348,6 +361,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slaptazodis': {
+      id: '/slaptazodis'
+      path: '/slaptazodis'
+      fullPath: '/slaptazodis'
+      preLoaderRoute: typeof SlaptazodisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -538,6 +558,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   PrisijungimasRoute: PrisijungimasRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SlaptazodisRoute: SlaptazodisRoute,
   ApiTrackViewRoute: ApiTrackViewRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
