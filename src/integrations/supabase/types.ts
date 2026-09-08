@@ -668,7 +668,7 @@ export type Database = {
         | "proposal"
         | "note"
         | "task"
-      app_role: "admin"
+      app_role: "admin" | "developer"
       client_status:
         | "lead"
         | "negotiation"
@@ -853,7 +853,7 @@ export const Constants = {
         "note",
         "task",
       ],
-      app_role: ["admin"],
+      app_role: ["admin", "developer"],
       client_status: [
         "lead",
         "negotiation",

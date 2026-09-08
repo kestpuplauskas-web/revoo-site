@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PrisijungimasRouteImport } from './routes/prisijungimas'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SlaptazodisRouteImport } from './routes/slaptazodis'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiTrackViewRouteImport } from './routes/api/track-view'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
@@ -21,6 +22,7 @@ import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
+import { Route as AuthenticatedAdminVartotojaiRouteImport } from './routes/_authenticated/admin.vartotojai'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
 import { Route as AuthenticatedAdminPerziuraIdRouteImport } from './routes/_authenticated/admin.perziura.$id'
@@ -50,6 +52,11 @@ const PrisijungimasRoute = PrisijungimasRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlaptazodisRoute = SlaptazodisRouteImport.update({
+  id: '/slaptazodis',
+  path: '/slaptazodis',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -92,6 +99,12 @@ const AuthenticatedAdminUzklausosRoute =
   AuthenticatedAdminUzklausosRouteImport.update({
     id: '/uzklausos',
     path: '/uzklausos',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminVartotojaiRoute =
+  AuthenticatedAdminVartotojaiRouteImport.update({
+    id: '/vartotojai',
+    path: '/vartotojai',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const LtBlogIndexRoute = LtBlogIndexRouteImport.update({
@@ -163,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/slaptazodis': typeof SlaptazodisRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -170,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/lt/': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
+  '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
@@ -187,12 +202,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/slaptazodis': typeof SlaptazodisRoute
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
+  '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
@@ -212,6 +229,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/slaptazodis': typeof SlaptazodisRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -219,6 +237,7 @@ export interface FileRoutesById {
   '/lt/': typeof LtIndexRoute
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
+  '/_authenticated/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
@@ -238,6 +257,7 @@ export interface FileRouteTypes {
     | '/'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/slaptazodis'
     | '/admin'
     | '/api/track-view'
     | '/blog/$slug'
@@ -245,6 +265,7 @@ export interface FileRouteTypes {
     | '/lt/'
     | '/admin/analitika'
     | '/admin/uzklausos'
+    | '/admin/vartotojai'
     | '/lt/blog/$slug'
     | '/admin/'
     | '/lt/blog/'
@@ -262,12 +283,14 @@ export interface FileRouteTypes {
     | '/'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/slaptazodis'
     | '/api/track-view'
     | '/blog/$slug'
     | '/blog'
     | '/lt'
     | '/admin/analitika'
     | '/admin/uzklausos'
+    | '/admin/vartotojai'
     | '/lt/blog/$slug'
     | '/admin'
     | '/lt/blog'
@@ -286,6 +309,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/prisijungimas'
     | '/sitemap.xml'
+    | '/slaptazodis'
     | '/_authenticated/admin'
     | '/api/track-view'
     | '/blog/$slug'
@@ -293,6 +317,7 @@ export interface FileRouteTypes {
     | '/lt/'
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/uzklausos'
+    | '/_authenticated/admin/vartotojai'
     | '/lt/blog/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
@@ -312,6 +337,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   PrisijungimasRoute: typeof PrisijungimasRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SlaptazodisRoute: typeof SlaptazodisRoute
   ApiTrackViewRoute: typeof ApiTrackViewRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -348,6 +374,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slaptazodis': {
+      id: '/slaptazodis'
+      path: '/slaptazodis'
+      fullPath: '/slaptazodis'
+      preLoaderRoute: typeof SlaptazodisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -404,6 +437,13 @@ declare module '@tanstack/react-router' {
       path: '/uzklausos'
       fullPath: '/admin/uzklausos'
       preLoaderRoute: typeof AuthenticatedAdminUzklausosRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/vartotojai': {
+      id: '/_authenticated/admin/vartotojai'
+      path: '/vartotojai'
+      fullPath: '/admin/vartotojai'
+      preLoaderRoute: typeof AuthenticatedAdminVartotojaiRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/lt/blog/': {
@@ -489,6 +529,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
+  AuthenticatedAdminVartotojaiRoute: typeof AuthenticatedAdminVartotojaiRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminPerziuraIdRoute: typeof AuthenticatedAdminPerziuraIdRoute
   AuthenticatedAdminProjektaiIdRoute: typeof AuthenticatedAdminProjektaiIdRoute
@@ -504,6 +545,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
+  AuthenticatedAdminVartotojaiRoute: AuthenticatedAdminVartotojaiRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminPerziuraIdRoute: AuthenticatedAdminPerziuraIdRoute,
   AuthenticatedAdminProjektaiIdRoute: AuthenticatedAdminProjektaiIdRoute,
@@ -538,6 +580,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   PrisijungimasRoute: PrisijungimasRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SlaptazodisRoute: SlaptazodisRoute,
   ApiTrackViewRoute: ApiTrackViewRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,

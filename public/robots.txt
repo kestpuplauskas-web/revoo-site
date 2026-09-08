@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /prisijungimas
+Disallow: /slaptazodis
 
 # AI paieškos robotai - aiskiai leidziami
 User-agent: GPTBot
