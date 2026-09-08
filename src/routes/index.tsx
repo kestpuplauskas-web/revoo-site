@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
           as: "image",
           href: "/media/6_booking.webp",
           type: "image/webp",
-          fetchpriority: "high",
+          fetchPriority: "high",
         },
       ],
     };
