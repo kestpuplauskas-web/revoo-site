@@ -107,10 +107,13 @@ function AdminLayout() {
 
         <button
           onClick={signOut}
-          className="mt-8 w-full rounded-full border border-ink/15 px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream lg:w-auto"
+          className="mt-12 w-full rounded-full border border-ink/15 px-5 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream lg:w-auto"
         >
           Atsijungti
         </button>
+        {authUser.data ? (
+          <p className="mt-3 text-sm text-ink-soft">{authUser.data.fullName}</p>
+        ) : null}
       </aside>
 
       <div className="min-w-0 flex-1">
