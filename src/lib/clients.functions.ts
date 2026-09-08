@@ -53,81 +53,84 @@ const optionalDate = z
 
 /* ------------------------------------------------------------------ list */
 
-export type ClientListItem = ClientRow & {
+export type ProjectListItem = ProjectRow & {
+  client: Pick<
+    ClientRow,
+    "id" | "name" | "company_name" | "country" | "city" | "property_type" | "units_count" | "status"
+  >;
   contract: Pick<
     ContractRow,
     "monthly_subscription" | "setup_fee" | "currency" | "next_payment_date"
   > | null;
-  projects_count: number;
-  first_project_links: {
-    website_url: string | null;
-    lovable_url: string | null;
-    github_url: string | null;
-    supabase_url: string | null;
-  } | null;
 };
 
 export type CurrencyTotals = { currency: Currency; total: number }[];
 
-export const listClients = createServerFn({ method: "GET" })
+/**
+ * „Valdomi projektai“ rodo TIK rankiniu būdu sukurtus projektus.
+ * Kliento būsena registre čia nieko nesukuria ir neįtakoja sąrašo.
+ */
+export const listProjects = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const [clientsRes, contractsRes, projectsRes] = await Promise.all([
-      context.supabase
-        .from("clients")
-        .select("*")
-        .neq("status", "lead")
-        .order("created_at", { ascending: false }),
+    const [projectsRes, clientsRes, contractsRes] = await Promise.all([
+      context.supabase.from("projects").select("*").order("created_at", { ascending: false }),
+      context.supabase.from("clients").select("*"),
       context.supabase.from("client_contracts").select("*"),
-      context.supabase.from("projects").select("*").order("created_at", { ascending: true }),
     ]);
 
-    if (clientsRes.error || contractsRes.error || projectsRes.error) {
+    if (projectsRes.error || clientsRes.error || contractsRes.error) {
       console.error(
-        "listClients failed",
+        "listProjects failed",
+        projectsRes.error?.message,
         clientsRes.error?.message,
         contractsRes.error?.message,
-        projectsRes.error?.message,
       );
-      throw new Error("Nepavyko įkelti klientų");
+      throw new Error("Nepavyko įkelti projektų");
     }
 
+    const clients = clientsRes.data ?? [];
     const contracts = contractsRes.data ?? [];
-    const projects = projectsRes.data ?? [];
 
-    const items: ClientListItem[] = (clientsRes.data ?? []).map((client) => {
-      const contract = contracts.find((c) => c.client_id === client.id) ?? null;
-      const own = projects.filter((p) => p.client_id === client.id);
-      const linkSource = own.find((p) => p.project_status === "active") ?? own[0] ?? null;
-      return {
-        ...client,
-        contract: contract
-          ? {
-              monthly_subscription: contract.monthly_subscription,
-              setup_fee: contract.setup_fee,
-              currency: contract.currency,
-              next_payment_date: contract.next_payment_date,
-            }
-          : null,
-        projects_count: own.length,
-        first_project_links: linkSource
-          ? {
-              website_url: linkSource.website_url,
-              lovable_url: linkSource.lovable_url,
-              github_url: linkSource.github_url,
-              supabase_url: linkSource.supabase_url,
-            }
-          : null,
-      };
+    const items: ProjectListItem[] = (projectsRes.data ?? []).flatMap((project) => {
+      const client = clients.find((c) => c.id === project.client_id);
+      if (!client) return [];
+      const contract = contracts.find((c) => c.client_id === project.client_id) ?? null;
+      return [
+        {
+          ...project,
+          client: {
+            id: client.id,
+            name: client.name,
+            company_name: client.company_name,
+            country: client.country,
+            city: client.city,
+            property_type: client.property_type,
+            units_count: client.units_count,
+            status: client.status,
+          },
+          contract: contract
+            ? {
+                monthly_subscription: contract.monthly_subscription,
+                setup_fee: contract.setup_fee,
+                currency: contract.currency,
+                next_payment_date: contract.next_payment_date,
+              }
+            : null,
+        },
+      ];
     });
 
-    // KPI: MRR (active clients only) and setup revenue, grouped by currency.
+    // KPI skaičiuojami tik pagal klientus, kurie turi bent vieną projektą.
     const mrrMap = new Map<Currency, number>();
     const setupMap = new Map<Currency, number>();
-    for (const client of items) {
-      const c = client.contract;
+    const seen = new Set<string>();
+    for (const item of items) {
+      if (seen.has(item.client.id)) continue;
+      seen.add(item.client.id);
+      const c = item.contract;
       if (!c) continue;
-      if (client.status === "active" && c.monthly_subscription) {
+      if (item.client.status === "active" && c.monthly_subscription) {
         mrrMap.set(c.currency, (mrrMap.get(c.currency) ?? 0) + Number(c.monthly_subscription));
       }
       if (c.setup_fee) {
@@ -141,14 +144,28 @@ export const listClients = createServerFn({ method: "GET" })
         .sort((a, b) => b.total - a.total);
 
     return {
-      clients: items,
+      projects: items,
       kpi: {
-        activeClients: items.filter((c) => c.status === "active").length,
-        onboardingClients: items.filter((c) => c.status === "onboarding").length,
+        activeProjects: items.filter((p) => p.project_status === "active").length,
+        onboardingProjects: items.filter(
+          (p) => p.project_status === "onboarding" || p.project_status === "development",
+        ).length,
         mrr: toTotals(mrrMap),
         setupRevenue: toTotals(setupMap),
       },
     };
+  });
+
+/** Klientų sąrašas projekto kūrimo langui. */
+export const listClientOptions = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data, error } = await context.supabase
+      .from("clients")
+      .select("id, name, company_name, status")
+      .order("name", { ascending: true });
+    if (error) throw new Error("Nepavyko įkelti klientų sąrašo");
+    return { clients: data ?? [] };
   });
 
 /* ------------------------------------------------------------- client page */
