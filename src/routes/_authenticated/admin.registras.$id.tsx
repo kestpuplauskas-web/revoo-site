@@ -11,6 +11,7 @@ import {
   addActivity,
   deleteActivity,
   getRegistryClient,
+  listTeam,
   saveRegistryClient,
   type ActivityRow,
 } from "@/lib/registry.functions";
@@ -113,7 +114,14 @@ function RegistryClientPage() {
     });
   }, [query.data?.client]);
 
-  const team = query.data?.team ?? [];
+  const fetchTeam = useServerFn(listTeam);
+  const teamQuery = useQuery({
+    queryKey: ["registry-team"],
+    queryFn: () => fetchTeam({}),
+    enabled: isNew,
+  });
+
+  const team = query.data?.team ?? teamQuery.data?.team ?? [];
   const nameOf = (uid: string | null) => {
     const t = team.find((p) => p.id === uid);
     return t?.full_name ?? t?.email ?? (uid ? "Nežinomas naudotojas" : "Sistema");
