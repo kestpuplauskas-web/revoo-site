@@ -33,9 +33,9 @@ function AdminLayout() {
     enabled: role.data?.isAdmin === true,
   });
 
-  const authUser = useQuery<AuthUser>({
+  const authUser = useQuery({
     queryKey: ["my-auth-user"],
-    queryFn: async () => {
+    queryFn: async (): Promise<AuthUser> => {
       const { data } = await supabase.auth.getUser();
       const u = data.user;
       if (!u) return null;
