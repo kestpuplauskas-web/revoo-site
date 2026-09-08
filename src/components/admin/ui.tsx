@@ -67,7 +67,7 @@ export function KpiCard({
         )
       ) : (
         <p className="mt-2 font-display text-3xl text-ink">
-          {value === 0 || value === undefined || value === null || value === "" ? "—" : value}
+          {value === undefined || value === null || value === "" ? "—" : value}
         </p>
       )}
       {note ? <p className="mt-2 text-xs text-ink-soft">{note}</p> : null}
