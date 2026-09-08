@@ -172,6 +172,7 @@ function AnalyticsPage() {
   const totalVisitors = Number(data?.totals?.visitors ?? 0);
   const leads = Number(data?.leads ?? 0);
   const conversion = totalVisitors ? ((leads / totalVisitors) * 100).toFixed(1) : "0.0";
+  const bots = Number(data?.bots ?? 0);
 
   return (
     <main className="px-4 py-8 lg:px-10">
@@ -180,6 +181,10 @@ function AnalyticsPage() {
           <h1 className="font-display text-3xl text-ink">Analitika</h1>
           <p className="mt-1 text-sm text-ink-soft">
             Savi lankomumo duomenys. Jokių slapukų, jokio trečiųjų šalių sekimo.
+          </p>
+          <p className="mt-1 text-xs text-ink-soft">
+            Robotų ir tikrintuvų apsilankymai atskiriami ir į skaičius neįtraukiami
+            {isLoading ? "" : ` (per laikotarpį atmesta: ${bots})`}.
           </p>
         </div>
         <div className="flex gap-2">
