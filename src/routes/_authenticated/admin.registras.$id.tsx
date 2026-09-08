@@ -11,6 +11,7 @@ import {
   addActivity,
   deleteActivity,
   getRegistryClient,
+  listTeam,
   saveRegistryClient,
   type ActivityRow,
 } from "@/lib/registry.functions";
