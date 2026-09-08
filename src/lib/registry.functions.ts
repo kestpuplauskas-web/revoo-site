@@ -78,7 +78,11 @@ const optionalUuid = z
 export const ensureProfile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const email = (context.claims as { email?: string } | null)?.email ?? null;
+    const claims = context.claims as
+      | { email?: string; user_metadata?: { full_name?: string } }
+      | null;
+    const email = claims?.email ?? null;
+    const metaName = claims?.user_metadata?.full_name?.trim() || null;
     const { data: existing } = await context.supabase
       .from("profiles")
       .select("id, full_name, email")
@@ -86,14 +90,19 @@ export const ensureProfile = createServerFn({ method: "POST" })
       .maybeSingle();
 
     if (!existing) {
-      const fallback = email ? (email.split("@")[0] ?? email) : "Naudotojas";
+      const fallback = metaName ?? (email ? (email.split("@")[0] ?? email) : "Naudotojas");
       await context.supabase
         .from("profiles")
         .insert({ id: context.userId, email, full_name: fallback });
       return { id: context.userId, full_name: fallback, email };
     }
-    if (email && existing.email !== email) {
-      await context.supabase.from("profiles").update({ email }).eq("id", context.userId);
+
+    const patch: { email?: string; full_name?: string } = {};
+    if (email && existing.email !== email) patch.email = email;
+    if (metaName && existing.full_name !== metaName) patch.full_name = metaName;
+    if (Object.keys(patch).length > 0) {
+      await context.supabase.from("profiles").update(patch).eq("id", context.userId);
+      return { ...existing, ...patch };
     }
     return existing;
   });
@@ -105,8 +114,14 @@ export const listTeam = createServerFn({ method: "GET" })
       .from("profiles")
       .select("id, full_name, email")
       .order("full_name", { ascending: true });
-    return { team: data ?? [], me: context.userId };
+
+    const team = (data ?? []).map((p) => ({
+      ...p,
+      full_name: p.full_name?.trim() || (p.email ? (p.email.split("@")[0] ?? p.email) : null),
+    }));
+    return { team, me: context.userId };
   });
+
 
 export const updateMyName = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
