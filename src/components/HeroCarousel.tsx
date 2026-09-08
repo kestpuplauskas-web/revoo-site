@@ -341,7 +341,7 @@ export function HeroCarousel({ lang }: { lang: Lang }) {
           <div className="rc-par" style={v({ "--p": 0.5 })}>
             <div className="rc-float" style={v({ "--dur": "12s", "--del": "-6s" })}>
               <div className="rc-plain">
-                <img src="/media/9_invoice.webp" width={1275} height={1233} alt={c.carousel.alts.invoice} loading="eager" decoding="async" />
+                <img src="/media/9_invoice.webp" width={1275} height={1233} alt={c.carousel.alts.invoice} loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
