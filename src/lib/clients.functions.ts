@@ -73,7 +73,11 @@ export const listClients = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const [clientsRes, contractsRes, projectsRes] = await Promise.all([
-      context.supabase.from("clients").select("*").order("created_at", { ascending: false }),
+      context.supabase
+        .from("clients")
+        .select("*")
+        .neq("status", "lead")
+        .order("created_at", { ascending: false }),
       context.supabase.from("client_contracts").select("*"),
       context.supabase.from("projects").select("*").order("created_at", { ascending: true }),
     ]);
