@@ -476,18 +476,37 @@ function describe(a: ActivityRow, nameOf: (id: string | null) => string) {
 }
 
 function ActivityForm({
+  templates,
+  fill,
   onSubmit,
 }: {
+  templates: TemplateWithStats[];
+  fill: (text: string) => string;
   onSubmit: (payload: {
     activity_type: (typeof ACTIVITY_TYPES)[number];
     body: string;
     occurred_at: string;
+    template_id: string | null;
   }) => Promise<void>;
 }) {
   const [type, setType] = useState<(typeof ACTIVITY_TYPES)[number]>("call");
   const [body, setBody] = useState("");
   const [when, setWhen] = useState(() => new Date().toISOString().slice(0, 10));
   const [busy, setBusy] = useState(false);
+  const [templateId, setTemplateId] = useState("");
+
+  const templateKind = type === "call" ? "call" : type === "email" || type === "proposal" ? "email" : null;
+  const options = templates.filter((t) => t.kind === templateKind);
+
+  const pickTemplate = (id: string) => {
+    setTemplateId(id);
+    if (!id) return;
+    const t = templates.find((x) => x.id === id);
+    if (!t) return;
+    if (body.trim().length > 0 && !window.confirm("Perrašyti esamą tekstą šablono tekstu?")) return;
+    const subject = t.subject ? `Tema: ${fill(t.subject)}\n\n` : "";
+    setBody(subject + fill(t.body));
+  };
 
   return (
     <div className="mt-4 space-y-3 rounded-2xl bg-cream/70 p-4">
@@ -496,7 +515,10 @@ function ActivityForm({
           <select
             className={INPUT}
             value={type}
-            onChange={(e) => setType(e.target.value as (typeof ACTIVITY_TYPES)[number])}
+            onChange={(e) => {
+              setType(e.target.value as (typeof ACTIVITY_TYPES)[number]);
+              setTemplateId("");
+            }}
           >
             {ACTIVITY_TYPES.map((t) => (
               <option key={t} value={t}>
@@ -514,6 +536,22 @@ function ActivityForm({
           />
         </Field>
       </div>
+      {templateKind ? (
+        <Field label="Šablonas">
+          <select
+            className={INPUT}
+            value={templateId}
+            onChange={(e) => pickTemplate(e.target.value)}
+          >
+            <option value="">— be šablono —</option>
+            {options.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </select>
+        </Field>
+      ) : null}
       <Field label="Aprašymas">
         <textarea
           className={`${INPUT} min-h-20`}
