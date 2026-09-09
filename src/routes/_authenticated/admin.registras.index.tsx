@@ -1,14 +1,26 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useMemo, useState } from "react";
-import { Loader2, Search, Upload } from "lucide-react";
+import { useMemo } from "react";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
+import { Loader2, Search, Upload, X } from "lucide-react";
 
 import { listRegistry, ALL_STATUSES } from "@/lib/registry.functions";
 import { CLIENT_STATUS_LABELS, formatDate } from "@/lib/admin-format";
 import { BTN, BTN_GHOST, CARD, EmptyState, KpiCard, Pill } from "@/components/admin/ui";
 
+const registrySearchSchema = z.object({
+  q: fallback(z.string(), "").default(""),
+  status: fallback(z.string(), "").default(""),
+  assignee: fallback(z.string(), "").default(""),
+  country: fallback(z.string(), "").default(""),
+  units: fallback(z.string(), "").default(""),
+  next: fallback(z.string(), "").default(""),
+});
+
 export const Route = createFileRoute("/_authenticated/admin/registras/")({
+  validateSearch: zodValidator(registrySearchSchema),
   head: () => ({
     meta: [
       { title: "Klientų registras — Revoo administravimas" },
@@ -25,12 +37,29 @@ function RegistryPage() {
   const fetchRegistry = useServerFn(listRegistry);
   const query = useQuery({ queryKey: ["registry"], queryFn: () => fetchRegistry() });
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("");
-  const [assignee, setAssignee] = useState("");
-  const [country, setCountry] = useState("");
-  const [units, setUnits] = useState<UnitsRange>("");
-  const [nextState, setNextState] = useState<NextState>("");
+  const navigate = useNavigate({ from: Route.fullPath });
+  const search = Route.useSearch();
+
+  const setParam = (key: keyof typeof search, value: string) =>
+    navigate({
+      replace: true,
+      search: (prev) => ({ ...prev, [key]: value }),
+    });
+
+  const setSearch = (v: string) => setParam("q", v);
+  const setStatus = (v: string) => setParam("status", v);
+  const setAssignee = (v: string) => setParam("assignee", v);
+  const setCountry = (v: string) => setParam("country", v);
+  const setUnits = (v: UnitsRange) => setParam("units", v);
+  const setNextState = (v: NextState) => setParam("next", v);
+
+  const { q: searchTerm, status, assignee, country } = search;
+  const units = search["units"] as UnitsRange;
+  const nextState = search["next"] as NextState;
+
+  const hasFilters = Boolean(searchTerm || status || assignee || country || units || nextState);
+  const clearFilters = () =>
+    navigate({ search: { q: "", status: "", assignee: "", country: "", units: "", next: "" } });
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
@@ -42,7 +71,7 @@ function RegistryPage() {
     null;
 
   const rows = useMemo(() => {
-    const term = search.trim().toLowerCase();
+    const term = searchTerm.trim().toLowerCase();
     const filtered = clients.filter((c) => {
       if (status && c.status !== status) return false;
       if (country && (c.country ?? "") !== country) return false;
@@ -79,7 +108,7 @@ function RegistryPage() {
       if (ad !== bd) return ad.localeCompare(bd);
       return b.created_at.localeCompare(a.created_at);
     });
-  }, [clients, search, status, country, assignee, units, nextState, today]);
+  }, [clients, searchTerm, status, country, assignee, units, nextState, today]);
 
   const countries = useMemo(
     () =>
@@ -147,7 +176,7 @@ function RegistryPage() {
               className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-ink-soft"
             />
             <input
-              value={search}
+              value={searchTerm}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Ieškoti pagal pavadinimą, el. paštą, statytoją ar pastabą"
               aria-label="Ieškoti objektų"
@@ -191,6 +220,15 @@ function RegistryPage() {
             <option value="upcoming">Būsimi</option>
             <option value="none">Nenustatytas</option>
           </Select>
+          {hasFilters ? (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="flex items-center gap-1.5 rounded-full border border-ink/15 px-4 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream"
+            >
+              <X className="h-4 w-4" aria-hidden="true" /> Šalinti filtrus
+            </button>
+          ) : null}
         </div>
 
         <div className="mt-6">
@@ -241,6 +279,7 @@ function RegistryPage() {
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
+                            search={(prev) => prev}
                             className="block font-medium text-ink group-hover:underline"
                           >
                             {c.name}
@@ -274,7 +313,12 @@ function RegistryPage() {
                           </div>
                         </td>
                         <td className="px-4 py-3">
-                          <Link to="/admin/registras/$id/" params={{ id: c.id }} className="block">
+                          <Link
+                            to="/admin/registras/$id/"
+                            params={{ id: c.id }}
+                            search={(prev) => prev}
+                            className="block"
+                          >
                             <span className={isOverdue ? "font-medium text-ink" : "text-ink"}>
                               {c.next_action || "—"}
                             </span>
