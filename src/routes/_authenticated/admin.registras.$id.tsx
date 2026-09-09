@@ -21,7 +21,33 @@ import {
   CLIENT_STATUS_LABELS,
   formatDate,
 } from "@/lib/admin-format";
+import { listTemplates, type TemplateWithStats } from "@/lib/templates.functions";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
+
+type ClientVars = {
+  name: string;
+  contact_name: string | null;
+  city: string | null;
+  property_type: string | null;
+  units_count: number | null;
+  website_url: string | null;
+};
+
+function applyVariables(text: string, client: ClientVars | null, myName: string) {
+  const first = (client?.name ?? "").trim().split(/\s+/)[0] ?? "";
+  const map: Record<string, string> = {
+    vardas: (client?.contact_name ?? "").trim() || first,
+    objektas: client?.name ?? "",
+    miestas: client?.city ?? "",
+    tipas: client?.property_type ?? "",
+    vienetai: client?.units_count != null ? String(client.units_count) : "",
+    svetaine: client?.website_url ?? "",
+    mano_vardas: myName,
+  };
+  return text.replace(/\{\{\s*(\w+)\s*\}\}/g, (full, key: string) =>
+    key in map ? (map[key] ?? "") : full,
+  );
+}
 
 export const Route = createFileRoute("/_authenticated/admin/registras/$id")({
   head: () => ({
