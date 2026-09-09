@@ -153,6 +153,17 @@ function RegistryClientPage() {
     return t?.full_name ?? t?.email ?? (uid ? "Nežinomas naudotojas" : "Sistema");
   };
 
+  const fetchTemplates = useServerFn(listTemplates);
+  const templatesQuery = useQuery({
+    queryKey: ["templates"],
+    queryFn: () => fetchTemplates(),
+    enabled: !isNew,
+  });
+  const templates = (templatesQuery.data?.templates ?? []).filter((t) => t.is_active);
+  const templateNameOf = (tid: string | null) =>
+    (templatesQuery.data?.templates ?? []).find((t) => t.id === tid)?.name ?? null;
+  const myName = query.data?.me ? nameOf(query.data.me) : "";
+
   const saveMutation = useMutation({
     mutationFn: () =>
       save({
