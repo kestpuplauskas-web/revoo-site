@@ -249,6 +249,7 @@ const activitySchema = z.object({
   activity_type: z.enum(ACTIVITY_TYPES as [ActivityType, ...ActivityType[]]),
   body: z.string().trim().min(1).max(4000),
   occurred_at: z.string().min(1),
+  template_id: z.string().uuid().nullable().optional(),
 });
 
 export const addActivity = createServerFn({ method: "POST" })
@@ -262,6 +263,7 @@ export const addActivity = createServerFn({ method: "POST" })
       body: data.body,
       occurred_at: new Date(data.occurred_at).toISOString(),
       author_id: context.userId,
+      template_id: data.template_id ?? null,
     });
     if (error) throw new Error("Nepavyko įrašyti veiksmo");
     return { ok: true as const };
