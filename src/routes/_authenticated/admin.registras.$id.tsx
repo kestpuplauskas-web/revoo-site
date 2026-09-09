@@ -566,8 +566,14 @@ function ActivityForm({
         onClick={async () => {
           setBusy(true);
           try {
-            await onSubmit({ activity_type: type, body: body.trim(), occurred_at: when });
+            await onSubmit({
+              activity_type: type,
+              body: body.trim(),
+              occurred_at: when,
+              template_id: templateId || null,
+            });
             setBody("");
+            setTemplateId("");
           } catch (e) {
             toast.error((e as Error).message);
           } finally {
