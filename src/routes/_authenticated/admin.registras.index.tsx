@@ -54,8 +54,8 @@ function RegistryPage() {
   const setNextState = (v: NextState) => setParam("next", v);
 
   const { q: searchTerm, status, assignee, country } = search;
-  const units = search.units as UnitsRange;
-  const nextState = search.next as NextState;
+  const units = search["units"] as UnitsRange;
+  const nextState = search["next"] as NextState;
 
   const hasFilters = Boolean(searchTerm || status || assignee || country || units || nextState);
   const clearFilters = () =>
