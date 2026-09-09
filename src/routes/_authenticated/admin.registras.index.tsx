@@ -176,7 +176,7 @@ function RegistryPage() {
               className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-ink-soft"
             />
             <input
-              value={search}
+              value={searchTerm}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Ieškoti pagal pavadinimą, el. paštą, statytoją ar pastabą"
               aria-label="Ieškoti objektų"
