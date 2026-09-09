@@ -1,14 +1,26 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useMemo, useState } from "react";
-import { Loader2, Search, Upload } from "lucide-react";
+import { useMemo } from "react";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
+import { Loader2, Search, Upload, X } from "lucide-react";
 
 import { listRegistry, ALL_STATUSES } from "@/lib/registry.functions";
 import { CLIENT_STATUS_LABELS, formatDate } from "@/lib/admin-format";
 import { BTN, BTN_GHOST, CARD, EmptyState, KpiCard, Pill } from "@/components/admin/ui";
 
+const registrySearchSchema = z.object({
+  q: fallback(z.string(), "").default(""),
+  status: fallback(z.string(), "").default(""),
+  assignee: fallback(z.string(), "").default(""),
+  country: fallback(z.string(), "").default(""),
+  units: fallback(z.string(), "").default(""),
+  next: fallback(z.string(), "").default(""),
+});
+
 export const Route = createFileRoute("/_authenticated/admin/registras/")({
+  validateSearch: zodValidator(registrySearchSchema),
   head: () => ({
     meta: [
       { title: "Klientų registras — Revoo administravimas" },
@@ -25,12 +37,29 @@ function RegistryPage() {
   const fetchRegistry = useServerFn(listRegistry);
   const query = useQuery({ queryKey: ["registry"], queryFn: () => fetchRegistry() });
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("");
-  const [assignee, setAssignee] = useState("");
-  const [country, setCountry] = useState("");
-  const [units, setUnits] = useState<UnitsRange>("");
-  const [nextState, setNextState] = useState<NextState>("");
+  const navigate = useNavigate({ from: Route.fullPath });
+  const search = Route.useSearch();
+
+  const setParam = (key: keyof typeof search, value: string) =>
+    navigate({
+      replace: true,
+      search: (prev) => ({ ...prev, [key]: value }),
+    });
+
+  const setSearch = (v: string) => setParam("q", v);
+  const setStatus = (v: string) => setParam("status", v);
+  const setAssignee = (v: string) => setParam("assignee", v);
+  const setCountry = (v: string) => setParam("country", v);
+  const setUnits = (v: UnitsRange) => setParam("units", v);
+  const setNextState = (v: NextState) => setParam("next", v);
+
+  const { q: searchTerm, status, assignee, country } = search;
+  const units = search.units as UnitsRange;
+  const nextState = search.next as NextState;
+
+  const hasFilters = Boolean(searchTerm || status || assignee || country || units || nextState);
+  const clearFilters = () =>
+    navigate({ search: { q: "", status: "", assignee: "", country: "", units: "", next: "" } });
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
