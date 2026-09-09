@@ -179,7 +179,11 @@ function RegistryClientPage() {
   return (
     <main className="px-4 py-8 sm:px-8">
       <div className="mx-auto max-w-6xl">
-        <Link to="/admin/registras/" className="flex items-center gap-2 text-sm text-ink-soft">
+        <Link
+          to="/admin/registras/"
+          search={(prev) => prev}
+          className="flex items-center gap-2 text-sm text-ink-soft"
+        >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Į registrą
         </Link>
 
