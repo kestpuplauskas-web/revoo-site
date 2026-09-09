@@ -6,6 +6,8 @@ Leidžia administratoriui iš kliento kortelės rankiniu būdu išsiųsti el. la
 
 Projekte dar nėra sukonfigūruoto el. pašto domeno. Pirmas žingsnis — `revoo.site` domeno nustatymas per el. pašto sąrankos langą. Lovable deleguoja subdomeną (pvz. `notify.revoo.site`) ir valdo SPF/DKIM/MX. DNS patikrinimo nereikia kodui — pakanka tik pradėti sąranką.
 
+Siuntimas per Lovable yra tik išsiuntimas — gaunamų laiškų dėžučių ji nevaldo. Kad kliento atsakymas pasiektų komandos narį, adresai kaip `kestutis@revoo.site` turi egzistuoti kaip realios dėžutės (pvz. Google Workspace) — bet tai nėra siuntimo sąlyga.
+
 ## 1. El. pašto infrastruktūros sukūrimas
 
 Po domeno sąrankos:
@@ -43,6 +45,14 @@ sendClientEmail({ clientId, templateId, message })
 - `{ sent: true }` — sėkmė, toast „Laiškas išsiųstas".
 - `idempotencyKey` = `client-email-${clientId}-${templateId}-${Date.now()}`.
 
+### Siuntėjas pagal prisijungusį vartotoją
+
+- `profiles` lentelė pridedama kolona `sender_email text` (migracija). Kiekvienas komandos naris susiveda savo siuntėjo adresą (pvz. `kestutis@revoo.site`) — redaguojama kaip ir vardas (vartotojas keičia savo, per tą pačią vietą admino sąsajoje).
+- Siunčiant, serverio funkcija paima dabartinio vartotojo `profiles.full_name` ir `sender_email`:
+  - Laiško „Nuo:" rodomas kaip `„Kęstutis — Revoo" <kestutis@revoo.site>` (matomas domenas — `revoo.site`, kai sąrankoje įjungtas root-domain rodymas; kitu atveju naudojamas patikrintas subdomenas su tuo pačiu vietiniu vardu, pvz. `kestutis@notify.revoo.site`).
+  - `replyTo` visuomet nustatomas į vartotojo `sender_email` — kliento atsakymas nueina tiesiai jam.
+- Jei vartotojas nėra susivedęs `sender_email` — naudojamas numatytasis `noreply` siuntėjas su `Revoo` vardu; `replyTo` nededamas.
+
 ## 4. Sąsaja kliento kortelėje
 
 `src/routes/_authenticated/admin.registras.$id.tsx`:
@@ -50,6 +60,7 @@ sendClientEmail({ clientId, templateId, message })
 - Mygtukas **„Siųsti laišką"** kortelės antraštėje šalia „Išsaugoti" (rodomas tik kai klientas jau išsaugotas, t.y. ne naujas).
 - Paspaudus atsidaro dialogas (modal) su:
   - Šablono pasirinkimu (dropdown: Demo kvietimas / Pasiūlymo priminimas / Pasiteiravimas).
+  - Siuntėjo eilutė (tik skaitoma) — „Nuo: Kęstutis · kestutis@revoo.site" pagal prisijungusį vartotoją.
   - Gavėjo laukas (tik skaitomas — rodo `contact_email`; jei tuščias, mygtukas blokuojamas su užrašu „Nėra el. pašto").
   - Laisvo teksto laukas (neprivalomas) — admino žinutė, kuri įsilieja į šabloną.
   - Temos peržiūra pagal pasirinktą šabloną.
