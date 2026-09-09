@@ -67,6 +67,10 @@ sendClientEmail({ clientId, templateId, message })
   - Mygtukas „Siųsti".
 - Po išsiuntimo: toast pranešimas, dialogas užsidaro, veiksmų istorija atsinaujina.
 
+## Atsakymų stebėjimas
+
+Lovable siunčia laiškus, bet negauna atsakymų — gaunamų laiškų dėžučių ji nevaldo. `replyTo` nukreipia kliento atsakymą tiesiai į siuntėjo dėžutę (`kestutis@revoo.site`). Admin skydelyje matomas tik pristatymo rezultatas (išsiųsta / atmesta / bounce / atsisakyta); pats atsakymas komandos narys įrašo rankiniu būdu į kliento veiksmų istoriją (esama „Laiškas" / „Susisiekta" veiksmų rūšimi). Automatinio atsakymų importavimo į istoriją nėra.
+
 ## 5. Kas neliečiama
 
 - `clients` lentelės schema — be pakeitimų.
