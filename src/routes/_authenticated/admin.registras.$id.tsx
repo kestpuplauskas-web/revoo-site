@@ -431,6 +431,11 @@ function RegistryClientPage() {
                           {formatDate(a.occurred_at, true)} · {nameOf(a.author_id)}
                         </p>
                         <p className="mt-1 text-sm text-ink">{describe(a, nameOf)}</p>
+                        {a.template_id && templateNameOf(a.template_id) ? (
+                          <span className="mt-1 inline-block rounded-full bg-cream px-2 py-0.5 text-xs text-ink-soft">
+                            Šablonas: {templateNameOf(a.template_id)}
+                          </span>
+                        ) : null}
                         {a.kind === "manual" ? (
                           <button
                             type="button"
