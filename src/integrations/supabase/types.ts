@@ -51,6 +51,7 @@ export type Database = {
           new_value: string | null
           occurred_at: string
           old_value: string | null
+          template_id: string | null
         }
         Insert: {
           activity_type?: Database["public"]["Enums"]["activity_type"] | null
@@ -64,6 +65,7 @@ export type Database = {
           new_value?: string | null
           occurred_at?: string
           old_value?: string | null
+          template_id?: string | null
         }
         Update: {
           activity_type?: Database["public"]["Enums"]["activity_type"] | null
@@ -77,6 +79,7 @@ export type Database = {
           new_value?: string | null
           occurred_at?: string
           old_value?: string | null
+          template_id?: string | null
         }
         Relationships: [
           {
@@ -84,6 +87,20 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_activities_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "message_template_stats"
+            referencedColumns: ["template_id"]
+          },
+          {
+            foreignKeyName: "client_activities_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "message_templates"
             referencedColumns: ["id"]
           },
         ]
@@ -272,6 +289,42 @@ export type Database = {
           source?: string | null
           units?: string | null
           user_agent?: string | null
+        }
+        Relationships: []
+      }
+      message_templates: {
+        Row: {
+          body: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          kind: Database["public"]["Enums"]["template_kind"]
+          name: string
+          subject: string | null
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          kind: Database["public"]["Enums"]["template_kind"]
+          name: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["template_kind"]
+          name?: string
+          subject?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -652,7 +705,14 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      message_template_stats: {
+        Row: {
+          last_used_at: string | null
+          template_id: string | null
+          usage_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       analytics_summary: { Args: { _from: string; _to: string }; Returns: Json }
@@ -699,6 +759,7 @@ export type Database = {
         | "active"
         | "paused"
         | "cancelled"
+      template_kind: "email" | "call"
       ticket_category:
         | "bug"
         | "question"
@@ -886,6 +947,7 @@ export const Constants = {
         "paused",
         "cancelled",
       ],
+      template_kind: ["email", "call"],
       ticket_category: [
         "bug",
         "question",
