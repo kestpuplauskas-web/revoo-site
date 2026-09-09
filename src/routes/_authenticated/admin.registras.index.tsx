@@ -220,6 +220,15 @@ function RegistryPage() {
             <option value="upcoming">Būsimi</option>
             <option value="none">Nenustatytas</option>
           </Select>
+          {hasFilters ? (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="flex items-center gap-1.5 rounded-full border border-ink/15 px-4 py-2.5 text-sm text-ink transition-colors hover:bg-ink hover:text-cream"
+            >
+              <X className="h-4 w-4" aria-hidden="true" /> Šalinti filtrus
+            </button>
+          ) : null}
         </div>
 
         <div className="mt-6">
