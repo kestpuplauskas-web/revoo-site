@@ -60,6 +60,7 @@ sendClientEmail({ clientId, templateId, message })
 - Mygtukas **„Siųsti laišką"** kortelės antraštėje šalia „Išsaugoti" (rodomas tik kai klientas jau išsaugotas, t.y. ne naujas).
 - Paspaudus atsidaro dialogas (modal) su:
   - Šablono pasirinkimu (dropdown: Demo kvietimas / Pasiūlymo priminimas / Pasiteiravimas).
+  - Siuntėjo eilutė (tik skaitoma) — „Nuo: Kęstutis · kestutis@revoo.site" pagal prisijungusį vartotoją.
   - Gavėjo laukas (tik skaitomas — rodo `contact_email`; jei tuščias, mygtukas blokuojamas su užrašu „Nėra el. pašto").
   - Laisvo teksto laukas (neprivalomas) — admino žinutė, kuri įsilieja į šabloną.
   - Temos peržiūra pagal pasirinktą šabloną.
