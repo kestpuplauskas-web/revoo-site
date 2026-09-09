@@ -389,6 +389,10 @@ function RegistryClientPage() {
             ) : (
               <>
                 <ActivityForm
+                  templates={templates}
+                  fill={(text) =>
+                    applyVariables(text, query.data?.client ?? null, myName)
+                  }
                   onSubmit={async (payload) => {
                     await addAct({ data: { client_id: id, ...payload } });
                     await queryClient.invalidateQueries({ queryKey: ["registry-client", id] });
