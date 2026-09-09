@@ -279,6 +279,7 @@ function RegistryPage() {
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
+                            search={(prev) => prev}
                             className="block font-medium text-ink group-hover:underline"
                           >
                             {c.name}
@@ -312,7 +313,12 @@ function RegistryPage() {
                           </div>
                         </td>
                         <td className="px-4 py-3">
-                          <Link to="/admin/registras/$id/" params={{ id: c.id }} className="block">
+                          <Link
+                            to="/admin/registras/$id/"
+                            params={{ id: c.id }}
+                            search={(prev) => prev}
+                            className="block"
+                          >
                             <span className={isOverdue ? "font-medium text-ink" : "text-ink"}>
                               {c.next_action || "—"}
                             </span>
