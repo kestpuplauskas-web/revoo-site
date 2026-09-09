@@ -71,7 +71,7 @@ function RegistryPage() {
     null;
 
   const rows = useMemo(() => {
-    const term = search.trim().toLowerCase();
+    const term = searchTerm.trim().toLowerCase();
     const filtered = clients.filter((c) => {
       if (status && c.status !== status) return false;
       if (country && (c.country ?? "") !== country) return false;
@@ -108,7 +108,7 @@ function RegistryPage() {
       if (ad !== bd) return ad.localeCompare(bd);
       return b.created_at.localeCompare(a.created_at);
     });
-  }, [clients, search, status, country, assignee, units, nextState, today]);
+  }, [clients, searchTerm, status, country, assignee, units, nextState, today]);
 
   const countries = useMemo(
     () =>
