@@ -21,7 +21,33 @@ import {
   CLIENT_STATUS_LABELS,
   formatDate,
 } from "@/lib/admin-format";
+import { listTemplates, type TemplateWithStats } from "@/lib/templates.functions";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
+
+type ClientVars = {
+  name: string;
+  contact_name: string | null;
+  city: string | null;
+  property_type: string | null;
+  units_count: number | null;
+  website_url: string | null;
+};
+
+function applyVariables(text: string, client: ClientVars | null, myName: string) {
+  const first = (client?.name ?? "").trim().split(/\s+/)[0] ?? "";
+  const map: Record<string, string> = {
+    vardas: (client?.contact_name ?? "").trim() || first,
+    objektas: client?.name ?? "",
+    miestas: client?.city ?? "",
+    tipas: client?.property_type ?? "",
+    vienetai: client?.units_count != null ? String(client.units_count) : "",
+    svetaine: client?.website_url ?? "",
+    mano_vardas: myName,
+  };
+  return text.replace(/\{\{\s*(\w+)\s*\}\}/g, (full, key: string) =>
+    key in map ? (map[key] ?? "") : full,
+  );
+}
 
 export const Route = createFileRoute("/_authenticated/admin/registras/$id")({
   head: () => ({
@@ -126,6 +152,17 @@ function RegistryClientPage() {
     const t = team.find((p) => p.id === uid);
     return t?.full_name ?? t?.email ?? (uid ? "Nežinomas naudotojas" : "Sistema");
   };
+
+  const fetchTemplates = useServerFn(listTemplates);
+  const templatesQuery = useQuery({
+    queryKey: ["templates"],
+    queryFn: () => fetchTemplates(),
+    enabled: !isNew,
+  });
+  const templates = (templatesQuery.data?.templates ?? []).filter((t) => t.is_active);
+  const templateNameOf = (tid: string | null) =>
+    (templatesQuery.data?.templates ?? []).find((t) => t.id === tid)?.name ?? null;
+  const myName = query.data?.me ? nameOf(query.data.me) : "";
 
   const saveMutation = useMutation({
     mutationFn: () =>
@@ -352,6 +389,10 @@ function RegistryClientPage() {
             ) : (
               <>
                 <ActivityForm
+                  templates={templates}
+                  fill={(text) =>
+                    applyVariables(text, query.data?.client ?? null, myName)
+                  }
                   onSubmit={async (payload) => {
                     await addAct({ data: { client_id: id, ...payload } });
                     await queryClient.invalidateQueries({ queryKey: ["registry-client", id] });
@@ -390,6 +431,11 @@ function RegistryClientPage() {
                           {formatDate(a.occurred_at, true)} · {nameOf(a.author_id)}
                         </p>
                         <p className="mt-1 text-sm text-ink">{describe(a, nameOf)}</p>
+                        {a.template_id && templateNameOf(a.template_id) ? (
+                          <span className="mt-1 inline-block rounded-full bg-cream px-2 py-0.5 text-xs text-ink-soft">
+                            Šablonas: {templateNameOf(a.template_id)}
+                          </span>
+                        ) : null}
                         {a.kind === "manual" ? (
                           <button
                             type="button"
@@ -435,18 +481,37 @@ function describe(a: ActivityRow, nameOf: (id: string | null) => string) {
 }
 
 function ActivityForm({
+  templates,
+  fill,
   onSubmit,
 }: {
+  templates: TemplateWithStats[];
+  fill: (text: string) => string;
   onSubmit: (payload: {
     activity_type: (typeof ACTIVITY_TYPES)[number];
     body: string;
     occurred_at: string;
+    template_id: string | null;
   }) => Promise<void>;
 }) {
   const [type, setType] = useState<(typeof ACTIVITY_TYPES)[number]>("call");
   const [body, setBody] = useState("");
   const [when, setWhen] = useState(() => new Date().toISOString().slice(0, 10));
   const [busy, setBusy] = useState(false);
+  const [templateId, setTemplateId] = useState("");
+
+  const templateKind = type === "call" ? "call" : type === "email" || type === "proposal" ? "email" : null;
+  const options = templates.filter((t) => t.kind === templateKind);
+
+  const pickTemplate = (id: string) => {
+    setTemplateId(id);
+    if (!id) return;
+    const t = templates.find((x) => x.id === id);
+    if (!t) return;
+    if (body.trim().length > 0 && !window.confirm("Perrašyti esamą tekstą šablono tekstu?")) return;
+    const subject = t.subject ? `Tema: ${fill(t.subject)}\n\n` : "";
+    setBody(subject + fill(t.body));
+  };
 
   return (
     <div className="mt-4 space-y-3 rounded-2xl bg-cream/70 p-4">
@@ -455,7 +520,10 @@ function ActivityForm({
           <select
             className={INPUT}
             value={type}
-            onChange={(e) => setType(e.target.value as (typeof ACTIVITY_TYPES)[number])}
+            onChange={(e) => {
+              setType(e.target.value as (typeof ACTIVITY_TYPES)[number]);
+              setTemplateId("");
+            }}
           >
             {ACTIVITY_TYPES.map((t) => (
               <option key={t} value={t}>
@@ -473,6 +541,22 @@ function ActivityForm({
           />
         </Field>
       </div>
+      {templateKind ? (
+        <Field label="Šablonas">
+          <select
+            className={INPUT}
+            value={templateId}
+            onChange={(e) => pickTemplate(e.target.value)}
+          >
+            <option value="">— be šablono —</option>
+            {options.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </select>
+        </Field>
+      ) : null}
       <Field label="Aprašymas">
         <textarea
           className={`${INPUT} min-h-20`}
@@ -487,8 +571,14 @@ function ActivityForm({
         onClick={async () => {
           setBusy(true);
           try {
-            await onSubmit({ activity_type: type, body: body.trim(), occurred_at: when });
+            await onSubmit({
+              activity_type: type,
+              body: body.trim(),
+              occurred_at: when,
+              template_id: templateId || null,
+            });
             setBody("");
+            setTemplateId("");
           } catch (e) {
             toast.error((e as Error).message);
           } finally {

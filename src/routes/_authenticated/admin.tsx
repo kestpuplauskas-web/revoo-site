@@ -1,7 +1,15 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { BarChart3, Building2, FileText, FolderKanban, Inbox, Users } from "lucide-react";
+import {
+  BarChart3,
+  Building2,
+  FileText,
+  FolderKanban,
+  Inbox,
+  NotepadText,
+  Users,
+} from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { getMyRole, getUnreadCount } from "@/lib/leads.functions";
@@ -97,6 +105,9 @@ function AdminLayout() {
           <NavItem to="/admin/registras/" icon={<Building2 className="h-4 w-4" aria-hidden="true" />}>
             Klientų registras
           </NavItem>
+          <NavItem to="/admin/sablonai/" icon={<NotepadText className="h-4 w-4" aria-hidden="true" />}>
+            Šablonai
+          </NavItem>
           <NavItem to="/admin/analitika/" icon={<BarChart3 className="h-4 w-4" aria-hidden="true" />}>
             Analitika
           </NavItem>
@@ -134,6 +145,7 @@ function NavItem({
     | "/admin/straipsniai/"
     | "/admin/projektai/"
     | "/admin/registras/"
+    | "/admin/sablonai/"
     | "/admin/analitika/"
     | "/admin/vartotojai/";
   icon: React.ReactNode;

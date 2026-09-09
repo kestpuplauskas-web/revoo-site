@@ -21,6 +21,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
+import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
 import { Route as AuthenticatedAdminVartotojaiRouteImport } from './routes/_authenticated/admin.vartotojai'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
@@ -93,6 +94,12 @@ const AuthenticatedAdminAnalitikaRoute =
   AuthenticatedAdminAnalitikaRouteImport.update({
     id: '/analitika',
     path: '/analitika',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSablonaiRoute =
+  AuthenticatedAdminSablonaiRouteImport.update({
+    id: '/sablonai',
+    path: '/sablonai',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminUzklausosRoute =
@@ -183,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
+  '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
@@ -208,6 +216,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogIndexRoute
   '/lt': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
+  '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
@@ -236,6 +245,7 @@ export interface FileRoutesById {
   '/blog/': typeof BlogIndexRoute
   '/lt/': typeof LtIndexRoute
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
+  '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/_authenticated/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/lt/'
     | '/admin/analitika'
+    | '/admin/sablonai'
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/lt'
     | '/admin/analitika'
+    | '/admin/sablonai'
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
@@ -316,6 +328,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/lt/'
     | '/_authenticated/admin/analitika'
+    | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/uzklausos'
     | '/_authenticated/admin/vartotojai'
     | '/lt/blog/$slug'
@@ -432,6 +445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnalitikaRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/sablonai': {
+      id: '/_authenticated/admin/sablonai'
+      path: '/sablonai'
+      fullPath: '/admin/sablonai'
+      preLoaderRoute: typeof AuthenticatedAdminSablonaiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/uzklausos': {
       id: '/_authenticated/admin/uzklausos'
       path: '/uzklausos'
@@ -528,6 +548,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
+  AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
   AuthenticatedAdminVartotojaiRoute: typeof AuthenticatedAdminVartotojaiRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
@@ -544,6 +565,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
+  AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
   AuthenticatedAdminVartotojaiRoute: AuthenticatedAdminVartotojaiRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
