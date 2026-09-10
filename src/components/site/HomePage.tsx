@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { BedDouble, CalendarDays, Check, FileText, TrendingUp, Users, X } from "lucide-react";
 
 import { DemoForm } from "./DemoForm";
 import { Faq } from "./Faq";
@@ -453,6 +453,8 @@ export function HomePage({ lang }: { lang: Lang }) {
     </div>
   );
 }
+
+const FEATURE_ICONS = [CalendarDays, BedDouble, TrendingUp, Users, FileText, Users] as const;
 
 function SectionHead({
   eyebrow,
