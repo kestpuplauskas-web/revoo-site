@@ -87,9 +87,11 @@ export function HomePage({ lang }: { lang: Lang }) {
               {c.features.items.map((item, i) => {
                 const Icon = FEATURE_ICONS[i % FEATURE_ICONS.length] ?? CalendarDays;
                 const highlight = i === 2;
+                const target = featureCopy[lang].items[i];
                 return (
                   <Reveal key={item.title} delay={50 * (i + 1)}>
-                    <article
+                    <Link
+                      to={target ? featureHref(lang, target.slug) : featureHref(lang)}
                       className={`card-lift relative flex h-full flex-col gap-4 rounded-2xl border p-7 ${
                         highlight
                           ? "border-amber/60 bg-amber/10"
@@ -106,7 +108,10 @@ export function HomePage({ lang }: { lang: Lang }) {
                       </span>
                       <h3 className="font-display text-2xl text-cream">{item.title}</h3>
                       <p className="text-[0.95rem] leading-relaxed text-cream/80">{item.body}</p>
-                    </article>
+                      <span className="mt-auto pt-2 text-[0.9rem] text-amber underline underline-offset-4">
+                        {featureCopy[lang].more}
+                      </span>
+                    </Link>
                   </Reveal>
                 );
               })}
