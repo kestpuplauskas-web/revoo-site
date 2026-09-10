@@ -85,7 +85,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             </Reveal>
             <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {c.features.items.map((item, i) => {
-                const Icon = FEATURE_ICONS[i % FEATURE_ICONS.length];
+                const Icon = FEATURE_ICONS[i % FEATURE_ICONS.length] ?? CalendarDays;
                 const highlight = i === 2;
                 return (
                   <Reveal key={item.title} delay={50 * (i + 1)}>
