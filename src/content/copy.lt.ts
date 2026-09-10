@@ -47,28 +47,28 @@ export const lt: Copy = {
     h2: "Visas viešbučio valdymas – *jūsų* kontrolėje",
     items: [
       {
-        title: "Užsakymų sistema",
-        body: "Auginkite tiesioginių užsakymų srautą be tarpininkų.",
+        title: "Daugiau tiesioginių rezervacijų",
+        body: "Jūsų svetainėje integruotas booking engine leidžia svečiams rezervuoti tiesiogiai – be tarpininkų ir papildomų komisinių.",
       },
       {
-        title: "Jūsų NT turto nuomos valdymo sistema",
-        body: "Vienas įrankis visam nuomos portfeliui valdyti.",
+        title: "Viso apgyvendinimo verslo valdymas",
+        body: "Valdykite sutartis, sąskaitas, rezervacijas, svečius, kambarius, kainas ir kasdienes užduotis vienoje sistemoje.",
       },
       {
         title: "Pajamų optimizavimas",
-        body: "Didinkite pajamas: nustatykite optimalią kiekvieno numerio kainodarą.",
+        body: "Didinkite pajamas: nustatykite optimalią kiekvieno numerio kainodarą ir sistema dinamiškai padės valdyti.\u00a0",
       },
       {
         title: "Kambarių priežiūros modulis",
-        body: "Atskiroji mobili aplikacija kambarių personalui. Užduočių skyrimas, darbų eigos sekimas, gedimų fiksavimas su nuotraukomis, realaus laiko pranešimai.",
+        body: "Atskiroji aplikacija kambarių personalui. Užduočių skyrimas, darbų eigos sekimas, gedimų fiksavimas su nuotraukomis, realaus laiko pranešimai.",
       },
       {
         title: "Automatizuotas sąskaitų formavimas",
         body: "Sisteminis, tikslus ir greitas sąskaitų-faktūrų bei kvitų generavimas, integravimas su buhalterine programa, automatizuotas siuntimas el. paštu.",
       },
       {
-        title: "Klientų santykių valdymas",
-        body: "Visa svečių istorija ir komunikacija vienoje vietoje.",
+        title: "Pagalba 24/7",
+        body: "Integruotas AI asistentas, padedantis efektyviai dirbti su sistema ir valdyti verslą – jis teikia duomenimis pagrįstas įžvalgas, paremtas geriausiomis verslo praktikomis.",
       },
     ],
   },
