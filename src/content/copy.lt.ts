@@ -165,7 +165,7 @@ export const lt: Copy = {
     yesTitle: "Šis produktas jums, jei:",
     noTitle: "Produktas gali jums netikti, jei:",
     yes: [
-      "Turite 6–30 būstų ir juos valdote patys arba su nedidele komanda.",
+      "Turite 6–130 būstų ir juos valdote patys arba su nedidele komanda.",
       "Valdote viešbutį, namelius, svečių namus ar apartamentus, net jei jie yra skirtingais adresais.",
       "Siūlote svečiams ne tik apgyvendinimą, bet ir papildomas paslaugas.",
       "Priimate verslo klientus, kuriems reikalingos sąskaitos įmonei.",
