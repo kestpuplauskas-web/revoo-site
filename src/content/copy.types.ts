@@ -39,6 +39,11 @@ export type Copy = {
       website2: string;
     };
   };
+  features: {
+    eyebrow: string;
+    h2: string;
+    items: TitleBody[];
+  };
   approach: {
     eyebrow: string;
     h2: string;

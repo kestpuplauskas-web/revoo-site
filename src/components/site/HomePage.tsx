@@ -1,4 +1,4 @@
-import { Check, X } from "lucide-react";
+import { BedDouble, CalendarDays, Check, FileText, TrendingUp, Users, X } from "lucide-react";
 
 import { DemoForm } from "./DemoForm";
 import { Faq } from "./Faq";
@@ -72,6 +72,46 @@ export function HomePage({ lang }: { lang: Lang }) {
             <HeroCarousel lang={lang} />
           </div>
 
+        </section>
+
+        {/* 1b. Features */}
+        <section className="section-y bg-teal-900">
+          <div className="container-page">
+            <Reveal className="text-cream">
+              <Eyebrow tone="dark">{c.features.eyebrow}</Eyebrow>
+              <h2 className="text-cream">
+                <Signature text={c.features.h2} />
+              </h2>
+            </Reveal>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {c.features.items.map((item, i) => {
+                const Icon = FEATURE_ICONS[i % FEATURE_ICONS.length] ?? CalendarDays;
+                const highlight = i === 2;
+                return (
+                  <Reveal key={item.title} delay={50 * (i + 1)}>
+                    <article
+                      className={`card-lift relative flex h-full flex-col gap-4 rounded-2xl border p-7 ${
+                        highlight
+                          ? "border-amber/60 bg-amber/10"
+                          : "border-cream/15 bg-teal-800"
+                      }`}
+                    >
+                      <span
+                        className={`flex h-11 w-11 items-center justify-center rounded-xl ${
+                          highlight ? "bg-amber/20 text-amber" : "bg-cream/10 text-cream"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <h3 className="font-display text-2xl text-cream">{item.title}</h3>
+                      <p className="text-[0.95rem] leading-relaxed text-cream/80">{item.body}</p>
+                    </article>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
         </section>
 
         {/* 2. Approach */}
@@ -413,6 +453,8 @@ export function HomePage({ lang }: { lang: Lang }) {
     </div>
   );
 }
+
+const FEATURE_ICONS = [CalendarDays, BedDouble, TrendingUp, Users, FileText, Users] as const;
 
 function SectionHead({
   eyebrow,

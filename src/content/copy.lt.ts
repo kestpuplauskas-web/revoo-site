@@ -42,6 +42,36 @@ export const lt: Copy = {
       website2: "Viešbučio rezervacijų svetainės kambarių pasirinkimo ir apmokėjimo puslapis",
     },
   },
+  features: {
+    eyebrow: "Viskas vienoje vietoje",
+    h2: "Visas viešbučio valdymas – *jūsų* kontrolėje",
+    items: [
+      {
+        title: "Užsakymų sistema",
+        body: "Auginkite tiesioginių užsakymų srautą be tarpininkų.",
+      },
+      {
+        title: "Jūsų NT turto nuomos valdymo sistema",
+        body: "Vienas įrankis visam nuomos portfeliui valdyti.",
+      },
+      {
+        title: "Pajamų optimizavimas",
+        body: "Didinkite pajamas: nustatykite optimalią kiekvieno numerio kainodarą.",
+      },
+      {
+        title: "Kambarių priežiūros modulis",
+        body: "Atskiroji mobili aplikacija kambarių personalui. Užduočių skyrimas, darbų eigos sekimas, gedimų fiksavimas su nuotraukomis, realaus laiko pranešimai.",
+      },
+      {
+        title: "Automatizuotas sąskaitų formavimas",
+        body: "Sisteminis, tikslus ir greitas sąskaitų-faktūrų bei kvitų generavimas, integravimas su buhalterine programa, automatizuotas siuntimas el. paštu.",
+      },
+      {
+        title: "Klientų santykių valdymas",
+        body: "Visa svečių istorija ir komunikacija vienoje vietoje.",
+      },
+    ],
+  },
   approach: {
     eyebrow: "Mūsų požiūris",
     h2: "Konfigūracija nėra *pritaikymas*",
