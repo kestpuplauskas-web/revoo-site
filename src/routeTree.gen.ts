@@ -28,6 +28,7 @@ import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminVartotojaiRouteImport } from './routes/_authenticated/admin.vartotojai'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
+import { Route as LtFunkcijosIndexRouteImport } from './routes/lt/funkcijos/index'
 import { Route as AuthenticatedAdminPerziuraIdRouteImport } from './routes/_authenticated/admin.perziura.$id'
 import { Route as AuthenticatedAdminProjektaiIndexRouteImport } from './routes/_authenticated/admin.projektai.index'
 import { Route as AuthenticatedAdminProjektaiIdRouteImport } from './routes/_authenticated/admin.projektai.$id'
@@ -136,6 +137,11 @@ const LtBlogSlugRoute = LtBlogSlugRouteImport.update({
   path: '/lt/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LtFunkcijosIndexRoute = LtFunkcijosIndexRouteImport.update({
+  id: '/lt/funkcijos/',
+  path: '/lt/funkcijos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminPerziuraIdRoute =
   AuthenticatedAdminPerziuraIdRouteImport.update({
     id: '/perziura/$id',
@@ -210,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/lt/funkcijos/': typeof LtFunkcijosIndexRoute
   '/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/admin/projektai/$id': typeof AuthenticatedAdminProjektaiIdRoute
   '/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
@@ -238,6 +245,7 @@ export interface FileRoutesByTo {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
+  '/lt/funkcijos': typeof LtFunkcijosIndexRoute
   '/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/admin/projektai/$id': typeof AuthenticatedAdminProjektaiIdRoute
   '/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
@@ -269,6 +277,7 @@ export interface FileRoutesById {
   '/lt/blog/$slug': typeof LtBlogSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/lt/funkcijos/': typeof LtFunkcijosIndexRoute
   '/_authenticated/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/_authenticated/admin/projektai/$id': typeof AuthenticatedAdminProjektaiIdRoute
   '/_authenticated/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
@@ -300,6 +309,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/admin/'
     | '/lt/blog/'
+    | '/lt/funkcijos/'
     | '/admin/perziura/$id'
     | '/admin/projektai/$id'
     | '/admin/projektai/nustatymai'
@@ -328,6 +338,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/admin'
     | '/lt/blog'
+    | '/lt/funkcijos'
     | '/admin/perziura/$id'
     | '/admin/projektai/$id'
     | '/admin/projektai/nustatymai'
@@ -358,6 +369,7 @@ export interface FileRouteTypes {
     | '/lt/blog/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
+    | '/lt/funkcijos/'
     | '/_authenticated/admin/perziura/$id'
     | '/_authenticated/admin/projektai/$id'
     | '/_authenticated/admin/projektai/nustatymai'
@@ -383,6 +395,7 @@ export interface RootRouteChildren {
   LtIndexRoute: typeof LtIndexRoute
   LtBlogSlugRoute: typeof LtBlogSlugRoute
   LtBlogIndexRoute: typeof LtBlogIndexRoute
+  LtFunkcijosIndexRoute: typeof LtFunkcijosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -520,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LtBlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lt/funkcijos/': {
+      id: '/lt/funkcijos/'
+      path: '/lt/funkcijos'
+      fullPath: '/lt/funkcijos/'
+      preLoaderRoute: typeof LtFunkcijosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/perziura/$id': {
       id: '/_authenticated/admin/perziura/$id'
       path: '/perziura/$id'
@@ -651,6 +671,7 @@ const rootRouteChildren: RootRouteChildren = {
   LtIndexRoute: LtIndexRoute,
   LtBlogSlugRoute: LtBlogSlugRoute,
   LtBlogIndexRoute: LtBlogIndexRoute,
+  LtFunkcijosIndexRoute: LtFunkcijosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
