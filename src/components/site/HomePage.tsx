@@ -1,4 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { BedDouble, CalendarDays, Check, FileText, TrendingUp, Users, X } from "lucide-react";
+
+import { featureCopy, featureHref } from "@/content/features";
 
 import { DemoForm } from "./DemoForm";
 import { Faq } from "./Faq";
