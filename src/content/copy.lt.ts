@@ -60,7 +60,7 @@ export const lt: Copy = {
       },
       {
         title: "Kambarių priežiūros modulis",
-        body: "Atskiroji mobili aplikacija kambarių personalui. Užduočių skyrimas, darbų eigos sekimas, gedimų fiksavimas su nuotraukomis, realaus laiko pranešimai.",
+        body: "Atskiroji aplikacija kambarių personalui. Užduočių skyrimas, darbų eigos sekimas, gedimų fiksavimas su nuotraukomis, realaus laiko pranešimai.",
       },
       {
         title: "Automatizuotas sąskaitų formavimas",
