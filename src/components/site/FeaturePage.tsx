@@ -37,7 +37,7 @@ export function FeatureDetailPage({ lang, feature }: { lang: Lang; feature: Feat
                 <SignatureUnderlined text={feature.h1} />
               </h1>
               <p className="mt-6 text-lg leading-relaxed text-cream/80">{feature.lede}</p>
-              <CtaLink href={demoHref} className="mt-8" tone="light">
+              <CtaLink href={demoHref} className="mt-8" tone="cream">
                 {fc.ctaButton}
               </CtaLink>
             </div>
@@ -103,7 +103,7 @@ export function FeatureDetailPage({ lang, feature }: { lang: Lang; feature: Feat
             <div className="mt-14 rounded-3xl bg-teal-900 p-10 text-cream md:p-14">
               <h2 className="text-cream">{fc.ctaTitle}</h2>
               <p className="mt-4 max-w-xl text-cream/80">{fc.ctaBody}</p>
-              <CtaLink href={demoHref} className="mt-8" tone="light">
+              <CtaLink href={demoHref} className="mt-8" tone="cream">
                 {fc.ctaButton}
               </CtaLink>
             </div>
@@ -162,7 +162,7 @@ export function FeaturesIndexPage({ lang }: { lang: Lang }) {
                 >
                   <h2 className="font-display text-2xl">{item.card}</h2>
                   <p className="text-[0.95rem] leading-relaxed text-ink-soft">{item.lede}</p>
-                  <span className="mt-auto pt-4 text-[0.9rem] text-amber-dark underline underline-offset-4">
+                  <span className="mt-auto pt-4 text-[0.9rem] text-teal-700 underline underline-offset-4">
                     {fc.more}
                   </span>
                 </Link>
