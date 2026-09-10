@@ -42,6 +42,36 @@ export const en: Copy = {
       website2: "Hotel booking website room selection and checkout page",
     },
   },
+  features: {
+    eyebrow: "Everything in one place",
+    h2: "Full property management — *under your* control",
+    items: [
+      {
+        title: "Booking system",
+        body: "Grow direct bookings without middlemen.",
+      },
+      {
+        title: "Your property rental management system",
+        body: "One tool to manage your entire rental portfolio.",
+      },
+      {
+        title: "Revenue optimization",
+        body: "Increase revenue: set the optimal pricing for every room.",
+      },
+      {
+        title: "Housekeeping module",
+        body: "A separate mobile app for housekeeping staff. Task assignment, progress tracking, issue reporting with photos, real-time notifications.",
+      },
+      {
+        title: "Automated invoicing",
+        body: "Systematic, accurate and fast invoice and receipt generation, integration with your accounting software, automated sending by email.",
+      },
+      {
+        title: "Guest relationship management",
+        body: "Your full guest history and communication in one place.",
+      },
+    ],
+  },
   approach: {
     eyebrow: "Our approach",
     h2: "Configuration is not *customisation*",
