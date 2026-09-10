@@ -29,6 +29,7 @@ import { Route as AuthenticatedAdminVartotojaiRouteImport } from './routes/_auth
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
 import { Route as LtFunkcijosIndexRouteImport } from './routes/lt/funkcijos/index'
+import { Route as LtFunkcijosSlugRouteImport } from './routes/lt/funkcijos/$slug'
 import { Route as AuthenticatedAdminPerziuraIdRouteImport } from './routes/_authenticated/admin.perziura.$id'
 import { Route as AuthenticatedAdminProjektaiIndexRouteImport } from './routes/_authenticated/admin.projektai.index'
 import { Route as AuthenticatedAdminProjektaiIdRouteImport } from './routes/_authenticated/admin.projektai.$id'
@@ -142,6 +143,11 @@ const LtFunkcijosIndexRoute = LtFunkcijosIndexRouteImport.update({
   path: '/lt/funkcijos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LtFunkcijosSlugRoute = LtFunkcijosSlugRouteImport.update({
+  id: '/lt/funkcijos/$slug',
+  path: '/lt/funkcijos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminPerziuraIdRoute =
   AuthenticatedAdminPerziuraIdRouteImport.update({
     id: '/perziura/$id',
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/lt/funkcijos/$slug': typeof LtFunkcijosSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
   '/lt/funkcijos/': typeof LtFunkcijosIndexRoute
@@ -243,6 +250,7 @@ export interface FileRoutesByTo {
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/lt/funkcijos/$slug': typeof LtFunkcijosSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
   '/lt/funkcijos': typeof LtFunkcijosIndexRoute
@@ -275,6 +283,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/_authenticated/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/lt/funkcijos/$slug': typeof LtFunkcijosSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
   '/lt/funkcijos/': typeof LtFunkcijosIndexRoute
@@ -307,6 +316,7 @@ export interface FileRouteTypes {
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
+    | '/lt/funkcijos/$slug'
     | '/admin/'
     | '/lt/blog/'
     | '/lt/funkcijos/'
@@ -336,6 +346,7 @@ export interface FileRouteTypes {
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
+    | '/lt/funkcijos/$slug'
     | '/admin'
     | '/lt/blog'
     | '/lt/funkcijos'
@@ -367,6 +378,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/uzklausos'
     | '/_authenticated/admin/vartotojai'
     | '/lt/blog/$slug'
+    | '/lt/funkcijos/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
     | '/lt/funkcijos/'
@@ -394,6 +406,7 @@ export interface RootRouteChildren {
   FeaturesIndexRoute: typeof FeaturesIndexRoute
   LtIndexRoute: typeof LtIndexRoute
   LtBlogSlugRoute: typeof LtBlogSlugRoute
+  LtFunkcijosSlugRoute: typeof LtFunkcijosSlugRoute
   LtBlogIndexRoute: typeof LtBlogIndexRoute
   LtFunkcijosIndexRoute: typeof LtFunkcijosIndexRoute
 }
@@ -540,6 +553,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LtFunkcijosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lt/funkcijos/$slug': {
+      id: '/lt/funkcijos/$slug'
+      path: '/lt/funkcijos/$slug'
+      fullPath: '/lt/funkcijos/$slug'
+      preLoaderRoute: typeof LtFunkcijosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/perziura/$id': {
       id: '/_authenticated/admin/perziura/$id'
       path: '/perziura/$id'
@@ -670,6 +690,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeaturesIndexRoute: FeaturesIndexRoute,
   LtIndexRoute: LtIndexRoute,
   LtBlogSlugRoute: LtBlogSlugRoute,
+  LtFunkcijosSlugRoute: LtFunkcijosSlugRoute,
   LtBlogIndexRoute: LtBlogIndexRoute,
   LtFunkcijosIndexRoute: LtFunkcijosIndexRoute,
 }
