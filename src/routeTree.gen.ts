@@ -18,6 +18,8 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as ApiTrackViewRouteImport } from './routes/api/track-view'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as FeaturesIndexRouteImport } from './routes/features/index'
+import { Route as FeaturesSlugRouteImport } from './routes/features/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
@@ -26,6 +28,8 @@ import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminVartotojaiRouteImport } from './routes/_authenticated/admin.vartotojai'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
 import { Route as LtBlogSlugRouteImport } from './routes/lt/blog/$slug'
+import { Route as LtFunkcijosIndexRouteImport } from './routes/lt/funkcijos/index'
+import { Route as LtFunkcijosSlugRouteImport } from './routes/lt/funkcijos/$slug'
 import { Route as AuthenticatedAdminPerziuraIdRouteImport } from './routes/_authenticated/admin.perziura.$id'
 import { Route as AuthenticatedAdminProjektaiIndexRouteImport } from './routes/_authenticated/admin.projektai.index'
 import { Route as AuthenticatedAdminProjektaiIdRouteImport } from './routes/_authenticated/admin.projektai.$id'
@@ -80,6 +84,16 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturesIndexRoute = FeaturesIndexRouteImport.update({
+  id: '/features/',
+  path: '/features/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
+  id: '/features/$slug',
+  path: '/features/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LtIndexRoute = LtIndexRouteImport.update({
   id: '/lt/',
   path: '/lt/',
@@ -122,6 +136,16 @@ const LtBlogIndexRoute = LtBlogIndexRouteImport.update({
 const LtBlogSlugRoute = LtBlogSlugRouteImport.update({
   id: '/lt/blog/$slug',
   path: '/lt/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LtFunkcijosIndexRoute = LtFunkcijosIndexRouteImport.update({
+  id: '/lt/funkcijos/',
+  path: '/lt/funkcijos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LtFunkcijosSlugRoute = LtFunkcijosSlugRouteImport.update({
+  id: '/lt/funkcijos/$slug',
+  path: '/lt/funkcijos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminPerziuraIdRoute =
@@ -187,15 +211,19 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/features/$slug': typeof FeaturesSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/lt/funkcijos/$slug': typeof LtFunkcijosSlugRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/lt/funkcijos/': typeof LtFunkcijosIndexRoute
   '/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/admin/projektai/$id': typeof AuthenticatedAdminProjektaiIdRoute
   '/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
@@ -213,15 +241,19 @@ export interface FileRoutesByTo {
   '/slaptazodis': typeof SlaptazodisRoute
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/features/$slug': typeof FeaturesSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/features': typeof FeaturesIndexRoute
   '/lt': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/lt/funkcijos/$slug': typeof LtFunkcijosSlugRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/lt/blog': typeof LtBlogIndexRoute
+  '/lt/funkcijos': typeof LtFunkcijosIndexRoute
   '/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/admin/projektai/$id': typeof AuthenticatedAdminProjektaiIdRoute
   '/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
@@ -242,15 +274,19 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/features/$slug': typeof FeaturesSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/_authenticated/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
+  '/lt/funkcijos/$slug': typeof LtFunkcijosSlugRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lt/blog/': typeof LtBlogIndexRoute
+  '/lt/funkcijos/': typeof LtFunkcijosIndexRoute
   '/_authenticated/admin/perziura/$id': typeof AuthenticatedAdminPerziuraIdRoute
   '/_authenticated/admin/projektai/$id': typeof AuthenticatedAdminProjektaiIdRoute
   '/_authenticated/admin/projektai/nustatymai': typeof AuthenticatedAdminProjektaiNustatymaiRoute
@@ -271,15 +307,19 @@ export interface FileRouteTypes {
     | '/admin'
     | '/api/track-view'
     | '/blog/$slug'
+    | '/features/$slug'
     | '/blog/'
+    | '/features/'
     | '/lt/'
     | '/admin/analitika'
     | '/admin/sablonai'
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
+    | '/lt/funkcijos/$slug'
     | '/admin/'
     | '/lt/blog/'
+    | '/lt/funkcijos/'
     | '/admin/perziura/$id'
     | '/admin/projektai/$id'
     | '/admin/projektai/nustatymai'
@@ -297,15 +337,19 @@ export interface FileRouteTypes {
     | '/slaptazodis'
     | '/api/track-view'
     | '/blog/$slug'
+    | '/features/$slug'
     | '/blog'
+    | '/features'
     | '/lt'
     | '/admin/analitika'
     | '/admin/sablonai'
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
+    | '/lt/funkcijos/$slug'
     | '/admin'
     | '/lt/blog'
+    | '/lt/funkcijos'
     | '/admin/perziura/$id'
     | '/admin/projektai/$id'
     | '/admin/projektai/nustatymai'
@@ -325,15 +369,19 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/api/track-view'
     | '/blog/$slug'
+    | '/features/$slug'
     | '/blog/'
+    | '/features/'
     | '/lt/'
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/uzklausos'
     | '/_authenticated/admin/vartotojai'
     | '/lt/blog/$slug'
+    | '/lt/funkcijos/$slug'
     | '/_authenticated/admin/'
     | '/lt/blog/'
+    | '/lt/funkcijos/'
     | '/_authenticated/admin/perziura/$id'
     | '/_authenticated/admin/projektai/$id'
     | '/_authenticated/admin/projektai/nustatymai'
@@ -353,10 +401,14 @@ export interface RootRouteChildren {
   SlaptazodisRoute: typeof SlaptazodisRoute
   ApiTrackViewRoute: typeof ApiTrackViewRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  FeaturesSlugRoute: typeof FeaturesSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  FeaturesIndexRoute: typeof FeaturesIndexRoute
   LtIndexRoute: typeof LtIndexRoute
   LtBlogSlugRoute: typeof LtBlogSlugRoute
+  LtFunkcijosSlugRoute: typeof LtFunkcijosSlugRoute
   LtBlogIndexRoute: typeof LtBlogIndexRoute
+  LtFunkcijosIndexRoute: typeof LtFunkcijosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -424,6 +476,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/features/': {
+      id: '/features/'
+      path: '/features'
+      fullPath: '/features/'
+      preLoaderRoute: typeof FeaturesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/$slug': {
+      id: '/features/$slug'
+      path: '/features/$slug'
+      fullPath: '/features/$slug'
+      preLoaderRoute: typeof FeaturesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lt/': {
       id: '/lt/'
       path: '/lt'
@@ -478,6 +544,20 @@ declare module '@tanstack/react-router' {
       path: '/lt/blog/$slug'
       fullPath: '/lt/blog/$slug'
       preLoaderRoute: typeof LtBlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lt/funkcijos/': {
+      id: '/lt/funkcijos/'
+      path: '/lt/funkcijos'
+      fullPath: '/lt/funkcijos/'
+      preLoaderRoute: typeof LtFunkcijosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lt/funkcijos/$slug': {
+      id: '/lt/funkcijos/$slug'
+      path: '/lt/funkcijos/$slug'
+      fullPath: '/lt/funkcijos/$slug'
+      preLoaderRoute: typeof LtFunkcijosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/perziura/$id': {
@@ -605,10 +685,14 @@ const rootRouteChildren: RootRouteChildren = {
   SlaptazodisRoute: SlaptazodisRoute,
   ApiTrackViewRoute: ApiTrackViewRoute,
   BlogSlugRoute: BlogSlugRoute,
+  FeaturesSlugRoute: FeaturesSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
+  FeaturesIndexRoute: FeaturesIndexRoute,
   LtIndexRoute: LtIndexRoute,
   LtBlogSlugRoute: LtBlogSlugRoute,
+  LtFunkcijosSlugRoute: LtFunkcijosSlugRoute,
   LtBlogIndexRoute: LtBlogIndexRoute,
+  LtFunkcijosIndexRoute: LtFunkcijosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
