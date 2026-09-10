@@ -63,6 +63,46 @@ function buildSitemap(posts: SitemapPost[]): string {
     },
   ];
 
+  const enFeatures = absUrl("en", "features");
+  const ltFeatures = absUrl("lt", "funkcijos");
+  const featuresLastmod = new Date().toISOString().slice(0, 10);
+
+  entries.push(
+    {
+      loc: enFeatures,
+      lastmod: featuresLastmod,
+      alternates: [
+        { lang: "en", href: enFeatures },
+        { lang: "lt", href: ltFeatures },
+        { lang: "x-default", href: enFeatures },
+      ],
+    },
+    {
+      loc: ltFeatures,
+      lastmod: featuresLastmod,
+      alternates: [
+        { lang: "en", href: enFeatures },
+        { lang: "lt", href: ltFeatures },
+        { lang: "x-default", href: enFeatures },
+      ],
+    },
+  );
+
+  for (const item of featureCopy.en.items) {
+    const ltSlug = featureSlugByKey("lt", item.key);
+    const en = absUrl("en", featurePath("en", item.slug));
+    const lt = ltSlug ? absUrl("lt", featurePath("lt", ltSlug)) : null;
+    const alternates = lt
+      ? [
+          { lang: "en", href: en },
+          { lang: "lt", href: lt },
+          { lang: "x-default", href: en },
+        ]
+      : [];
+    entries.push({ loc: en, lastmod: featuresLastmod, alternates });
+    if (lt) entries.push({ loc: lt, lastmod: featuresLastmod, alternates });
+  }
+
   for (const post of posts) {
     const loc = absUrl(post.lang, `blog/${post.slug}`);
     // A page that exists in only one language gets no hreflang annotations.
