@@ -165,7 +165,7 @@ export const en: Copy = {
     yesTitle: "This is for you if",
     noTitle: "This is not for you if",
     yes: [
-      "6–30 units, owner-operated or run by a small team",
+      "3–130 units, owner-operated or run by a small team",
       "Hotels, cabins, guesthouses, or apartments across several addresses",
       "You sell more than the room, whatever that is at your property",
       "Business guests who need a proper invoice to a company",
