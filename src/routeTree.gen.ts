@@ -19,6 +19,7 @@ import { Route as ApiTrackViewRouteImport } from './routes/api/track-view'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as FeaturesIndexRouteImport } from './routes/features/index'
+import { Route as FeaturesSlugRouteImport } from './routes/features/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
@@ -84,6 +85,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 const FeaturesIndexRoute = FeaturesIndexRouteImport.update({
   id: '/features/',
   path: '/features/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
+  id: '/features/$slug',
+  path: '/features/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LtIndexRoute = LtIndexRouteImport.update({
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/features/$slug': typeof FeaturesSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/slaptazodis': typeof SlaptazodisRoute
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/features/$slug': typeof FeaturesSlugRoute
   '/blog': typeof BlogIndexRoute
   '/features': typeof FeaturesIndexRoute
   '/lt': typeof LtIndexRoute
@@ -250,6 +258,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/features/$slug': typeof FeaturesSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/api/track-view'
     | '/blog/$slug'
+    | '/features/$slug'
     | '/blog/'
     | '/features/'
     | '/lt/'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/slaptazodis'
     | '/api/track-view'
     | '/blog/$slug'
+    | '/features/$slug'
     | '/blog'
     | '/features'
     | '/lt'
@@ -336,6 +347,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/api/track-view'
     | '/blog/$slug'
+    | '/features/$slug'
     | '/blog/'
     | '/features/'
     | '/lt/'
@@ -365,6 +377,7 @@ export interface RootRouteChildren {
   SlaptazodisRoute: typeof SlaptazodisRoute
   ApiTrackViewRoute: typeof ApiTrackViewRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  FeaturesSlugRoute: typeof FeaturesSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   FeaturesIndexRoute: typeof FeaturesIndexRoute
   LtIndexRoute: typeof LtIndexRoute
@@ -442,6 +455,13 @@ declare module '@tanstack/react-router' {
       path: '/features'
       fullPath: '/features/'
       preLoaderRoute: typeof FeaturesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/$slug': {
+      id: '/features/$slug'
+      path: '/features/$slug'
+      fullPath: '/features/$slug'
+      preLoaderRoute: typeof FeaturesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lt/': {
@@ -625,6 +645,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlaptazodisRoute: SlaptazodisRoute,
   ApiTrackViewRoute: ApiTrackViewRoute,
   BlogSlugRoute: BlogSlugRoute,
+  FeaturesSlugRoute: FeaturesSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   FeaturesIndexRoute: FeaturesIndexRoute,
   LtIndexRoute: LtIndexRoute,
