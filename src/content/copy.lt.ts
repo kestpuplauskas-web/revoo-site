@@ -44,7 +44,7 @@ export const lt: Copy = {
   },
   features: {
     eyebrow: "Viskas vienoje vietoje",
-    h2: "Visas viešbučio valdymas – *jūsų* kontrolėje",
+    h2: "Apgyvendinimo verslo valdymas – *jūsų* kontrolėje",
     items: [
       {
         title: "Daugiau tiesioginių rezervacijų",
