@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { featureCopy, featurePath, featureSlugByKey } from "@/content/features";
 import { absUrl } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
 import type { SitemapPost } from "@/lib/posts.server";
