@@ -18,6 +18,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as ApiTrackViewRouteImport } from './routes/api/track-view'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as FeaturesIndexRouteImport } from './routes/features/index'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
@@ -78,6 +79,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesIndexRoute = FeaturesIndexRouteImport.update({
+  id: '/features/',
+  path: '/features/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LtIndexRoute = LtIndexRouteImport.update({
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
@@ -214,6 +221,7 @@ export interface FileRoutesByTo {
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/features': typeof FeaturesIndexRoute
   '/lt': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
@@ -243,6 +251,7 @@ export interface FileRoutesById {
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
@@ -272,6 +281,7 @@ export interface FileRouteTypes {
     | '/api/track-view'
     | '/blog/$slug'
     | '/blog/'
+    | '/features/'
     | '/lt/'
     | '/admin/analitika'
     | '/admin/sablonai'
@@ -298,6 +308,7 @@ export interface FileRouteTypes {
     | '/api/track-view'
     | '/blog/$slug'
     | '/blog'
+    | '/features'
     | '/lt'
     | '/admin/analitika'
     | '/admin/sablonai'
@@ -326,6 +337,7 @@ export interface FileRouteTypes {
     | '/api/track-view'
     | '/blog/$slug'
     | '/blog/'
+    | '/features/'
     | '/lt/'
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/sablonai'
@@ -354,6 +366,7 @@ export interface RootRouteChildren {
   ApiTrackViewRoute: typeof ApiTrackViewRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  FeaturesIndexRoute: typeof FeaturesIndexRoute
   LtIndexRoute: typeof LtIndexRoute
   LtBlogSlugRoute: typeof LtBlogSlugRoute
   LtBlogIndexRoute: typeof LtBlogIndexRoute
@@ -422,6 +435,13 @@ declare module '@tanstack/react-router' {
       path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features/': {
+      id: '/features/'
+      path: '/features'
+      fullPath: '/features/'
+      preLoaderRoute: typeof FeaturesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lt/': {
@@ -606,6 +626,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTrackViewRoute: ApiTrackViewRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
+  FeaturesIndexRoute: FeaturesIndexRoute,
   LtIndexRoute: LtIndexRoute,
   LtBlogSlugRoute: LtBlogSlugRoute,
   LtBlogIndexRoute: LtBlogIndexRoute,
