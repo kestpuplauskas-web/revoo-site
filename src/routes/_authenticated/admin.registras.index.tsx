@@ -63,7 +63,6 @@ function RegistryPage() {
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
-  const summary = query.data?.summary;
   const today = query.data?.today ?? new Date().toISOString().slice(0, 10);
 
   const teamName = (id: string | null) =>
@@ -110,6 +109,17 @@ function RegistryPage() {
     });
   }, [clients, searchTerm, status, country, assignee, units, nextState, today]);
 
+  const filteredSummary = useMemo(() => {
+    const byStatus: Record<string, number> = {};
+    for (const c of rows) byStatus[c.status] = (byStatus[c.status] ?? 0) + 1;
+    return {
+      total: rows.length,
+      byStatus,
+      overdue: rows.filter((c) => c.next_action_date && c.next_action_date < today).length,
+      unassigned: rows.filter((c) => !c.assigned_to).length,
+    };
+  }, [rows, today]);
+
   const countries = useMemo(
     () =>
       [...new Set(clients.map((c) => c.country).filter((v): v is string => Boolean(v)))].sort(
@@ -137,37 +147,33 @@ function RegistryPage() {
         </header>
 
         <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="IŠ VISO KLIENTŲ" value={summary?.total} />
-          <KpiCard label="Pradelsti veiksmai" value={summary?.overdue} />
-          <KpiCard label="Be atsakingo" value={summary?.unassigned} />
+          <KpiCard label="IŠ VISO KLIENTŲ" value={filteredSummary.total} />
+          <KpiCard label="Pradelsti veiksmai" value={filteredSummary.overdue} />
+          <KpiCard label="Be atsakingo" value={filteredSummary.unassigned} />
           <KpiCard
             label="Piltuvėlyje"
             value={
-              summary
-                ? Object.entries(summary.byStatus)
-                    .filter(([k]) => !["won", "lost", "cancelled"].includes(k))
-                    .reduce((acc, [, v]) => acc + v, 0)
-                : undefined
+              Object.entries(filteredSummary.byStatus)
+                .filter(([k]) => !["won", "lost", "cancelled"].includes(k))
+                .reduce((acc, [, v]) => acc + v, 0)
             }
           />
         </div>
 
-        {summary ? (
-          <div className={`${CARD} mt-4 flex flex-wrap gap-2 p-4`}>
-            {ALL_STATUSES.filter((s) => (summary.byStatus[s] ?? 0) > 0).map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => setStatus(status === s ? "" : s)}
-                className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                  status === s ? "bg-teal-700 text-cream" : "bg-cream text-ink-soft"
-                }`}
-              >
-                {CLIENT_STATUS_LABELS[s]}: {summary.byStatus[s]}
-              </button>
-            ))}
-          </div>
-        ) : null}
+        <div className={`${CARD} mt-4 flex flex-wrap gap-2 p-4`}>
+          {ALL_STATUSES.filter((s) => (filteredSummary.byStatus[s] ?? 0) > 0).map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setStatus(status === s ? "" : s)}
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                status === s ? "bg-teal-700 text-cream" : "bg-cream text-ink-soft"
+              }`}
+            >
+              {CLIENT_STATUS_LABELS[s]}: {filteredSummary.byStatus[s]}
+            </button>
+          ))}
+        </div>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <div className="relative min-w-[240px] flex-1">
