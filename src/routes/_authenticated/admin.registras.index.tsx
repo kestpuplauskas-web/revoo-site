@@ -64,7 +64,6 @@ function RegistryPage() {
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
   const today = query.data?.today ?? new Date().toISOString().slice(0, 10);
-  const today = query.data?.today ?? new Date().toISOString().slice(0, 10);
 
   const teamName = (id: string | null) =>
     (team.find((t) => t.id === id)?.full_name ?? team.find((t) => t.id === id)?.email ?? null) ||
