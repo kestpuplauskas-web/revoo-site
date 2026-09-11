@@ -63,7 +63,7 @@ function RegistryPage() {
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
-  const summary = query.data?.summary;
+  void query.data?.summary;
   const today = query.data?.today ?? new Date().toISOString().slice(0, 10);
 
   const teamName = (id: string | null) =>
