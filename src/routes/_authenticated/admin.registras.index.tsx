@@ -110,6 +110,17 @@ function RegistryPage() {
     });
   }, [clients, searchTerm, status, country, assignee, units, nextState, today]);
 
+  const filteredSummary = useMemo(() => {
+    const byStatus: Record<string, number> = {};
+    for (const c of rows) byStatus[c.status] = (byStatus[c.status] ?? 0) + 1;
+    return {
+      total: rows.length,
+      byStatus,
+      overdue: rows.filter((c) => c.next_action_date && c.next_action_date < today).length,
+      unassigned: rows.filter((c) => !c.assigned_to).length,
+    };
+  }, [rows, today]);
+
   const countries = useMemo(
     () =>
       [...new Set(clients.map((c) => c.country).filter((v): v is string => Boolean(v)))].sort(
