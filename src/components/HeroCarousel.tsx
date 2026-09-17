@@ -18,7 +18,7 @@ function Vid({
   height,
 }: {
   src: string;
-  poster?: string;
+  poster?: string | undefined;
   width: number;
   height: number;
 }) {
