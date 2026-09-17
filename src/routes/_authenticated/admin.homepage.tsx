@@ -112,6 +112,39 @@ function SlotCard({ slot, refresh }: { slot: AdminSlotView; refresh: () => void 
   );
 }
 
+function DefaultPreview({ slotKey, def }: { slotKey: SlotKey; def: typeof SLOT_MAP[SlotKey] }) {
+  const media = DEFAULT_SLOTS[slotKey];
+  const isVideo = def.kind === "video";
+  return (
+    <div className="mt-4 rounded-lg border border-ink/10 bg-cream/40 p-3">
+      <div className="flex items-center gap-2 text-xs font-medium text-ink-soft">
+        <Star className="h-3.5 w-3.5" aria-hidden="true" /> Šiuo metu svetainėje — numatytasis failas
+      </div>
+      <div className="mt-2 flex items-center gap-3">
+        <div className="h-16 w-24 overflow-hidden rounded border border-ink/10 bg-white">
+          {isVideo ? (
+            <video
+              src={media.url}
+              poster={media.posterUrl ?? undefined}
+              className="h-full w-full object-cover"
+              muted
+              playsInline
+              preload="metadata"
+            />
+          ) : (
+            <img src={media.url} alt="" className="h-full w-full object-cover" />
+          )}
+        </div>
+        <div className="text-xs text-ink-soft">
+          <p>{media.width}×{media.height}px</p>
+          <p className="break-all">{media.url}</p>
+          {media.posterUrl ? <p className="break-all">Posteris: {media.posterUrl}</p> : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AssetPreview({ asset, def }: { asset: AdminSlotAsset; def: typeof SLOT_MAP[SlotKey] }) {
   const isVideo = def.kind === "video";
   return (
