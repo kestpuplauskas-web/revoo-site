@@ -18,11 +18,13 @@ export function Header({ lang, altHref }: { lang: Lang; altHref: string }) {
   }, []);
 
   const links = [
+    { label: c.nav.home, href: home },
     { label: c.nav.product, href: `${home}#product` },
     { label: c.nav.approach, href: `${home}#approach` },
     { label: c.nav.who, href: `${home}#fit` },
     { label: c.nav.blog, href: href(lang, "blog") },
     { label: c.nav.faq, href: `${home}#faq` },
+    { label: c.nav.contact, href: "tel:+37065287044" },
   ];
 
   return (

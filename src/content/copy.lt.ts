@@ -11,6 +11,8 @@ export const lt: Copy = {
     langLabel: "Kalba",
     skip: "Pereiti prie turinio",
     home: "Pradžia",
+    contact: "Kontaktai",
+    contactPhone: "+370 (652) 87 044",
   },
   hero: {
     eyebrow: "PROGRAMINĖ ĮRANGA SU NUOSAVA REZERVACIJŲ SVETAINE JŪSŲ APGYVENDINIMO VERSLUI\n\n",
@@ -236,6 +238,7 @@ export const lt: Copy = {
     lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
     facts: [
       "hello@revoo.site",
+      "+370 (652) 87 044",
       "Bendraujame anglų ir lietuvių kalbomis",
       "Esame Lietuvoje · šiuo metu diegiame Revoo produktus ir Islandijoje",
     ],
@@ -309,7 +312,7 @@ export const lt: Copy = {
     linksTitle: "Svetainė",
     langTitle: "Kalba",
     rights: "© 2026 Revoo",
-    contact: "revoo.site · hello@revoo.site",
+    contact: "revoo.site · hello@revoo.site · +370 (652) 87 044",
   },
   blog: {
     title: "Blogas",
