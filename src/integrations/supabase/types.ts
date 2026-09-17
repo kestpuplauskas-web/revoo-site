@@ -292,6 +292,96 @@ export type Database = {
         }
         Relationships: []
       }
+      media_assets: {
+        Row: {
+          height: number
+          id: string
+          mime: string
+          position: number
+          poster_asset_id: string | null
+          slot_key: string
+          storage_path: string
+          uploaded_at: string
+          uploaded_by: string | null
+          url: string
+          width: number
+        }
+        Insert: {
+          height: number
+          id?: string
+          mime: string
+          position: number
+          poster_asset_id?: string | null
+          slot_key: string
+          storage_path: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+          url: string
+          width: number
+        }
+        Update: {
+          height?: number
+          id?: string
+          mime?: string
+          position?: number
+          poster_asset_id?: string | null
+          slot_key?: string
+          storage_path?: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+          url?: string
+          width?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_assets_poster_asset_id_fkey"
+            columns: ["poster_asset_id"]
+            isOneToOne: false
+            referencedRelation: "media_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "media_assets_slot_key_fkey"
+            columns: ["slot_key"]
+            isOneToOne: false
+            referencedRelation: "media_slots"
+            referencedColumns: ["key"]
+          },
+        ]
+      }
+      media_slots: {
+        Row: {
+          key: string
+          kind: string
+          label: string
+          max_width: number
+          ratio_h: number
+          ratio_w: number
+          sort_order: number
+          used_in: string
+        }
+        Insert: {
+          key: string
+          kind: string
+          label: string
+          max_width: number
+          ratio_h: number
+          ratio_w: number
+          sort_order?: number
+          used_in: string
+        }
+        Update: {
+          key?: string
+          kind?: string
+          label?: string
+          max_width?: number
+          ratio_h?: number
+          ratio_w?: number
+          sort_order?: number
+          used_in?: string
+        }
+        Relationships: []
+      }
       message_templates: {
         Row: {
           body: string
