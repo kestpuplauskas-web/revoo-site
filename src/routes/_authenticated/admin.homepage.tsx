@@ -242,13 +242,16 @@ function MediaLightbox({
   isVideo,
   label,
   thumbnailClassName,
+  ratio,
 }: {
   src: string;
   poster?: string | null | undefined;
   isVideo: boolean;
   label: string;
   thumbnailClassName: string;
+  ratio?: number;
 }) {
+  const fit = ratio ? "object-contain" : "object-cover";
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -258,18 +261,19 @@ function MediaLightbox({
           className={`group relative shrink-0 overflow-hidden rounded border border-ink/10 bg-cream/50 p-0 ${thumbnailClassName}`}
           aria-label={label}
           title={label}
+          {...(ratio ? { style: { aspectRatio: String(ratio) } } : {})}
         >
           {isVideo ? (
             <video
               src={src}
               poster={poster ?? undefined}
-              className="h-full w-full object-cover"
+              className={`h-full w-full ${fit}`}
               muted
               playsInline
               preload="metadata"
             />
           ) : (
-            <img src={src} alt="" className="h-full w-full object-cover" />
+            <img src={src} alt="" className={`h-full w-full ${fit}`} />
           )}
           <span className="absolute inset-0 flex items-center justify-center bg-ink/0 text-cream opacity-0 transition group-hover:bg-ink/45 group-hover:opacity-100 group-focus-visible:bg-ink/45 group-focus-visible:opacity-100">
             <Maximize2 className="h-4 w-4" aria-hidden="true" />
