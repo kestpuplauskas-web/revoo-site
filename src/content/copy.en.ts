@@ -11,6 +11,8 @@ export const en: Copy = {
     langLabel: "Language",
     skip: "Skip to content",
     home: "Home",
+    contact: "Contacts",
+    contactPhone: "+370 (652) 87 044",
   },
   hero: {
     eyebrow: "PROPERTY MANAGEMENT SYSTEM WITH YOUR OWN BOOKING WEBSITE\n\n",
@@ -236,6 +238,7 @@ export const en: Copy = {
     lede: "Tell us a little about it and we will come back within one working day — with either a demo time or an honest \u201Cwe are not the right fit\u201D.",
     facts: [
       "hello@revoo.site",
+      "+370 (652) 87 044",
       "Working in English and Lithuanian",
       "Based in Lithuania · onboarding properties in Iceland",
     ],
@@ -309,7 +312,7 @@ export const en: Copy = {
     linksTitle: "Site",
     langTitle: "Language",
     rights: "© 2026 Revoo",
-    contact: "revoo.site · hello@revoo.site",
+    contact: "revoo.site · hello@revoo.site · +370 (652) 87 044",
   },
   blog: {
     title: "Blog",

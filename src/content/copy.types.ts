@@ -13,6 +13,8 @@ export type Copy = {
     langLabel: string;
     skip: string;
     home: string;
+    contact: string;
+    contactPhone: string;
   };
   hero: {
     eyebrow: string;
