@@ -257,12 +257,14 @@ function UploadArea({
     setBusy(true);
     try {
       await register({
-        slot_key: slotKey,
-        url: img.url,
-        storage_path: img.storagePath,
-        width: img.width,
-        height: img.height,
-        mime: "image/webp",
+        data: {
+          slot_key: slotKey,
+          url: img.url,
+          storage_path: img.storagePath,
+          width: img.width,
+          height: img.height,
+          mime: "image/webp",
+        },
       });
       toast.success("Kandidatas pridėtas");
       refresh();
@@ -287,22 +289,24 @@ function UploadArea({
     setBusy(true);
     try {
       await register({
-        slot_key: slotKey,
-        url: data.url,
-        storage_path: data.storagePath,
-        width: data.width,
-        height: data.height,
-        mime: "video/mp4",
-        ...(posterData
-          ? {
-              poster: {
-                url: posterData.url,
-                storage_path: posterData.storagePath,
-                width: posterData.width,
-                height: posterData.height,
-              },
-            }
-          : {}),
+        data: {
+          slot_key: slotKey,
+          url: data.url,
+          storage_path: data.storagePath,
+          width: data.width,
+          height: data.height,
+          mime: "video/mp4",
+          ...(posterData
+            ? {
+                poster: {
+                  url: posterData.url,
+                  storage_path: posterData.storagePath,
+                  width: posterData.width,
+                  height: posterData.height,
+                },
+              }
+            : {}),
+        },
       });
       toast.success("Kandidatas pridėtas");
       setPosterData(null);
