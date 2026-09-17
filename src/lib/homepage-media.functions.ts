@@ -193,7 +193,7 @@ export const registerAsset = createServerFn({ method: "POST" })
       .order("position", { ascending: false })
       .limit(1);
 
-    const nextPos = existing && existing.length > 0 ? existing[0].position + 1 : 0;
+    const nextPos = existing && existing.length > 0 ? (existing[0]?.position ?? 0) + 1 : 0;
     // New candidate goes to the END of the queue (not position 0 = active)
 
     let posterAssetId: string | null = null;
