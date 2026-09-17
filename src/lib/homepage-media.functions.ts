@@ -127,8 +127,8 @@ export const adminListSlots = createServerFn({ method: "GET" })
     const bySlot: Record<string, AdminSlotAsset[]> = {};
     for (const row of data ?? []) {
       const poster = row.poster_asset_id ? posterMap[row.poster_asset_id] : undefined;
-      if (!bySlot[row.slot_key]) bySlot[row.slot_key] = [];
-      bySlot[row.slot_key].push({
+      const arr = bySlot[row.slot_key] ?? (bySlot[row.slot_key] = []);
+      arr.push({
         id: row.id,
         slot_key: row.slot_key,
         position: row.position,
