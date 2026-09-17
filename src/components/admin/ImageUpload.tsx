@@ -45,30 +45,31 @@ async function prepareImage(
   let width = Math.round(w * scale);
   let height = Math.round(h * scale);
 
-  // Central crop to expected ratio if needed
-  let cropped = false;
-  let drawSource = source;
-  let sx = 0;
-  let sy = 0;
-  let sw = w;
-  let sh = h;
+  // Fit (never crop, never stretch): the whole picture is placed inside a canvas
+  // with the slot ratio; any leftover space stays transparent.
+  let padded = false;
+  let dx = 0;
+  let dy = 0;
+  let dw = width;
+  let dh = height;
 
   if (expectedRatio) {
-    const targetH = Math.round(width / expectedRatio);
-    if (height !== targetH) {
-      cropped = true;
-      if (height > targetH) {
-        // Too tall — crop top/bottom (in source pixels)
-        const targetSh = Math.round(w * (targetH / height));
-        sy = Math.round((h - targetSh) / 2);
-        sh = targetSh;
+    const sourceRatio = width / height;
+    if (Math.abs(sourceRatio - expectedRatio) / expectedRatio > 0.01) {
+      padded = true;
+      if (sourceRatio > expectedRatio) {
+        // Wider than the slot — keep width, add space above and below
+        height = Math.round(width / expectedRatio);
       } else {
-        // Too wide — crop left/right (in source pixels)
-        const targetSw = Math.round(h * expectedRatio);
-        sx = Math.round((w - targetSw) / 2);
-        sw = targetSw;
+        // Taller than the slot — keep height, add space left and right
+        width = Math.min(maxWidth, Math.round(height * expectedRatio));
+        height = Math.round(width / expectedRatio);
       }
-      height = targetH;
+      const fit = Math.min(width / dw, height / dh);
+      dw = Math.round(dw * fit);
+      dh = Math.round(dh * fit);
+      dx = Math.round((width - dw) / 2);
+      dy = Math.round((height - dh) / 2);
     }
   }
 
@@ -76,8 +77,9 @@ async function prepareImage(
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d");
-  if (!ctx) return { blob: file, ext: file.name.split(".").pop() ?? "jpg", width, height, cropped };
-  ctx.drawImage(drawSource, sx, sy, sw, sh, 0, 0, width, height);
+  if (!ctx) return { blob: file, ext: file.name.split(".").pop() ?? "jpg", width, height, cropped: padded };
+  ctx.drawImage(source, 0, 0, w, h, dx, dy, dw, dh);
+  const cropped = padded;
 
   const webp = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob((b) => resolve(b), "image/webp", 0.82),
