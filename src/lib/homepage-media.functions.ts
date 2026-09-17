@@ -367,11 +367,9 @@ export const deleteAsset = createServerFn({ method: "POST" })
       .order("position", { ascending: true });
 
     if (remaining) {
-      await Promise.all(
-        remaining.map((a, i) =>
-          context.supabase.from("media_assets").update({ position: i }).eq("id", a.id),
-        ),
-      );
+      for (let i = 0; i < remaining.length; i++) {
+        await context.supabase.from("media_assets").update({ position: i }).eq("id", remaining[i]!.id);
+      }
     }
 
     return { ok: true as const };
