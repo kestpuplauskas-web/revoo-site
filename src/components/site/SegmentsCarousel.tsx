@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { t, type Lang } from "@/lib/i18n";
 import type { Copy } from "@/content/copy.types";
@@ -13,6 +13,8 @@ export function SegmentsCarousel({ lang, copy }: { lang: Lang; copy?: Copy }) {
   const visibleCount = isMobile ? 1 : 2;
   const pageCount = Math.ceil(slides.length / visibleCount);
   const [index, setIndex] = useState(0);
+
+  useEffect(() => setIndex(0), [visibleCount]);
 
   const go = (next: number) => setIndex((next + pageCount) % pageCount);
 
