@@ -312,7 +312,7 @@ export const reorderSlot = createServerFn({ method: "POST" })
 
     // Write new positions sequentially
     for (let i = 0; i < ordered_ids.length; i++) {
-      await context.supabase.from("media_assets").update({ position: i }).eq("id", ordered_ids[i]);
+      await context.supabase.from("media_assets").update({ position: i }).eq("id", ordered_ids[i]!);
     }
 
     return { ok: true as const };
