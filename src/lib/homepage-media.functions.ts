@@ -271,21 +271,15 @@ export const activateAsset = createServerFn({ method: "POST" })
 
     // Move activated asset to position 0, shift others up
     const reordered = assets.filter((a) => a.id !== asset_id);
-    const updates: Promise<unknown>[] = [];
 
     // Activated asset → position 0
-    updates.push(
-      context.supabase.from("media_assets").update({ position: 0 }).eq("id", asset_id),
-    );
+    await context.supabase.from("media_assets").update({ position: 0 }).eq("id", asset_id);
 
     // Others → positions 1, 2, 3...
-    reordered.forEach((a, i) => {
-      updates.push(
-        context.supabase.from("media_assets").update({ position: i + 1 }).eq("id", a.id),
-      );
-    });
+    for (let i = 0; i < reordered.length; i++) {
+      await context.supabase.from("media_assets").update({ position: i + 1 }).eq("id", reordered[i].id);
+    }
 
-    await Promise.all(updates);
     return { ok: true as const };
   });
 
