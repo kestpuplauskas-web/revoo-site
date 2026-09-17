@@ -6,6 +6,7 @@ import {
   Building2,
   FileText,
   FolderKanban,
+  Images,
   Inbox,
   NotepadText,
   Users,
@@ -99,6 +100,9 @@ function AdminLayout() {
           <NavItem to="/admin/straipsniai/" icon={<FileText className="h-4 w-4" aria-hidden="true" />}>
             Straipsniai
           </NavItem>
+          <NavItem to="/admin/homepage/" icon={<Images className="h-4 w-4" aria-hidden="true" />}>
+            Pagrindinis puslapis
+          </NavItem>
           <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
             Valdomi projektai
           </NavItem>
@@ -147,7 +151,8 @@ function NavItem({
     | "/admin/registras/"
     | "/admin/sablonai/"
     | "/admin/analitika/"
-    | "/admin/vartotojai/";
+    | "/admin/vartotojai/"
+    | "/admin/homepage/";
   icon: React.ReactNode;
   badge?: number;
   children: React.ReactNode;

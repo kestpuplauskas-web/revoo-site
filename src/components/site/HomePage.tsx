@@ -19,11 +19,12 @@ import {
   Signature,
   SignatureUnderlined,
 } from "./primitives";
-import { media } from "@/content/media";
+import { useSlotOverrides } from "@/hooks/useSlotOverrides";
 import { href, t, type Lang } from "@/lib/i18n";
 
 export function HomePage({ lang }: { lang: Lang }) {
   const c = t(lang);
+  const slots = useSlotOverrides();
   const home = href(lang);
   const demoHref = `${home}#demo`;
   const altHref = lang === "en" ? "/lt/" : "/";
@@ -72,7 +73,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             </div>
           </div>
           <div className="relative min-h-[520px] bg-teal-900 lg:min-h-[660px]">
-            <HeroCarousel lang={lang} />
+            <HeroCarousel lang={lang} slots={slots} />
           </div>
 
         </section>
@@ -165,10 +166,10 @@ export function HomePage({ lang }: { lang: Lang }) {
               <BrowserFrame url={c.media.browserUrl}>
                 <img
                   className="block h-auto w-full"
-                  src="/media/6_booking.webp"
+                  src={slots["booking-calendar"].url}
                   alt={c.media.alt.calendar}
-                  width={1867}
-                  height={937}
+                  width={slots["booking-calendar"].width}
+                  height={slots["booking-calendar"].height}
                   loading="lazy"
                 />
               </BrowserFrame>
@@ -181,18 +182,18 @@ export function HomePage({ lang }: { lang: Lang }) {
           <div className="container-page grid items-center gap-16 lg:grid-cols-2">
             <Reveal className="relative flex justify-center">
               <img
-                src={media.housekeepingWeek.url}
-                width={media.housekeepingWeek.width}
-                height={media.housekeepingWeek.height}
+                src={slots["housekeeping-week"].url}
+                width={slots["housekeeping-week"].width}
+                height={slots["housekeeping-week"].height}
                 alt={c.media.alt.housekeepingWeek}
                 loading="lazy"
                 className="pointer-events-none absolute inset-x-0 top-8 hidden rotate-[-4deg] rounded-2xl opacity-45 sm:block"
               />
               <PhoneFrame className="relative w-[250px]">
                 <img
-                  src={media.housekeepingApp.url}
-                  width={media.housekeepingApp.width}
-                  height={media.housekeepingApp.height}
+                  src={slots["housekeeping-phone"].posterUrl!}
+                  width={slots["housekeeping-phone"].posterWidth!}
+                  height={slots["housekeeping-phone"].posterHeight!}
                   alt={c.media.alt.housekeepingApp}
                   loading="lazy"
                   className="block h-auto w-full"
@@ -224,9 +225,9 @@ export function HomePage({ lang }: { lang: Lang }) {
             <Reveal delay={60} className="flex justify-center">
               <div className="card-lift rotate-2 rounded-2xl bg-white p-4 shadow-[0_24px_60px_-45px_rgba(8,32,30,0.55)]">
                 <img
-                  src={media.invoice.url}
-                  width={media.invoice.width}
-                  height={media.invoice.height}
+                  src={slots["invoice"].url}
+                  width={slots["invoice"].width}
+                  height={slots["invoice"].height}
                   alt={c.media.alt.invoice}
                   loading="lazy"
                   className="block h-auto w-full max-w-[460px] rounded-xl"
@@ -250,9 +251,9 @@ export function HomePage({ lang }: { lang: Lang }) {
               <div className="w-full max-w-[900px] rounded-3xl bg-cream/10 p-3 shadow-[0_0_120px_-40px_rgba(247,242,231,0.65)]">
                 <BrowserFrame url={c.media.browserUrl}>
                   <img
-                    src={media.bookingSite.url}
-                    width={media.bookingSite.width}
-                    height={media.bookingSite.height}
+                    src={slots["site-calendar"].url}
+                    width={slots["site-calendar"].width}
+                    height={slots["site-calendar"].height}
                     alt={c.media.alt.bookingSite}
                     loading="lazy"
                     className="block h-auto w-full"
