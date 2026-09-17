@@ -1,16 +1,22 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { t, type Lang } from "@/lib/i18n";
 import type { Copy } from "@/content/copy.types";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
 export function SegmentsCarousel({ lang, copy }: { lang: Lang; copy?: Copy }) {
   const c = copy ?? t(lang);
   const slides = c.segments.slides;
+  const isMobile = useIsMobile();
+  const visibleCount = isMobile ? 1 : 2;
+  const pageCount = Math.ceil(slides.length / visibleCount);
   const [index, setIndex] = useState(0);
 
-  const go = (next: number) => setIndex((next + slides.length) % slides.length);
+  useEffect(() => setIndex(0), [visibleCount]);
+
+  const go = (next: number) => setIndex((next + pageCount) % pageCount);
 
   return (
     <div
@@ -48,35 +54,38 @@ export function SegmentsCarousel({ lang, copy }: { lang: Lang; copy?: Copy }) {
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-3xl">
+      <div className="overflow-hidden rounded-3xl bg-[linear-gradient(135deg,#0b302e_0%,#15544e_58%,#2c8075_100%)]">
         <div
-          className="flex transition-transform duration-500 ease-out"
+          className="flex min-h-[380px] transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
-          {slides.map((slide) => (
+          {slides.map((slide, slideIndex) => {
+            const firstVisible = index * visibleCount;
+            const isVisible = slideIndex >= firstVisible && slideIndex < firstVisible + visibleCount;
+
+            return (
             <article
               key={slide.title}
-              aria-hidden={slides[index]?.title !== slide.title}
-              className="w-full shrink-0 px-0"
+              aria-hidden={!isVisible}
+              className="flex w-full shrink-0 items-center p-5 sm:p-8 md:w-1/2 md:p-10"
             >
-              <div className="flex min-h-[380px] flex-col justify-end rounded-3xl bg-[linear-gradient(135deg,#0b302e_0%,#15544e_58%,#2c8075_100%)] p-6 sm:p-10 md:flex-row md:items-center md:justify-end">
-                <div className="w-full rounded-2xl border border-white/20 bg-white/[0.12] p-7 backdrop-blur-md md:max-w-[430px]">
-                  <h3 className="font-display text-3xl text-cream">{slide.title}</h3>
-                  <p className="mt-4 text-[0.98rem] leading-relaxed text-cream/85">{slide.body}</p>
-                </div>
+              <div className="flex min-h-[260px] w-full flex-col justify-center rounded-2xl border border-white/20 bg-white/[0.12] p-7 backdrop-blur-md sm:p-8">
+                <h3 className="font-display text-3xl text-cream">{slide.title}</h3>
+                <p className="mt-4 text-[0.98rem] leading-relaxed text-cream/85">{slide.body}</p>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
 
       <div className="mt-6 flex justify-center gap-2">
-        {slides.map((slide, i) => (
+        {Array.from({ length: pageCount }, (_, i) => (
           <button
-            key={slide.title}
+            key={i}
             type="button"
             onClick={() => setIndex(i)}
-            aria-label={`${c.segments.goTo}: ${slide.title}`}
+            aria-label={`${c.segments.goTo}: ${slides[i * visibleCount]?.title ?? i + 1}`}
             aria-current={i === index}
             className={cn(
               "h-2.5 rounded-full transition-all duration-200",
