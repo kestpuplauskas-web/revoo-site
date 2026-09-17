@@ -86,7 +86,7 @@ function SlotCard({ slot, refresh }: { slot: AdminSlotView; refresh: () => void 
           <AssetPreview asset={active} def={def} />
         </div>
       ) : (
-        <p className="mt-4 text-xs text-ink-soft">Aktyvus vaizdas: numatytasis (įkraunamas iš /media/)</p>
+        <DefaultPreview slotKey={slot.key as SlotKey} def={def} />
       )}
 
       {/* Candidates */}
