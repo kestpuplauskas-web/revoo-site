@@ -320,6 +320,30 @@ export const reorderSlot = createServerFn({ method: "POST" })
     return { ok: true as const };
   });
 
+const deactivateSchema = z.object({
+  slot_key: z.enum(SLOT_KEYS as [string, ...string[]]),
+});
+
+/** Grąžina angą prie numatytojo failo: visi įkelti failai lieka kandidatais (pozicijos nuo 1). */
+export const deactivateSlot = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => deactivateSchema.parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: assets, error } = await context.supabase
+      .from("media_assets")
+      .select("id")
+      .eq("slot_key", data.slot_key)
+      .order("position", { ascending: true });
+
+    if (error) throw new Error("Nepavyko perskaičiuoti eilės");
+
+    for (let i = 0; i < (assets ?? []).length; i++) {
+      await context.supabase.from("media_assets").update({ position: i + 1 }).eq("id", assets![i]!.id);
+    }
+
+    return { ok: true as const };
+  });
+
 const deleteSchema = z.object({ id: z.string().uuid() });
 
 export const deleteAsset = createServerFn({ method: "POST" })
