@@ -155,7 +155,7 @@ function CandidateRow({
   const handleActivate = async () => {
     setBusy(true);
     try {
-      await activate({ slot_key: slotKey, asset_id: asset.id });
+      await activate({ data: { slot_key: slotKey, asset_id: asset.id } });
       toast.success("Aktyvuota");
       refresh();
     } catch {
@@ -169,7 +169,7 @@ function CandidateRow({
     if (!confirm("Tikrai ištrinti šį kandidatą?")) return;
     setBusy(true);
     try {
-      await remove({ id: asset.id });
+      await remove({ data: { id: asset.id } });
       toast.success("Ištrinta");
       refresh();
     } catch {
