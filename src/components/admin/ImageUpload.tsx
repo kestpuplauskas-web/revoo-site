@@ -127,7 +127,11 @@ export function ImageUpload({
     setBusy(true);
     try {
       const cropped = await uploadFile(file);
-      toast.success(cropped ? "Paveikslėlis įkeltas (automatiškai apkirpta pagal proporcijas)" : "Paveikslėlis įkeltas");
+      toast.success(
+        cropped
+          ? "Paveikslėlis įkeltas — visas vaizdas išsaugotas, pritaikytas prie vietos proporcijų"
+          : "Paveikslėlis įkeltas",
+      );
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Nepavyko įkelti paveikslėlio");
     } finally {
