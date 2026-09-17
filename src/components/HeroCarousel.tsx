@@ -38,9 +38,9 @@ function Vid({
   );
 }
 
-function Browser({ url, children }: { url: string; children: React.ReactNode }) {
+function Browser({ url, children, className = "" }: { url: string; children: React.ReactNode; className?: string }) {
   return (
-    <div className="rc-browser">
+    <div className={`rc-browser ${className}`}>
       <div className="rc-bbar">
         <i />
         <i />
@@ -464,7 +464,7 @@ export function HeroCarousel({ lang, slots }: { lang: Lang; slots: Slots }) {
         >
           <div className="rc-par" style={v({ "--p": 1.5 })}>
             <div className="rc-float" style={v({ "--dur": "10s", "--del": "0s" })}>
-              <Browser url="yourhotel.com">
+              <Browser url="yourhotel.com" className="rc-browser-cover">
                 <img src={s["site-calendar"].url} width={s["site-calendar"].width} height={s["site-calendar"].height} alt={c.carousel.alts.websiteCalendar} loading="lazy" decoding="async" />
               </Browser>
             </div>

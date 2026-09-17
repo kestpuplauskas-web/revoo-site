@@ -35,62 +35,34 @@ async function loadBitmap(
 async function prepareImage(
   file: File,
   maxWidth: number,
-  expectedRatio?: number,
-): Promise<{ blob: Blob; ext: string; width: number; height: number; cropped: boolean }> {
+  _expectedRatio?: number,
+): Promise<{ blob: Blob; ext: string; width: number; height: number; adjusted: boolean }> {
   if (file.type === "image/svg+xml") {
-    return { blob: file, ext: "svg", width: 0, height: 0, cropped: false };
+    return { blob: file, ext: "svg", width: 0, height: 0, adjusted: false };
   }
   const { source, w, h } = await loadBitmap(file);
   const scale = w > maxWidth ? maxWidth / w : 1;
-  let width = Math.round(w * scale);
-  let height = Math.round(h * scale);
-
-  // Fit (never crop, never stretch): the whole picture is placed inside a canvas
-  // with the slot ratio; any leftover space stays transparent.
-  let padded = false;
-  let dx = 0;
-  let dy = 0;
-  let dw = width;
-  let dh = height;
-
-  if (expectedRatio) {
-    const sourceRatio = width / height;
-    if (Math.abs(sourceRatio - expectedRatio) / expectedRatio > 0.01) {
-      padded = true;
-      if (sourceRatio > expectedRatio) {
-        // Wider than the slot — keep width, add space above and below
-        height = Math.round(width / expectedRatio);
-      } else {
-        // Taller than the slot — keep height, add space left and right
-        width = Math.min(maxWidth, Math.round(height * expectedRatio));
-        height = Math.round(width / expectedRatio);
-      }
-      const fit = Math.min(width / dw, height / dh);
-      dw = Math.round(dw * fit);
-      dh = Math.round(dh * fit);
-      dx = Math.round((width - dw) / 2);
-      dy = Math.round((height - dh) / 2);
-    }
-  }
+  const width = Math.round(w * scale);
+  const height = Math.round(h * scale);
 
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d");
-  if (!ctx) return { blob: file, ext: file.name.split(".").pop() ?? "jpg", width, height, cropped: padded };
-  ctx.drawImage(source, 0, 0, w, h, dx, dy, dw, dh);
-  const cropped = padded;
+  if (!ctx) return { blob: file, ext: file.name.split(".").pop() ?? "jpg", width, height, adjusted: false };
+  ctx.drawImage(source, 0, 0, w, h, 0, 0, width, height);
+  const adjusted = scale < 1;
 
   const webp = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob((b) => resolve(b), "image/webp", 0.82),
   );
-  if (webp && webp.type === "image/webp") return { blob: webp, ext: "webp", width, height, cropped };
+  if (webp && webp.type === "image/webp") return { blob: webp, ext: "webp", width, height, adjusted };
 
   const jpeg = await new Promise<Blob | null>((resolve) =>
     canvas.toBlob((b) => resolve(b), "image/jpeg", 0.85),
   );
-  if (jpeg) return { blob: jpeg, ext: "jpg", width, height, cropped };
-  return { blob: file, ext: file.name.split(".").pop() ?? "jpg", width, height, cropped };
+  if (jpeg) return { blob: jpeg, ext: "jpg", width, height, adjusted };
+  return { blob: file, ext: file.name.split(".").pop() ?? "jpg", width, height, adjusted };
 }
 
 export function ImageUpload({
@@ -112,7 +84,7 @@ export function ImageUpload({
   const [busy, setBusy] = useState(false);
 
   const uploadFile = async (file: File) => {
-    const { blob, ext, width, height, cropped } = await prepareImage(file, maxWidth, expectedRatio);
+    const { blob, ext, width, height, adjusted } = await prepareImage(file, maxWidth, expectedRatio);
     const path = `${new Date().getFullYear()}/${crypto.randomUUID()}.${ext}`;
     const { error } = await supabase.storage
       .from(bucket)
@@ -120,16 +92,16 @@ export function ImageUpload({
     if (error) throw error;
     const { data } = supabase.storage.from(bucket).getPublicUrl(path);
     onUploaded({ url: data.publicUrl, width, height, storagePath: path });
-    return cropped;
+    return adjusted;
   };
 
   const handle = async (file: File) => {
     setBusy(true);
     try {
-      const cropped = await uploadFile(file);
+      const adjusted = await uploadFile(file);
       toast.success(
-        cropped
-          ? "Paveikslėlis įkeltas — visas vaizdas išsaugotas, pritaikytas prie vietos proporcijų"
+        adjusted
+          ? "Paveikslėlis įkeltas — visas vaizdas išsaugotas ir sumažintas"
           : "Paveikslėlis įkeltas",
       );
     } catch (error) {
