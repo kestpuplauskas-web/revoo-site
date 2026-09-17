@@ -2,11 +2,13 @@ import { useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowDown, ArrowUp, Loader2, Star, Trash2, Upload, Video } from "lucide-react";
+import { ArrowDown, ArrowUp, Loader2, Maximize2, Star, Trash2, Upload, Video } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
 import { ImageUpload, type UploadedImage } from "@/components/admin/ImageUpload";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   adminListSlots,
   activateAsset,
@@ -121,20 +123,13 @@ function DefaultPreview({ slotKey, def }: { slotKey: SlotKey; def: typeof SLOT_M
         <Star className="h-3.5 w-3.5" aria-hidden="true" /> Šiuo metu svetainėje — numatytasis failas
       </div>
       <div className="mt-2 flex items-center gap-3">
-        <div className="h-16 w-24 overflow-hidden rounded border border-ink/10 bg-white">
-          {isVideo ? (
-            <video
-              src={media.url}
-              poster={media.posterUrl ?? undefined}
-              className="h-full w-full object-cover"
-              muted
-              playsInline
-              preload="metadata"
-            />
-          ) : (
-            <img src={media.url} alt="" className="h-full w-full object-cover" />
-          )}
-        </div>
+        <MediaLightbox
+          src={media.url}
+          poster={media.posterUrl}
+          isVideo={isVideo}
+          label={`Peržiūrėti ${def.label}`}
+          thumbnailClassName="h-16 w-24"
+        />
         <div className="text-xs text-ink-soft">
           <p>{media.width}×{media.height}px</p>
           <p className="break-all">{media.url}</p>
@@ -149,13 +144,13 @@ function AssetPreview({ asset, def }: { asset: AdminSlotAsset; def: typeof SLOT_
   const isVideo = def.kind === "video";
   return (
     <div className="mt-2 flex items-center gap-3">
-      <div className="h-16 w-24 overflow-hidden rounded border border-ink/10 bg-cream/50">
-        {isVideo ? (
-          <video src={asset.url} poster={asset.poster_url ?? undefined} className="h-full w-full object-cover" muted />
-        ) : (
-          <img src={asset.url} alt="" className="h-full w-full object-cover" />
-        )}
-      </div>
+      <MediaLightbox
+        src={asset.url}
+        poster={asset.poster_url}
+        isVideo={isVideo}
+        label={`Peržiūrėti ${def.label}`}
+        thumbnailClassName="h-16 w-24"
+      />
       <div className="text-xs text-ink-soft">
         <p>{asset.width}×{asset.height}px · {asset.mime}</p>
         <p>Įkelta: {new Date(asset.uploaded_at).toLocaleDateString("lt-LT")}</p>
@@ -230,13 +225,13 @@ function CandidateRow({
 
   return (
     <div className="flex items-center gap-3 rounded-lg border border-ink/10 bg-cream/30 p-2">
-      <div className="h-12 w-20 overflow-hidden rounded border border-ink/10">
-        {def.kind === "video" ? (
-          <video src={asset.url} poster={asset.poster_url ?? undefined} className="h-full w-full object-cover" muted />
-        ) : (
-          <img src={asset.url} alt="" className="h-full w-full object-cover" />
-        )}
-      </div>
+      <MediaLightbox
+        src={asset.url}
+        poster={asset.poster_url}
+        isVideo={def.kind === "video"}
+        label={`Peržiūrėti ${def.label} kandidatą`}
+        thumbnailClassName="h-12 w-20"
+      />
       <div className="flex-1 text-xs text-ink-soft">
         {asset.width}×{asset.height}px · {new Date(asset.uploaded_at).toLocaleDateString("lt-LT")}
       </div>
@@ -260,6 +255,69 @@ function CandidateRow({
         </button>
       </div>
     </div>
+  );
+}
+
+function MediaLightbox({
+  src,
+  poster,
+  isVideo,
+  label,
+  thumbnailClassName,
+}: {
+  src: string;
+  poster?: string | null;
+  isVideo: boolean;
+  label: string;
+  thumbnailClassName: string;
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          className={`group relative shrink-0 overflow-hidden rounded border border-ink/10 bg-cream/50 p-0 ${thumbnailClassName}`}
+          aria-label={label}
+          title={label}
+        >
+          {isVideo ? (
+            <video
+              src={src}
+              poster={poster ?? undefined}
+              className="h-full w-full object-cover"
+              muted
+              playsInline
+              preload="metadata"
+            />
+          ) : (
+            <img src={src} alt="" className="h-full w-full object-cover" />
+          )}
+          <span className="absolute inset-0 flex items-center justify-center bg-ink/0 text-cream opacity-0 transition group-hover:bg-ink/45 group-hover:opacity-100 group-focus-visible:bg-ink/45 group-focus-visible:opacity-100">
+            <Maximize2 className="h-4 w-4" aria-hidden="true" />
+          </span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="w-[92vw] max-w-6xl border-0 bg-background p-3 sm:p-5">
+        <DialogTitle className="pr-8 font-display text-lg text-ink">{label.replace("Peržiūrėti ", "")}</DialogTitle>
+        <DialogDescription className="sr-only">Padidinta nuotraukos arba vaizdo įrašo peržiūra</DialogDescription>
+        <div className="flex max-h-[78vh] min-h-48 items-center justify-center overflow-hidden rounded bg-cream/40">
+          {isVideo ? (
+            <video
+              src={src}
+              poster={poster ?? undefined}
+              className="max-h-[78vh] max-w-full object-contain"
+              controls
+              autoPlay
+              muted
+              playsInline
+            />
+          ) : (
+            <img src={src} alt="" className="max-h-[78vh] max-w-full object-contain" />
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
