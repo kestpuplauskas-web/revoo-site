@@ -2,11 +2,12 @@ import type { Copy } from "./copy.types";
 
 export type CopyEntry = { path: string; value: string };
 
-/** Sekcijų pavadinimai administravimo sąsajai (lietuviškai). */
+/**
+ * Redaguojamos pagrindinio puslapio sekcijos (lietuviški pavadinimai).
+ * Meniu juosta, poraštė ir blogas čia neįtraukti — jie naudojami ir kituose puslapiuose.
+ */
 export const SECTION_LABELS: Record<string, string> = {
-  nav: "Meniu juosta",
   hero: "Pirmasis ekranas",
-  carousel: "Karuselė",
   features: "Galimybės",
   approach: "Požiūris",
   week: "Kambarinių savaitė",
@@ -20,16 +21,18 @@ export const SECTION_LABELS: Record<string, string> = {
   start: "Kaip pradėti",
   demo: "Demo forma",
   faq: "DUK",
-  footer: "Poraštė",
-  blog: "Blogas",
   contacts: "Kontaktai",
-  notFound: "Puslapis nerastas",
   media: "Vaizdų aprašymai",
-  mobileCta: "Mobili juosta",
 };
 
 /** Sekcijų eilė administravimo puslapyje. */
 export const SECTION_ORDER = Object.keys(SECTION_LABELS);
+
+/** Ar šį kelią leidžiama redaguoti. */
+export function isEditablePath(path: string): boolean {
+  const root = path.split(".")[0] ?? "";
+  return root in SECTION_LABELS;
+}
 
 function walk(value: unknown, prefix: string, out: CopyEntry[]): void {
   if (typeof value === "string") {
