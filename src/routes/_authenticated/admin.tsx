@@ -9,6 +9,7 @@ import {
   Images,
   Inbox,
   NotepadText,
+  Type,
   Users,
 } from "lucide-react";
 
@@ -155,6 +156,7 @@ function NavItem({
     | "/admin/sablonai/"
     | "/admin/analitika/"
     | "/admin/vartotojai/"
+    | "/admin/tekstai/"
     | "/admin/homepage/";
   icon: React.ReactNode;
   badge?: number;
