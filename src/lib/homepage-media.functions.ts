@@ -193,8 +193,10 @@ export const registerAsset = createServerFn({ method: "POST" })
       .order("position", { ascending: false })
       .limit(1);
 
-    const nextPos = existing && existing.length > 0 ? (existing[0]?.position ?? 0) + 1 : 0;
-    // New candidate goes to the END of the queue (not position 0 = active)
+    // New candidate goes to the END of the queue, never to position 0 (= active).
+    // With an empty slot we start at 1 so the built-in default stays live until
+    // the admin explicitly activates the new file.
+    const nextPos = existing && existing.length > 0 ? (existing[0]?.position ?? 0) + 1 : 1;
 
     let posterAssetId: string | null = null;
 
