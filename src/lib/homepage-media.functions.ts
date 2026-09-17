@@ -277,7 +277,7 @@ export const activateAsset = createServerFn({ method: "POST" })
 
     // Others → positions 1, 2, 3...
     for (let i = 0; i < reordered.length; i++) {
-      await context.supabase.from("media_assets").update({ position: i + 1 }).eq("id", reordered[i].id);
+      await context.supabase.from("media_assets").update({ position: i + 1 }).eq("id", reordered[i]!.id);
     }
 
     return { ok: true as const };
@@ -310,12 +310,11 @@ export const reorderSlot = createServerFn({ method: "POST" })
       throw new Error("Eilės sudėtis nesutampa su esamais kandidatais");
     }
 
-    // Write new positions
-    const updates: Promise<unknown>[] = ordered_ids.map((id, i) =>
-      context.supabase.from("media_assets").update({ position: i }).eq("id", id),
-    );
+    // Write new positions sequentially
+    for (let i = 0; i < ordered_ids.length; i++) {
+      await context.supabase.from("media_assets").update({ position: i }).eq("id", ordered_ids[i]);
+    }
 
-    await Promise.all(updates);
     return { ok: true as const };
   });
 
