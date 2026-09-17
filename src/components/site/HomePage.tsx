@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BedDouble, CalendarDays, Check, FileText, TrendingUp, Users, X } from "lucide-react";
+import { BedDouble, CalendarDays, Check, FileText, Mail, MapPin, Phone, TrendingUp, Users, X } from "lucide-react";
 
 import { featureCopy, featureHref } from "@/content/features";
 
@@ -408,6 +408,50 @@ export function HomePage({ lang }: { lang: Lang }) {
                 {c.start.cta}
               </CtaLink>
             </div>
+          </div>
+        </section>
+
+        {/* 11b. Contacts */}
+        <section id="contacts" className="section-y bg-white">
+          <div className="container-page grid gap-12 lg:grid-cols-[1fr_1fr]">
+            <Reveal>
+              <Eyebrow>{c.contacts.eyebrow}</Eyebrow>
+              <h2>
+                <Signature text={c.contacts.h2} />
+              </h2>
+              <ul className="mt-8 space-y-5 text-ink-soft">
+                <li className="flex items-start gap-3">
+                  <MapPin aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
+                  <div>
+                    <p className="eyebrow text-[0.7rem] text-ink/60">{c.contacts.addressLabel}</p>
+                    <p className="mt-1 text-[1rem]">{c.contacts.address}</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Phone aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
+                  <div>
+                    <p className="eyebrow text-[0.7rem] text-ink/60">{c.contacts.phoneLabel}</p>
+                    <a href="tel:+37065287044" className="mt-1 block text-[1rem] text-teal-500 hover:text-teal-700">
+                      {c.contacts.phone}
+                    </a>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Mail aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-teal-500" />
+                  <div>
+                    <p className="eyebrow text-[0.7rem] text-ink/60">{c.contacts.emailLabel}</p>
+                    <a href={`mailto:${c.contacts.email}`} className="mt-1 block text-[1rem] text-teal-500 hover:text-teal-700">
+                      {c.contacts.email}
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </Reveal>
+            <Reveal delay={60} className="flex items-center justify-center">
+              <CtaLink href={demoHref} tone="solid">
+                {c.nav.cta}
+              </CtaLink>
+            </Reveal>
           </div>
         </section>
 

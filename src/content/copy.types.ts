@@ -164,6 +164,16 @@ export type Copy = {
     ctaBody: string;
     ctaButton: string;
   };
+  contacts: {
+    eyebrow: string;
+    h2: string;
+    addressLabel: string;
+    address: string;
+    phoneLabel: string;
+    phone: string;
+    emailLabel: string;
+    email: string;
+  };
   notFound: {
     title: string;
     body: string;
