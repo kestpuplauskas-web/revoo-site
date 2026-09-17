@@ -20,10 +20,11 @@ import {
   SignatureUnderlined,
 } from "./primitives";
 import { useSlotOverrides } from "@/hooks/useSlotOverrides";
+import { useCopyOverrides } from "@/hooks/useCopyOverrides";
 import { href, t, type Lang } from "@/lib/i18n";
 
 export function HomePage({ lang }: { lang: Lang }) {
-  const c = t(lang);
+  const c = useCopyOverrides(lang);
   const slots = useSlotOverrides();
   const home = href(lang);
   const demoHref = `${home}#demo`;
@@ -278,7 +279,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               />
             </Reveal>
             <Reveal delay={60} className="mt-10">
-              <SegmentsCarousel lang={lang} />
+              <SegmentsCarousel lang={lang} copy={c} />
             </Reveal>
           </div>
         </section>
@@ -480,7 +481,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </ul>
             </Reveal>
             <Reveal delay={60}>
-              <DemoForm lang={lang} />
+              <DemoForm lang={lang} copy={c} />
             </Reveal>
           </div>
         </section>
@@ -495,7 +496,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </h2>
             </Reveal>
             <Reveal delay={60} className="mt-10">
-              <Faq lang={lang} />
+              <Faq lang={lang} copy={c} />
             </Reveal>
           </div>
         </section>

@@ -25,6 +25,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
+import { Route as AuthenticatedAdminTekstaiRouteImport } from './routes/_authenticated/admin.tekstai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
 import { Route as AuthenticatedAdminVartotojaiRouteImport } from './routes/_authenticated/admin.vartotojai'
 import { Route as LtBlogIndexRouteImport } from './routes/lt/blog/index'
@@ -121,6 +122,12 @@ const AuthenticatedAdminSablonaiRoute =
   AuthenticatedAdminSablonaiRouteImport.update({
     id: '/sablonai',
     path: '/sablonai',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTekstaiRoute =
+  AuthenticatedAdminTekstaiRouteImport.update({
+    id: '/tekstai',
+    path: '/tekstai',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminUzklausosRoute =
@@ -225,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
+  '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
@@ -256,6 +264,7 @@ export interface FileRoutesByTo {
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
+  '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
@@ -290,6 +299,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
+  '/_authenticated/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
   '/_authenticated/admin/vartotojai': typeof AuthenticatedAdminVartotojaiRoute
   '/lt/blog/$slug': typeof LtBlogSlugRoute
@@ -324,6 +334,7 @@ export interface FileRouteTypes {
     | '/admin/analitika'
     | '/admin/homepage'
     | '/admin/sablonai'
+    | '/admin/tekstai'
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
@@ -355,6 +366,7 @@ export interface FileRouteTypes {
     | '/admin/analitika'
     | '/admin/homepage'
     | '/admin/sablonai'
+    | '/admin/tekstai'
     | '/admin/uzklausos'
     | '/admin/vartotojai'
     | '/lt/blog/$slug'
@@ -388,6 +400,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/sablonai'
+    | '/_authenticated/admin/tekstai'
     | '/_authenticated/admin/uzklausos'
     | '/_authenticated/admin/vartotojai'
     | '/lt/blog/$slug'
@@ -538,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSablonaiRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/tekstai': {
+      id: '/_authenticated/admin/tekstai'
+      path: '/tekstai'
+      fullPath: '/admin/tekstai'
+      preLoaderRoute: typeof AuthenticatedAdminTekstaiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/uzklausos': {
       id: '/_authenticated/admin/uzklausos'
       path: '/uzklausos'
@@ -650,6 +670,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
+  AuthenticatedAdminTekstaiRoute: typeof AuthenticatedAdminTekstaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
   AuthenticatedAdminVartotojaiRoute: typeof AuthenticatedAdminVartotojaiRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
@@ -668,6 +689,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
+  AuthenticatedAdminTekstaiRoute: AuthenticatedAdminTekstaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
   AuthenticatedAdminVartotojaiRoute: AuthenticatedAdminVartotojaiRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,

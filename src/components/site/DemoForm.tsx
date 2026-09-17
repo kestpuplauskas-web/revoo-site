@@ -5,9 +5,10 @@ import { toast } from "sonner";
 
 import { submitLead } from "@/lib/leads.functions";
 import { t, type Lang } from "@/lib/i18n";
+import type { Copy } from "@/content/copy.types";
 
-export function DemoForm({ lang }: { lang: Lang }) {
-  const c = t(lang);
+export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
+  const c = copy ?? t(lang);
   const f = c.demo.form;
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);

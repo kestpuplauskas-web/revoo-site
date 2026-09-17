@@ -9,6 +9,7 @@ import {
   Images,
   Inbox,
   NotepadText,
+  Type,
   Users,
 } from "lucide-react";
 
@@ -103,6 +104,9 @@ function AdminLayout() {
           <NavItem to="/admin/homepage/" icon={<Images className="h-4 w-4" aria-hidden="true" />}>
             Pagrindinis puslapis
           </NavItem>
+          <NavItem to="/admin/tekstai/" icon={<Type className="h-4 w-4" aria-hidden="true" />}>
+            Tekstai
+          </NavItem>
           <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
             Valdomi projektai
           </NavItem>
@@ -152,6 +156,7 @@ function NavItem({
     | "/admin/sablonai/"
     | "/admin/analitika/"
     | "/admin/vartotojai/"
+    | "/admin/tekstai/"
     | "/admin/homepage/";
   icon: React.ReactNode;
   badge?: number;
