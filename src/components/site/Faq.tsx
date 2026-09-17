@@ -2,10 +2,11 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 import { t, type Lang } from "@/lib/i18n";
+import type { Copy } from "@/content/copy.types";
 import { cn } from "@/lib/utils";
 
-export function Faq({ lang }: { lang: Lang }) {
-  const c = t(lang);
+export function Faq({ lang, copy }: { lang: Lang; copy?: Copy }) {
+  const c = copy ?? t(lang);
   const [open, setOpen] = useState<number | null>(0);
 
   return (

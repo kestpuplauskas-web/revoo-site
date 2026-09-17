@@ -2,10 +2,11 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 import { t, type Lang } from "@/lib/i18n";
+import type { Copy } from "@/content/copy.types";
 import { cn } from "@/lib/utils";
 
-export function SegmentsCarousel({ lang }: { lang: Lang }) {
-  const c = t(lang);
+export function SegmentsCarousel({ lang, copy }: { lang: Lang; copy?: Copy }) {
+  const c = copy ?? t(lang);
   const slides = c.segments.slides;
   const [index, setIndex] = useState(0);
 
