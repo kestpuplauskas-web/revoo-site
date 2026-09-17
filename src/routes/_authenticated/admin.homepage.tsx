@@ -422,7 +422,7 @@ function UploadArea({
   if (def.kind === "image") {
     return (
       <ImageUpload
-        label="Įkelti kandidatą"
+        label="Įkelti nuotrauką"
         bucket="site-media"
         maxWidth={def.maxWidth}
         expectedRatio={def.ratioW / def.ratioH}
