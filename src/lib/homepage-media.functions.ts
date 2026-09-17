@@ -193,8 +193,10 @@ export const registerAsset = createServerFn({ method: "POST" })
       .order("position", { ascending: false })
       .limit(1);
 
-    const nextPos = existing && existing.length > 0 ? (existing[0]?.position ?? 0) + 1 : 0;
-    // New candidate goes to the END of the queue (not position 0 = active)
+    // New candidate goes to the END of the queue, never to position 0 (= active).
+    // With an empty slot we start at 1 so the built-in default stays live until
+    // the admin explicitly activates the new file.
+    const nextPos = existing && existing.length > 0 ? (existing[0]?.position ?? 0) + 1 : 1;
 
     let posterAssetId: string | null = null;
 
@@ -318,6 +320,30 @@ export const reorderSlot = createServerFn({ method: "POST" })
     return { ok: true as const };
   });
 
+const deactivateSchema = z.object({
+  slot_key: z.enum(SLOT_KEYS as [string, ...string[]]),
+});
+
+/** Grąžina angą prie numatytojo failo: visi įkelti failai lieka kandidatais (pozicijos nuo 1). */
+export const deactivateSlot = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => deactivateSchema.parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: assets, error } = await context.supabase
+      .from("media_assets")
+      .select("id")
+      .eq("slot_key", data.slot_key)
+      .order("position", { ascending: true });
+
+    if (error) throw new Error("Nepavyko perskaičiuoti eilės");
+
+    for (let i = 0; i < (assets ?? []).length; i++) {
+      await context.supabase.from("media_assets").update({ position: i + 1 }).eq("id", assets![i]!.id);
+    }
+
+    return { ok: true as const };
+  });
+
 const deleteSchema = z.object({ id: z.string().uuid() });
 
 export const deleteAsset = createServerFn({ method: "POST" })
@@ -366,9 +392,15 @@ export const deleteAsset = createServerFn({ method: "POST" })
       .eq("slot_key", asset.slot_key)
       .order("position", { ascending: true });
 
+    // Compact positions. If the active file (position 0) was deleted, the slot falls
+    // back to the built-in default — remaining files stay candidates (from 1).
+    const offset = asset.position === 0 ? 1 : 0;
     if (remaining) {
       for (let i = 0; i < remaining.length; i++) {
-        await context.supabase.from("media_assets").update({ position: i }).eq("id", remaining[i]!.id);
+        await context.supabase
+          .from("media_assets")
+          .update({ position: i + offset })
+          .eq("id", remaining[i]!.id);
       }
     }
 

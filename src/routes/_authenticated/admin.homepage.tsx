@@ -14,6 +14,7 @@ import {
   activateAsset,
   registerAsset,
   reorderSlot,
+  deactivateSlot,
   deleteAsset,
   type AdminSlotView,
   type AdminSlotAsset,
@@ -56,11 +57,84 @@ function HomepageMediaAdmin() {
 
 function SlotCard({ slot, refresh }: { slot: AdminSlotView; refresh: () => void }) {
   const def = SLOT_MAP[slot.key as SlotKey];
+  const slotKey = slot.key as SlotKey;
   const expectedRatio = def.ratioW / def.ratioH;
-  const needsPoster = def.kind === "video" && Boolean(DEFAULT_SLOTS[slot.key as SlotKey].posterUrl);
+  const needsPoster = def.kind === "video" && Boolean(DEFAULT_SLOTS[slotKey].posterUrl);
+  const fallback = DEFAULT_SLOTS[slotKey];
 
-  const active = slot.assets.find((a) => a.position === 0);
-  const candidates = slot.assets.filter((a) => a.position !== 0).sort((a, b) => a.position - b.position);
+  const activate = useServerFn(activateAsset);
+  const deactivate = useServerFn(deactivateSlot);
+  const remove = useServerFn(deleteAsset);
+  const [busy, setBusy] = useState(false);
+
+  const sorted = [...slot.assets].sort((a, b) => a.position - b.position);
+  const active = sorted.find((a) => a.position === 0) ?? null;
+  const rest = sorted.filter((a) => a.position !== 0);
+
+  const run = async (fn: () => Promise<unknown>, ok: string, fail: string) => {
+    setBusy(true);
+    try {
+      await fn();
+      toast.success(ok);
+      refresh();
+    } catch {
+      toast.error(fail);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const defaultTile = (
+    <GalleryTile
+      key="default"
+      label="Numatytasis failas"
+      src={fallback.url}
+      poster={fallback.posterUrl ?? null}
+      isVideo={def.kind === "video"}
+      ratio={expectedRatio}
+      meta={`${fallback.width}×${fallback.height}px`}
+      isActive={!active}
+      busy={busy}
+      slotLabel={def.label}
+      {...(active
+        ? {
+            onActivate: () =>
+              run(() => deactivate({ data: { slot_key: slotKey } }), "Grąžintas numatytasis", "Nepavyko grąžinti"),
+          }
+        : {})}
+    />
+  );
+
+  const assetTiles = (active ? [active, ...rest] : rest).map((asset) => (
+    <GalleryTile
+      key={asset.id}
+      label={asset.position === 0 ? "Įkeltas failas" : "Kandidatas"}
+      src={asset.url}
+      poster={asset.poster_url}
+      isVideo={def.kind === "video"}
+      ratio={expectedRatio}
+      meta={`${asset.width}×${asset.height}px · ${new Date(asset.uploaded_at).toLocaleDateString("lt-LT")}`}
+      isActive={asset.position === 0}
+      busy={busy}
+      slotLabel={def.label}
+      {...(asset.position === 0
+        ? {}
+        : {
+            onActivate: () =>
+              run(
+                () => activate({ data: { slot_key: slotKey, asset_id: asset.id } }),
+                "Aktyvuota",
+                "Nepavyko aktyvuoti",
+              ),
+          })}
+      onDelete={() => {
+        if (!confirm("Tikrai ištrinti šią nuotrauką?")) return;
+        void run(() => remove({ data: { id: asset.id } }), "Ištrinta", "Nepavyko ištrinti");
+      }}
+    />
+  ));
+
+  const tiles = active ? [...assetTiles, defaultTile] : [defaultTile, ...assetTiles];
 
   return (
     <div className="rounded-2xl border border-ink/10 bg-white p-5">
@@ -75,184 +149,88 @@ function SlotCard({ slot, refresh }: { slot: AdminSlotView; refresh: () => void 
           </p>
         </div>
         <div className="shrink-0">
-          <UploadArea slotKey={slot.key as SlotKey} def={def} needsPoster={needsPoster} refresh={refresh} />
+          <UploadArea slotKey={slotKey} def={def} needsPoster={needsPoster} refresh={refresh} />
         </div>
       </div>
 
-      {/* Active asset */}
-      {active ? (
-        <div className="mt-4 rounded-lg border-2 border-teal-700/30 bg-teal-700/5 p-3">
-          <div className="flex items-center gap-2 text-xs font-medium text-teal-700">
-            <Star className="h-3.5 w-3.5" aria-hidden="true" /> Aktyvus — rodomas svetainėje
-          </div>
-          <AssetPreview asset={active} def={def} />
-        </div>
-      ) : (
-        <DefaultPreview slotKey={slot.key as SlotKey} def={def} />
-      )}
-
-      {/* Candidates */}
-      {candidates.length > 0 ? (
-        <div className="mt-4">
-          <p className="text-xs font-medium text-ink-soft">Kandidatai ({candidates.length})</p>
-          <div className="mt-2 space-y-2">
-            {candidates.map((asset, i) => (
-              <CandidateRow
-                key={asset.id}
-                asset={asset}
-                def={def}
-                isFirst={i === 0}
-                isLast={i === candidates.length - 1}
-                slotKey={slot.key as SlotKey}
-                refresh={refresh}
-              />
-            ))}
-          </div>
-        </div>
-      ) : null}
+      <p className="mt-5 text-xs font-medium text-ink-soft">
+        Galerija ({tiles.length}) — pirmoji nuotrauka rodoma svetainėje
+      </p>
+      <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">{tiles}</div>
     </div>
   );
 }
 
-function DefaultPreview({ slotKey, def }: { slotKey: SlotKey; def: typeof SLOT_MAP[SlotKey] }) {
-  const media = DEFAULT_SLOTS[slotKey];
-  const isVideo = def.kind === "video";
-  return (
-    <div className="mt-4 rounded-lg border border-ink/10 bg-cream/40 p-3">
-      <div className="flex items-center gap-2 text-xs font-medium text-ink-soft">
-        <Star className="h-3.5 w-3.5" aria-hidden="true" /> Šiuo metu svetainėje — numatytasis failas
-      </div>
-      <div className="mt-2 flex items-center gap-3">
-        <MediaLightbox
-          src={media.url}
-          poster={media.posterUrl}
-          isVideo={isVideo}
-          label={`Peržiūrėti ${def.label}`}
-          thumbnailClassName="h-16 w-24"
-        />
-        <div className="text-xs text-ink-soft">
-          <p>{media.width}×{media.height}px</p>
-          <p className="break-all">{media.url}</p>
-          {media.posterUrl ? <p className="break-all">Posteris: {media.posterUrl}</p> : null}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AssetPreview({ asset, def }: { asset: AdminSlotAsset; def: typeof SLOT_MAP[SlotKey] }) {
-  const isVideo = def.kind === "video";
-  return (
-    <div className="mt-2 flex items-center gap-3">
-      <MediaLightbox
-        src={asset.url}
-        poster={asset.poster_url}
-        isVideo={isVideo}
-        label={`Peržiūrėti ${def.label}`}
-        thumbnailClassName="h-16 w-24"
-      />
-      <div className="text-xs text-ink-soft">
-        <p>{asset.width}×{asset.height}px · {asset.mime}</p>
-        <p>Įkelta: {new Date(asset.uploaded_at).toLocaleDateString("lt-LT")}</p>
-        {asset.poster_url ? <p>Posteris: {asset.poster_width}×{asset.poster_height}px</p> : null}
-      </div>
-    </div>
-  );
-}
-
-function CandidateRow({
-  asset,
-  def,
-  isFirst,
-  isLast,
-  slotKey,
-  refresh,
+function GalleryTile({
+  label,
+  src,
+  poster,
+  isVideo,
+  ratio,
+  meta,
+  isActive,
+  busy,
+  slotLabel,
+  onActivate,
+  onDelete,
 }: {
-  asset: AdminSlotAsset;
-  def: typeof SLOT_MAP[SlotKey];
-  isFirst: boolean;
-  isLast: boolean;
-  slotKey: SlotKey;
-  refresh: () => void;
+  label: string;
+  src: string;
+  poster?: string | null | undefined;
+  isVideo: boolean;
+  ratio: number;
+  meta: string;
+  isActive: boolean;
+  busy: boolean;
+  slotLabel: string;
+  onActivate?: () => void;
+  onDelete?: () => void;
 }) {
-  const activate = useServerFn(activateAsset);
-  const remove = useServerFn(deleteAsset);
-  const reorder = useServerFn(reorderSlot);
-  const [busy, setBusy] = useState(false);
-
-  const handleActivate = async () => {
-    setBusy(true);
-    try {
-      await activate({ data: { slot_key: slotKey, asset_id: asset.id } });
-      toast.success("Aktyvuota");
-      refresh();
-    } catch {
-      toast.error("Nepavyko aktyvuoti");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!confirm("Tikrai ištrinti šį kandidatą?")) return;
-    setBusy(true);
-    try {
-      await remove({ data: { id: asset.id } });
-      toast.success("Ištrinta");
-      refresh();
-    } catch {
-      toast.error("Nepavyko ištrinti");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleMove = async (dir: "up" | "down") => {
-    // Reorder within candidates: swap positions
-    // We need to get the full ordered list from the parent, but since we don't have it here,
-    // we'll just move this candidate up/down in the candidate queue
-    // For simplicity, we skip reorder for now and just allow activate/delete
-    // Actually, let me implement reorder properly
-    setBusy(true);
-    try {
-      // This is a simplified approach - the parent should pass the ordered IDs
-      // For now, just refresh
-      toast.info("Perstatymas greitai bus pridėtas");
-    } finally {
-      setBusy(false);
-    }
-  };
-
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-ink/10 bg-cream/30 p-2">
-      <MediaLightbox
-        src={asset.url}
-        poster={asset.poster_url}
-        isVideo={def.kind === "video"}
-        label={`Peržiūrėti ${def.label} kandidatą`}
-        thumbnailClassName="h-12 w-20"
-      />
-      <div className="flex-1 text-xs text-ink-soft">
-        {asset.width}×{asset.height}px · {new Date(asset.uploaded_at).toLocaleDateString("lt-LT")}
+    <div
+      className={`overflow-hidden rounded-xl border p-2 ${
+        isActive ? "border-teal-700/40 bg-teal-700/5" : "border-ink/10 bg-cream/30"
+      }`}
+    >
+      <div className="relative">
+        <MediaLightbox
+          src={src}
+          poster={poster}
+          isVideo={isVideo}
+          label={`Peržiūrėti ${slotLabel}`}
+          thumbnailClassName="h-auto w-full"
+          ratio={ratio}
+        />
+        {isActive ? (
+          <span className="pointer-events-none absolute left-1.5 top-1.5 flex items-center gap-1 rounded-full bg-teal-700 px-2 py-0.5 text-[10px] font-medium text-cream">
+            <Star className="h-3 w-3" aria-hidden="true" /> Aktyvi
+          </span>
+        ) : null}
       </div>
-      <div className="flex items-center gap-1">
-        <button
-          type="button"
-          onClick={handleActivate}
-          disabled={busy}
-          className="rounded-full bg-teal-700 px-3 py-1.5 text-xs text-cream hover:bg-teal-800 disabled:opacity-60"
-        >
-          Aktyvuoti
-        </button>
-        <button
-          type="button"
-          onClick={handleDelete}
-          disabled={busy}
-          className="rounded-full border border-ink/15 p-1.5 text-ink-soft hover:bg-red-50 hover:text-red-600 disabled:opacity-60"
-          aria-label="Ištrinti"
-        >
-          <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-        </button>
+      <p className="mt-2 text-[11px] font-medium text-ink">{label}</p>
+      <p className="text-[11px] text-ink-soft">{meta}</p>
+      <div className="mt-2 flex items-center gap-1">
+        {onActivate ? (
+          <button
+            type="button"
+            onClick={onActivate}
+            disabled={busy}
+            className="rounded-full bg-teal-700 px-3 py-1 text-[11px] text-cream hover:bg-teal-800 disabled:opacity-60"
+          >
+            Rodyti svetainėje
+          </button>
+        ) : null}
+        {onDelete ? (
+          <button
+            type="button"
+            onClick={onDelete}
+            disabled={busy}
+            className="rounded-full border border-ink/15 p-1.5 text-ink-soft hover:bg-red-50 hover:text-red-600 disabled:opacity-60"
+            aria-label="Ištrinti"
+          >
+            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        ) : null}
       </div>
     </div>
   );
@@ -264,13 +242,16 @@ function MediaLightbox({
   isVideo,
   label,
   thumbnailClassName,
+  ratio,
 }: {
   src: string;
   poster?: string | null | undefined;
   isVideo: boolean;
   label: string;
   thumbnailClassName: string;
+  ratio?: number;
 }) {
+  const fit = ratio ? "object-contain" : "object-cover";
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -280,18 +261,19 @@ function MediaLightbox({
           className={`group relative shrink-0 overflow-hidden rounded border border-ink/10 bg-cream/50 p-0 ${thumbnailClassName}`}
           aria-label={label}
           title={label}
+          {...(ratio ? { style: { aspectRatio: String(ratio) } } : {})}
         >
           {isVideo ? (
             <video
               src={src}
               poster={poster ?? undefined}
-              className="h-full w-full object-cover"
+              className={`h-full w-full ${fit}`}
               muted
               playsInline
               preload="metadata"
             />
           ) : (
-            <img src={src} alt="" className="h-full w-full object-cover" />
+            <img src={src} alt="" className={`h-full w-full ${fit}`} />
           )}
           <span className="absolute inset-0 flex items-center justify-center bg-ink/0 text-cream opacity-0 transition group-hover:bg-ink/45 group-hover:opacity-100 group-focus-visible:bg-ink/45 group-focus-visible:opacity-100">
             <Maximize2 className="h-4 w-4" aria-hidden="true" />
