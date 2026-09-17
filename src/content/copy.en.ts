@@ -238,7 +238,6 @@ export const en: Copy = {
     lede: "Tell us a little about it and we will come back within one working day — with either a demo time or an honest \u201Cwe are not the right fit\u201D.",
     facts: [
       "hello@revoo.site",
-      "+370 (652) 87 044",
       "Working in English and Lithuanian",
       "Based in Lithuania · onboarding properties in Iceland",
     ],
@@ -329,6 +328,16 @@ export const en: Copy = {
     ctaTitle: "Wondering whether Revoo fits your property?",
     ctaBody: "One 45-minute conversation, and an honest answer either way.",
     ctaButton: "Request a demo",
+  },
+  contacts: {
+    eyebrow: "Contacts",
+    h2: "Get in touch",
+    addressLabel: "Address",
+    address: "Liepų g. 83, Klaipėda, Lithuania",
+    phoneLabel: "Phone",
+    phone: "+370 (652) 87 044",
+    emailLabel: "Email",
+    email: "mantas@revoo.site",
   },
   notFound: {
     title: "Page not found",

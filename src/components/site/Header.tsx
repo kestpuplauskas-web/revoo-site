@@ -24,7 +24,7 @@ export function Header({ lang, altHref }: { lang: Lang; altHref: string }) {
     { label: c.nav.who, href: `${home}#fit` },
     { label: c.nav.blog, href: href(lang, "blog") },
     { label: c.nav.faq, href: `${home}#faq` },
-    { label: c.nav.contact, href: "tel:+37065287044" },
+    { label: c.nav.contact, href: `${home}#contacts` },
   ];
 
   return (

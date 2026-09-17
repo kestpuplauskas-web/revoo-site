@@ -238,7 +238,6 @@ export const lt: Copy = {
     lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
     facts: [
       "hello@revoo.site",
-      "+370 (652) 87 044",
       "Bendraujame anglų ir lietuvių kalbomis",
       "Esame Lietuvoje · šiuo metu diegiame Revoo produktus ir Islandijoje",
     ],
@@ -329,6 +328,16 @@ export const lt: Copy = {
     ctaTitle: "Įdomu, ar Revoo tinka jūsų objektui?",
     ctaBody: "Vienas 45 minučių pokalbis ir sąžiningas atsakymas bet kuriuo atveju.",
     ctaButton: "Užsisakyti demo",
+  },
+  contacts: {
+    eyebrow: "Kontaktai",
+    h2: "Susisiekite",
+    addressLabel: "Adresas",
+    address: "Liepų g. 83, Klaipėda, Lietuva",
+    phoneLabel: "Telefonas",
+    phone: "+370 (652) 87 044",
+    emailLabel: "El. paštas",
+    email: "mantas@revoo.site",
   },
   notFound: {
     title: "Puslapis nerastas",
