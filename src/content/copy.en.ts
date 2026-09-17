@@ -337,7 +337,7 @@ export const en: Copy = {
     phoneLabel: "Phone",
     phone: "+370 (652) 87 044",
     emailLabel: "Email",
-    email: "mantas@revoo.site",
+    email: "hello@revoo.site",
   },
   notFound: {
     title: "Page not found",
