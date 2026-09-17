@@ -392,9 +392,15 @@ export const deleteAsset = createServerFn({ method: "POST" })
       .eq("slot_key", asset.slot_key)
       .order("position", { ascending: true });
 
+    // Compact positions. If the active file (position 0) was deleted, the slot falls
+    // back to the built-in default — remaining files stay candidates (from 1).
+    const offset = asset.position === 0 ? 1 : 0;
     if (remaining) {
       for (let i = 0; i < remaining.length; i++) {
-        await context.supabase.from("media_assets").update({ position: i }).eq("id", remaining[i]!.id);
+        await context.supabase
+          .from("media_assets")
+          .update({ position: i + offset })
+          .eq("id", remaining[i]!.id);
       }
     }
 
