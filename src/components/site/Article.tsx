@@ -10,7 +10,7 @@ export function Article({ lang, post }: { lang: Lang; post: Post }) {
 
   return (
     <div className="min-h-screen bg-cream">
-      <Header lang={lang} altHref={altHref} />
+      <Header lang={lang} altHref={altHref} variant="solid" />
       <main className="pt-[68px]">
         <article className="section-y">
           <div className="container-page">

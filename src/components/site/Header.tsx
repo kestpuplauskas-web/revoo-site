@@ -5,13 +5,22 @@ import { CtaLink } from "./primitives";
 import { href, t, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-export function Header({ lang, altHref }: { lang: Lang; altHref: string }) {
+export function Header({
+  lang,
+  altHref,
+  variant = "overlay",
+}: {
+  lang: Lang;
+  altHref: string;
+  variant?: "overlay" | "solid";
+}) {
   const c = t(lang);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const scrolled = variant === "solid" ? true : isScrolled;
   const home = href(lang);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setIsScrolled(window.scrollY > 80);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

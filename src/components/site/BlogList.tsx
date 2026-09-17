@@ -11,9 +11,9 @@ export function BlogList({ lang, items }: { lang: Lang; items: PostListItem[] })
   return (
     <div className="min-h-screen bg-cream">
       <Header lang={lang} altHref={altHref} />
-      <main className="pt-[68px]">
-        <section className="section-y bg-teal-700">
-          <div className="container-page">
+      <main>
+        <section className="section-y bg-teal-700 pt-[68px]">
+          <div className="container-page pt-10">
             <Eyebrow tone="dark">{c.blog.eyebrow}</Eyebrow>
             <h1 className="text-cream">
               <Signature text={c.blog.h2} />
