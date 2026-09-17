@@ -14,6 +14,7 @@ import {
   activateAsset,
   registerAsset,
   reorderSlot,
+  deactivateSlot,
   deleteAsset,
   type AdminSlotView,
   type AdminSlotAsset,
