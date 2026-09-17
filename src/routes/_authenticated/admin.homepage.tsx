@@ -266,7 +266,7 @@ function MediaLightbox({
   thumbnailClassName,
 }: {
   src: string;
-  poster?: string | null;
+  poster?: string | null | undefined;
   isVideo: boolean;
   label: string;
   thumbnailClassName: string;
