@@ -238,6 +238,33 @@ export type Database = {
           },
         ]
       }
+      homepage_copy: {
+        Row: {
+          id: string
+          lang: string
+          path: string
+          updated_at: string
+          updated_by: string | null
+          value: string
+        }
+        Insert: {
+          id?: string
+          lang: string
+          path: string
+          updated_at?: string
+          updated_by?: string | null
+          value: string
+        }
+        Update: {
+          id?: string
+          lang?: string
+          path?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           archived_at: string | null
