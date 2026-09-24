@@ -89,6 +89,26 @@ export type Copy = {
     text: string;
     button: string;
   };
+  pricing: {
+    eyebrow: string;
+    h2: string;
+    lede: string;
+    badges: string[];
+    step1: string;
+    shortTitle: string;
+    shortSub: string;
+    longTitle: string;
+    longSub: string;
+    step2: string;
+    unitsLabel: string;
+    unitsHint: string;
+    totalLabel: string;
+    perMonth: string;
+    unitPriceLabel: string;
+    perUnit: string;
+    minNote: string;
+    cta: string;
+  };
   included: {
     eyebrow: string;
     h2: string;
