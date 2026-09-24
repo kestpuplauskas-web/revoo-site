@@ -179,7 +179,7 @@ export const lt: Copy = {
     unitPriceLabel: "Vieneto kaina",
     perUnit: "už vienetą per mėnesį",
     minNote: "Taikoma mažiausia mėnesinė kaina.",
-    cta: "Užsisakyti demo",
+    cta: "Noriu išbandyti",
   },
   included: {
     eyebrow: "Ką gaunate",
