@@ -604,6 +604,66 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_settings: {
+        Row: {
+          created_at: string
+          currency: string
+          id: string
+          max_units: number
+          min_monthly_price: number
+          singleton: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          id?: string
+          max_units?: number
+          min_monthly_price?: number
+          singleton?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          id?: string
+          max_units?: number
+          min_monthly_price?: number
+          singleton?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pricing_tiers: {
+        Row: {
+          created_at: string
+          id: string
+          max_units: number
+          min_units: number
+          rental_kind: Database["public"]["Enums"]["rental_kind"]
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          max_units: number
+          min_units: number
+          rental_kind: Database["public"]["Enums"]["rental_kind"]
+          unit_price: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          max_units?: number
+          min_units?: number
+          rental_kind?: Database["public"]["Enums"]["rental_kind"]
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -876,6 +936,7 @@ export type Database = {
         | "active"
         | "paused"
         | "cancelled"
+      rental_kind: "short_term" | "long_term"
       template_kind: "email" | "call"
       ticket_category:
         | "bug"
@@ -1064,6 +1125,7 @@ export const Constants = {
         "paused",
         "cancelled",
       ],
+      rental_kind: ["short_term", "long_term"],
       template_kind: ["email", "call"],
       ticket_category: [
         "bug",

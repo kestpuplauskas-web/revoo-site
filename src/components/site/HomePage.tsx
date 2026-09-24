@@ -9,6 +9,7 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { HeroCarousel } from "../HeroCarousel";
 import { MobileCtaBar } from "./MobileCtaBar";
+import { PricingCalculator } from "./PricingCalculator";
 import { SegmentsCarousel } from "./SegmentsCarousel";
 import {
   BrowserFrame,
@@ -335,6 +336,30 @@ export function HomePage({ lang }: { lang: Lang }) {
                 </article>
               </Reveal>
             </div>
+          </div>
+        </section>
+
+        {/* 9b. Pricing calculator */}
+        <section id="pricing" className="section-y bg-teal-900">
+          <div className="container-page">
+            <Reveal className="text-cream">
+              <Eyebrow tone="dark">{c.pricing.eyebrow}</Eyebrow>
+              <h2 className="text-cream">
+                <SignatureUnderlined text={c.pricing.h2} />
+              </h2>
+              <p className="measure mt-5 text-cream/80">{c.pricing.lede}</p>
+              <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+                {c.pricing.badges.map((badge) => (
+                  <li key={badge} className="flex items-center gap-2 text-[0.95rem] text-cream/90">
+                    <Check aria-hidden="true" className="h-4 w-4 shrink-0 text-amber" />
+                    <span>{badge}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={80} className="mt-12">
+              <PricingCalculator lang={lang} copy={c} ctaHref={demoHref} />
+            </Reveal>
           </div>
         </section>
 

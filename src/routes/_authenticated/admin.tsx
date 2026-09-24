@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   BarChart3,
+  Calculator,
   Building2,
   FileText,
   FolderKanban,
@@ -122,6 +123,9 @@ function AdminLayout() {
           <NavItem to="/admin/vartotojai/" icon={<Users className="h-4 w-4" aria-hidden="true" />}>
             Vartotojai
           </NavItem>
+          <NavItem to="/admin/kainodara/" icon={<Calculator className="h-4 w-4" aria-hidden="true" />}>
+            Kainodara
+          </NavItem>
         </nav>
 
         <button
@@ -157,6 +161,7 @@ function NavItem({
     | "/admin/analitika/"
     | "/admin/vartotojai/"
     | "/admin/tekstai/"
+    | "/admin/kainodara/"
     | "/admin/homepage/";
   icon: React.ReactNode;
   badge?: number;

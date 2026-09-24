@@ -16,6 +16,7 @@ export const SECTION_LABELS: Record<string, string> = {
   channel: "Kanalai",
   segments: "Kam skirta",
   ctaBand: "Kvietimo juosta",
+  pricing: "Kainų skaičiuoklė",
   included: "Kas įskaičiuota",
   fit: "Ar tinka",
   start: "Kaip pradėti",
