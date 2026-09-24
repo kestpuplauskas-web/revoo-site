@@ -24,6 +24,7 @@ import { Route as LtIndexRouteImport } from './routes/lt/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
+import { Route as AuthenticatedAdminKainodaraRouteImport } from './routes/_authenticated/admin.kainodara'
 import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
 import { Route as AuthenticatedAdminTekstaiRouteImport } from './routes/_authenticated/admin.tekstai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
@@ -116,6 +117,12 @@ const AuthenticatedAdminHomepageRoute =
   AuthenticatedAdminHomepageRouteImport.update({
     id: '/homepage',
     path: '/homepage',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminKainodaraRoute =
+  AuthenticatedAdminKainodaraRouteImport.update({
+    id: '/kainodara',
+    path: '/kainodara',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminSablonaiRoute =
@@ -231,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/lt/': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
+  '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -263,6 +271,7 @@ export interface FileRoutesByTo {
   '/lt': typeof LtIndexRoute
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
+  '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -298,6 +307,7 @@ export interface FileRoutesById {
   '/lt/': typeof LtIndexRoute
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
+  '/_authenticated/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -333,6 +343,7 @@ export interface FileRouteTypes {
     | '/lt/'
     | '/admin/analitika'
     | '/admin/homepage'
+    | '/admin/kainodara'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -365,6 +376,7 @@ export interface FileRouteTypes {
     | '/lt'
     | '/admin/analitika'
     | '/admin/homepage'
+    | '/admin/kainodara'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -399,6 +411,7 @@ export interface FileRouteTypes {
     | '/lt/'
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/homepage'
+    | '/_authenticated/admin/kainodara'
     | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/tekstai'
     | '/_authenticated/admin/uzklausos'
@@ -544,6 +557,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminHomepageRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/kainodara': {
+      id: '/_authenticated/admin/kainodara'
+      path: '/kainodara'
+      fullPath: '/admin/kainodara'
+      preLoaderRoute: typeof AuthenticatedAdminKainodaraRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/sablonai': {
       id: '/_authenticated/admin/sablonai'
       path: '/sablonai'
@@ -669,6 +689,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
+  AuthenticatedAdminKainodaraRoute: typeof AuthenticatedAdminKainodaraRoute
   AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
   AuthenticatedAdminTekstaiRoute: typeof AuthenticatedAdminTekstaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
@@ -688,6 +709,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
+  AuthenticatedAdminKainodaraRoute: AuthenticatedAdminKainodaraRoute,
   AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
   AuthenticatedAdminTekstaiRoute: AuthenticatedAdminTekstaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
