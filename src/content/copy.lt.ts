@@ -11,6 +11,7 @@ export const lt: Copy = {
     langLabel: "Kalba",
     skip: "Pereiti prie turinio",
     home: "Pradžia",
+    pricing: "Kainos",
     contact: "Kontaktai",
     contactPhone: "+370 (652) 87 044",
   },

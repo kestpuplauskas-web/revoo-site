@@ -13,6 +13,7 @@ export type Copy = {
     langLabel: string;
     skip: string;
     home: string;
+    pricing: string;
     contact: string;
     contactPhone: string;
   };

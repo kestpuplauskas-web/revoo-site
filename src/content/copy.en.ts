@@ -11,6 +11,7 @@ export const en: Copy = {
     langLabel: "Language",
     skip: "Skip to content",
     home: "Home",
+    pricing: "Pricing",
     contact: "Contacts",
     contactPhone: "+370 (652) 87 044",
   },
