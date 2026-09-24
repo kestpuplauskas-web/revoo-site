@@ -158,7 +158,7 @@ export const lt: Copy = {
   },
   pricing: {
     eyebrow: "KAINODARA",
-    h2: "Mokate už *vienetus*, ne už modulius",
+    h2: "Mokate už *vienetus*",
     lede: "Viena mėnesinė prenumerata visai sistemai. Kaina priklauso tik nuo to, kiek turite kambarių ar butų. Darbo vietų, licencijų ir serverio nuomos neskaičiuojame.",
     badges: [
       "Nuo 79 € per mėnesį",
