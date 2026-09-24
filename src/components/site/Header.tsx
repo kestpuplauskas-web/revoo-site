@@ -31,6 +31,7 @@ export function Header({
     { label: c.nav.product, href: `${home}#product` },
     { label: c.nav.approach, href: `${home}#approach` },
     { label: c.nav.who, href: `${home}#fit` },
+    { label: c.nav.pricing, href: `${home}#pricing` },
     { label: c.nav.blog, href: href(lang, "blog") },
     { label: c.nav.faq, href: `${home}#faq` },
     { label: c.nav.contact, href: `${home}#contacts` },
