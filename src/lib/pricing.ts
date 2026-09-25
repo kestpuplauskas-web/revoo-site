@@ -10,6 +10,7 @@ export type PricingTier = {
 
 export type PricingSettings = {
   min_monthly_price: number;
+  max_monthly_price: number | null;
   currency: string;
   max_units: number;
 };
@@ -21,6 +22,7 @@ export type PricingData = {
 
 export const DEFAULT_PRICING_SETTINGS: PricingSettings = {
   min_monthly_price: 79,
+  max_monthly_price: null,
   currency: "EUR",
   max_units: 220,
 };
