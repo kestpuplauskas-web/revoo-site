@@ -1,0 +1,1 @@
+ALTER TABLE public.pricing_settings ADD COLUMN max_monthly_price numeric;
