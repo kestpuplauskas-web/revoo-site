@@ -44,10 +44,11 @@ export type PriceResult = {
   unitPrice: number;
   total: number;
   minApplied: boolean;
+  maxApplied: boolean;
   tier: PricingTier | null;
 };
 
-/** Pasiekto rėžio kaina taikoma VISIEMS vienetams; galutinė suma ne mažesnė nei minimali. */
+/** Pasiekto rėžio kaina taikoma VISIEMS vienetams; suma ne mažesnė nei minimali ir ne didesnė nei maksimali (jei nustatyta). */
 export function calculatePrice(
   data: PricingData,
   kind: RentalKind,
@@ -57,8 +58,14 @@ export function calculatePrice(
   const unitPrice = tier ? Number(tier.unit_price) : 0;
   const raw = unitPrice * Math.max(1, units);
   const min = Number(data.settings.min_monthly_price) || 0;
-  const total = Math.max(raw, min);
-  return { unitPrice, total, minApplied: total > raw, tier };
+  const max = data.settings.max_monthly_price != null ? Number(data.settings.max_monthly_price) : null;
+  let total = Math.max(raw, min);
+  let maxApplied = false;
+  if (max != null && max > 0 && total > max) {
+    total = max;
+    maxApplied = true;
+  }
+  return { unitPrice, total, minApplied: !maxApplied && total > raw, maxApplied, tier };
 }
 
 export function formatPrice(value: number, currency: string, locale: string): string {
