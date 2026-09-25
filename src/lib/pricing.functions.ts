@@ -30,7 +30,7 @@ export const getPricing = createServerFn({ method: "GET" }).handler(
       const sb = publicSupabase();
       const [tiersRes, settingsRes] = await Promise.all([
         sb.from("pricing_tiers").select("id, rental_kind, min_units, max_units, unit_price").order("min_units"),
-        sb.from("pricing_settings").select("min_monthly_price, currency, max_units").limit(1).maybeSingle(),
+        sb.from("pricing_settings").select("min_monthly_price, max_monthly_price, currency, max_units").limit(1).maybeSingle(),
       ]);
 
       const tiers = tiersRes.error ? [] : normalizeTiers(tiersRes.data ?? []);
@@ -40,6 +40,7 @@ export const getPricing = createServerFn({ method: "GET" }).handler(
         settings: s
           ? {
               min_monthly_price: Number(s.min_monthly_price),
+              max_monthly_price: s.max_monthly_price != null ? Number(s.max_monthly_price) : null,
               currency: s.currency,
               max_units: Number(s.max_units),
             }
@@ -64,7 +65,7 @@ export const adminGetPricing = createServerFn({ method: "GET" })
         .order("min_units"),
       context.supabase
         .from("pricing_settings")
-        .select("min_monthly_price, currency, max_units")
+        .select("min_monthly_price, max_monthly_price, currency, max_units")
         .limit(1)
         .maybeSingle(),
     ]);
@@ -75,6 +76,7 @@ export const adminGetPricing = createServerFn({ method: "GET" })
       settings: s
         ? {
             min_monthly_price: Number(s.min_monthly_price),
+            max_monthly_price: s.max_monthly_price != null ? Number(s.max_monthly_price) : null,
             currency: s.currency,
             max_units: Number(s.max_units),
           }
@@ -125,6 +127,7 @@ export const saveSettings = createServerFn({ method: "POST" })
     z
       .object({
         min_monthly_price: z.number().min(0).max(100000),
+        max_monthly_price: z.number().min(0).max(1000000).nullable(),
         currency: z.string().min(3).max(3),
         max_units: z.number().int().min(1).max(100000),
       })
@@ -135,6 +138,7 @@ export const saveSettings = createServerFn({ method: "POST" })
       .from("pricing_settings")
       .update({
         min_monthly_price: data.min_monthly_price,
+        max_monthly_price: data.max_monthly_price,
         currency: data.currency,
         max_units: data.max_units,
       })

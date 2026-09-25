@@ -108,6 +108,7 @@ export function PricingCalculator({
           </p>
           <p className="mt-2 text-sm text-ink-soft">{c.perMonth}</p>
           {result.minApplied ? <p className="mt-2 text-xs text-ink-soft">{c.minNote}</p> : null}
+          {result.maxApplied ? <p className="mt-2 text-xs text-ink-soft">{c.maxNote}</p> : null}
         </div>
         <div className="sm:text-right">
           <p className="eyebrow text-[0.7rem] text-ink/60">{c.unitPriceLabel}</p>

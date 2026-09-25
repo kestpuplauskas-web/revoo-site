@@ -609,6 +609,7 @@ export type Database = {
           created_at: string
           currency: string
           id: string
+          max_monthly_price: number | null
           max_units: number
           min_monthly_price: number
           singleton: boolean
@@ -618,6 +619,7 @@ export type Database = {
           created_at?: string
           currency?: string
           id?: string
+          max_monthly_price?: number | null
           max_units?: number
           min_monthly_price?: number
           singleton?: boolean
@@ -627,6 +629,7 @@ export type Database = {
           created_at?: string
           currency?: string
           id?: string
+          max_monthly_price?: number | null
           max_units?: number
           min_monthly_price?: number
           singleton?: boolean

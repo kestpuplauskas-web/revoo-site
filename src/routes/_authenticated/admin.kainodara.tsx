@@ -230,6 +230,9 @@ function PricingAdminPage() {
           {result?.minApplied ? (
             <p className="text-xs text-ink-soft">Pritaikyta minimali mėnesinė kaina.</p>
           ) : null}
+          {result?.maxApplied ? (
+            <p className="text-xs text-ink-soft">Pritaikytos maksimalios mėnesinės kainos lubos.</p>
+          ) : null}
         </div>
       </div>
     </div>
@@ -240,23 +243,34 @@ function SettingsCard({
   initial,
   onSave,
 }: {
-  initial: { min_monthly_price: number; currency: string; max_units: number };
-  onSave: (values: { min_monthly_price: number; currency: string; max_units: number }) => Promise<void>;
+  initial: { min_monthly_price: number; max_monthly_price: number | null; currency: string; max_units: number };
+  onSave: (values: { min_monthly_price: number; max_monthly_price: number | null; currency: string; max_units: number }) => Promise<void>;
 }) {
   const [minPrice, setMinPrice] = useState(String(initial.min_monthly_price));
+  const [maxPrice, setMaxPrice] = useState(initial.max_monthly_price != null ? String(initial.max_monthly_price) : "");
   const [currency, setCurrency] = useState(initial.currency);
   const [maxUnits, setMaxUnits] = useState(String(initial.max_units));
   const [busy, setBusy] = useState(false);
 
   return (
     <div className={`${CARD} mt-6 p-6`}>
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Field label="Minimali mėnesinė kaina" hint="Mažesnės sumos nerodomos.">
           <input
             type="number"
             min={0}
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
+            className={INPUT}
+          />
+        </Field>
+        <Field label="Maksimali mėnesinė kaina" hint="Lubos — palikite tuščią, jei netaikomos.">
+          <input
+            type="number"
+            min={0}
+            value={maxPrice}
+            placeholder="Be lubų"
+            onChange={(e) => setMaxPrice(e.target.value)}
             className={INPUT}
           />
         </Field>
@@ -284,8 +298,10 @@ function SettingsCard({
         className={`${BTN} mt-5`}
         onClick={async () => {
           setBusy(true);
+          const maxVal = maxPrice.trim() === "" ? null : Math.max(0, Number(maxPrice) || 0);
           await onSave({
             min_monthly_price: Number(minPrice) || 0,
+            max_monthly_price: maxVal,
             currency: currency.trim().toUpperCase() || "EUR",
             max_units: Math.max(1, Number(maxUnits) || 220),
           });

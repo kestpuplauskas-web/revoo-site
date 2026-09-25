@@ -179,6 +179,7 @@ export const en: Copy = {
     unitPriceLabel: "Price per unit",
     perUnit: "per unit per month",
     minNote: "The minimum monthly price applies.",
+    maxNote: "The maximum monthly price is reached — the total no longer increases with more units.",
     cta: "Request a demo",
   },
   included: {
