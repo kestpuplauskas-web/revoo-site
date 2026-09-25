@@ -108,6 +108,7 @@ export type Copy = {
     unitPriceLabel: string;
     perUnit: string;
     minNote: string;
+    maxNote: string;
     cta: string;
   };
   included: {
