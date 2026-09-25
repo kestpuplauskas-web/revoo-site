@@ -179,6 +179,7 @@ export const lt: Copy = {
     unitPriceLabel: "Vieneto kaina",
     perUnit: "už vienetą per mėnesį",
     minNote: "Taikoma mažiausia mėnesinė kaina.",
+    maxNote: "Pasiekta didžiausia mėnesinė kaina — didinant vienetų skaičių suma nebedidėja.",
     cta: "Noriu išbandyti",
   },
   included: {
