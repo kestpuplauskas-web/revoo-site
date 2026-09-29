@@ -164,7 +164,10 @@ export const listRegistry = createServerFn({ method: "GET" })
       summary: {
         total: clients.length,
         byStatus,
-        overdue: clients.filter((c) => c.next_action_date && c.next_action_date < today).length,
+        overdue: clients.filter(
+          (c) =>
+            c.next_action_date && c.next_action_date < today && c.status !== "cancelled",
+        ).length,
         unassigned: clients.filter((c) => !c.assigned_to).length,
       },
       today,
