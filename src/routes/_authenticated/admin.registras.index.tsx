@@ -86,7 +86,11 @@ function RegistryPage() {
       if (nextState) {
         const d = c.next_action_date;
         if (nextState === "none" && d) return false;
-        if (nextState === "overdue" && !(d && d < today)) return false;
+        if (
+          nextState === "overdue" &&
+          !(d && d < today && c.status !== "cancelled")
+        )
+          return false;
         if (nextState === "today" && d !== today) return false;
         if (nextState === "upcoming" && !(d && d > today)) return false;
       }
@@ -97,7 +101,7 @@ function RegistryPage() {
     });
 
     const overdue = (c: (typeof clients)[number]) =>
-      c.next_action_date && c.next_action_date < today ? 0 : 1;
+      c.next_action_date && c.next_action_date < today && c.status !== "cancelled" ? 0 : 1;
 
     return [...filtered].sort((a, b) => {
       const byOverdue = overdue(a) - overdue(b);
@@ -115,7 +119,10 @@ function RegistryPage() {
     return {
       total: rows.length,
       byStatus,
-      overdue: rows.filter((c) => c.next_action_date && c.next_action_date < today).length,
+      overdue: rows.filter(
+        (c) =>
+          c.next_action_date && c.next_action_date < today && c.status !== "cancelled",
+      ).length,
       unassigned: rows.filter((c) => !c.assigned_to).length,
     };
   }, [rows, today]);
@@ -275,7 +282,9 @@ function RegistryPage() {
                 </thead>
                 <tbody>
                   {rows.map((c) => {
-                    const isOverdue = Boolean(c.next_action_date && c.next_action_date < today);
+                    const isOverdue = Boolean(
+                      c.next_action_date && c.next_action_date < today && c.status !== "cancelled",
+                    );
                     return (
                       <tr
                         key={c.id}
