@@ -286,6 +286,25 @@ export function HeroCarousel({ lang, slots }: { lang: Lang; slots: Slots }) {
 
   const s = slots;
 
+  // Kai iš DB atkeliauja aktyvūs perrašymai, React atnaujina tik data-src.
+  // Čia sinchronizuojame jau priskirtą video src, kad rodytų naują failą.
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    stage.querySelectorAll<HTMLVideoElement>("video[data-src]").forEach((vid) => {
+      const next = vid.dataset["src"];
+      if (!next) return;
+      const current = vid.getAttribute("src");
+      if (current === next) return;
+      vid.setAttribute("src", next);
+      vid.load();
+      const scene = vid.closest(".rc-scene");
+      if (scene?.classList.contains("on")) {
+        void vid.play().catch(() => {});
+      }
+    });
+  }, [slots]);
+
   return (
     <div
       className="rc-stage"
