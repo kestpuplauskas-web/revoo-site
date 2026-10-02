@@ -295,7 +295,8 @@ export function HeroCarousel({ lang, slots }: { lang: Lang; slots: Slots }) {
       const next = vid.dataset["src"];
       if (!next) return;
       const current = vid.getAttribute("src");
-      if (current === next) return;
+      // src dar nepriskirtas — paliekame tingų įkėlimą (mediaReady) valdyti pirmą kartą
+      if (!current || current === next) return;
       vid.setAttribute("src", next);
       vid.load();
       const scene = vid.closest(".rc-scene");
