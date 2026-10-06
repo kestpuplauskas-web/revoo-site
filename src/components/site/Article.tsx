@@ -1,6 +1,7 @@
 import { BlogCta } from "./BlogList";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { InlineLinks } from "./InlineLinks";
 import type { Post } from "@/content/posts";
 import { href, t, type Lang } from "@/lib/i18n";
 
@@ -43,7 +44,7 @@ export function Article({ lang, post }: { lang: Lang; post: Post }) {
                   if (block.type === "p") {
                     return (
                       <p key={i} className="text-[1.02rem] leading-[1.75] text-ink-soft">
-                        {block.text}
+                        <InlineLinks text={block.text} />
                       </p>
                     );
                   }
@@ -69,7 +70,7 @@ export function Article({ lang, post }: { lang: Lang; post: Post }) {
                   }
                   const items = block.items.map((item, j) => (
                     <li key={j} className="text-[1.02rem] leading-[1.7] text-ink-soft">
-                      {item}
+                      <InlineLinks text={item} />
                     </li>
                   ));
                   return block.type === "ul" ? (
