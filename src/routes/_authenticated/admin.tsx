@@ -6,7 +6,6 @@ import {
   Building2,
   FilePenLine,
   FolderKanban,
-  Gauge,
   Images,
   Inbox,
   NotepadText,
