@@ -38,6 +38,7 @@ export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
         data: {
           name: value("name"),
           email: value("email"),
+          phone: value("phone"),
           property_name: value("property"),
           country: value("country"),
           property_type: value("type"),

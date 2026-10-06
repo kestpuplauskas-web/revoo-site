@@ -18,6 +18,13 @@ const optionalText = (max: number) =>
 const submitSchema = z.object({
   name: z.string().trim().min(1).max(120),
   email: z.string().trim().email().max(255),
+  phone: z
+    .string()
+    .trim()
+    .max(40)
+    .regex(/^[0-9+()\-\s.]*$/)
+    .optional()
+    .transform((v) => (v && v.length > 0 ? v : null)),
   property_name: z.string().trim().min(1).max(160),
   country: optionalText(80),
   property_type: optionalText(80),
@@ -55,6 +62,7 @@ export const submitLead = createServerFn({ method: "POST" })
     const { error } = await supabase.from("leads").insert({
       name: data.name,
       email: data.email,
+      phone: data.phone,
       property_name: data.property_name,
       country: data.country,
       property_type: data.property_type,
