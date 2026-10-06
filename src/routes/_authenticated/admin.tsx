@@ -9,6 +9,7 @@ import {
   Images,
   Inbox,
   NotepadText,
+  Send,
   Tag,
   Type,
   Users,
@@ -106,6 +107,9 @@ function AdminLayout() {
             <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
               Valdomi projektai
             </NavItem>
+            <NavItem to="/admin/kampanijos/" icon={<Send className="h-4 w-4" aria-hidden="true" />}>
+              Kampanijos
+            </NavItem>
           </NavGroup>
 
           <NavGroup label="Valdymas">
@@ -184,7 +188,8 @@ function NavItem({
     | "/admin/vartotojai/"
     | "/admin/tekstai/"
     | "/admin/kainodara/"
-    | "/admin/homepage/";
+    | "/admin/homepage/"
+    | "/admin/kampanijos/";
   icon: React.ReactNode;
   badge?: number;
   children: React.ReactNode;

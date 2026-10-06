@@ -28,3 +28,8 @@ klaida, o ne kitos kalbos tekstas puslapyje.
 ## Administravimo meniu
 
 Administravimo navigaciją grupuok į „Darbo sritis“, „Valdymas“ ir „Nustatymai“, nes pastovi hierarchija sumažina modulio paieškos laiką.
+
+## El. pašto kampanijos
+
+Kampanijų laiškai siunčiami per Amazon SES (SigV4, `aws4fetch`) iš serverio; gavėjų eilė saugoma duomenų bazėje, o minutinis siuntimo ciklas suplanuojamas tik kol yra vykdoma kampanija, nes taip paskirstomas siuntimas per dieną be nuolatinio apkrovimo.
+Siuntėjai rotuojami pagal mažiausią dienos limito išnaudojimą, kad nė vienas adresas neviršytų savo saugaus limito.

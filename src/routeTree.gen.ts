@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AtsisakytiRouteImport } from './routes/atsisakyti'
 import { Route as PrisijungimasRouteImport } from './routes/prisijungimas'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SlaptazodisRouteImport } from './routes/slaptazodis'
@@ -25,6 +26,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as AuthenticatedAdminKainodaraRouteImport } from './routes/_authenticated/admin.kainodara'
+import { Route as AuthenticatedAdminKampanijosRouteImport } from './routes/_authenticated/admin.kampanijos'
 import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
 import { Route as AuthenticatedAdminTekstaiRouteImport } from './routes/_authenticated/admin.tekstai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
@@ -42,6 +44,7 @@ import { Route as AuthenticatedAdminRegistrasIdRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminRegistrasImportasRouteImport } from './routes/_authenticated/admin.registras.importas'
 import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
 import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
+import { Route as ApiPublicCampaignsTickRouteImport } from './routes/api/public/campaigns/tick'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -50,6 +53,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtsisakytiRoute = AtsisakytiRouteImport.update({
+  id: '/atsisakyti',
+  path: '/atsisakyti',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrisijungimasRoute = PrisijungimasRouteImport.update({
@@ -123,6 +131,12 @@ const AuthenticatedAdminKainodaraRoute =
   AuthenticatedAdminKainodaraRouteImport.update({
     id: '/kainodara',
     path: '/kainodara',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminKampanijosRoute =
+  AuthenticatedAdminKampanijosRouteImport.update({
+    id: '/kampanijos',
+    path: '/kampanijos',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminSablonaiRoute =
@@ -223,9 +237,15 @@ const AuthenticatedAdminStraipsniaiIdRoute =
     path: '/straipsniai/$id',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicCampaignsTickRoute = ApiPublicCampaignsTickRouteImport.update({
+  id: '/api/public/campaigns/tick',
+  path: '/api/public/campaigns/tick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/atsisakyti': typeof AtsisakytiRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/slaptazodis': typeof SlaptazodisRoute
@@ -239,6 +259,7 @@ export interface FileRoutesByFullPath {
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
+  '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -254,12 +275,14 @@ export interface FileRoutesByFullPath {
   '/admin/registras/$id': typeof AuthenticatedAdminRegistrasIdRoute
   '/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
+  '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
   '/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
   '/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/atsisakyti': typeof AtsisakytiRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/slaptazodis': typeof SlaptazodisRoute
@@ -272,6 +295,7 @@ export interface FileRoutesByTo {
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
+  '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -287,6 +311,7 @@ export interface FileRoutesByTo {
   '/admin/registras/$id': typeof AuthenticatedAdminRegistrasIdRoute
   '/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
+  '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
   '/admin/projektai': typeof AuthenticatedAdminProjektaiIndexRoute
   '/admin/registras': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -295,6 +320,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/atsisakyti': typeof AtsisakytiRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/slaptazodis': typeof SlaptazodisRoute
@@ -308,6 +334,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
+  '/_authenticated/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -323,6 +350,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/registras/$id': typeof AuthenticatedAdminRegistrasIdRoute
   '/_authenticated/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
+  '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
   '/_authenticated/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
   '/_authenticated/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -331,6 +359,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/atsisakyti'
     | '/prisijungimas'
     | '/sitemap.xml'
     | '/slaptazodis'
@@ -344,6 +373,7 @@ export interface FileRouteTypes {
     | '/admin/analitika'
     | '/admin/homepage'
     | '/admin/kainodara'
+    | '/admin/kampanijos'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -359,12 +389,14 @@ export interface FileRouteTypes {
     | '/admin/registras/$id'
     | '/admin/registras/importas'
     | '/admin/straipsniai/$id'
+    | '/api/public/campaigns/tick'
     | '/admin/projektai/'
     | '/admin/registras/'
     | '/admin/straipsniai/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/atsisakyti'
     | '/prisijungimas'
     | '/sitemap.xml'
     | '/slaptazodis'
@@ -377,6 +409,7 @@ export interface FileRouteTypes {
     | '/admin/analitika'
     | '/admin/homepage'
     | '/admin/kainodara'
+    | '/admin/kampanijos'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -392,6 +425,7 @@ export interface FileRouteTypes {
     | '/admin/registras/$id'
     | '/admin/registras/importas'
     | '/admin/straipsniai/$id'
+    | '/api/public/campaigns/tick'
     | '/admin/projektai'
     | '/admin/registras'
     | '/admin/straipsniai'
@@ -399,6 +433,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/atsisakyti'
     | '/prisijungimas'
     | '/sitemap.xml'
     | '/slaptazodis'
@@ -412,6 +447,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/kainodara'
+    | '/_authenticated/admin/kampanijos'
     | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/tekstai'
     | '/_authenticated/admin/uzklausos'
@@ -427,6 +463,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/registras/$id'
     | '/_authenticated/admin/registras/importas'
     | '/_authenticated/admin/straipsniai/$id'
+    | '/api/public/campaigns/tick'
     | '/_authenticated/admin/projektai/'
     | '/_authenticated/admin/registras/'
     | '/_authenticated/admin/straipsniai/'
@@ -435,6 +472,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AtsisakytiRoute: typeof AtsisakytiRoute
   PrisijungimasRoute: typeof PrisijungimasRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SlaptazodisRoute: typeof SlaptazodisRoute
@@ -448,6 +486,7 @@ export interface RootRouteChildren {
   LtFunkcijosSlugRoute: typeof LtFunkcijosSlugRoute
   LtBlogIndexRoute: typeof LtBlogIndexRoute
   LtFunkcijosIndexRoute: typeof LtFunkcijosIndexRoute
+  ApiPublicCampaignsTickRoute: typeof ApiPublicCampaignsTickRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -464,6 +503,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atsisakyti': {
+      id: '/atsisakyti'
+      path: '/atsisakyti'
+      fullPath: '/atsisakyti'
+      preLoaderRoute: typeof AtsisakytiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prisijungimas': {
@@ -562,6 +608,13 @@ declare module '@tanstack/react-router' {
       path: '/kainodara'
       fullPath: '/admin/kainodara'
       preLoaderRoute: typeof AuthenticatedAdminKainodaraRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/kampanijos': {
+      id: '/_authenticated/admin/kampanijos'
+      path: '/kampanijos'
+      fullPath: '/admin/kampanijos'
+      preLoaderRoute: typeof AuthenticatedAdminKampanijosRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/sablonai': {
@@ -683,6 +736,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStraipsniaiIdRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/campaigns/tick': {
+      id: '/api/public/campaigns/tick'
+      path: '/api/public/campaigns/tick'
+      fullPath: '/api/public/campaigns/tick'
+      preLoaderRoute: typeof ApiPublicCampaignsTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -690,6 +750,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminKainodaraRoute: typeof AuthenticatedAdminKainodaraRoute
+  AuthenticatedAdminKampanijosRoute: typeof AuthenticatedAdminKampanijosRoute
   AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
   AuthenticatedAdminTekstaiRoute: typeof AuthenticatedAdminTekstaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
@@ -710,6 +771,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminKainodaraRoute: AuthenticatedAdminKainodaraRoute,
+  AuthenticatedAdminKampanijosRoute: AuthenticatedAdminKampanijosRoute,
   AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
   AuthenticatedAdminTekstaiRoute: AuthenticatedAdminTekstaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
@@ -746,6 +808,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AtsisakytiRoute: AtsisakytiRoute,
   PrisijungimasRoute: PrisijungimasRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SlaptazodisRoute: SlaptazodisRoute,
@@ -759,6 +822,7 @@ const rootRouteChildren: RootRouteChildren = {
   LtFunkcijosSlugRoute: LtFunkcijosSlugRoute,
   LtBlogIndexRoute: LtBlogIndexRoute,
   LtFunkcijosIndexRoute: LtFunkcijosIndexRoute,
+  ApiPublicCampaignsTickRoute: ApiPublicCampaignsTickRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
