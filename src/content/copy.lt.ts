@@ -378,7 +378,7 @@ export const lt: Copy = {
     phoneLabel: "Telefonas",
     phone: "+370 (652) 87 044",
     emailLabel: "El. paštas",
-    email: "mantas@revoo.site",
+    email: "mantas@revoo.lt",
   },
   notFound: {
     title: "Puslapis nerastas",
