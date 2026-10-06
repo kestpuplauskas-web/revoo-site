@@ -185,7 +185,7 @@ export const setUserPasswordFromSecret = createServerFn({ method: "POST" })
     z.object({ email: z.string().trim().email(), secretName: z.string().trim().min(1) }).parse(d),
   )
   .handler(async ({ data, context }) => {
-    await assertDeveloper(context);
+    await assertAdmin(context);
     const password = process.env[data.secretName];
     if (!password || password.length < 8) {
       throw new Error("Paslaptis nerasta arba slaptažodis per trumpas (min. 8 simboliai).");
