@@ -9,6 +9,7 @@ import {
   Images,
   Inbox,
   NotepadText,
+  Send,
   Tag,
   Type,
   Users,
@@ -105,6 +106,9 @@ function AdminLayout() {
             </NavItem>
             <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
               Valdomi projektai
+            </NavItem>
+            <NavItem to="/admin/kampanijos/" icon={<Send className="h-4 w-4" aria-hidden="true" />}>
+              Kampanijos
             </NavItem>
           </NavGroup>
 
