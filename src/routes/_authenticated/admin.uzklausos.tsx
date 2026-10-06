@@ -174,6 +174,7 @@ function LeadsPage() {
 
                 <dl className="mt-5 space-y-3 text-sm">
                   <Detail label="Objektas" value={selected.property_name} />
+                  <Detail label="Telefonas" value={selected.phone} />
                   <Detail label="Šalis" value={selected.country} />
                   <Detail label="Objekto tipas" value={selected.property_type} />
                   <Detail label="Vienetų skaičius" value={selected.units} />

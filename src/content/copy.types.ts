@@ -142,6 +142,7 @@ export type Copy = {
     form: {
       name: string;
       email: string;
+      phone: string;
       property: string;
       country: string;
       countries: string[];

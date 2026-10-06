@@ -38,6 +38,7 @@ export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
         data: {
           name: value("name"),
           email: value("email"),
+          phone: value("phone"),
           property_name: value("property"),
           country: value("country"),
           property_type: value("type"),
@@ -119,6 +120,16 @@ export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
               <option key={option}>{option}</option>
             ))}
           </select>
+        </Field>
+        <Field id="demo-phone" label={f.phone} hint={f.optional}>
+          <input
+            id="demo-phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            className={inputClass}
+          />
         </Field>
         <div className="sm:col-span-2">
           <Field id="demo-current" label={f.current}>

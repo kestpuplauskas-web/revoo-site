@@ -15,6 +15,13 @@
       "when": 1791275275750,
       "tag": "0001_campaigns_cron",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791285940928,
+      "tag": "0002_add_phone_to_leads",
+      "breakpoints": true
     }
   ]
 }
