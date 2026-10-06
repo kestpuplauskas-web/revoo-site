@@ -484,6 +484,7 @@ export type Database = {
           lang: string
           name: string
           notes: string | null
+          phone: string | null
           property_name: string
           property_type: string | null
           read_at: string | null
@@ -501,6 +502,7 @@ export type Database = {
           lang?: string
           name: string
           notes?: string | null
+          phone?: string | null
           property_name: string
           property_type?: string | null
           read_at?: string | null
@@ -518,6 +520,7 @@ export type Database = {
           lang?: string
           name?: string
           notes?: string | null
+          phone?: string | null
           property_name?: string
           property_type?: string | null
           read_at?: string | null
