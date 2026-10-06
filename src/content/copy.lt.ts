@@ -17,7 +17,7 @@ export const lt: Copy = {
   },
   hero: {
     eyebrow: "PROGRAMINĖ ĮRANGA SU NUOSAVA REZERVACIJŲ SVETAINE JŪSŲ APGYVENDINIMO VERSLUI\n\n",
-    h1: "Programinė įranga, *prisitaikanti* prie Jūsų verslo, o ne verčianti verslą prisitaikyti prie jos.",
+    h1: "Apgyvendinimo valdymo ir rezervacijų sistema, *prisitaikanti* prie Jūsų verslo.",
     sub: "Viešbučiai, nameliai, svečių namai ir apartamentai veikia skirtingai. Vis dėlto dauguma programinės įrangos sprendimų visus verčia dirbti vienodai. Revoo - platforma, pritaikyta būtent Jūsų veiklai. Su rezervacijų svetaine, kuri yra personalizuotai sukurta Jums.",
     primary: "Užsisakyti demo",
     secondary: "Kaip tai veikia",
