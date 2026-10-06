@@ -8,9 +8,9 @@ export const SITE_URL = "https://revoo.site";
 const MAX_PER_TICK = 60;
 
 export function sesConfig() {
-  const accessKeyId = process.env.AWS_SES_ACCESS_KEY_ID;
-  const secretAccessKey = process.env.AWS_SES_SECRET_ACCESS_KEY;
-  const region = process.env.AWS_SES_REGION || "eu-central-1";
+  const accessKeyId = process.env["AWS_SES_ACCESS_KEY_ID"];
+  const secretAccessKey = process.env["AWS_SES_SECRET_ACCESS_KEY"];
+  const region = process.env["AWS_SES_REGION"] || "eu-central-1";
   if (!accessKeyId || !secretAccessKey) return null;
   return { accessKeyId, secretAccessKey, region };
 }

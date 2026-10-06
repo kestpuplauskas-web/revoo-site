@@ -26,6 +26,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as AuthenticatedAdminKainodaraRouteImport } from './routes/_authenticated/admin.kainodara'
+import { Route as AuthenticatedAdminKampanijosRouteImport } from './routes/_authenticated/admin.kampanijos'
 import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
 import { Route as AuthenticatedAdminTekstaiRouteImport } from './routes/_authenticated/admin.tekstai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
@@ -130,6 +131,12 @@ const AuthenticatedAdminKainodaraRoute =
   AuthenticatedAdminKainodaraRouteImport.update({
     id: '/kainodara',
     path: '/kainodara',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminKampanijosRoute =
+  AuthenticatedAdminKampanijosRouteImport.update({
+    id: '/kampanijos',
+    path: '/kampanijos',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminSablonaiRoute =
@@ -252,6 +259,7 @@ export interface FileRoutesByFullPath {
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
+  '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -287,6 +295,7 @@ export interface FileRoutesByTo {
   '/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
+  '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -325,6 +334,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/analitika': typeof AuthenticatedAdminAnalitikaRoute
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
+  '/_authenticated/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -363,6 +373,7 @@ export interface FileRouteTypes {
     | '/admin/analitika'
     | '/admin/homepage'
     | '/admin/kainodara'
+    | '/admin/kampanijos'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -398,6 +409,7 @@ export interface FileRouteTypes {
     | '/admin/analitika'
     | '/admin/homepage'
     | '/admin/kainodara'
+    | '/admin/kampanijos'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -435,6 +447,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/analitika'
     | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/kainodara'
+    | '/_authenticated/admin/kampanijos'
     | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/tekstai'
     | '/_authenticated/admin/uzklausos'
@@ -597,6 +610,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminKainodaraRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/kampanijos': {
+      id: '/_authenticated/admin/kampanijos'
+      path: '/kampanijos'
+      fullPath: '/admin/kampanijos'
+      preLoaderRoute: typeof AuthenticatedAdminKampanijosRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/sablonai': {
       id: '/_authenticated/admin/sablonai'
       path: '/sablonai'
@@ -730,6 +750,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnalitikaRoute: typeof AuthenticatedAdminAnalitikaRoute
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminKainodaraRoute: typeof AuthenticatedAdminKainodaraRoute
+  AuthenticatedAdminKampanijosRoute: typeof AuthenticatedAdminKampanijosRoute
   AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
   AuthenticatedAdminTekstaiRoute: typeof AuthenticatedAdminTekstaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
@@ -750,6 +771,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnalitikaRoute: AuthenticatedAdminAnalitikaRoute,
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminKainodaraRoute: AuthenticatedAdminKainodaraRoute,
+  AuthenticatedAdminKampanijosRoute: AuthenticatedAdminKampanijosRoute,
   AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
   AuthenticatedAdminTekstaiRoute: AuthenticatedAdminTekstaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,

@@ -75,7 +75,7 @@ export const getCampaignOverview = createServerFn({ method: "GET" })
       countries: [...new Set((countries.data ?? []).map((c) => c.country as string))].sort(),
       unsubscribes: unsubs.data ?? [],
       sesReady: !!sesConfig(),
-      sesRegion: process.env.AWS_SES_REGION || "eu-central-1",
+      sesRegion: process.env["AWS_SES_REGION"] || "eu-central-1",
     };
   });
 
@@ -128,7 +128,7 @@ export const setCampaignStatus = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
-    const patch: Record<string, unknown> = { status: data.status };
+    const patch: { status: string; started_at?: string } = { status: data.status };
     if (data.status === "running") patch.started_at = new Date().toISOString();
     const { error } = await context.supabase.from("email_campaigns").update(patch).eq("id", data.id);
     if (error) throw new Error("Nepavyko pakeisti būsenos");
