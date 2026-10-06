@@ -22,7 +22,7 @@ export function absUrl(lang: Lang, path = ""): string {
   return clean ? `${SITE_URL}${prefix}${clean}/` : `${SITE_URL}${prefix}`;
 }
 
-export const SITE_IMAGE = `${SITE_URL}/media/11_dashboard.png`;
+export const SITE_IMAGE = `${SITE_URL}/media/og-revoo.jpg`;
 
 type HeadArgs = {
   lang: Lang;
@@ -93,8 +93,16 @@ export function organizationLd() {
     "@type": "Organization",
     name: "Revoo",
     url: SITE_URL,
-    email: "hello@revoo.site",
-    areaServed: ["LT", "IS"],
+    email: "hello@revoostay.com",
+    telephone: "+37065287044",
+    logo: `${SITE_URL}/favicon.svg`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Liepų g. 83",
+      addressLocality: "Klaipėda",
+      addressCountry: "LT",
+    },
+    areaServed: ["LT", "IS", "US"],
   };
 }
 
