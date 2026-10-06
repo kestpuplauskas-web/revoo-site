@@ -1,7 +1,17 @@
 // Pirminis lankomumo švyturėlis. Slapukų nėra, IP ir naršyklės duomenys nesaugomi.
 import { createFileRoute } from "@tanstack/react-router";
 
-const ALLOWED_HOSTS = ["revoo.site", "www.revoo.site", "localhost", "127.0.0.1"];
+// Visos svetainės adresų formos, iš kurių priimami lankomumo signalai.
+const ALLOWED_HOSTS = [
+  "revoostay.com",
+  "www.revoostay.com",
+  "revoo.site",
+  "www.revoo.site",
+  "revoo.lt",
+  "www.revoo.lt",
+  "localhost",
+  "127.0.0.1",
+];
 
 const BOT_PATTERN =
   /bot|crawl|spider|slurp|bing|yandex|baidu|duckduck|facebookexternalhit|embedly|quora|pinterest|semrush|ahrefs|petal|headless|lighthouse|preview|monitor|curl|wget|python-requests|node-fetch|go-http/i;
