@@ -153,7 +153,7 @@ export const en: Copy = {
     ],
   },
   ctaBand: {
-    text: "Curious whether this fits your property? One 45-minute conversation will tell you.",
+    text: "Curious whether this fits your property? One 15-minute conversation will tell you.",
     button: "Request a demo",
   },
   pricing: {
@@ -246,7 +246,7 @@ export const en: Copy = {
     steps: [
       {
         title: "A conversation",
-        body: "About 45 minutes. How your property runs, what you sell alongside the room, what breaks today, and what your invoices have to look like. We tell you honestly whether we are a fit.",
+        body: "About 15 minutes. How your property runs, what you sell alongside the room, what breaks today, and what your invoices have to look like. We tell you honestly whether we are a fit.",
       },
       {
         title: "Implementation",
@@ -367,7 +367,7 @@ export const en: Copy = {
     disclaimer:
       "This article is general information, not tax or legal advice. Check specifics with your accountant or your national tax authority.",
     ctaTitle: "Wondering whether Revoo fits your property?",
-    ctaBody: "One 45-minute conversation, and an honest answer either way.",
+    ctaBody: "One 15-minute conversation, and an honest answer either way.",
     ctaButton: "Request a demo",
   },
   contacts: {
