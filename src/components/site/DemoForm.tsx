@@ -121,6 +121,16 @@ export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
             ))}
           </select>
         </Field>
+        <Field id="demo-phone" label={f.phone} hint={f.optional}>
+          <input
+            id="demo-phone"
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            className={inputClass}
+          />
+        </Field>
         <div className="sm:col-span-2">
           <Field id="demo-current" label={f.current}>
             <select id="demo-current" name="current" defaultValue="" className={inputClass}>
