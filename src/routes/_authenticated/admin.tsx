@@ -188,7 +188,8 @@ function NavItem({
     | "/admin/vartotojai/"
     | "/admin/tekstai/"
     | "/admin/kainodara/"
-    | "/admin/homepage/";
+    | "/admin/homepage/"
+    | "/admin/kampanijos/";
   icon: React.ReactNode;
   badge?: number;
   children: React.ReactNode;
