@@ -4,7 +4,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 type Admin = SupabaseClient<Database>;
 
-export const SITE_URL = "https://revoo.site";
+export const SITE_URL = "https://revoostay.com";
 const MAX_PER_TICK = 60;
 
 export function sesConfig() {

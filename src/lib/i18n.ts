@@ -1,7 +1,7 @@
 import { copy, type Lang } from "@/content/copy";
 
 export type { Lang };
-export const SITE_URL = "https://revoo.site";
+export const SITE_URL = "https://revoostay.com";
 export const LANGS: Lang[] = ["en", "lt"];
 
 export function t(lang: Lang) {

@@ -13,10 +13,10 @@ export type ManagedUser = {
   lastSignInAt: string | null;
 };
 
-const ALLOWED_HOSTS = ["revoo.site", "www.revoo.site", "localhost", "127.0.0.1"];
+const ALLOWED_HOSTS = ["revoostay.com", "www.revoostay.com", "revoo.site", "www.revoo.site", "localhost", "127.0.0.1"];
 
 function safeRedirect(origin: string | undefined): string {
-  const fallback = "https://revoo.site/slaptazodis";
+  const fallback = "https://revoostay.com/slaptazodis";
   if (!origin) return fallback;
   try {
     const u = new URL(origin);
