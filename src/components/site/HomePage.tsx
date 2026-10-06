@@ -495,7 +495,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 {c.demo.facts.map((fact) => (
                   <li key={fact}>
                     {fact.includes("@") ? (
-                      <a href="mailto:hello@revoo.site" className="text-teal-500 hover:text-teal-700">
+                      <a href="mailto:hello@revoostay.com" className="text-teal-500 hover:text-teal-700">
                         {fact}
                       </a>
                     ) : (
