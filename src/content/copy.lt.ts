@@ -271,6 +271,7 @@ export const lt: Copy = {
     form: {
       name: "Vardas",
       email: "El. paštas",
+      phone: "Telefono numeris",
       property: "Objekto pavadinimas",
       country: "Šalis",
       countries: [

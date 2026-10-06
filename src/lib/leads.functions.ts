@@ -5,7 +5,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Database } from "@/integrations/supabase/types";
 
 const LEAD_COLUMNS =
-  "id, created_at, name, email, property_name, country, property_type, units, current_system, notes, lang, source, read_at, archived_at";
+  "id, created_at, name, email, phone, property_name, country, property_type, units, current_system, notes, lang, source, read_at, archived_at";
 
 const optionalText = (max: number) =>
   z

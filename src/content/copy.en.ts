@@ -271,6 +271,7 @@ export const en: Copy = {
     form: {
       name: "Name",
       email: "Email",
+      phone: "Phone number",
       property: "Property name",
       country: "Country",
       countries: [
