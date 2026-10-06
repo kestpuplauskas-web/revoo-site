@@ -352,7 +352,7 @@ export const lt: Copy = {
     linksTitle: "Svetainė",
     langTitle: "Kalba",
     rights: "© 2026 Revoo",
-    contact: "revoo.site · hello@revoo.site · +370 (652) 87 044",
+    contact: "revoostay.com · hello@revoostay.com · +370 (652) 87 044",
   },
   blog: {
     title: "Blogas",
