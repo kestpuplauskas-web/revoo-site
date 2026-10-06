@@ -9,7 +9,9 @@ export function InlineLinks({ text }: { text: string }): ReactNode {
   let m: RegExpExecArray | null;
   LINK.lastIndex = 0;
   while ((m = LINK.exec(text))) {
-    const [full, label, url] = m;
+    const full = m[0];
+    const label = m[1] ?? "";
+    const url = m[2] ?? "";
     const safe = url.startsWith("/") || url.startsWith("https://");
     if (m.index > last) out.push(text.slice(last, m.index));
     out.push(
