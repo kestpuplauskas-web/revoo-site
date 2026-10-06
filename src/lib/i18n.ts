@@ -171,7 +171,7 @@ export const homeSeo: Record<Lang, { title: string; description: string }> = {
       "Revoo is a property management system and booking website in one. Manage bookings, invoices and housekeeping for small hotels and guesthouses.",
   },
   lt: {
-    title: "Revoo | Apgyvendinimo & Nuomos Valdymo Sistema",
+    title: "Revoo | Apgyvendinimo valdymo ir rezervacijų sistema",
     description:
       "Revoo – išmani apgyvendinimo valdymo sistema. Automatizuokite rezervacijas, kainodarą ir klientų komunikaciją vienoje vietoje. Skirta mažiems objektams.",
   },

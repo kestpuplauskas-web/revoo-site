@@ -22,7 +22,7 @@ export const featuresLt: FeatureCopy = {
       card: "Daugiau tiesioginių rezervacijų",
       eyebrow: "Rezervacijų sistema",
       h1: "Rezervacijų sistema jūsų *svetainėje*",
-      metaTitle: "Rezervacijų sistema svetainėje | Revoo booking engine",
+      metaTitle: "Rezervacijų sistema svetainei ir nuomai | Revoo",
       metaDescription:
         "Booking engine jūsų svetainėje: tiesioginės rezervacijos be komisinių, laisvų vietų kalendorius, kainos ir apmokėjimas internetu jūsų apgyvendinimo objektui.",
       lede: "Tiesioginė rezervacija jūsų domene, jūsų dizainu ir jūsų kalba – ta pati sistema, kurią naudoja jūsų administracija.",
