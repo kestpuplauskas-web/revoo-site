@@ -38,6 +38,91 @@ export type Database = {
         }
         Relationships: []
       }
+      campaign_recipients: {
+        Row: {
+          campaign_id: string
+          client_id: string | null
+          created_at: string
+          email: string
+          error: string | null
+          id: string
+          name: string | null
+          provider_message_id: string | null
+          sender_id: string | null
+          sent_at: string | null
+          status: string
+          unsubscribe_token: string
+        }
+        Insert: {
+          campaign_id: string
+          client_id?: string | null
+          created_at?: string
+          email: string
+          error?: string | null
+          id?: string
+          name?: string | null
+          provider_message_id?: string | null
+          sender_id?: string | null
+          sent_at?: string | null
+          status?: string
+          unsubscribe_token?: string
+        }
+        Update: {
+          campaign_id?: string
+          client_id?: string | null
+          created_at?: string
+          email?: string
+          error?: string | null
+          id?: string
+          name?: string | null
+          provider_message_id?: string | null
+          sender_id?: string | null
+          sent_at?: string | null
+          status?: string
+          unsubscribe_token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_recipients_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_recipients_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_recipients_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "email_senders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_runtime: {
+        Row: {
+          last_tick_at: string | null
+          singleton: boolean
+          tick_token: string
+        }
+        Insert: {
+          last_tick_at?: string | null
+          singleton?: boolean
+          tick_token?: string
+        }
+        Update: {
+          last_tick_at?: string | null
+          singleton?: boolean
+          tick_token?: string
+        }
+        Relationships: []
+      }
       client_activities: {
         Row: {
           activity_type: Database["public"]["Enums"]["activity_type"] | null
@@ -237,6 +322,129 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      email_campaigns: {
+        Row: {
+          body: string
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          daily_limit: number
+          filters: Json
+          id: string
+          name: string
+          per_minute: number
+          sent_day: string | null
+          sent_today: number
+          started_at: string | null
+          status: string
+          subject: string
+          template_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          daily_limit?: number
+          filters?: Json
+          id?: string
+          name: string
+          per_minute?: number
+          sent_day?: string | null
+          sent_today?: number
+          started_at?: string | null
+          status?: string
+          subject: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          daily_limit?: number
+          filters?: Json
+          id?: string
+          name?: string
+          per_minute?: number
+          sent_day?: string | null
+          sent_today?: number
+          started_at?: string | null
+          status?: string
+          subject?: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_campaigns_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "message_template_stats"
+            referencedColumns: ["template_id"]
+          },
+          {
+            foreignKeyName: "email_campaigns_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "message_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_senders: {
+        Row: {
+          created_at: string
+          daily_limit: number
+          email: string
+          from_name: string
+          id: string
+          is_active: boolean
+          sent_day: string | null
+          sent_today: number
+        }
+        Insert: {
+          created_at?: string
+          daily_limit?: number
+          email: string
+          from_name?: string
+          id?: string
+          is_active?: boolean
+          sent_day?: string | null
+          sent_today?: number
+        }
+        Update: {
+          created_at?: string
+          daily_limit?: number
+          email?: string
+          from_name?: string
+          id?: string
+          is_active?: boolean
+          sent_day?: string | null
+          sent_today?: number
+        }
+        Relationships: []
+      }
+      email_unsubscribes: {
+        Row: {
+          created_at: string
+          email: string
+          reason: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          reason?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          reason?: string
+        }
+        Relationships: []
       }
       homepage_copy: {
         Row: {
