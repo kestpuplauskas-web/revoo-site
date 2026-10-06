@@ -3,13 +3,14 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   BarChart3,
-  Calculator,
   Building2,
-  FileText,
+  FilePenLine,
   FolderKanban,
+  Gauge,
   Images,
   Inbox,
   NotepadText,
+  Tag,
   Type,
   Users,
 } from "lucide-react";
@@ -95,37 +96,45 @@ function AdminLayout() {
         <p className="eyebrow text-ink-soft">REVOO.</p>
         <p className="mt-1 font-display text-xl text-ink">Administravimas</p>
 
-        <nav className="mt-6 flex flex-wrap gap-1 lg:flex-col">
-          <NavItem to="/admin/uzklausos/" icon={<Inbox className="h-4 w-4" aria-hidden="true" />} badge={unreadCount}>
-            Užklausos
-          </NavItem>
-          <NavItem to="/admin/straipsniai/" icon={<FileText className="h-4 w-4" aria-hidden="true" />}>
-            Straipsniai
-          </NavItem>
-          <NavItem to="/admin/homepage/" icon={<Images className="h-4 w-4" aria-hidden="true" />}>
-            Pagrindinis puslapis
-          </NavItem>
-          <NavItem to="/admin/tekstai/" icon={<Type className="h-4 w-4" aria-hidden="true" />}>
-            Tekstai
-          </NavItem>
-          <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
-            Valdomi projektai
-          </NavItem>
-          <NavItem to="/admin/registras/" icon={<Building2 className="h-4 w-4" aria-hidden="true" />}>
-            Klientų registras
-          </NavItem>
-          <NavItem to="/admin/sablonai/" icon={<NotepadText className="h-4 w-4" aria-hidden="true" />}>
-            Šablonai
-          </NavItem>
-          <NavItem to="/admin/analitika/" icon={<BarChart3 className="h-4 w-4" aria-hidden="true" />}>
-            Analitika
-          </NavItem>
-          <NavItem to="/admin/vartotojai/" icon={<Users className="h-4 w-4" aria-hidden="true" />}>
-            Vartotojai
-          </NavItem>
-          <NavItem to="/admin/kainodara/" icon={<Calculator className="h-4 w-4" aria-hidden="true" />}>
-            Kainodara
-          </NavItem>
+        <nav aria-label="Administravimo meniu" className="mt-7 grid gap-6 sm:grid-cols-3 lg:grid-cols-1">
+          <NavGroup label="Darbo sritis">
+            <NavItem to="/admin/uzklausos/" icon={<Inbox className="h-4 w-4" aria-hidden="true" />} badge={unreadCount}>
+              Užklausos
+            </NavItem>
+            <NavItem to="/admin/registras/" icon={<Building2 className="h-4 w-4" aria-hidden="true" />}>
+              Klientų registras
+            </NavItem>
+            <NavItem to="/admin/projektai/" icon={<FolderKanban className="h-4 w-4" aria-hidden="true" />}>
+              Valdomi projektai
+            </NavItem>
+          </NavGroup>
+
+          <NavGroup label="Valdymas">
+            <NavItem to="/admin/analitika/" icon={<BarChart3 className="h-4 w-4" aria-hidden="true" />}>
+              Analitika
+            </NavItem>
+            <NavItem to="/admin/kainodara/" icon={<Tag className="h-4 w-4" aria-hidden="true" />}>
+              Kainodara
+            </NavItem>
+            <NavItem to="/admin/straipsniai/" icon={<FilePenLine className="h-4 w-4" aria-hidden="true" />}>
+              Straipsniai
+            </NavItem>
+            <NavItem to="/admin/homepage/" icon={<Images className="h-4 w-4" aria-hidden="true" />}>
+              Pagrindinis puslapis
+            </NavItem>
+            <NavItem to="/admin/tekstai/" icon={<Type className="h-4 w-4" aria-hidden="true" />}>
+              Tekstai
+            </NavItem>
+            <NavItem to="/admin/sablonai/" icon={<NotepadText className="h-4 w-4" aria-hidden="true" />}>
+              Šablonai
+            </NavItem>
+          </NavGroup>
+
+          <NavGroup label="Nustatymai">
+            <NavItem to="/admin/vartotojai/" icon={<Users className="h-4 w-4" aria-hidden="true" />}>
+              Vartotojai
+            </NavItem>
+          </NavGroup>
         </nav>
 
         <button
@@ -143,6 +152,20 @@ function AdminLayout() {
         <Outlet />
       </div>
     </div>
+  );
+}
+
+function NavGroup({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <section aria-labelledby={`nav-${label.toLocaleLowerCase("lt").replaceAll(" ", "-")}`}>
+      <h2
+        id={`nav-${label.toLocaleLowerCase("lt").replaceAll(" ", "-")}`}
+        className="px-3 text-[11px] font-semibold uppercase text-muted-foreground"
+      >
+        {label}
+      </h2>
+      <div className="mt-2 flex flex-col gap-1">{children}</div>
+    </section>
   );
 }
 
@@ -171,14 +194,14 @@ function NavItem({
     <Link
       to={to}
       activeOptions={{ exact: false }}
-      activeProps={{ className: "bg-teal-700 text-cream" }}
-      inactiveProps={{ className: "text-ink-soft hover:bg-cream/70 hover:text-ink" }}
-      className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm transition-colors"
+      activeProps={{ className: "bg-accent font-semibold text-accent-foreground" }}
+      inactiveProps={{ className: "text-muted-foreground hover:bg-muted/70 hover:text-foreground" }}
+      className="flex min-h-11 items-center gap-2.5 rounded-md px-3 py-2 text-sm transition-colors"
     >
-      {icon}
+      <span className="shrink-0">{icon}</span>
       <span className="flex-1">{children}</span>
       {badge ? (
-        <span className="rounded-full bg-amber px-2 py-0.5 text-xs font-semibold text-ink">
+        <span className="min-w-5 rounded-full bg-amber px-1.5 py-0.5 text-center text-xs font-semibold text-ink">
           {badge}
         </span>
       ) : null}
