@@ -27,6 +27,7 @@ export function PricingCalculator({
   const [data, setData] = useState<PricingData>({ tiers: [], settings: DEFAULT_PRICING_SETTINGS });
   const [kind, setKind] = useState<RentalKind>("short_term");
   const [units, setUnits] = useState(36);
+  const [draft, setDraft] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -79,8 +80,14 @@ export function PricingCalculator({
           type="number"
           min={1}
           max={maxUnits}
-          value={clamped}
-          onChange={(e) => setUnits(Number(e.target.value) || 1)}
+          value={draft ?? String(clamped)}
+          onChange={(e) => {
+            const v = e.target.value;
+            setDraft(v);
+            const n = Number(v);
+            if (v !== "" && Number.isFinite(n) && n >= 1) setUnits(Math.round(n));
+          }}
+          onBlur={() => setDraft(null)}
           className="w-28 rounded-xl border border-ink/15 px-4 py-3 text-center font-display text-2xl text-teal-700 outline-none focus:border-teal-500"
         />
       </div>
@@ -90,7 +97,10 @@ export function PricingCalculator({
         min={1}
         max={maxUnits}
         value={clamped}
-        onChange={(e) => setUnits(Number(e.target.value))}
+        onChange={(e) => {
+          setDraft(null);
+          setUnits(Number(e.target.value));
+        }}
         className="pricing-range mt-5 w-full"
       />
       <div className="mt-2 flex justify-between text-xs text-ink-soft">
