@@ -266,7 +266,7 @@ export const lt: Copy = {
     facts: [
       "hello@revoo.site",
       "Bendraujame anglų ir lietuvių kalbomis",
-      "Esame Lietuvoje · šiuo metu diegiame Revoo produktus ir Islandijoje",
+      "Esame Lietuvoje · šiuo metu diegiame Revoo produktus Amerikos ir Islandijos rinkose",
     ],
     form: {
       name: "Vardas",
