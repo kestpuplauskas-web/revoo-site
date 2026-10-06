@@ -264,7 +264,7 @@ export const lt: Copy = {
     h2: "Papasakokite apie savo apgyvendinimo vietą",
     lede: "Trumpai papasakokite apie savo veiklą, o mes su jumis susisieksime per vieną darbo dieną. Pasiūlysime demonstracijos laiką arba atvirai pasakysime, jei Revoo nėra tinkamiausias sprendimas jūsų verslui.",
     facts: [
-      "hello@revoo.site",
+      "mantas@revoo.lt",
       "Bendraujame anglų ir lietuvių kalbomis",
       "Esame Lietuvoje · šiuo metu diegiame Revoo produktus Amerikos ir Islandijos rinkose",
     ],
