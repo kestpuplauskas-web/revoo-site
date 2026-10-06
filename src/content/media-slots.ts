@@ -61,8 +61,8 @@ export const SLOT_MAP: Record<SlotKey, SlotDef> = Object.fromEntries(
 ) as Record<SlotKey, SlotDef>;
 
 export const DEFAULT_SLOTS: Record<SlotKey, SlotMedia> = {
-  "booking-calendar": { url: "/media/6_booking.webp", width: 1867, height: 937 },
-  "booking-video": { url: "/media/10_new_booking.mp4", width: 1920, height: 1080, posterUrl: "/media/6_booking.webp", posterWidth: 1867, posterHeight: 937 },
+  "booking-calendar": { url: "/media/6_booking_v2.webp", width: 1867, height: 848 },
+  "booking-video": { url: "/media/10_new_booking.mp4", width: 1920, height: 1080, posterUrl: "/media/6_booking_v2.webp", posterWidth: 1867, posterHeight: 848 },
   "housekeeping-week": { url: "/media/8_housekeeping.webp", width: 1863, height: 895 },
   "housekeeping-phone": { url: "/media/7_housekeeping_app.mp4", width: 384, height: 848, posterUrl: "/media/7_housekeeping_app.webp", posterWidth: 738, posterHeight: 1600 },
   "invoice": { url: "/media/9_invoice.webp", width: 1275, height: 1233 },
