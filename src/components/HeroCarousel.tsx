@@ -329,7 +329,7 @@ export function HeroCarousel({ lang, slots }: { lang: Lang; slots: Slots }) {
           <div className="rc-par" style={v({ "--p": 1.6 })}>
             <div className="rc-float" style={v({ "--dur": "9s", "--del": "0s" })}>
               <Browser url="app.revoo.site / bookings">
-                <Vid width={s["booking-video"].width} height={s["booking-video"].height} src={s["booking-video"].url} poster={s["booking-calendar"].url} />
+                <Vid width={s["booking-video"].width} height={s["booking-video"].height} src={s["booking-video"].url} poster={s["booking-video"].posterUrl ?? s["booking-calendar"].url} />
               </Browser>
             </div>
           </div>
