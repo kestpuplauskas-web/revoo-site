@@ -153,7 +153,7 @@ export const lt: Copy = {
     ],
   },
   ctaBand: {
-    text: "Įdomu, ar Revoo tiktų jūsų apgyvendinimo vietai?\u00a0 45 minučių pokalbio pakaks, kad tai išsiaiškintume.",
+    text: "Įdomu, ar Revoo tiktų jūsų apgyvendinimo vietai?\u00a0 15 minučių pokalbio pakaks, kad tai išsiaiškintume.",
     button: "Užsisakyti demo",
   },
   pricing: {
@@ -246,7 +246,7 @@ export const lt: Copy = {
     steps: [
       {
         title: "Pokalbis",
-         body: "Apie 45 minutes skiriame tam, kad geriau suprastume jūsų veiklą: kaip valdote apgyvendinimo vietą, ką siūlote svečiams be apgyvendinimo, su kokiomis problemomis susiduriate šiandien ir kaip turi atrodyti jūsų sąskaitos.",
+         body: "Apie 15 minučių skiriame tam, kad geriau suprastume jūsų veiklą: kaip valdote apgyvendinimo vietą, ką siūlote svečiams be apgyvendinimo, su kokiomis problemomis susiduriate šiandien ir kaip turi atrodyti jūsų sąskaitos.",
       },
       {
         title: "Sistemos diegimas",
@@ -367,7 +367,7 @@ export const lt: Copy = {
     disclaimer:
       "Šis straipsnis yra bendro pobūdžio informacija, o ne mokestinė ar teisinė konsultacija. Konkrečius atvejus derinkite su savo buhalteriu arba VMI.",
     ctaTitle: "Įdomu, ar Revoo tinka jūsų objektui?",
-    ctaBody: "Vienas 45 minučių pokalbis ir sąžiningas atsakymas bet kuriuo atveju.",
+    ctaBody: "Vienas 15 minučių pokalbis ir sąžiningas atsakymas bet kuriuo atveju.",
     ctaButton: "Užsisakyti demo",
   },
   contacts: {

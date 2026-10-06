@@ -12,7 +12,7 @@ export const featuresLt: FeatureCopy = {
   more: "Skaityti plačiau",
   back: "Visos funkcijos",
   ctaTitle: "Norite pamatyti, kaip tai veiktų jūsų objekte?",
-  ctaBody: "45 minučių pokalbis ir sąžiningas atsakymas, ar tinkame vieni kitiems.",
+  ctaBody: "15 minučių pokalbis ir sąžiningas atsakymas, ar tinkame vieni kitiems.",
   ctaButton: "Užsisakyti demo",
   keywordsTitle: "Susijusios temos",
   items: [
