@@ -179,6 +179,28 @@ export const setUserRole = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const setUserPasswordFromSecret = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ email: z.string().trim().email(), secretName: z.string().trim().min(1) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    await assertDeveloper(context);
+    const password = process.env[data.secretName];
+    if (!password || password.length < 8) {
+      throw new Error("Paslaptis nerasta arba slaptažodis per trumpas (min. 8 simboliai).");
+    }
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: list } = await supabaseAdmin.auth.admin.listUsers({ perPage: 200 });
+    const user = list?.users.find(
+      (u) => u.email?.toLowerCase() === data.email.toLowerCase(),
+    );
+    if (!user) throw new Error("Naudotojas su tokiu el. paštu nerastas.");
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(user.id, { password });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 export const deleteUser = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => z.object({ userId: z.string().uuid() }).parse(d))
