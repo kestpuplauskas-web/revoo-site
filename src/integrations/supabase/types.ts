@@ -1104,6 +1104,7 @@ export type Database = {
     }
     Functions: {
       analytics_summary: { Args: { _from: string; _to: string }; Returns: Json }
+      campaigns_cron_ensure: { Args: never; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
