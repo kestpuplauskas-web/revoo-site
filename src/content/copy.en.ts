@@ -264,7 +264,7 @@ export const en: Copy = {
     h2: "Let's look at your *property*",
     lede: "Tell us a little about it and we will come back within one working day — with either a demo time or an honest \u201Cwe are not the right fit\u201D.",
     facts: [
-      "hello@revoo.site",
+      "hello@revoostay.com",
       "Working in English and Lithuanian",
       "Based in Lithuania · onboarding properties in Iceland",
     ],
@@ -378,7 +378,7 @@ export const en: Copy = {
     phoneLabel: "Phone",
     phone: "+370 (652) 87 044",
     emailLabel: "Email",
-    email: "hello@revoo.site",
+    email: "hello@revoostay.com",
   },
   notFound: {
     title: "Page not found",
