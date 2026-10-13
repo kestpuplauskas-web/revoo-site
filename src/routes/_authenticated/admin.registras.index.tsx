@@ -146,7 +146,7 @@ function RegistryPage() {
           </div>
           <div className="flex gap-2">
             <Link to="/admin/registras/importas/" className={`${BTN_GHOST} flex items-center gap-2`}>
-              <Upload className="h-4 w-4" aria-hidden="true" /> Importuoti CSV
+              <Upload className="h-4 w-4" aria-hidden="true" /> Importuoti Excel / CSV
             </Link>
             <Link to="/admin/registras/$id/" params={{ id: "naujas" }} className={BTN}>
               Pridėti klientą
