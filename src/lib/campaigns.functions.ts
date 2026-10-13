@@ -85,7 +85,7 @@ export const previewAudience = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
     const list = await audience(context.supabase, data);
-    return { count: list.length, sample: list.slice(0, 8) };
+    return { count: list.length, recipients: list };
   });
 
 const createSchema = z.object({
@@ -94,6 +94,7 @@ const createSchema = z.object({
   subject: z.string().trim().min(1).max(200),
   body: z.string().trim().min(1).max(10000),
   filters: filtersSchema,
+  exclude_ids: z.array(z.string().uuid()).max(20000).default([]),
   daily_limit: z.number().int().min(1).max(20000),
   per_minute: z.number().int().min(1).max(30),
 });
@@ -104,7 +105,8 @@ export const createCampaign = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const sb = context.supabase;
     await assertAdmin(sb, context.userId);
-    const list = await audience(sb, data.filters);
+    const excluded = new Set(data.exclude_ids);
+    const list = (await audience(sb, data.filters)).filter((c) => !excluded.has(c.id));
     if (!list.length) throw new Error("Pagal filtrus nerasta nė vieno kliento su el. paštu");
     const { data: camp, error } = await sb.from("email_campaigns").insert(data).select("id").single();
     if (error || !camp) throw new Error("Nepavyko sukurti kampanijos");
