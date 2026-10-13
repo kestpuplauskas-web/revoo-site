@@ -28,14 +28,30 @@ export function Field({
   );
 }
 
-export function Pill({ children, tone = "muted" }: { children: ReactNode; tone?: "muted" | "accent" | "warn" }) {
+export function Pill({
+  children,
+  tone = "muted",
+  size = "md",
+}: {
+  children: ReactNode;
+  tone?: "muted" | "accent" | "warn";
+  size?: "sm" | "md";
+}) {
   const tones = {
     muted: "bg-cream text-ink-soft",
     accent: "bg-teal-700 text-cream",
     warn: "bg-amber text-ink",
   } as const;
+  const sizes = {
+    sm: "px-2 py-0.5 text-[11px]",
+    md: "px-3 py-1 text-xs",
+  } as const;
   return (
-    <span className={`inline-flex items-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${tones[tone]}`}>{children}</span>
+    <span
+      className={`inline-flex items-center whitespace-nowrap rounded-full ${sizes[size]} font-medium ${tones[tone]}`}
+    >
+      {children}
+    </span>
   );
 }
 
