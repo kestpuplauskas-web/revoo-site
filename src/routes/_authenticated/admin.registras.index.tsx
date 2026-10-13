@@ -151,9 +151,11 @@ function RegistryPage() {
   );
 
   const perPageOptions = [20, 50, 100];
-  const perPage = perPageOptions.includes(Number(search.perPage)) ? Number(search.perPage) : 50;
+  const perPage = perPageOptions.includes(Number(search["perPage"]))
+    ? Number(search["perPage"])
+    : 50;
   const totalPages = Math.max(1, Math.ceil(rows.length / perPage));
-  const page = Math.min(Math.max(1, Number(search.page) || 1), totalPages);
+  const page = Math.min(Math.max(1, Number(search["page"]) || 1), totalPages);
   const pageRows = useMemo(
     () => rows.slice((page - 1) * perPage, page * perPage),
     [rows, page, perPage],
