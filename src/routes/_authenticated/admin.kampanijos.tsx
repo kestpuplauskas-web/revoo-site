@@ -279,11 +279,17 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
   const [dailyLimit, setDailyLimit] = useState(300);
   const [perMinute, setPerMinute] = useState(5);
   const [testTo, setTestTo] = useState("");
+  const [excluded, setExcluded] = useState<Set<string>>(new Set());
 
   const aud = useQuery({
     queryKey: ["audience", filters],
     queryFn: () => preview({ data: filters }),
   });
+
+  // Pakeitus filtrus, išmetimų sąrašas nebegalioja – pradedama iš naujo.
+  useEffect(() => {
+    setExcluded(new Set());
+  }, [filters]);
 
   useEffect(() => {
     const t = emailTemplates.find((x) => x.id === templateId);
