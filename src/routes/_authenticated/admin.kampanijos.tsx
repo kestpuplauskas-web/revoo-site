@@ -21,7 +21,7 @@ import {
 } from "@/lib/campaigns.functions";
 import { listTemplates } from "@/lib/templates.functions";
 import { REGISTRY_STATUSES } from "@/lib/registry.functions";
-import { CLIENT_STATUS_LABELS } from "@/lib/admin-format";
+import { CLIENT_STATUS_LABELS, formatDate } from "@/lib/admin-format";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
 
 export const Route = createFileRoute("/_authenticated/admin/kampanijos")({
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/_authenticated/admin/kampanijos")({
   component: CampaignsPage,
 });
 
-type Tab = "campaigns" | "senders" | "unsubs";
+type Tab = "campaigns" | "done" | "senders" | "unsubs";
 const STATUS_TEXT: Record<string, string> = {
   draft: "Juodraštis",
   running: "Vykdoma",
@@ -77,7 +77,8 @@ function CampaignsPage() {
       <div className="mt-6 flex gap-2" role="tablist">
         {(
           [
-            ["campaigns", "Kampanijos"],
+            ["campaigns", `Vykstančios${d ? ` (${d.campaigns.filter((c) => !DONE.includes(c.status)).length})` : ""}`],
+            ["done", `Užbaigtos${d ? ` (${d.campaigns.filter((c) => DONE.includes(c.status)).length})` : ""}`],
             ["senders", `Siuntėjai${d ? ` (${d.senders.length})` : ""}`],
             ["unsubs", `Atsisakę${d ? ` (${d.unsubscribes.length})` : ""}`],
           ] as const
@@ -96,7 +97,8 @@ function CampaignsPage() {
 
       {q.isLoading ? <p className="mt-8 text-sm text-ink-soft">Kraunama…</p> : null}
       {q.error ? <p className="mt-8 text-sm text-red-700">Nepavyko įkelti duomenų.</p> : null}
-      {d && tab === "campaigns" ? <CampaignsTab data={d} /> : null}
+      {d && tab === "campaigns" ? <CampaignsTab key="a" data={d} done={false} /> : null}
+      {d && tab === "done" ? <CampaignsTab key="d" data={d} done /> : null}
       {d && tab === "senders" ? <SendersTab senders={d.senders} /> : null}
       {d && tab === "unsubs" ? <UnsubsTab rows={d.unsubscribes} /> : null}
     </main>
@@ -105,8 +107,11 @@ function CampaignsPage() {
 
 type Overview = NonNullable<ReturnType<typeof useOverview>["data"]>;
 
-function CampaignsTab({ data }: { data: Overview }) {
+const DONE = ["completed", "cancelled"];
+
+function CampaignsTab({ data, done }: { data: Overview; done: boolean }) {
   const [creating, setCreating] = useState(false);
+  const list = data.campaigns.filter((c) => DONE.includes(c.status) === done);
   const [openId, setOpenId] = useState<string | null>(null);
   const qc = useQueryClient();
   const setStatus = useServerFn(setCampaignStatus);
@@ -152,19 +157,36 @@ function CampaignsTab({ data }: { data: Overview }) {
         </button>
       </div>
 
-      {data.campaigns.length === 0 ? (
-        <div className={`${CARD} p-8 text-center text-sm text-ink-soft`}>Kampanijų dar nėra.</div>
+      {list.length === 0 ? (
+        <div className={`${CARD} p-8 text-center text-sm text-ink-soft`}>
+          {done ? "Užbaigtų kampanijų dar nėra." : "Vykstančių kampanijų nėra."}
+        </div>
       ) : null}
 
-      {data.campaigns.map((c) => {
+      {list.map((c) => {
         const s = data.stats[c.id] ?? { total: 0, pending: 0, sent: 0, failed: 0, unsubscribed: 0 };
         const pct = s.total ? Math.round(((s.sent + s.failed + s.unsubscribed) / s.total) * 100) : 0;
+        const attempted = s.sent + s.failed;
+        const rate = (n: number, d: number) => (d ? `${((n / d) * 100).toLocaleString("lt-LT", { maximumFractionDigits: 1 })} %` : "—");
+        const metrics: [string, string, string][] = [
+          ["Gavėjai", String(s.total), "Visi į kampaniją įtraukti adresai"],
+          ["Išsiųsta", String(s.sent), "Sėkmingai perduota pristatymui"],
+          ["Pristatymo rodiklis", rate(s.sent, attempted), "Išsiųsta / (išsiųsta + klaidos). Gera reikšmė – virš 97 %"],
+          ["Atmetimo rodiklis", rate(s.failed, attempted), "Klaidos / bandyta siųsti. Rekomenduojama – žemiau 2 %"],
+          ["Atsisakymo rodiklis", rate(s.unsubscribed, s.total), "Atsisakę / gavėjai. Įprasta – žemiau 0,5 %"],
+          ["Laukia", String(s.pending), "Dar neišsiųsti laiškai"],
+        ];
         return (
           <article key={c.id} className={`${CARD} p-5`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="font-display text-xl text-ink">{c.name}</h2>
                 <p className="mt-0.5 text-sm text-ink-soft">{c.subject}</p>
+                <p className="mt-1 text-xs text-ink-soft">
+                  Sukurta {formatDate(c.created_at, true)} · Paleista{" "}
+                  {c.started_at ? formatDate(c.started_at, true) : "dar nepaleista"}
+                  {c.completed_at ? ` · Užbaigta ${formatDate(c.completed_at, true)}` : ""}
+                </p>
               </div>
               <Pill tone={c.status === "running" ? "accent" : c.status === "paused" ? "warn" : "muted"}>
                 {STATUS_TEXT[c.status] ?? c.status}
@@ -173,9 +195,16 @@ function CampaignsTab({ data }: { data: Overview }) {
             <div className="mt-4 h-2 overflow-hidden rounded-full bg-cream" aria-label={`Progresas ${pct}%`}>
               <div className="h-full bg-teal-700" style={{ width: `${pct}%` }} />
             </div>
+            <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {metrics.map(([l, v, hint]) => (
+                <div key={l} className="rounded-xl bg-cream/60 px-3 py-2" title={hint}>
+                  <dt className="text-xs text-ink-soft">{l}</dt>
+                  <dd className="font-display text-lg text-ink">{v}</dd>
+                </div>
+              ))}
+            </dl>
             <p className="mt-2 text-xs text-ink-soft">
-              Gavėjų {s.total} · išsiųsta {s.sent} · laukia {s.pending} · klaidų {s.failed} · atsisakė {s.unsubscribed} ·
-              limitas {c.daily_limit}/d., {c.per_minute}/min.
+              Limitas {c.daily_limit}/d., {c.per_minute}/min. Atidarymai ir paspaudimai nesekami.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {c.status === "draft" || c.status === "paused" ? (
