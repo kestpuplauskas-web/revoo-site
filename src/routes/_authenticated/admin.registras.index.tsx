@@ -346,28 +346,31 @@ function RegistryPage() {
                             </span>
                           </Link>
                         </td>
-                        <td className="px-3 py-3 text-ink">{c.country ?? "—"}</td>
-                        <td className="px-3 py-3 text-ink">
-                          {mail[c.id]?.count ? (
-                            <>
-                              {mail[c.id]?.count}
-                              <span className="mt-0.5 block max-w-full truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
-                                {mail[c.id]?.campaigns.join(", ")}
-                              </span>
-                            </>
-                          ) : (
-                            "0"
-                          )}
+                        <td className="px-3 py-1.5 text-ink">{c.country ?? "—"}</td>
+                        <td className="px-3 py-1.5 text-ink" title={campaigns.join(", ")}>
+                          {mail[c.id]?.count ?? 0}
+                          {campaigns.length ? (
+                            <span className="block max-w-full truncate text-xs text-ink-soft">
+                              {campaigns.join(", ")}
+                            </span>
+                          ) : null}
                         </td>
-                        <td className="px-3 py-3">
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            {isOverdue ? <Pill tone="warn">Pradelsta</Pill> : null}
+                        <td className="px-3 py-1.5">
+                          <div className="flex items-center gap-1.5">
                             <Pill tone={c.status === "won" ? "accent" : "muted"}>
                               {CLIENT_STATUS_LABELS[c.status]}
                             </Pill>
+                            {isOverdue ? (
+                              <span
+                                role="img"
+                                aria-label="Pradelsta"
+                                title="Pradelsta"
+                                className="inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-amber ring-2 ring-amber/25"
+                              />
+                            ) : null}
                           </div>
                         </td>
-                        <td className="px-3 py-3 text-ink">
+                        <td className="px-3 py-1.5 text-ink">
                           {c.contact_phone ? (
                             <a
                               href={`tel:${c.contact_phone}`}
@@ -380,24 +383,28 @@ function RegistryPage() {
                             "—"
                           )}
                         </td>
-                        <td className="px-3 py-3">
+                        <td className="px-3 py-1.5">
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
                             search={(prev) => prev}
-                            className="block"
+                            className="flex max-w-full items-baseline gap-1.5"
                             title={c.next_action ?? ""}
                           >
-                            <span className={`block max-w-full truncate ${isOverdue ? "font-medium text-ink" : "text-ink"}`}>
+                            <span
+                              className={`min-w-0 truncate ${isOverdue ? "font-medium text-ink" : "text-ink"}`}
+                            >
                               {c.next_action || "—"}
                             </span>
-                            <span className="mt-0.5 block text-xs text-ink-soft">
-                              {c.next_action_date ? formatDate(c.next_action_date) : "—"}
-                            </span>
+                            {c.next_action_date ? (
+                              <span className="shrink-0 text-xs text-ink-soft">
+                                {formatDate(c.next_action_date)}
+                              </span>
+                            ) : null}
                           </Link>
                         </td>
-                        <td className="px-3 py-3 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
-                        <td className="px-3 py-3 text-ink whitespace-nowrap">
+                        <td className="px-3 py-1.5 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
+                        <td className="px-3 py-1.5 text-ink whitespace-nowrap">
                           {formatDate(c.created_at)}
                         </td>
                       </tr>
