@@ -314,6 +314,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
           subject,
           body,
           filters,
+          exclude_ids: [...excluded],
           daily_limit: dailyLimit,
           per_minute: perMinute,
         },
@@ -339,8 +340,17 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
   const toggle = (key: "statuses" | "countries", v: string) =>
     setFilters((f) => ({ ...f, [key]: f[key].includes(v) ? f[key].filter((x) => x !== v) : [...f[key], v] }));
 
-  const days = aud.data && dailyLimit ? Math.ceil(aud.data.count / Math.min(dailyLimit, totalSenderCap || dailyLimit)) : 0;
-  const canSave = name.trim() && subject.trim() && body.trim() && (aud.data?.count ?? 0) > 0;
+  const selectedCount = Math.max(0, (aud.data?.count ?? 0) - excluded.size);
+  const days = aud.data && dailyLimit ? Math.ceil(selectedCount / Math.min(dailyLimit, totalSenderCap || dailyLimit)) : 0;
+  const canSave = name.trim() && subject.trim() && body.trim() && selectedCount > 0;
+
+  const toggleRecipient = (id: string) =>
+    setExcluded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   return (
     <section className={`${CARD} mt-6 max-w-3xl space-y-6 p-6`}>
