@@ -20,7 +20,7 @@ import {
   type SenderRow,
 } from "@/lib/campaigns.functions";
 import { listTemplates } from "@/lib/templates.functions";
-import { ALL_STATUSES } from "@/lib/registry.functions";
+import { REGISTRY_STATUSES } from "@/lib/registry.functions";
 import { CLIENT_STATUS_LABELS } from "@/lib/admin-format";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
 
@@ -412,7 +412,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
         <h3 className="text-[11px] font-semibold text-ink-soft uppercase">2. Auditorija iš klientų registro</h3>
         <Field label="Būsena">
           <div className="flex flex-wrap gap-2">
-            {ALL_STATUSES.map((s) => (
+            {REGISTRY_STATUSES.map((s) => (
               <Chip key={s} on={filters.statuses.includes(s)} onClick={() => toggle("statuses", s)}>
                 {CLIENT_STATUS_LABELS[s] ?? s}
               </Chip>
