@@ -306,8 +306,8 @@ function RegistryPage() {
                     <th className="px-3 py-2 font-medium w-[7%]">Šalis</th>
                     <th className="px-3 py-2 font-medium w-[9%]">Išsiųsta laiškų</th>
                     <th className="px-3 py-2 font-medium w-[17%]">Statusas</th>
-                    <th className="px-3 py-2 font-medium w-[10%]">Telefonas</th>
-                    <th className="px-3 py-2 font-medium w-[14%]">Kitas veiksmas</th>
+                    <th className="px-3 py-2 font-medium w-[12%]">Telefonas</th>
+                    <th className="px-3 py-2 font-medium w-[12%]">Kitas veiksmas</th>
                     <th className="px-3 py-2 font-medium w-[10%]">Atsakingas</th>
                     <th className="px-3 py-2 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
                   </tr>
@@ -370,7 +370,7 @@ function RegistryPage() {
                             ) : null}
                           </div>
                         </td>
-                        <td className="px-3 py-1.5 text-ink">
+                        <td className="px-3 py-1.5 text-ink truncate">
                           {c.contact_phone ? (
                             <a
                               href={`tel:${c.contact_phone}`}
