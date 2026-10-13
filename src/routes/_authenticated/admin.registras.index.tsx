@@ -302,14 +302,14 @@ function RegistryPage() {
               <table className="w-full min-w-[880px] table-fixed text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-3 py-3 font-medium w-[24%]">El. Paštas</th>
-                    <th className="px-3 py-3 font-medium w-[8%]">Šalis</th>
-                    <th className="px-3 py-3 font-medium w-[14%]">Išsiųsta laiškų</th>
-                    <th className="px-3 py-3 font-medium w-[13%]">Statusas</th>
-                    <th className="px-3 py-3 font-medium w-[12%]">Telefonas</th>
-                    <th className="px-3 py-3 font-medium w-[14%]">Kitas veiksmas</th>
-                    <th className="px-3 py-3 font-medium w-[9%]">Atsakingas</th>
-                    <th className="px-3 py-3 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
+                    <th className="px-3 py-2 font-medium w-[24%]">El. Paštas</th>
+                    <th className="px-3 py-2 font-medium w-[8%]">Šalis</th>
+                    <th className="px-3 py-2 font-medium w-[14%]">Išsiųsta laiškų</th>
+                    <th className="px-3 py-2 font-medium w-[13%]">Statusas</th>
+                    <th className="px-3 py-2 font-medium w-[12%]">Telefonas</th>
+                    <th className="px-3 py-2 font-medium w-[14%]">Kitas veiksmas</th>
+                    <th className="px-3 py-2 font-medium w-[9%]">Atsakingas</th>
+                    <th className="px-3 py-2 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -317,6 +317,14 @@ function RegistryPage() {
                     const isOverdue = Boolean(
                       c.next_action_date && c.next_action_date < today && c.status !== "cancelled",
                     );
+                    const sub = [
+                      c.city,
+                      c.property_type,
+                      c.units_count ? `${c.units_count} kamb.` : null,
+                    ]
+                      .filter(Boolean)
+                      .join(" · ");
+                    const campaigns = mail[c.id]?.campaigns ?? [];
                     return (
                       <tr
                         key={c.id}
