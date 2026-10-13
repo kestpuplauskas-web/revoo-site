@@ -273,11 +273,11 @@ function RegistryPage() {
               <table className="w-full min-w-[820px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-4 py-3 font-medium">Klientas</th>
+                    <th className="px-4 py-3 font-medium">El. Paštas</th>
                     <th className="px-4 py-3 font-medium">Šalis</th>
-                    <th className="px-4 py-3 font-medium">Telefonas</th>
-                    <th className="px-4 py-3 font-medium">Statusas</th>
                     <th className="px-4 py-3 font-medium">Išsiųsta laiškų</th>
+                    <th className="px-4 py-3 font-medium">Statusas</th>
+                    <th className="px-4 py-3 font-medium">Telefonas</th>
                     <th className="px-4 py-3 font-medium">Kitas veiksmas</th>
                     <th className="px-4 py-3 font-medium">Atsakingas</th>
                   </tr>
@@ -299,7 +299,7 @@ function RegistryPage() {
                             search={(prev) => prev}
                             className="block font-medium text-ink group-hover:underline"
                           >
-                            {c.name}
+                            {c.contact_email ?? c.name}
                             <span className="mt-0.5 block text-xs font-normal text-ink-soft">
                               {[c.city, c.property_type, c.units_count ? `${c.units_count} kamb.` : null]
                                 .filter(Boolean)
@@ -309,16 +309,15 @@ function RegistryPage() {
                         </td>
                         <td className="px-4 py-3 text-ink">{c.country ?? "—"}</td>
                         <td className="px-4 py-3 text-ink">
-                          {c.contact_phone ? (
-                            <a
-                              href={`tel:${c.contact_phone}`}
-                              className="hover:underline"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {c.contact_phone}
-                            </a>
+                          {mail[c.id]?.count ? (
+                            <>
+                              {mail[c.id]?.count}
+                              <span className="mt-0.5 block max-w-[220px] truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
+                                {mail[c.id]?.campaigns.join(", ")}
+                              </span>
+                            </>
                           ) : (
-                            "—"
+                            "0"
                           )}
                         </td>
                         <td className="px-4 py-3">
@@ -330,15 +329,16 @@ function RegistryPage() {
                           </div>
                         </td>
                         <td className="px-4 py-3 text-ink">
-                          {mail[c.id]?.count ? (
-                            <>
-                              {mail[c.id]?.count}
-                              <span className="mt-0.5 block max-w-[220px] truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
-                                {mail[c.id]?.campaigns.join(", ")}
-                              </span>
-                            </>
+                          {c.contact_phone ? (
+                            <a
+                              href={`tel:${c.contact_phone}`}
+                              className="hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {c.contact_phone}
+                            </a>
                           ) : (
-                            "0"
+                            "—"
                           )}
                         </td>
                         <td className="px-4 py-3">
