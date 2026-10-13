@@ -108,7 +108,8 @@ export const createCampaign = createServerFn({ method: "POST" })
     const excluded = new Set(data.exclude_ids);
     const list = (await audience(sb, data.filters)).filter((c) => !excluded.has(c.id));
     if (!list.length) throw new Error("Pagal filtrus nerasta nė vieno kliento su el. paštu");
-    const { data: camp, error } = await sb.from("email_campaigns").insert(data).select("id").single();
+    const { exclude_ids: _omit, ...campaign } = data;
+    const { data: camp, error } = await sb.from("email_campaigns").insert(campaign).select("id").single();
     if (error || !camp) throw new Error("Nepavyko sukurti kampanijos");
     for (let i = 0; i < list.length; i += 500) {
       const chunk = list.slice(i, i + 500).map((c) => ({
