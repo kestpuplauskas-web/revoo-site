@@ -29,6 +29,13 @@
       "when": 1791892247644,
       "tag": "0003_client_status_unsubscribed",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791892261346,
+      "tag": "0004_client_status_from_campaigns",
+      "breakpoints": true
     }
   ]
 }
