@@ -451,11 +451,39 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
           </Field>
         </div>
         <div className="rounded-2xl bg-cream px-4 py-3 text-sm text-ink">
-          {aud.isFetching ? "Skaičiuojama…" : `Atrinkta gavėjų: ${aud.data?.count ?? 0}`}
+          {aud.isFetching
+            ? "Skaičiuojama…"
+            : `Į kampaniją įtraukiama: ${selectedCount} iš ${aud.data?.count ?? 0} atrinktų gavėjų`}
           <span className="block text-xs text-ink-soft">
-            Įtraukiami tik klientai su el. paštu; atsisakę ir pasikartojantys adresai praleidžiami.
+            Įtraukiami tik klientai su el. paštu; atsisakę ir pasikartojantys adresai praleidžiami. Nuimkite varnelę,
+            jei kliento į šią kampaniją įtraukti nenorite.
           </span>
         </div>
+        {(aud.data?.recipients?.length ?? 0) > 0 ? (
+          <div className="max-h-72 overflow-auto rounded-2xl border border-ink/10">
+            <ul className="divide-y divide-ink/5">
+              {(aud.data?.recipients ?? []).map((r) => {
+                const included = !excluded.has(r.id);
+                return (
+                  <li key={r.id}>
+                    <label className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2 text-sm hover:bg-cream/60">
+                      <input
+                        type="checkbox"
+                        checked={included}
+                        onChange={() => toggleRecipient(r.id)}
+                        className="h-4 w-4 shrink-0 accent-teal-700"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-ink">{r.contact_name ?? r.name}</span>
+                        <span className="block truncate text-xs text-ink-soft">{r.email}</span>
+                      </span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
       <div className="space-y-4">
