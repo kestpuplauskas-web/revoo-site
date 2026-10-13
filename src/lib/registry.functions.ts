@@ -13,14 +13,13 @@ export type ActivityType = Database["public"]["Enums"]["activity_type"];
 export const PIPELINE_STATUSES: ClientStatus[] = [
   "lead",
   "contacted",
-  "awaiting_reply",
-  "replied",
-  "demo_scheduled",
-  "proposal_sent",
   "negotiation",
+  "unsubscribed",
   "won",
-  "lost",
 ];
+
+/** Registre rodomi ir pasirenkami tik šie penki statusai. */
+export const REGISTRY_STATUSES: ClientStatus[] = PIPELINE_STATUSES;
 
 /** Būsenos, kurios jau egzistavo klientų valdyme — registre rodomos po piltuvėlio. */
 export const DELIVERY_STATUSES: ClientStatus[] = [
@@ -31,6 +30,45 @@ export const DELIVERY_STATUSES: ClientStatus[] = [
 ];
 
 export const ALL_STATUSES: ClientStatus[] = [...PIPELINE_STATUSES, ...DELIVERY_STATUSES];
+const ANY_STATUS: ClientStatus[] = [
+  ...ALL_STATUSES,
+  "awaiting_reply",
+  "replied",
+  "demo_scheduled",
+  "proposal_sent",
+  "lost",
+];
+
+export type MailStats = { count: number; campaigns: string[]; last_sent_at: string | null };
+
+async function loadMailStats(
+  supabase: { from: (t: "campaign_recipients") => any },
+  clientId?: string,
+): Promise<Record<string, MailStats>> {
+  const out: Record<string, MailStats> = {};
+  const page = 1000;
+  for (let from = 0; ; from += page) {
+    let q = supabase
+      .from("campaign_recipients")
+      .select("client_id, sent_at, email_campaigns(name)")
+      .eq("status", "sent")
+      .not("client_id", "is", null)
+      .order("sent_at", { ascending: false })
+      .range(from, from + page - 1);
+    if (clientId) q = q.eq("client_id", clientId);
+    const { data, error } = await q;
+    if (error || !data) break;
+    for (const r of data as { client_id: string; sent_at: string | null; email_campaigns: { name: string } | null }[]) {
+      const st = (out[r.client_id] ??= { count: 0, campaigns: [], last_sent_at: null });
+      st.count += 1;
+      if (!st.last_sent_at) st.last_sent_at = r.sent_at;
+      const n = r.email_campaigns?.name;
+      if (n && !st.campaigns.includes(n)) st.campaigns.push(n);
+    }
+    if (data.length < page) break;
+  }
+  return out;
+}
 
 export const ACTIVITY_TYPES: ActivityType[] = [
   "call",
@@ -144,9 +182,10 @@ export type RegistryItem = ClientRow;
 export const listRegistry = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const [clientsRes, teamRes] = await Promise.all([
-      context.supabase.from("clients").select("*").order("created_at", { ascending: false }),
+    const [clientsRes, teamRes, mail] = await Promise.all([
+      context.supabase.from("clients").select("*").order("created_at", { ascending: false }).range(0, 9999),
       context.supabase.from("profiles").select("id, full_name, email"),
+      loadMailStats(context.supabase),
     ]);
     if (clientsRes.error) {
       console.error("listRegistry failed", clientsRes.error.message);
@@ -160,6 +199,7 @@ export const listRegistry = createServerFn({ method: "GET" })
 
     return {
       clients,
+      mail,
       team: teamRes.data ?? [],
       summary: {
         total: clients.length,
@@ -180,7 +220,7 @@ export const getRegistryClient = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ id: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
-    const [clientRes, activitiesRes, teamRes] = await Promise.all([
+    const [clientRes, activitiesRes, teamRes, mail] = await Promise.all([
       context.supabase.from("clients").select("*").eq("id", data.id).maybeSingle(),
       context.supabase
         .from("client_activities")
@@ -189,6 +229,7 @@ export const getRegistryClient = createServerFn({ method: "GET" })
         .order("occurred_at", { ascending: false })
         .order("created_at", { ascending: false }),
       context.supabase.from("profiles").select("id, full_name, email"),
+      loadMailStats(context.supabase, data.id),
     ]);
 
     if (clientRes.error || !clientRes.data) throw new Error("Objektas nerastas");
@@ -196,6 +237,7 @@ export const getRegistryClient = createServerFn({ method: "GET" })
     return {
       client: clientRes.data,
       activities: activitiesRes.data ?? [],
+      mail: mail[data.id] ?? { count: 0, campaigns: [], last_sent_at: null },
       team: teamRes.data ?? [],
       me: context.userId,
     };
@@ -217,7 +259,7 @@ const registrySchema = z.object({
   contact_email: optionalText(255),
   contact_phone: optionalText(60),
   notes: optionalText(4000),
-  status: z.enum(ALL_STATUSES as [ClientStatus, ...ClientStatus[]]),
+  status: z.enum(ANY_STATUS as [ClientStatus, ...ClientStatus[]]),
   next_action: optionalText(400),
   next_action_date: optionalDate,
   assigned_to: optionalUuid,
@@ -314,12 +356,13 @@ const domainOf = (url: string | null | undefined) => {
 export const importClientsCsv = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
-    z.object({ rows: z.array(importRowSchema).max(2000) }).parse(input),
+    z.object({ rows: z.array(importRowSchema).max(10000) }).parse(input),
   )
   .handler(async ({ data, context }) => {
     const { data: existing, error } = await context.supabase
       .from("clients")
-      .select("id, name, city, contact_email, website_url");
+      .select("id, name, city, contact_email, website_url")
+      .range(0, 9999);
     if (error) throw new Error("Nepavyko patikrinti esamų objektų");
 
     const byDomain = new Map<string, string>();

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import {
   ACTIVITY_TYPES,
   ALL_STATUSES,
+  REGISTRY_STATUSES,
   addActivity,
   deleteActivity,
   getRegistryClient,
@@ -252,13 +253,13 @@ function RegistryClientPage() {
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </Field>
-              <Field label="Būsena">
+              <Field label="Statusas">
                 <select
                   className={INPUT}
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
                 >
-                  {ALL_STATUSES.map((s) => (
+                  {REGISTRY_STATUSES.map((s) => (
                     <option key={s} value={s}>
                       {CLIENT_STATUS_LABELS[s]}
                     </option>
@@ -381,6 +382,19 @@ function RegistryClientPage() {
           </section>
 
           <section className={`${CARD} p-6`}>
+            {!isNew ? (
+              <div className="mb-6 rounded-2xl bg-cream/70 p-4 text-sm text-ink">
+                <p className="text-xs tracking-wide text-ink-soft uppercase">Išsiųsta laiškų per sistemą</p>
+                <p className="mt-1 font-display text-2xl">{query.data?.mail.count ?? 0}</p>
+                {query.data?.mail.campaigns.length ? (
+                  <ul className="mt-2 list-disc pl-5 text-ink-soft">
+                    {query.data.mail.campaigns.map((n) => (
+                      <li key={n}>{n}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            ) : null}
             <h2 className="font-display text-xl text-ink">Veiksmų istorija</h2>
             {isNew ? (
               <p className="mt-3 text-sm text-ink-soft">
