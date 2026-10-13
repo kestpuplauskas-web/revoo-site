@@ -16,6 +16,8 @@ const registrySearchSchema = z.object({
   assignee: fallback(z.string(), "").default(""),
   country: fallback(z.string(), "").default(""),
   next: fallback(z.string(), "").default(""),
+  page: fallback(z.string(), "1").default(""),
+  perPage: fallback(z.string(), "50").default(""),
 });
 
 export const Route = createFileRoute("/_authenticated/admin/registras/")({
@@ -44,18 +46,41 @@ function RegistryPage() {
       search: (prev) => ({ ...prev, [key]: value }),
     });
 
-  const setSearch = (v: string) => setParam("q", v);
-  const setStatus = (v: string) => setParam("status", v);
-  const setAssignee = (v: string) => setParam("assignee", v);
-  const setCountry = (v: string) => setParam("country", v);
-  const setNextState = (v: NextState) => setParam("next", v);
+  const setParamFiltered = (key: keyof typeof search, value: string) =>
+    navigate({
+      replace: true,
+      search: (prev) => ({ ...prev, [key]: value, page: "1" }),
+    });
+
+  const setSearch = (v: string) => setParamFiltered("q", v);
+  const setStatus = (v: string) => setParamFiltered("status", v);
+  const setAssignee = (v: string) => setParamFiltered("assignee", v);
+  const setCountry = (v: string) => setParamFiltered("country", v);
+  const setNextState = (v: NextState) => setParamFiltered("next", v);
+
+  const setPage = (p: number) => setParam("page", String(p));
+  const setPerPage = (v: number) =>
+    navigate({
+      replace: true,
+      search: (prev) => ({ ...prev, perPage: String(v), page: "1" }),
+    });
 
   const { q: searchTerm, status, assignee, country } = search;
   const nextState = search["next"] as NextState;
 
   const hasFilters = Boolean(searchTerm || status || assignee || country || nextState);
   const clearFilters = () =>
-    navigate({ search: { q: "", status: "", assignee: "", country: "", next: "" } });
+    navigate({
+      search: {
+        q: "",
+        status: "",
+        assignee: "",
+        country: "",
+        next: "",
+        page: "1",
+        perPage: "50",
+      },
+    });
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
@@ -123,6 +148,17 @@ function RegistryPage() {
         (a, b) => a.localeCompare(b, "lt"),
       ),
     [clients],
+  );
+
+  const perPageOptions = [20, 50, 100];
+  const perPage = perPageOptions.includes(Number(search["perPage"]))
+    ? Number(search["perPage"])
+    : 50;
+  const totalPages = Math.max(1, Math.ceil(rows.length / perPage));
+  const page = Math.min(Math.max(1, Number(search["page"]) || 1), totalPages);
+  const pageRows = useMemo(
+    () => rows.slice((page - 1) * perPage, page * perPage),
+    [rows, page, perPage],
   );
 
   return (
@@ -253,7 +289,16 @@ function RegistryPage() {
               />
             </div>
           ) : (
-            <div className={`${CARD} overflow-x-auto`}>
+            <div className={CARD}>
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                total={rows.length}
+                perPage={perPage}
+                onPage={setPage}
+                onPerPage={setPerPage}
+              />
+              <div className="overflow-x-auto">
               <table className="w-full min-w-[880px] table-fixed text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
@@ -268,7 +313,7 @@ function RegistryPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((c) => {
+                  {pageRows.map((c) => {
                     const isOverdue = Boolean(
                       c.next_action_date && c.next_action_date < today && c.status !== "cancelled",
                     );
@@ -352,6 +397,15 @@ function RegistryPage() {
                   })}
                 </tbody>
               </table>
+              </div>
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                total={rows.length}
+                perPage={perPage}
+                onPage={setPage}
+                onPerPage={setPerPage}
+              />
             </div>
           )}
         </div>
@@ -381,5 +435,67 @@ function Select({
       <option value="">{label}: visi</option>
       {children}
     </select>
+  );
+}
+
+function Pagination({
+  page,
+  totalPages,
+  total,
+  perPage,
+  onPage,
+  onPerPage,
+}: {
+  page: number;
+  totalPages: number;
+  total: number;
+  perPage: number;
+  onPage: (p: number) => void;
+  onPerPage: (v: number) => void;
+}) {
+  const btnClass =
+    "rounded-full border border-ink/15 px-4 py-1.5 text-sm transition-colors hover:bg-ink hover:text-cream disabled:pointer-events-none disabled:opacity-40";
+
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-sm">
+      <p className="text-ink-soft">
+        Puslapis {page} iš {totalPages} · iš viso {total} įrašų
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <select
+          value={perPage}
+          onChange={(e) => onPerPage(Number(e.target.value))}
+          aria-label="Įrašų skaičius puslapyje"
+          className="rounded-full border border-ink/10 bg-white px-3 py-1.5 text-sm text-ink outline-none focus:border-teal-500"
+        >
+          {[20, 50, 100].map((n) => (
+            <option key={n} value={n}>
+              {n} įrašų
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          onClick={() => onPage(page - 1)}
+          disabled={page <= 1}
+          aria-label="Ankstesnis puslapis"
+          className={btnClass}
+        >
+          Ankstesnis
+        </button>
+        <span className="text-ink-soft" aria-current="page">
+          {page} / {totalPages}
+        </span>
+        <button
+          type="button"
+          onClick={() => onPage(page + 1)}
+          disabled={page >= totalPages}
+          aria-label="Sekantis puslapis"
+          className={btnClass}
+        >
+          Sekantis
+        </button>
+      </div>
+    </div>
   );
 }
