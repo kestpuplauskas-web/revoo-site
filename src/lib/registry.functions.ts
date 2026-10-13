@@ -247,7 +247,7 @@ export const getRegistryClient = createServerFn({ method: "GET" })
 
 const registrySchema = z.object({
   id: z.string().uuid().optional(),
-  name: z.string().trim().min(1).max(160),
+  name: z.string().trim().max(160),
   units_count: optionalNumber,
   building_area_sqm: optionalNumber,
   developer: optionalText(160),
@@ -270,8 +270,20 @@ export const saveRegistryClient = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => registrySchema.parse(input))
   .handler(async ({ data, context }): Promise<{ id: string }> => {
     const { id, ...values } = data;
+    const email = values.contact_email?.trim().toLowerCase() ?? "";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      throw new Error("Įveskite teisingą el. pašto adresą");
+    }
+    let dupQ = context.supabase.from("clients").select("id").ilike("contact_email", email).limit(1);
+    if (id) dupQ = dupQ.neq("id", id);
+    const { data: dup } = await dupQ;
+    if (dup && dup.length > 0) {
+      throw new Error("Klientas su tokiu el. pašto adresu jau egzistuoja");
+    }
     const payload = {
       ...values,
+      name: values.name.trim() || email,
+      contact_email: email,
       units_count: values.units_count === null ? null : Math.max(0, Math.round(values.units_count)),
     };
 
