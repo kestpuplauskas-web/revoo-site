@@ -523,6 +523,20 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
       <button className={BTN} disabled={!canSave || createMut.isPending} onClick={() => createMut.mutate()}>
         {createMut.isPending ? "Kuriama…" : "Sukurti kampaniją"}
       </button>
+      {!canSave ? (
+        <p className="text-xs text-ink-soft">
+          {[
+            !name.trim() && "kampanijos pavadinimas",
+            !subject.trim() && "laiško tema",
+            !body.trim() && "laiško tekstas",
+            selectedCount === 0 && "bent vienas gavėjas",
+          ]
+            .filter(Boolean)
+            .join(", ")
+            .replace(/^./, (c) => c.toUpperCase())}{" "}
+          dar neužpildyta — mygtukas aktyvuosis, kai viskas bus įvesta.
+        </p>
+      ) : null}
     </section>
   );
 }
