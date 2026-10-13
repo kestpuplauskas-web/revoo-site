@@ -34,13 +34,14 @@ export function formatHours(minutes: number | null | undefined) {
 
 export const CLIENT_STATUS_LABELS: Record<string, string> = {
   lead: "Naujas",
-  contacted: "Susisiekta",
+  contacted: "Laiškas išsiųstas",
   awaiting_reply: "Laukiama atsakymo",
   replied: "Gautas atsakymas",
   demo_scheduled: "Demo suderinta",
   proposal_sent: "Pasiūlymas išsiųstas",
-  negotiation: "Derybos",
-  won: "Laimėta",
+  negotiation: "Vyksta derybos",
+  unsubscribed: "Atsisakė prenumeratos",
+  won: "Sudaryta sutartis",
   lost: "Prarasta",
   onboarding: "Diegimas",
   active: "Aktyvus",
@@ -60,7 +61,7 @@ export const ACTIVITY_TYPE_LABELS: Record<string, string> = {
 
 export const CLIENT_FIELD_LABELS: Record<string, string> = {
   created: "Objektas sukurtas",
-  status: "Būsena",
+  status: "Statusas",
   assigned_to: "Atsakingas",
   contact_name: "Kontaktinis asmuo",
   contact_email: "Kontaktinis el. paštas",

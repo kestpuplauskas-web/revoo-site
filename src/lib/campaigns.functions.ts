@@ -253,7 +253,7 @@ export const unsubscribeByToken = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: r } = await supabaseAdmin
       .from("campaign_recipients")
-      .select("email")
+      .select("id, email, client_id")
       .eq("unsubscribe_token", data.token)
       .maybeSingle();
     if (!r) return { ok: false };
@@ -263,5 +263,12 @@ export const unsubscribeByToken = createServerFn({ method: "POST" })
       .update({ status: "unsubscribed" })
       .eq("email", r.email)
       .eq("status", "pending");
+    if (r.client_id) {
+      await supabaseAdmin
+        .from("clients")
+        .update({ status: "unsubscribed" })
+        .eq("id", r.client_id)
+        .in("status", ["lead", "contacted", "negotiation"]);
+    }
     return { ok: true };
   });

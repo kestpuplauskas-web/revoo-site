@@ -6,7 +6,7 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Loader2, Search, Upload, X } from "lucide-react";
 
-import { listRegistry, ALL_STATUSES } from "@/lib/registry.functions";
+import { listRegistry, REGISTRY_STATUSES } from "@/lib/registry.functions";
 import { CLIENT_STATUS_LABELS, formatDate } from "@/lib/admin-format";
 import { BTN, BTN_GHOST, CARD, EmptyState, KpiCard, Pill } from "@/components/admin/ui";
 
@@ -168,7 +168,7 @@ function RegistryPage() {
         </div>
 
         <div className={`${CARD} mt-4 flex flex-wrap gap-2 p-4`}>
-          {ALL_STATUSES.filter((s) => (filteredSummary.byStatus[s] ?? 0) > 0).map((s) => (
+          {REGISTRY_STATUSES.filter((s) => (filteredSummary.byStatus[s] ?? 0) > 0).map((s) => (
             <button
               key={s}
               type="button"
@@ -196,8 +196,8 @@ function RegistryPage() {
               className="w-full rounded-full border border-ink/10 bg-white py-2.5 pr-4 pl-11 text-sm text-ink outline-none focus:border-teal-500"
             />
           </div>
-          <Select value={status} onChange={setStatus} label="Būsena">
-            {ALL_STATUSES.map((s) => (
+          <Select value={status} onChange={setStatus} label="Statusas">
+            {REGISTRY_STATUSES.map((s) => (
               <option key={s} value={s}>
                 {CLIENT_STATUS_LABELS[s]}
               </option>
@@ -275,7 +275,7 @@ function RegistryPage() {
                     <th className="px-4 py-3 font-medium">Klientas</th>
                     <th className="px-4 py-3 font-medium">Šalis</th>
                     <th className="px-4 py-3 font-medium">Telefonas</th>
-                    <th className="px-4 py-3 font-medium">Būsena</th>
+                    <th className="px-4 py-3 font-medium">Statusas</th>
                     <th className="px-4 py-3 font-medium">Kitas veiksmas</th>
                     <th className="px-4 py-3 font-medium">Atsakingas</th>
                   </tr>

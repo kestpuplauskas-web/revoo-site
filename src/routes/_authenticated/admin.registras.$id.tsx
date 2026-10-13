@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import {
   ACTIVITY_TYPES,
   ALL_STATUSES,
+  REGISTRY_STATUSES,
   addActivity,
   deleteActivity,
   getRegistryClient,
@@ -252,13 +253,13 @@ function RegistryClientPage() {
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </Field>
-              <Field label="Būsena">
+              <Field label="Statusas">
                 <select
                   className={INPUT}
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
                 >
-                  {ALL_STATUSES.map((s) => (
+                  {REGISTRY_STATUSES.map((s) => (
                     <option key={s} value={s}>
                       {CLIENT_STATUS_LABELS[s]}
                     </option>
