@@ -234,7 +234,10 @@ function RegistryClientPage() {
             <button
               type="button"
               className={BTN}
-              disabled={saveMutation.isPending || form.name.trim().length === 0}
+              disabled={
+                saveMutation.isPending ||
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.contact_email.trim())
+              }
               onClick={() => saveMutation.mutate()}
             >
               {saveMutation.isPending ? "Saugoma…" : "Išsaugoti"}
@@ -324,9 +327,12 @@ function RegistryClientPage() {
                   onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
                 />
               </Field>
-              <Field label="Kontaktinis el. paštas">
+              <Field label="El. paštas *">
                 <input
                   className={INPUT}
+                  type="email"
+                  autoComplete="email"
+                  required
                   value={form.contact_email}
                   onChange={(e) => setForm({ ...form, contact_email: e.target.value })}
                 />
