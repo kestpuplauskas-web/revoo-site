@@ -15,7 +15,6 @@ const registrySearchSchema = z.object({
   status: fallback(z.string(), "").default(""),
   assignee: fallback(z.string(), "").default(""),
   country: fallback(z.string(), "").default(""),
-  units: fallback(z.string(), "").default(""),
   next: fallback(z.string(), "").default(""),
 });
 
@@ -30,7 +29,6 @@ export const Route = createFileRoute("/_authenticated/admin/registras/")({
   component: RegistryPage,
 });
 
-type UnitsRange = "" | "lt20" | "20to50" | "gt50";
 type NextState = "" | "overdue" | "today" | "upcoming" | "none";
 
 function RegistryPage() {
@@ -50,16 +48,14 @@ function RegistryPage() {
   const setStatus = (v: string) => setParam("status", v);
   const setAssignee = (v: string) => setParam("assignee", v);
   const setCountry = (v: string) => setParam("country", v);
-  const setUnits = (v: UnitsRange) => setParam("units", v);
   const setNextState = (v: NextState) => setParam("next", v);
 
   const { q: searchTerm, status, assignee, country } = search;
-  const units = search["units"] as UnitsRange;
   const nextState = search["next"] as NextState;
 
-  const hasFilters = Boolean(searchTerm || status || assignee || country || units || nextState);
+  const hasFilters = Boolean(searchTerm || status || assignee || country || nextState);
   const clearFilters = () =>
-    navigate({ search: { q: "", status: "", assignee: "", country: "", units: "", next: "" } });
+    navigate({ search: { q: "", status: "", assignee: "", country: "", next: "" } });
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
@@ -77,13 +73,6 @@ function RegistryPage() {
       if (country && (c.country ?? "") !== country) return false;
       if (assignee === "none" ? Boolean(c.assigned_to) : assignee && c.assigned_to !== assignee)
         return false;
-      if (units) {
-        const n = c.units_count;
-        if (n === null || n === undefined) return false;
-        if (units === "lt20" && !(n < 20)) return false;
-        if (units === "20to50" && !(n >= 20 && n <= 50)) return false;
-        if (units === "gt50" && !(n > 50)) return false;
-      }
       if (nextState) {
         const d = c.next_action_date;
         if (nextState === "none" && d) return false;
@@ -112,7 +101,7 @@ function RegistryPage() {
       if (ad !== bd) return ad.localeCompare(bd);
       return b.created_at.localeCompare(a.created_at);
     });
-  }, [clients, searchTerm, status, country, assignee, units, nextState, today]);
+  }, [clients, searchTerm, status, country, assignee, nextState, today]);
 
   const filteredSummary = useMemo(() => {
     const byStatus: Record<string, number> = {};
@@ -218,11 +207,6 @@ function RegistryPage() {
                 {c}
               </option>
             ))}
-          </Select>
-          <Select value={units} onChange={(v) => setUnits(v as UnitsRange)} label="Kambariai">
-            <option value="lt20">iki 20</option>
-            <option value="20to50">20–50</option>
-            <option value="gt50">virš 50</option>
           </Select>
           <Select
             value={nextState}
