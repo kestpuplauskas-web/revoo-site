@@ -330,7 +330,7 @@ function RegistryPage() {
                         key={c.id}
                         className="group border-b border-ink/5 transition-colors last:border-0 hover:bg-cream/60"
                       >
-                        <td className="px-3 py-3">
+                        <td className="px-3 py-1.5">
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
@@ -339,12 +339,12 @@ function RegistryPage() {
                             title={c.contact_email ?? c.name}
                           >
                             {c.contact_email ?? c.name}
-                            <span className="mt-0.5 block max-w-full truncate text-xs font-normal text-ink-soft">
-                              {[c.city, c.property_type, c.units_count ? `${c.units_count} kamb.` : null]
-                                .filter(Boolean)
-                                .join(" · ") || " "}
-                            </span>
                           </Link>
+                          {sub ? (
+                            <span className="block max-w-full truncate text-xs font-normal text-ink-soft">
+                              {sub}
+                            </span>
+                          ) : null}
                         </td>
                         <td className="px-3 py-1.5 text-ink">{c.country ?? "—"}</td>
                         <td className="px-3 py-1.5 text-ink" title={campaigns.join(", ")}>
