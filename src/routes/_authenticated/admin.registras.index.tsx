@@ -270,7 +270,7 @@ function RegistryPage() {
             </div>
           ) : (
             <div className={`${CARD} overflow-x-auto`}>
-              <table className="w-full min-w-[820px] text-left text-sm">
+              <table className="w-full min-w-[900px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
                     <th className="px-4 py-3 font-medium">El. Paštas</th>
@@ -280,6 +280,7 @@ function RegistryPage() {
                     <th className="px-4 py-3 font-medium">Telefonas</th>
                     <th className="px-4 py-3 font-medium">Kitas veiksmas</th>
                     <th className="px-4 py-3 font-medium">Atsakingas</th>
+                    <th className="px-4 py-3 font-medium whitespace-nowrap">Sukurta</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -357,6 +358,9 @@ function RegistryPage() {
                           </Link>
                         </td>
                         <td className="px-4 py-3 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
+                        <td className="px-4 py-3 text-ink whitespace-nowrap">
+                          {formatDate(c.created_at)}
+                        </td>
                       </tr>
                     );
                   })}
