@@ -90,7 +90,7 @@ export async function processTick(admin: Admin) {
   const today = vilniusToday();
   const summary = { sent: 0, failed: 0, skipped: 0, note: "" as string };
   if (!sesConfig()) {
-    summary.note = "SES nenustatytas";
+    summary.note = "Resend nenustatytas";
     return summary;
   }
 

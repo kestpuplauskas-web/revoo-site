@@ -525,7 +525,7 @@ function SendersTab({ senders }: { senders: SenderRow[] }) {
       <div className={`${CARD} p-5`}>
         <h2 className="font-display text-xl text-ink">{form.id ? "Redaguoti siuntėją" : "Pridėti siuntėją"}</h2>
         <p className="mt-1 text-xs text-ink-soft">
-          Kiekvienas adresas turi būti patvirtintas Amazon SES. Šaltiems laiškams rekomenduojama 30–50 laiškų per dieną vienam adresui.
+          Kiekvienas adresas turi būti iš patvirtinto domeno Resend sistemoje. Šaltiems laiškams rekomenduojama 30–50 laiškų per dieną vienam adresui.
         </p>
         <div className="mt-4 space-y-3">
           <Field label="El. pašto adresas">
