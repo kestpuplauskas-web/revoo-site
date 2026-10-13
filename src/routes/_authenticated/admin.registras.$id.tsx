@@ -382,6 +382,19 @@ function RegistryClientPage() {
           </section>
 
           <section className={`${CARD} p-6`}>
+            {!isNew ? (
+              <div className="mb-6 rounded-2xl bg-cream/70 p-4 text-sm text-ink">
+                <p className="text-xs tracking-wide text-ink-soft uppercase">Išsiųsta laiškų per sistemą</p>
+                <p className="mt-1 font-display text-2xl">{query.data?.mail.count ?? 0}</p>
+                {query.data?.mail.campaigns.length ? (
+                  <ul className="mt-2 list-disc pl-5 text-ink-soft">
+                    {query.data.mail.campaigns.map((n) => (
+                      <li key={n}>{n}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            ) : null}
             <h2 className="font-display text-xl text-ink">Veiksmų istorija</h2>
             {isNew ? (
               <p className="mt-3 text-sm text-ink-soft">

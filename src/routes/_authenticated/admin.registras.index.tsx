@@ -63,6 +63,7 @@ function RegistryPage() {
 
   const clients = query.data?.clients ?? [];
   const team = query.data?.team ?? [];
+  const mail = query.data?.mail ?? {};
   const today = query.data?.today ?? new Date().toISOString().slice(0, 10);
 
   const teamName = (id: string | null) =>
@@ -276,6 +277,7 @@ function RegistryPage() {
                     <th className="px-4 py-3 font-medium">Šalis</th>
                     <th className="px-4 py-3 font-medium">Telefonas</th>
                     <th className="px-4 py-3 font-medium">Statusas</th>
+                    <th className="px-4 py-3 font-medium">Išsiųsta laiškų</th>
                     <th className="px-4 py-3 font-medium">Kitas veiksmas</th>
                     <th className="px-4 py-3 font-medium">Atsakingas</th>
                   </tr>
@@ -326,6 +328,18 @@ function RegistryPage() {
                               {CLIENT_STATUS_LABELS[c.status]}
                             </Pill>
                           </div>
+                        </td>
+                        <td className="px-4 py-3 text-ink">
+                          {mail[c.id]?.count ? (
+                            <>
+                              {mail[c.id]?.count}
+                              <span className="mt-0.5 block max-w-[220px] truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
+                                {mail[c.id]?.campaigns.join(", ")}
+                              </span>
+                            </>
+                          ) : (
+                            "0"
+                          )}
                         </td>
                         <td className="px-4 py-3">
                           <Link
