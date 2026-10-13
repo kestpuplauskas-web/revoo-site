@@ -270,16 +270,17 @@ function RegistryPage() {
             </div>
           ) : (
             <div className={`${CARD} overflow-x-auto`}>
-              <table className="w-full min-w-[820px] text-left text-sm">
+              <table className="w-full min-w-[880px] table-fixed text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-4 py-3 font-medium">El. Paštas</th>
-                    <th className="px-4 py-3 font-medium">Šalis</th>
-                    <th className="px-4 py-3 font-medium">Išsiųsta laiškų</th>
-                    <th className="px-4 py-3 font-medium">Statusas</th>
-                    <th className="px-4 py-3 font-medium">Telefonas</th>
-                    <th className="px-4 py-3 font-medium">Kitas veiksmas</th>
-                    <th className="px-4 py-3 font-medium">Atsakingas</th>
+                    <th className="px-3 py-3 font-medium w-[24%]">El. Paštas</th>
+                    <th className="px-3 py-3 font-medium w-[8%]">Šalis</th>
+                    <th className="px-3 py-3 font-medium w-[14%]">Išsiųsta laiškų</th>
+                    <th className="px-3 py-3 font-medium w-[13%]">Statusas</th>
+                    <th className="px-3 py-3 font-medium w-[12%]">Telefonas</th>
+                    <th className="px-3 py-3 font-medium w-[14%]">Kitas veiksmas</th>
+                    <th className="px-3 py-3 font-medium w-[9%]">Atsakingas</th>
+                    <th className="px-3 py-3 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -292,27 +293,28 @@ function RegistryPage() {
                         key={c.id}
                         className="group border-b border-ink/5 transition-colors last:border-0 hover:bg-cream/60"
                       >
-                        <td className="px-4 py-3">
+                        <td className="px-3 py-3">
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
                             search={(prev) => prev}
-                            className="block font-medium text-ink group-hover:underline"
+                            className="block max-w-full truncate font-medium text-ink group-hover:underline"
+                            title={c.contact_email ?? c.name}
                           >
                             {c.contact_email ?? c.name}
-                            <span className="mt-0.5 block text-xs font-normal text-ink-soft">
+                            <span className="mt-0.5 block max-w-full truncate text-xs font-normal text-ink-soft">
                               {[c.city, c.property_type, c.units_count ? `${c.units_count} kamb.` : null]
                                 .filter(Boolean)
                                 .join(" · ") || " "}
                             </span>
                           </Link>
                         </td>
-                        <td className="px-4 py-3 text-ink">{c.country ?? "—"}</td>
-                        <td className="px-4 py-3 text-ink">
+                        <td className="px-3 py-3 text-ink">{c.country ?? "—"}</td>
+                        <td className="px-3 py-3 text-ink">
                           {mail[c.id]?.count ? (
                             <>
                               {mail[c.id]?.count}
-                              <span className="mt-0.5 block max-w-[220px] truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
+                              <span className="mt-0.5 block max-w-full truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
                                 {mail[c.id]?.campaigns.join(", ")}
                               </span>
                             </>
@@ -320,7 +322,7 @@ function RegistryPage() {
                             "0"
                           )}
                         </td>
-                        <td className="px-4 py-3">
+                        <td className="px-3 py-3">
                           <div className="flex flex-wrap items-center gap-1.5">
                             {isOverdue ? <Pill tone="warn">Pradelsta</Pill> : null}
                             <Pill tone={c.status === "won" ? "accent" : "muted"}>
@@ -328,7 +330,7 @@ function RegistryPage() {
                             </Pill>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-ink">
+                        <td className="px-3 py-3 text-ink">
                           {c.contact_phone ? (
                             <a
                               href={`tel:${c.contact_phone}`}
@@ -341,14 +343,15 @@ function RegistryPage() {
                             "—"
                           )}
                         </td>
-                        <td className="px-4 py-3">
+                        <td className="px-3 py-3">
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
                             search={(prev) => prev}
                             className="block"
+                            title={c.next_action ?? ""}
                           >
-                            <span className={isOverdue ? "font-medium text-ink" : "text-ink"}>
+                            <span className={`block max-w-full truncate ${isOverdue ? "font-medium text-ink" : "text-ink"}`}>
                               {c.next_action || "—"}
                             </span>
                             <span className="mt-0.5 block text-xs text-ink-soft">
@@ -356,7 +359,10 @@ function RegistryPage() {
                             </span>
                           </Link>
                         </td>
-                        <td className="px-4 py-3 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
+                        <td className="px-3 py-3 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
+                        <td className="px-3 py-3 text-ink whitespace-nowrap">
+                          {formatDate(c.created_at)}
+                        </td>
                       </tr>
                     );
                   })}
