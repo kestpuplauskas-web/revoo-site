@@ -299,17 +299,17 @@ function RegistryPage() {
                 onPerPage={setPerPage}
               />
               <div className="overflow-x-auto">
-              <table className="w-full min-w-[940px] table-fixed text-left text-sm">
+              <table className="w-full min-w-[880px] table-fixed text-left text-[13px]">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-3 py-2 font-medium w-[22%]">El. Paštas</th>
-                    <th className="px-3 py-2 font-medium w-[7%]">Šalis</th>
-                    <th className="px-3 py-2 font-medium w-[9%]">Išsiųsta laiškų</th>
-                    <th className="px-3 py-2 font-medium w-[17%]">Statusas</th>
-                    <th className="px-3 py-2 font-medium w-[12%]">Telefonas</th>
-                    <th className="px-3 py-2 font-medium w-[12%]">Kitas veiksmas</th>
-                    <th className="px-3 py-2 font-medium w-[10%]">Atsakingas</th>
-                    <th className="px-3 py-2 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
+                    <th className="px-2 py-2 font-medium w-[22%]">El. Paštas</th>
+                    <th className="px-2 py-2 font-medium w-[6%]">Šalis</th>
+                    <th className="px-2 py-2 font-medium w-[7%]">Išsiųsta laiškų</th>
+                    <th className="px-2 py-2 font-medium w-[15%]">Statusas</th>
+                    <th className="px-2 py-2 font-medium w-[11%]">Telefonas</th>
+                    <th className="px-2 py-2 font-medium w-[20%]">Kitas veiksmas</th>
+                    <th className="px-2 py-2 font-medium w-[9%]">Atsakingas</th>
+                    <th className="px-2 py-2 font-medium whitespace-nowrap w-[10%]">Sukurta</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -330,7 +330,7 @@ function RegistryPage() {
                         key={c.id}
                         className="group border-b border-ink/5 transition-colors last:border-0 hover:bg-cream/60"
                       >
-                        <td className="px-3 py-1.5">
+                        <td className="px-2 py-1.5">
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
@@ -346,8 +346,8 @@ function RegistryPage() {
                             </span>
                           ) : null}
                         </td>
-                        <td className="px-3 py-1.5 text-ink">{c.country ?? "—"}</td>
-                        <td className="px-3 py-1.5 text-ink" title={campaigns.join(", ")}>
+                        <td className="px-2 py-1.5 text-ink">{c.country ?? "—"}</td>
+                        <td className="px-2 py-1.5 text-ink" title={campaigns.join(", ")}>
                           {mail[c.id]?.count ?? 0}
                           {campaigns.length ? (
                             <span className="block max-w-full truncate text-[11px] leading-[14px] text-ink-soft">
@@ -355,9 +355,9 @@ function RegistryPage() {
                             </span>
                           ) : null}
                         </td>
-                        <td className="px-3 py-1.5">
+                        <td className="px-2 py-1.5">
                           <div className="flex items-center gap-1.5">
-                            <Pill tone={c.status === "won" ? "accent" : "muted"}>
+                            <Pill size="sm" tone={c.status === "won" ? "accent" : "muted"}>
                               {CLIENT_STATUS_LABELS[c.status]}
                             </Pill>
                             {isOverdue ? (
@@ -370,7 +370,7 @@ function RegistryPage() {
                             ) : null}
                           </div>
                         </td>
-                        <td className="px-3 py-1.5 text-ink truncate">
+                        <td className="px-2 py-1.5 text-ink truncate">
                           {c.contact_phone ? (
                             <a
                               href={`tel:${c.contact_phone}`}
@@ -383,7 +383,7 @@ function RegistryPage() {
                             "—"
                           )}
                         </td>
-                        <td className="px-3 py-1.5">
+                        <td className="px-2 py-1.5">
                           <Link
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
@@ -403,8 +403,8 @@ function RegistryPage() {
                             ) : null}
                           </Link>
                         </td>
-                        <td className="px-3 py-1.5 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
-                        <td className="px-3 py-1.5 text-ink whitespace-nowrap">
+                        <td className="px-2 py-1.5 text-ink">{teamName(c.assigned_to) ?? "—"}</td>
+                        <td className="px-2 py-1.5 text-ink whitespace-nowrap">
                           {formatDate(c.created_at)}
                         </td>
                       </tr>
@@ -481,7 +481,7 @@ function Pagination({
           value={perPage}
           onChange={(e) => onPerPage(Number(e.target.value))}
           aria-label="Įrašų skaičius puslapyje"
-          className="rounded-full border border-ink/10 bg-white px-3 py-1.5 text-sm text-ink outline-none focus:border-teal-500"
+          className="rounded-full border border-ink/10 bg-white px-2 py-1.5 text-sm text-ink outline-none focus:border-teal-500"
         >
           {[20, 50, 100].map((n) => (
             <option key={n} value={n}>
