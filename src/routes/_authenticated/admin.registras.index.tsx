@@ -299,16 +299,16 @@ function RegistryPage() {
                 onPerPage={setPerPage}
               />
               <div className="overflow-x-auto">
-              <table className="w-full min-w-[880px] table-fixed text-left text-sm">
+              <table className="w-full min-w-[940px] table-fixed text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-3 py-2 font-medium w-[24%]">El. Paštas</th>
-                    <th className="px-3 py-2 font-medium w-[8%]">Šalis</th>
-                    <th className="px-3 py-2 font-medium w-[14%]">Išsiųsta laiškų</th>
-                    <th className="px-3 py-2 font-medium w-[13%]">Statusas</th>
-                    <th className="px-3 py-2 font-medium w-[12%]">Telefonas</th>
+                    <th className="px-3 py-2 font-medium w-[22%]">El. Paštas</th>
+                    <th className="px-3 py-2 font-medium w-[7%]">Šalis</th>
+                    <th className="px-3 py-2 font-medium w-[9%]">Išsiųsta laiškų</th>
+                    <th className="px-3 py-2 font-medium w-[17%]">Statusas</th>
+                    <th className="px-3 py-2 font-medium w-[10%]">Telefonas</th>
                     <th className="px-3 py-2 font-medium w-[14%]">Kitas veiksmas</th>
-                    <th className="px-3 py-2 font-medium w-[9%]">Atsakingas</th>
+                    <th className="px-3 py-2 font-medium w-[10%]">Atsakingas</th>
                     <th className="px-3 py-2 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
                   </tr>
                 </thead>

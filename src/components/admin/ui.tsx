@@ -35,7 +35,7 @@ export function Pill({ children, tone = "muted" }: { children: ReactNode; tone?:
     warn: "bg-amber text-ink",
   } as const;
   return (
-    <span className={`rounded-full px-3 py-1 text-xs font-medium ${tones[tone]}`}>{children}</span>
+    <span className={`inline-flex items-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${tones[tone]}`}>{children}</span>
   );
 }
 
