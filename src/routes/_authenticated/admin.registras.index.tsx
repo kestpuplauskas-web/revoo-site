@@ -273,7 +273,7 @@ function RegistryPage() {
               <table className="w-full min-w-[820px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-4 py-3 font-medium">Klientas</th>
+                    <th className="px-4 py-3 font-medium">El. Paštas</th>
                     <th className="px-4 py-3 font-medium">Šalis</th>
                     <th className="px-4 py-3 font-medium">Išsiųsta laiškų</th>
                     <th className="px-4 py-3 font-medium">Statusas</th>
