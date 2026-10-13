@@ -70,7 +70,7 @@ function CampaignsPage() {
 
       {d && !d.sesReady ? (
         <div className="mt-5 rounded-2xl bg-amber/30 px-4 py-3 text-sm text-ink">
-          Siuntimo kanalas (Amazon SES) dar neprijungtas — kampanijas galite kurti, bet laiškai nebus siunčiami.
+          Siuntimo kanalas (Resend) dar neprijungtas — kampanijas galite kurti, bet laiškai nebus siunčiami.
         </div>
       ) : null}
 
