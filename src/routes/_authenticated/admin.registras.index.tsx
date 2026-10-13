@@ -341,7 +341,7 @@ function RegistryPage() {
                             {c.contact_email ?? c.name}
                           </Link>
                           {sub ? (
-                            <span className="block max-w-full truncate text-xs font-normal text-ink-soft">
+                            <span className="block max-w-full truncate text-[11px] leading-[14px] font-normal text-ink-soft">
                               {sub}
                             </span>
                           ) : null}
@@ -350,7 +350,7 @@ function RegistryPage() {
                         <td className="px-3 py-1.5 text-ink" title={campaigns.join(", ")}>
                           {mail[c.id]?.count ?? 0}
                           {campaigns.length ? (
-                            <span className="block max-w-full truncate text-xs text-ink-soft">
+                            <span className="block max-w-full truncate text-[11px] leading-[14px] text-ink-soft">
                               {campaigns.join(", ")}
                             </span>
                           ) : null}
