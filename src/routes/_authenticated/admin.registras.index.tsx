@@ -270,17 +270,17 @@ function RegistryPage() {
             </div>
           ) : (
             <div className={`${CARD} overflow-x-auto`}>
-              <table className="w-full min-w-[900px] text-left text-sm">
+              <table className="w-full min-w-[880px] table-fixed text-left text-sm">
                 <thead>
                   <tr className="border-b border-ink/10 text-xs tracking-wide text-ink-soft uppercase">
-                    <th className="px-3 py-3 font-medium">El. Paštas</th>
-                    <th className="px-3 py-3 font-medium">Šalis</th>
-                    <th className="px-3 py-3 font-medium">Išsiųsta laiškų</th>
-                    <th className="px-3 py-3 font-medium">Statusas</th>
-                    <th className="px-3 py-3 font-medium">Telefonas</th>
-                    <th className="px-3 py-3 font-medium">Kitas veiksmas</th>
-                    <th className="px-3 py-3 font-medium">Atsakingas</th>
-                    <th className="px-3 py-3 font-medium whitespace-nowrap">Sukurta</th>
+                    <th className="px-3 py-3 font-medium w-[24%]">El. Paštas</th>
+                    <th className="px-3 py-3 font-medium w-[8%]">Šalis</th>
+                    <th className="px-3 py-3 font-medium w-[14%]">Išsiųsta laiškų</th>
+                    <th className="px-3 py-3 font-medium w-[13%]">Statusas</th>
+                    <th className="px-3 py-3 font-medium w-[12%]">Telefonas</th>
+                    <th className="px-3 py-3 font-medium w-[14%]">Kitas veiksmas</th>
+                    <th className="px-3 py-3 font-medium w-[9%]">Atsakingas</th>
+                    <th className="px-3 py-3 font-medium whitespace-nowrap w-[11%]">Sukurta</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -298,11 +298,11 @@ function RegistryPage() {
                             to="/admin/registras/$id/"
                             params={{ id: c.id }}
                             search={(prev) => prev}
-                            className="block max-w-[240px] truncate font-medium text-ink group-hover:underline"
+                            className="block max-w-full truncate font-medium text-ink group-hover:underline"
                             title={c.contact_email ?? c.name}
                           >
                             {c.contact_email ?? c.name}
-                            <span className="mt-0.5 block max-w-[240px] truncate text-xs font-normal text-ink-soft">
+                            <span className="mt-0.5 block max-w-full truncate text-xs font-normal text-ink-soft">
                               {[c.city, c.property_type, c.units_count ? `${c.units_count} kamb.` : null]
                                 .filter(Boolean)
                                 .join(" · ") || " "}
@@ -314,7 +314,7 @@ function RegistryPage() {
                           {mail[c.id]?.count ? (
                             <>
                               {mail[c.id]?.count}
-                              <span className="mt-0.5 block max-w-[140px] truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
+                              <span className="mt-0.5 block max-w-full truncate text-xs text-ink-soft" title={mail[c.id]?.campaigns.join(", ")}>
                                 {mail[c.id]?.campaigns.join(", ")}
                               </span>
                             </>
@@ -351,7 +351,7 @@ function RegistryPage() {
                             className="block"
                             title={c.next_action ?? ""}
                           >
-                            <span className={`block max-w-[150px] truncate ${isOverdue ? "font-medium text-ink" : "text-ink"}`}>
+                            <span className={`block max-w-full truncate ${isOverdue ? "font-medium text-ink" : "text-ink"}`}>
                               {c.next_action || "—"}
                             </span>
                             <span className="mt-0.5 block text-xs text-ink-soft">
