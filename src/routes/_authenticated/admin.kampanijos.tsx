@@ -279,11 +279,17 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
   const [dailyLimit, setDailyLimit] = useState(300);
   const [perMinute, setPerMinute] = useState(5);
   const [testTo, setTestTo] = useState("");
+  const [excluded, setExcluded] = useState<Set<string>>(new Set());
 
   const aud = useQuery({
     queryKey: ["audience", filters],
     queryFn: () => preview({ data: filters }),
   });
+
+  // Pakeitus filtrus, išmetimų sąrašas nebegalioja – pradedama iš naujo.
+  useEffect(() => {
+    setExcluded(new Set());
+  }, [filters]);
 
   useEffect(() => {
     const t = emailTemplates.find((x) => x.id === templateId);
@@ -308,6 +314,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
           subject,
           body,
           filters,
+          exclude_ids: [...excluded],
           daily_limit: dailyLimit,
           per_minute: perMinute,
         },
@@ -333,8 +340,17 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
   const toggle = (key: "statuses" | "countries", v: string) =>
     setFilters((f) => ({ ...f, [key]: f[key].includes(v) ? f[key].filter((x) => x !== v) : [...f[key], v] }));
 
-  const days = aud.data && dailyLimit ? Math.ceil(aud.data.count / Math.min(dailyLimit, totalSenderCap || dailyLimit)) : 0;
-  const canSave = name.trim() && subject.trim() && body.trim() && (aud.data?.count ?? 0) > 0;
+  const selectedCount = Math.max(0, (aud.data?.count ?? 0) - excluded.size);
+  const days = aud.data && dailyLimit ? Math.ceil(selectedCount / Math.min(dailyLimit, totalSenderCap || dailyLimit)) : 0;
+  const canSave = name.trim() && subject.trim() && body.trim() && selectedCount > 0;
+
+  const toggleRecipient = (id: string) =>
+    setExcluded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   return (
     <section className={`${CARD} mt-6 max-w-3xl space-y-6 p-6`}>
@@ -435,11 +451,39 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
           </Field>
         </div>
         <div className="rounded-2xl bg-cream px-4 py-3 text-sm text-ink">
-          {aud.isFetching ? "Skaičiuojama…" : `Atrinkta gavėjų: ${aud.data?.count ?? 0}`}
+          {aud.isFetching
+            ? "Skaičiuojama…"
+            : `Į kampaniją įtraukiama: ${selectedCount} iš ${aud.data?.count ?? 0} atrinktų gavėjų`}
           <span className="block text-xs text-ink-soft">
-            Įtraukiami tik klientai su el. paštu; atsisakę ir pasikartojantys adresai praleidžiami.
+            Įtraukiami tik klientai su el. paštu; atsisakę ir pasikartojantys adresai praleidžiami. Nuimkite varnelę,
+            jei kliento į šią kampaniją įtraukti nenorite.
           </span>
         </div>
+        {(aud.data?.recipients?.length ?? 0) > 0 ? (
+          <div className="max-h-72 overflow-auto rounded-2xl border border-ink/10">
+            <ul className="divide-y divide-ink/5">
+              {(aud.data?.recipients ?? []).map((r) => {
+                const included = !excluded.has(r.id);
+                return (
+                  <li key={r.id}>
+                    <label className="flex min-h-11 cursor-pointer items-center gap-3 px-4 py-2 text-sm hover:bg-cream/60">
+                      <input
+                        type="checkbox"
+                        checked={included}
+                        onChange={() => toggleRecipient(r.id)}
+                        className="h-4 w-4 shrink-0 accent-teal-700"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-ink">{r.contact_name ?? r.name}</span>
+                        <span className="block truncate text-xs text-ink-soft">{r.email}</span>
+                      </span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
       <div className="space-y-4">
