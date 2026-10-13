@@ -1,4 +1,3 @@
-import { AwsClient } from "aws4fetch";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -7,12 +6,9 @@ type Admin = SupabaseClient<Database>;
 export const SITE_URL = "https://revoostay.com";
 const MAX_PER_TICK = 60;
 
+/** Siuntimo kanalas: Resend. */
 export function sesConfig() {
-  const accessKeyId = process.env["AWS_SES_ACCESS_KEY_ID"];
-  const secretAccessKey = process.env["AWS_SES_SECRET_ACCESS_KEY"];
-  const region = process.env["AWS_SES_REGION"] || "eu-central-1";
-  if (!accessKeyId || !secretAccessKey) return null;
-  return { accessKeyId, secretAccessKey, region };
+  return process.env["RESEND_API_KEY"] ? { provider: "resend" as const } : null;
 }
 
 export function vilniusToday(): string {
@@ -61,39 +57,27 @@ export async function sendViaSes(args: {
   text: string;
   unsubscribeUrl: string;
 }): Promise<{ ok: true; messageId: string } | { ok: false; error: string }> {
-  const cfg = sesConfig();
-  if (!cfg) return { ok: false, error: "Amazon SES raktai nenustatyti" };
-  const aws = new AwsClient({
-    accessKeyId: cfg.accessKeyId,
-    secretAccessKey: cfg.secretAccessKey,
-    region: cfg.region,
-    service: "ses",
-  });
-  const res = await aws.fetch(`https://email.${cfg.region}.amazonaws.com/v2/email/outbound-emails`, {
+  const key = process.env["RESEND_API_KEY"];
+  if (!key) return { ok: false, error: "Resend raktas nenustatytas" };
+  const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", authorization: `Bearer ${key}` },
     body: JSON.stringify({
-      FromEmailAddress: args.from,
-      Destination: { ToAddresses: [args.to] },
-      Content: {
-        Simple: {
-          Subject: { Data: args.subject, Charset: "UTF-8" },
-          Body: {
-            Html: { Data: args.html, Charset: "UTF-8" },
-            Text: { Data: args.text, Charset: "UTF-8" },
-          },
-          Headers: [
-            { Name: "List-Unsubscribe", Value: `<${args.unsubscribeUrl}>` },
-            { Name: "List-Unsubscribe-Post", Value: "List-Unsubscribe=One-Click" },
-          ],
-        },
+      from: args.from,
+      to: [args.to],
+      subject: args.subject,
+      html: args.html,
+      text: args.text,
+      headers: {
+        "List-Unsubscribe": `<${args.unsubscribeUrl}>`,
+        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
       },
     }),
   });
   const raw = await res.text();
-  if (!res.ok) return { ok: false, error: `SES ${res.status}: ${raw.slice(0, 300)}` };
+  if (!res.ok) return { ok: false, error: `Resend ${res.status}: ${raw.slice(0, 300)}` };
   try {
-    return { ok: true, messageId: (JSON.parse(raw) as { MessageId?: string }).MessageId ?? "" };
+    return { ok: true, messageId: (JSON.parse(raw) as { id?: string }).id ?? "" };
   } catch {
     return { ok: true, messageId: "" };
   }
@@ -106,7 +90,7 @@ export async function processTick(admin: Admin) {
   const today = vilniusToday();
   const summary = { sent: 0, failed: 0, skipped: 0, note: "" as string };
   if (!sesConfig()) {
-    summary.note = "SES nenustatytas";
+    summary.note = "Resend nenustatytas";
     return summary;
   }
 

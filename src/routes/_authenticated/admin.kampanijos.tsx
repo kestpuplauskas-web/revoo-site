@@ -70,7 +70,7 @@ function CampaignsPage() {
 
       {d && !d.sesReady ? (
         <div className="mt-5 rounded-2xl bg-amber/30 px-4 py-3 text-sm text-ink">
-          Siuntimo kanalas (Amazon SES) dar neprijungtas — kampanijas galite kurti, bet laiškai nebus siunčiami.
+          Siuntimo kanalas (Resend) dar neprijungtas — kampanijas galite kurti, bet laiškai nebus siunčiami.
         </div>
       ) : null}
 
@@ -525,7 +525,7 @@ function SendersTab({ senders }: { senders: SenderRow[] }) {
       <div className={`${CARD} p-5`}>
         <h2 className="font-display text-xl text-ink">{form.id ? "Redaguoti siuntėją" : "Pridėti siuntėją"}</h2>
         <p className="mt-1 text-xs text-ink-soft">
-          Kiekvienas adresas turi būti patvirtintas Amazon SES. Šaltiems laiškams rekomenduojama 30–50 laiškų per dieną vienam adresui.
+          Kiekvienas adresas turi būti iš patvirtinto domeno Resend sistemoje. Šaltiems laiškams rekomenduojama 30–50 laiškų per dieną vienam adresui.
         </p>
         <div className="mt-4 space-y-3">
           <Field label="El. pašto adresas">
