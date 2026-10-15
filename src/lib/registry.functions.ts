@@ -183,7 +183,7 @@ export const listRegistry = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const [clientsRes, teamRes, mail] = await Promise.all([
-      context.supabase.from("clients").select("*").order("created_at", { ascending: false }).range(0, 9999),
+      fetchAllClients<ClientRow>(context.supabase as never, "*"),
       context.supabase.from("profiles").select("id, full_name, email"),
       loadMailStats(context.supabase),
     ]);
@@ -371,10 +371,13 @@ export const importClientsCsv = createServerFn({ method: "POST" })
     z.object({ rows: z.array(importRowSchema).max(10000) }).parse(input),
   )
   .handler(async ({ data, context }) => {
-    const { data: existing, error } = await context.supabase
-      .from("clients")
-      .select("id, name, city, contact_email, website_url")
-      .range(0, 9999);
+    const { data: existing, error } = await fetchAllClients<{
+      id: string;
+      name: string;
+      city: string | null;
+      contact_email: string | null;
+      website_url: string | null;
+    }>(context.supabase as never, "id, name, city, contact_email, website_url");
     if (error) throw new Error("Nepavyko patikrinti esamų objektų");
 
     const byDomain = new Map<string, string>();
@@ -399,6 +402,7 @@ export const importClientsCsv = createServerFn({ method: "POST" })
     let created = 0;
     let skipped = 0;
     const errors: string[] = [];
+    const pending: { index: number; payload: Record<string, unknown> }[] = [];
 
     for (const [index, row] of data.rows.entries()) {
       const d = domainOf(row.website_url ?? null);
@@ -408,7 +412,6 @@ export const importClientsCsv = createServerFn({ method: "POST" })
         skipped += 1;
         continue;
       }
-
       const payload = {
         name: row.name.trim(),
         units_count:
@@ -427,20 +430,50 @@ export const importClientsCsv = createServerFn({ method: "POST" })
         notes: row.notes ?? null,
         status: "lead" as ClientStatus,
       };
+      // reserve keys so duplicates inside the same file are skipped
+      if (d) byDomain.set(d, "pending");
+      if (e) byEmail.set(e, "pending");
+      byNameCity.set(nc, "pending");
+      pending.push({ index, payload });
+    }
 
-      const { data: inserted, error: insertError } = await context.supabase
+    const BATCH = 300;
+    for (let i = 0; i < pending.length; i += BATCH) {
+      const chunk = pending.slice(i, i + BATCH);
+      const { error: batchError } = await context.supabase
         .from("clients")
-        .insert(payload)
-        .select("id, name, city, contact_email, website_url")
-        .single();
-
-      if (insertError || !inserted) {
-        errors.push(`${index + 1} eilutė: ${insertError?.message ?? "nepavyko įrašyti"}`);
+        .insert(chunk.map((c) => c.payload) as never);
+      if (!batchError) {
+        created += chunk.length;
         continue;
       }
-      created += 1;
-      register(inserted);
+      // fallback: insert one by one to isolate the bad rows
+      for (const c of chunk) {
+        const { error: oneError } = await context.supabase.from("clients").insert(c.payload as never);
+        if (oneError) errors.push(`${c.index + 1} eilutė: ${oneError.message}`);
+        else created += 1;
+      }
     }
 
     return { created, skipped, errors: errors.slice(0, 20), errorCount: errors.length };
   });
+
+async function fetchAllClients<T>(
+  supabase: { from: (t: "clients") => any },
+  columns: string,
+): Promise<{ data: T[]; error: { message: string } | null }> {
+  const out: T[] = [];
+  const page = 1000;
+  for (let from = 0; ; from += page) {
+    const { data, error } = await supabase
+      .from("clients")
+      .select(columns)
+      .order("created_at", { ascending: false })
+      .order("id", { ascending: true })
+      .range(from, from + page - 1);
+    if (error) return { data: out, error };
+    out.push(...((data ?? []) as T[]));
+    if (!data || data.length < page) break;
+  }
+  return { data: out, error: null };
+}
