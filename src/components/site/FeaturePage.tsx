@@ -6,6 +6,7 @@ import { Header } from "./Header";
 import { CtaLink, Eyebrow, Reveal, Signature, SignatureUnderlined } from "./primitives";
 import { featureCopy, featureHref, featureSlugByKey, type Feature } from "@/content/features";
 import { href, type Lang } from "@/lib/i18n";
+import { demoCtaHref } from "@/lib/trial";
 
 function altFeatureHref(lang: Lang, feature: Feature): string {
   const other: Lang = lang === "en" ? "lt" : "en";
@@ -15,7 +16,7 @@ function altFeatureHref(lang: Lang, feature: Feature): string {
 
 export function FeatureDetailPage({ lang, feature }: { lang: Lang; feature: Feature }) {
   const fc = featureCopy[lang];
-  const demoHref = `${href(lang)}#demo`;
+  const demoHref = demoCtaHref(lang);
 
   return (
     <div className="min-h-screen bg-cream">

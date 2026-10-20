@@ -13,7 +13,7 @@ export const featuresEn: FeatureCopy = {
   back: "All features",
   ctaTitle: "Curious how this would work at your property?",
   ctaBody: "One 15-minute conversation, and an honest answer either way.",
-  ctaButton: "Request a demo",
+  ctaButton: "2-months free trial",
   keywordsTitle: "Related topics",
   items: [
     {

@@ -1,7 +1,8 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { href, t, type Lang } from "@/lib/i18n";
+import { t, type Lang } from "@/lib/i18n";
+import { demoCtaHref } from "@/lib/trial";
 
 export function MobileCtaBar({ lang }: { lang: Lang }) {
   const c = t(lang);
@@ -26,7 +27,7 @@ export function MobileCtaBar({ lang }: { lang: Lang }) {
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-cream/15 bg-teal-900/95 px-4 py-3 backdrop-blur-md lg:hidden">
       <div className="flex items-center gap-3">
         <a
-          href={`${href(lang)}#demo`}
+          href={demoCtaHref(lang)}
           className="flex-1 rounded-full bg-cream px-5 py-2.5 text-center text-[0.9rem] font-medium text-teal-900"
         >
           {c.mobileCta.text}

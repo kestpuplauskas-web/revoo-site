@@ -23,12 +23,13 @@ import {
 import { useSlotOverrides } from "@/hooks/useSlotOverrides";
 import { useCopyOverrides } from "@/hooks/useCopyOverrides";
 import { href, t, type Lang } from "@/lib/i18n";
+import { demoCtaHref } from "@/lib/trial";
 
 export function HomePage({ lang }: { lang: Lang }) {
   const c = useCopyOverrides(lang);
   const slots = useSlotOverrides();
   const home = href(lang);
-  const demoHref = `${home}#demo`;
+  const demoHref = demoCtaHref(lang);
   const altHref = lang === "en" ? "/lt/" : "/";
 
   return (

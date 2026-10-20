@@ -1,0 +1,2 @@
+- [ ] Replace English demo invitations with the two-month trial and direct registration links.
+- [ ] Verify website links and the destination registration page.
