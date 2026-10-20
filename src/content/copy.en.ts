@@ -7,7 +7,7 @@ export const en: Copy = {
     who: "Who it's for",
     blog: "Blog",
     faq: "FAQ",
-    cta: "Request a demo",
+    cta: "2-months free trial",
     langLabel: "Language",
     skip: "Skip to content",
     home: "Home",
@@ -19,7 +19,7 @@ export const en: Copy = {
     eyebrow: "PROPERTY MANAGEMENT SYSTEM WITH YOUR OWN BOOKING WEBSITE\n\n",
     h1: "Software that *adapts* to your business — not the other way around.",
     sub: "Hotels, cabins, guesthouses and apartments each run differently — and none of them run the way the software they were sold assumes. Revoo is a platform we shape to your operation, with a booking website that is genuinely yours.",
-    primary: "Request a demo",
+    primary: "2-months free trial",
     secondary: "See how it works",
     status: "Write to us, and we’ll give you access to try it out today.",
   },
@@ -154,7 +154,7 @@ export const en: Copy = {
   },
   ctaBand: {
     text: "Curious whether this fits your property? One 15-minute conversation will tell you.",
-    button: "Request a demo",
+    button: "2-months free trial",
   },
   pricing: {
     eyebrow: "PRICING",
@@ -180,7 +180,7 @@ export const en: Copy = {
     perUnit: "per unit per month",
     minNote: "The minimum monthly price applies.",
     maxNote: "The maximum monthly price is reached — the total no longer increases with more units.",
-    cta: "Request a demo",
+    cta: "2-months free trial",
   },
   included: {
     eyebrow: "What you get",
@@ -257,7 +257,7 @@ export const en: Copy = {
         body: "Your existing bookings move across. We train reception and housekeeping teams, so everyone knows how to use the system from day one.",
       },
     ],
-    cta: "Request a demo",
+    cta: "2-months free trial",
   },
   demo: {
     eyebrow: "Talk to us",
@@ -303,7 +303,7 @@ export const en: Copy = {
       notes: "Anything else we should know?",
       optional: "optional",
       required: "required",
-      submit: "Request a demo",
+      submit: "2-months free trial",
       fineprint: "We reply within one working day. No automated emails - we reply personally.",
       select: "Select",
     },
@@ -368,7 +368,7 @@ export const en: Copy = {
       "This article is general information, not tax or legal advice. Check specifics with your accountant or your national tax authority.",
     ctaTitle: "Wondering whether Revoo fits your property?",
     ctaBody: "One 15-minute conversation, and an honest answer either way.",
-    ctaButton: "Request a demo",
+    ctaButton: "2-months free trial",
   },
   contacts: {
     eyebrow: "Contacts",
@@ -397,7 +397,7 @@ export const en: Copy = {
     },
   },
   mobileCta: {
-    text: "Request a demo",
+    text: "2-months free trial",
     dismiss: "Hide this bar",
   },
 };

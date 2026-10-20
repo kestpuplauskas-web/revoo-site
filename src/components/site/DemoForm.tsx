@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { submitLead } from "@/lib/leads.functions";
 import { t, type Lang } from "@/lib/i18n";
 import type { Copy } from "@/content/copy.types";
+import { CtaLink } from "./primitives";
+import { TRIAL_REGISTRATION_URL } from "@/lib/trial";
 
 export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
   const c = copy ?? t(lang);
@@ -13,6 +15,14 @@ export function DemoForm({ lang, copy }: { lang: Lang; copy?: Copy }) {
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const send = useServerFn(submitLead);
+
+  if (lang === "en") {
+    return (
+      <div className="flex items-center justify-center py-10">
+        <CtaLink href={TRIAL_REGISTRATION_URL}>{f.submit}</CtaLink>
+      </div>
+    );
+  }
 
   if (sent) {
     return (

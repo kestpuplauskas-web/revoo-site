@@ -1,4 +1,5 @@
 import { href, t, type Lang } from "@/lib/i18n";
+import { demoCtaHref } from "@/lib/trial";
 
 export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
   const c = t(lang);
@@ -10,7 +11,7 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
     { label: c.nav.who, href: `${home}#fit` },
     { label: c.nav.blog, href: href(lang, "blog") },
     { label: c.nav.faq, href: `${home}#faq` },
-    { label: c.nav.cta, href: `${home}#demo` },
+    { label: c.nav.cta, href: demoCtaHref(lang) },
   ];
 
   return (

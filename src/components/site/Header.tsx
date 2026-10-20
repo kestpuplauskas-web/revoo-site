@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CtaLink } from "./primitives";
 import { href, t, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { demoCtaHref } from "@/lib/trial";
 
 export function Header({
   lang,
@@ -103,7 +104,7 @@ export function Header({
               </>
             )}
           </div>
-          <CtaLink href={`${home}#demo`} tone={scrolled ? "solid" : "cream"} size="sm">
+          <CtaLink href={demoCtaHref(lang)} tone={scrolled ? "solid" : "cream"} size="sm">
             {c.nav.cta}
           </CtaLink>
         </div>

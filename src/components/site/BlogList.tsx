@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { CtaLink, Eyebrow, Reveal, Signature } from "./primitives";
 import type { PostListItem } from "@/content/posts";
 import { href, t, type Lang } from "@/lib/i18n";
+import { demoCtaHref } from "@/lib/trial";
 
 export function BlogList({ lang, items }: { lang: Lang; items: PostListItem[] }) {
   const c = t(lang);
@@ -58,7 +59,7 @@ export function BlogCta({ lang }: { lang: Lang }) {
       <h2 className="text-cream">{c.blog.ctaTitle}</h2>
       <p className="measure mt-4 text-cream/85">{c.blog.ctaBody}</p>
       <div className="mt-7">
-        <CtaLink href={`${href(lang)}#demo`} tone="cream">
+        <CtaLink href={demoCtaHref(lang)} tone="cream">
           {c.blog.ctaButton}
         </CtaLink>
       </div>
