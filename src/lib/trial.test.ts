@@ -1,11 +1,12 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import { strictEqual } from "node:assert";
 import { demoCtaHref } from "./trial";
 
 describe("trial registration destination", () => {
   test("English trial opens the requested hotel registration address", () => {
-    expect(demoCtaHref("en")).toBe("https://app.revoostay.com/register");
+    strictEqual(demoCtaHref("en"), "https://app.revoostay.com/register");
   });
   test("Lithuanian contact flow remains independent", () => {
-    expect(demoCtaHref("lt")).toBe("/lt/#demo");
+    strictEqual(demoCtaHref("lt"), "/lt/#demo");
   });
 });

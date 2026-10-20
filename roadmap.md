@@ -1,2 +1,3 @@
-- [ ] Replace English demo invitations with the two-month trial and direct registration links.
-- [ ] Verify website links and the destination registration page.
+- [x] Replace English demo invitations with the two-month trial and direct registration links.
+- [x] Verify website links and the destination registration page.
+- [ ] Align the destination app's trial duration with two months; blocked because this chat cannot modify the other project (its page currently advertises 14 days).
