@@ -12,7 +12,7 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
     { label: c.nav.blog, href: href(lang, "blog") },
     { label: c.nav.faq, href: `${home}#faq` },
     { label: c.nav.cta, href: demoCtaHref(lang) },
-  ];
+  ].filter((link) => lang === "lt" || ![`${home}#approach`, `${home}#fit`].includes(link.href));
 
   return (
     <footer className="bg-teal-900 text-cream/80">

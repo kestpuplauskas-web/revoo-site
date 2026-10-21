@@ -16,12 +16,12 @@ export const en: Copy = {
     contactPhone: "+370 (652) 87 044",
   },
   hero: {
-    eyebrow: "PROPERTY MANAGEMENT SYSTEM WITH YOUR OWN BOOKING WEBSITE\n\n",
-    h1: "Software that *adapts* to your business — not the other way around.",
-    sub: "Hotels, cabins, guesthouses and apartments each run differently — and none of them run the way the software they were sold assumes. Revoo is a platform we shape to your operation, with a booking website that is genuinely yours.",
+    eyebrow: "HOTEL MANAGEMENT + YOUR OWN BOOKING WEBSITE",
+    h1: "Revoo. Your property, *under control*.",
+    sub: "Bookings, housekeeping and invoices in one place — with your own booking website. Create your hotel account and start working, without waiting for a sales call.",
     primary: "2-months free trial",
     secondary: "See how it works",
-    status: "Write to us, and we’ll give you access to try it out today.",
+    status: "2 months free · No credit card needed · Register online",
   },
   carousel: {
     label: "Product screens",
@@ -47,7 +47,7 @@ export const en: Copy = {
   },
   features: {
     eyebrow: "Everything in one place",
-    h2: "Full property management — *under your* control",
+    h2: "Less admin. More time for your *guests*.",
     items: [
       {
         title: "Booking system",
@@ -59,7 +59,7 @@ export const en: Copy = {
       },
       {
         title: "Revenue optimization",
-        body: "Increase revenue: set the optimal pricing for every room.",
+        body: "Manage room rates and stay-length pricing in one place.",
       },
       {
         title: "Housekeeping module",
@@ -101,7 +101,7 @@ export const en: Copy = {
   morning: {
     eyebrow: "HOUSEKEEPING",
     h2: "Your team knows what to do before you *ask*",
-    lede: "Revoo reads today's bookings and works out what each unit actually needs, then sorts the list by urgency. Nobody briefs anybody.",
+    lede: "Today’s bookings become a clear housekeeping list, sorted by urgency. Your team sees what each room needs without chasing messages.",
     points: [
       "Same-day turnovers come first — they have the tightest time window.",
       "A unit that didn't get finished does not quietly vanish from tomorrow's list.",
@@ -124,8 +124,8 @@ export const en: Copy = {
   channel: {
     eyebrow: "Your booking channel",
     h2: "A booking website, not a booking *widget*",
-    lede: "Most systems give you a booking box to embed in whatever website you already have. It works, but it rarely looks like it belongs there — different typography, different spacing, sometimes a different language. Revoo works the other way around: your website is the booking system — your design, your domain, your words, talking to the same engine your admin panel uses.",
-    note: "Under the hood this is a documented REST API with its own keys, origin allowlist and rate limits — so a mobile app, a partner integration or a second booking channel later is a configuration, not a rebuild.",
+    lede: "Give guests a direct way to book with you. Your booking website and control panel use the same availability, so your reservations stay in one place. A branded website or a connection to your existing site can be discussed with our team.",
+    note: "Already have a website or need a specific connection? Our team can help scope the right setup for your property.",
   },
   segments: {
     eyebrow: "Built for your kind of property",
@@ -153,18 +153,18 @@ export const en: Copy = {
     ],
   },
   ctaBand: {
-    text: "Curious whether this fits your property? One 15-minute conversation will tell you.",
+    text: "Your next booking. Your next invoice. Try them in Revoo, not in another spreadsheet.",
     button: "2-months free trial",
   },
   pricing: {
     eyebrow: "PRICING",
-    h2: "You pay for *units*, not for modules",
-    lede: "One monthly subscription for the whole system. The price depends only on how many rooms or apartments you have. No per-seat fees, no licence costs, no server rental.",
+    h2: "Start free. Decide after you’ve *tried it*.",
+    lede: "Your first two months are free. No credit card and no enquiry form before you start. Explore the system with your own property before deciding whether it fits your business. Contact us if you want to discuss ongoing pricing.",
     badges: [
-      "From €79 per month",
-      "No upfront licence fees",
-      "No long-term contract",
-      "No commission on bookings",
+      "2 months free",
+      "No credit card needed",
+      "Your own booking website",
+      "Bookings, housekeeping & invoices",
     ],
     step1: "1. TYPE OF RENTAL",
     shortTitle: "Short-term rental",
@@ -184,8 +184,8 @@ export const en: Copy = {
   },
   included: {
     eyebrow: "What you get",
-    h2: "What's in the platform, and what we *build* for you",
-    lede: "We would rather be precise than impressive. Here is the honest split.",
+    h2: "Ready to work. Room to make it *yours*.",
+    lede: "Start with everyday property management. Speak to our team when you need something specific to your business.",
     left: {
       title: "In the platform from day one",
       sub: "Working today, in production.",
@@ -204,7 +204,7 @@ export const en: Copy = {
     },
     right: {
       title: "Built into your implementation",
-      sub: "Scoped in the first conversation, built for your property.",
+      sub: "Optional support for your property’s specific needs.",
       items: [
         "Your booking website — designed for your property, on your domain",
         "Payments — we connect the provider you actually use",
@@ -241,32 +241,32 @@ export const en: Copy = {
   },
   start: {
     eyebrow: "Getting started",
-    h2: "How it actually *starts*",
-    lede: "No credit card form, and no 14-day trial you would abandon on day three.",
+    h2: "From registration to your first *booking*.",
+    lede: "No sales call to unlock access. Create your account and go straight to your own control panel.",
     steps: [
       {
-        title: "A conversation",
-        body: "About 15 minutes. How your property runs, what you sell alongside the room, what breaks today, and what your invoices have to look like. We tell you honestly whether we are a fit.",
+        title: "Create your account",
+        body: "Enter your details and hotel name. Choose the address for your booking website. Your two-month trial starts without a credit card.",
       },
       {
-        title: "Implementation",
-        body: "We set up your units, rates, extras and policies, build your booking website, connect your payment provider and adapt invoicing to your country. You review it as it takes shape.",
+        title: "Make it your property",
+        body: "Open your control panel and add your rooms, rates and property details. Keep your day-to-day work in one place.",
       },
       {
-        title: "Launch",
-        body: "Your existing bookings move across. We train reception and housekeeping teams, so everyone knows how to use the system from day one.",
+        title: "Try your everyday work",
+        body: "Create a booking, explore housekeeping and generate an invoice. Need help or a specific integration? Our team is a message away.",
       },
     ],
     cta: "2-months free trial",
   },
   demo: {
     eyebrow: "Talk to us",
-    h2: "Let's look at your *property*",
-    lede: "Tell us a little about it and we will come back within one working day — with either a demo time or an honest \u201Cwe are not the right fit\u201D.",
+    h2: "Ready to run your property with *Revoo*?",
+    lede: "Create your account and start your two-month free trial. Your own control panel and booking website — no sales appointment required.",
     facts: [
       "hello@revoostay.com",
       "Working in English and Lithuanian",
-      "Based in Lithuania · onboarding properties in Iceland",
+      "Based in Lithuania · working with properties internationally",
     ],
     form: {
       name: "Name",
@@ -317,8 +317,8 @@ export const en: Copy = {
     h2: "The things people actually *ask*",
     items: [
       {
-        q: "What does it cost?",
-        a: "There is a one-off implementation fee and a monthly subscription. The implementation fee depends on scope — how many units, what you sell alongside the room, whether you need a new website, which payment provider, which country's invoicing. We quote after the first conversation rather than before it, because a number quoted blind would be wrong in one direction or the other.",
+        q: "Is the trial really free?",
+        a: "Yes. Your first two months are free, and registration does not require a credit card. You can start online without booking a call. For ongoing pricing or custom services, contact hello@revoostay.com.",
       },
       {
         q: "Do you handle payments?",
@@ -333,8 +333,8 @@ export const en: Copy = {
         a: "Yes — it can connect to Revoo through the public API. But if your current site cannot take a booking without sending the guest somewhere else, replacing it is usually the single change that pays for the whole project.",
       },
       {
-        q: "Why isn't there a sign-up button?",
-        a: "Because every property we have set up has needed something the previous one did not. A self-service sign-up would hand you an empty dashboard and a settings page, and you would be doing the implementation yourself. We would rather do it properly.",
+        q: "Can I start without talking to sales?",
+        a: "Yes. Every free-trial button takes you straight to registration. Create your hotel account and enter your own control panel. A conversation with our team is optional, not a requirement for access.",
       },
       {
         q: "What happens if I decide to move to another solution?",
@@ -342,7 +342,7 @@ export const en: Copy = {
       },
       {
         q: "Where are you based?",
-        a: "Lithuania. The platform runs in production today, and we are onboarding properties in Iceland. We work in English and Lithuanian.",
+        a: "Our team is based in Lithuania. We work in English and Lithuanian, and you can contact us at hello@revoostay.com for help with your property.",
       },
     ],
   },
@@ -366,8 +366,8 @@ export const en: Copy = {
       "Practical articles for independent hotels, cabins and guesthouses: choosing a property management system, invoicing, housekeeping and direct bookings.",
     disclaimer:
       "This article is general information, not tax or legal advice. Check specifics with your accountant or your national tax authority.",
-    ctaTitle: "Wondering whether Revoo fits your property?",
-    ctaBody: "One 15-minute conversation, and an honest answer either way.",
+    ctaTitle: "Try Revoo with your own property",
+    ctaBody: "Two months free, no credit card needed. Create your account and start online.",
     ctaButton: "2-months free trial",
   },
   contacts: {
@@ -387,7 +387,7 @@ export const en: Copy = {
   },
   media: {
     missing: "Media file not available",
-    browserUrl: "app.revoo.site",
+    browserUrl: "app.revoostay.com",
     alt: {
       calendar: "Revoo booking calendar: units in rows, days in columns, bookings dragged between units",
       housekeepingApp: "Revoo housekeeping app on a phone, showing today's rooms sorted by urgency",
