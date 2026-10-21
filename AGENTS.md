@@ -35,3 +35,5 @@ Administravimo navigaciją grupuok į „Darbo sritis“, „Valdymas“ ir „N
 
 Kampanijų laiškai siunčiami per Amazon SES (SigV4, `aws4fetch`) iš serverio; gavėjų eilė saugoma duomenų bazėje, o minutinis siuntimo ciklas suplanuojamas tik kol yra vykdoma kampanija, nes taip paskirstomas siuntimas per dieną be nuolatinio apkrovimo.
 Siuntėjai rotuojami pagal mažiausią dienos limito išnaudojimą, kad nė vienas adresas neviršytų savo saugaus limito.
+
+- Campaign audience selection uses a shared helper for preview and creation, with database-side Lithuanian date bounds and stable paginated reads; this prevents the Data API row ceiling from hiding contacts, unsubscribes, or campaign statistics.

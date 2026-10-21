@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Database } from "@/integrations/supabase/types";
+import { fetchAllCampaignRows, loadCampaignAudience as audience } from "./campaigns-audience";
 
 export type CampaignRow = Database["public"]["Tables"]["email_campaigns"]["Row"];
 export type SenderRow = Database["public"]["Tables"]["email_senders"]["Row"];
@@ -22,51 +23,20 @@ async function assertAdmin(supabase: any, userId: string) {
   if (!data) throw new Error("Neturite teisių");
 }
 
-/** Kontaktų sukurimo data taip, kaip rodo registro lentelė (Lietuvos laiku). */
-const VILNIUS_DAY = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Vilnius" });
-
-async function audience(supabase: any, f: AudienceFilters) {
-  let q = supabase
-    .from("clients")
-    .select("id, name, contact_name, contact_email, country, status, created_at")
-    .not("contact_email", "is", null)
-    .limit(20000);
-  if (f.statuses.length) q = q.in("status", f.statuses);
-  if (f.countries.length) q = q.in("country", f.countries);
-  if (f.minUnits !== null) q = q.gte("units_count", f.minUnits);
-  if (f.maxUnits !== null) q = q.lte("units_count", f.maxUnits);
-  const { data, error } = await q;
-  if (error) throw new Error("Nepavyko atrinkti klientų");
-  const rows = f.created
-    ? (data ?? []).filter((c: { created_at: string }) => VILNIUS_DAY.format(new Date(c.created_at)) === f.created)
-    : (data ?? []);
-  const { data: unsubs } = await supabase.from("email_unsubscribes").select("email");
-  const blocked = new Set((unsubs ?? []).map((u: { email: string }) => u.email));
-  const seen = new Set<string>();
-  const out: { id: string; name: string; email: string; contact_name: string | null }[] = [];
-  for (const c of rows) {
-    const email = String(c.contact_email).trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || seen.has(email) || blocked.has(email)) continue;
-    seen.add(email);
-    out.push({ id: c.id, name: c.name, email, contact_name: c.contact_name });
-  }
-  return out;
-}
-
 export const getCampaignOverview = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const sb = context.supabase;
     await assertAdmin(sb, context.userId);
     const [camps, senders, recips, countries, unsubs] = await Promise.all([
-      sb.from("email_campaigns").select("*").order("created_at", { ascending: false }),
-      sb.from("email_senders").select("*").order("email"),
-      sb.from("campaign_recipients").select("campaign_id, status").limit(100000),
-      sb.from("clients").select("country").not("country", "is", null),
+      fetchAllCampaignRows((from, to) => sb.from("email_campaigns").select("*").order("created_at", { ascending: false }).order("id").range(from, to), "Nepavyko gauti kampanijų"),
+      fetchAllCampaignRows((from, to) => sb.from("email_senders").select("*").order("email").range(from, to), "Nepavyko gauti siuntėjų"),
+      fetchAllCampaignRows((from, to) => sb.from("campaign_recipients").select("campaign_id, status").order("id").range(from, to), "Nepavyko gauti kampanijų rezultatų"),
+      fetchAllCampaignRows((from, to) => sb.from("clients").select("country").not("country", "is", null).order("id").range(from, to), "Nepavyko gauti šalių"),
       sb.from("email_unsubscribes").select("email, reason, created_at").order("created_at", { ascending: false }).limit(500),
     ]);
     const stats: Record<string, CampaignStats> = {};
-    for (const r of recips.data ?? []) {
+    for (const r of recips) {
       const s = (stats[r.campaign_id] ??= { total: 0, pending: 0, sent: 0, failed: 0, unsubscribed: 0 });
       s.total++;
       if (r.status === "pending" || r.status === "sending") s.pending++;
@@ -76,10 +46,10 @@ export const getCampaignOverview = createServerFn({ method: "GET" })
     }
     const { sesConfig } = await import("./campaigns.server");
     return {
-      campaigns: (camps.data ?? []) as CampaignRow[],
-      senders: (senders.data ?? []) as SenderRow[],
+      campaigns: camps as CampaignRow[],
+      senders: senders as SenderRow[],
       stats,
-      countries: [...new Set((countries.data ?? []).map((c) => c.country as string))].sort(),
+      countries: [...new Set(countries.map((c) => c.country as string))].sort(),
       unsubscribes: unsubs.data ?? [],
       sesReady: !!sesConfig(),
       sesRegion: process.env["AWS_SES_REGION"] || "eu-central-1",
