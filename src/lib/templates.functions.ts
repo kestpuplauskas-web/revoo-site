@@ -62,7 +62,7 @@ const templateSchema = z.object({
     .optional()
     .nullable()
     .transform((v) => (v && v.length > 0 ? v : null)),
-  body: z.string().trim().min(1).max(8000),
+  body: z.string().trim().min(1).max(100000),
   is_active: z.boolean(),
 });
 

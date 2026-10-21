@@ -1,3 +1,5 @@
+import { RichEmailEditor } from "@/components/admin/RichEmailEditor";
+import { isHtml, sanitizeEmailHtml } from "@/lib/email-html";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -242,9 +244,14 @@ function TemplatesPage() {
                 Redaguoti
               </button>
             </div>
-            <p className="rounded-2xl bg-cream/70 p-4 text-sm whitespace-pre-wrap text-ink">
-              {current.body}
-            </p>
+            {current.kind === "email" && isHtml(current.body) ? (
+              <div
+                className="rounded-2xl bg-cream/70 p-4 text-sm text-ink [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-6"
+                dangerouslySetInnerHTML={{ __html: sanitizeEmailHtml(current.body) }}
+              />
+            ) : (
+              <p className="rounded-2xl bg-cream/70 p-4 text-sm whitespace-pre-wrap text-ink">{current.body}</p>
+            )}
           </section>
         ) : mode.view === "edit" ? (
           <section className={`${CARD} mt-6 space-y-4 p-6`}>
@@ -270,12 +277,16 @@ function TemplatesPage() {
               </Field>
             ) : null}
             <Field label={tab === "email" ? "Tekstas" : "Skriptas"}>
-              <textarea
-                className={`${INPUT} min-h-80 font-mono`}
-                maxLength={8000}
-                value={form.body}
-                onChange={(e) => setForm({ ...form, body: e.target.value })}
-              />
+{tab === "email" ? (
+                <RichEmailEditor value={form.body} onChange={(body) => setForm((f) => ({ ...f, body }))} minHeight="min-h-80" ariaLabel="Tekstas" />
+              ) : (
+                <textarea
+                  className={`${INPUT} min-h-80 font-mono`}
+                  maxLength={8000}
+                  value={form.body}
+                  onChange={(e) => setForm({ ...form, body: e.target.value })}
+                />
+              )}
             </Field>
             <p className="text-xs text-ink-soft">
               Kintamieji: {"{{vardas}}"} · {"{{objektas}}"} · {"{{miestas}}"} · {"{{tipas}}"} ·{" "}

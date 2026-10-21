@@ -69,7 +69,7 @@ const createSchema = z.object({
   name: z.string().trim().min(1).max(150),
   template_id: z.string().uuid().nullable(),
   subject: z.string().trim().min(1).max(200),
-  body: z.string().trim().min(1).max(10000),
+  body: z.string().trim().min(1).max(100000),
   filters: filtersSchema,
   exclude_ids: z.array(z.string().uuid()).max(20000).default([]),
   daily_limit: z.number().int().min(1).max(20000),
@@ -190,7 +190,7 @@ export const sendTestEmail = createServerFn({ method: "POST" })
         sender_id: z.string().uuid(),
         to: z.string().trim().email(),
         subject: z.string().min(1).max(200),
-        body: z.string().min(1).max(10000),
+        body: z.string().min(1).max(100000),
       })
       .parse(i),
   )

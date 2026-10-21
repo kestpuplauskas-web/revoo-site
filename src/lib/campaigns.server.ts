@@ -1,3 +1,4 @@
+import { htmlToText, toEmailHtml } from "./email-html";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -39,13 +40,9 @@ const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export function buildEmail(body: string, unsubscribeUrl: string) {
-  const html = `<!doctype html><html><body style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1f2a2a">${esc(
-    body,
-  )
-    .split(/\n{2,}/)
-    .map((p) => `<p style="margin:0 0 14px">${p.replace(/\n/g, "<br>")}</p>`)
-    .join("")}<p style="margin-top:28px;font-size:12px;color:#7a8585">Nenorite gauti laiškų? <a href="${unsubscribeUrl}" style="color:#7a8585">Atsisakyti</a></p></body></html>`;
-  const text = `${body}\n\n—\nAtsisakyti: ${unsubscribeUrl}`;
+  const content = toEmailHtml(body);
+  const html = `<!doctype html><html><head><meta charset="utf-8"><style>p{margin:0 0 14px}ul,ol{margin:0 0 14px;padding-left:24px}</style></head><body style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#1f2a2a">${content}<p style="margin-top:28px;font-size:12px;color:#7a8585">Nenorite gauti laiškų? <a href="${esc(unsubscribeUrl)}" style="color:#7a8585">Atsisakyti</a></p></body></html>`;
+  const text = `${htmlToText(content)}\n\n—\nAtsisakyti: ${unsubscribeUrl}`;
   return { html, text };
 }
 
