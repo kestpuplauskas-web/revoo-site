@@ -11,6 +11,7 @@ import { HeroCarousel } from "../HeroCarousel";
 import { MobileCtaBar } from "./MobileCtaBar";
 import { PricingCalculator } from "./PricingCalculator";
 import { SegmentsCarousel } from "./SegmentsCarousel";
+import { TrialHero } from "./TrialHero";
 import {
   BrowserFrame,
   CtaLink,
@@ -33,18 +34,18 @@ export function HomePage({ lang }: { lang: Lang }) {
   const altHref = lang === "en" ? "/lt/" : "/";
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className={`min-h-screen bg-cream ${lang === "en" ? "trial-page" : ""}`}>
       <a
         href="#hero"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-cream focus:px-4 focus:py-2"
       >
         {c.nav.skip}
       </a>
-      <Header lang={lang} altHref={altHref} />
+      <Header lang={lang} altHref={altHref} variant={lang === "en" ? "solid" : "overlay"} />
 
       <main id="hero">
         {/* 1. Hero */}
-        <section className="grid min-h-[88vh] grid-cols-1 lg:grid-cols-[55fr_45fr]">
+        {lang === "en" ? <TrialHero copy={c} image={slots["booking-calendar"]} /> : <section className="grid min-h-[88vh] grid-cols-1 lg:grid-cols-[55fr_45fr]">
           <div className="flex flex-col justify-center bg-teal-700 px-6 pb-16 pt-28 sm:px-10 lg:px-14 lg:py-32">
             <div className="mx-auto w-full max-w-[640px]">
               <p className="eyebrow mb-5 whitespace-pre-wrap text-amber-light">{c.hero.eyebrow}</p>
@@ -66,7 +67,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                   {c.hero.secondary}
                 </CtaLink>
               </div>
-              <p className="mt-10 flex items-center gap-3 whitespace-nowrap text-[0.78rem] text-cream/75">
+              <p className="mt-10 flex items-center gap-3 text-[0.78rem] text-cream/75">
                 <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-100 opacity-70" />
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-teal-100" />
@@ -79,7 +80,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             <HeroCarousel lang={lang} slots={slots} />
           </div>
 
-        </section>
+        </section>}
 
         {/* 1b. Features */}
         <section className="section-y bg-teal-900">
@@ -99,7 +100,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                   <Reveal key={item.title} delay={50 * (i + 1)}>
                     <Link
                       to={target ? featureHref(lang, target.slug) : featureHref(lang)}
-                      className={`card-lift relative flex h-full flex-col gap-4 rounded-2xl border p-7 ${
+                  className={`card-lift relative flex h-full flex-col gap-4 rounded-lg border p-7 ${
                         highlight
                           ? "border-amber/60 bg-amber/10"
                           : "border-cream/15 bg-teal-800"
@@ -127,7 +128,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 2b. Pricing calculator */}
-        <section id="pricing" className="section-y bg-teal-900">
+        <section id="pricing" className={`section-y bg-teal-900 ${lang === "en" ? "trial-offer" : ""}`}>
           <div className="container-page">
             <Reveal className="text-cream">
               <Eyebrow tone="dark">{c.pricing.eyebrow}</Eyebrow>
@@ -135,23 +136,23 @@ export function HomePage({ lang }: { lang: Lang }) {
                 <SignatureUnderlined text={c.pricing.h2} />
               </h2>
               <p className="measure mt-5 text-cream/80">{c.pricing.lede}</p>
-              <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+              {lang === "lt" && <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
                 {c.pricing.badges.map((badge) => (
                   <li key={badge} className="flex items-center gap-2 text-[0.95rem] text-cream/90">
                     <Check aria-hidden="true" className="h-4 w-4 shrink-0 text-amber" />
                     <span>{badge}</span>
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </Reveal>
             <Reveal delay={80} className="mt-12">
-              <PricingCalculator lang={lang} copy={c} ctaHref={demoHref} />
+              {lang === "en" ? <CtaLink href={demoHref} tone="cream">{c.pricing.cta}</CtaLink> : <PricingCalculator lang={lang} copy={c} ctaHref={demoHref} />}
             </Reveal>
           </div>
         </section>
 
         {/* 2. Approach */}
-        <section id="approach" className="section-y bg-cream">
+        {lang === "lt" && <section id="approach" className="section-y bg-cream">
           <div className="container-page">
             <Reveal>
               <SectionHead
@@ -170,7 +171,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </Reveal>
               <Reveal delay={120}>
                 <article className="card-lift h-full rounded-2xl bg-teal-700 p-8 text-cream">
-                  <h3>{c.approach.cardB.title}</h3>
+                  <h3 className="text-cream">{c.approach.cardB.title}</h3>
                   <p className="mt-4 text-cream/85">{c.approach.cardB.body}</p>
                 </article>
               </Reveal>
@@ -178,6 +179,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
+        }
         {/* 3. The week */}
         <section id="product" className="section-y bg-white">
           <div className="container-page grid items-center gap-14 lg:grid-cols-2">
@@ -218,9 +220,9 @@ export function HomePage({ lang }: { lang: Lang }) {
               />
               <PhoneFrame className="relative w-[250px]">
                 <img
-                  src={slots["housekeeping-phone"].posterUrl!}
-                  width={slots["housekeeping-phone"].posterWidth!}
-                  height={slots["housekeeping-phone"].posterHeight!}
+                  src={slots["housekeeping-phone"].posterUrl ?? slots["housekeeping-phone"].url}
+                  width={slots["housekeeping-phone"].posterWidth ?? slots["housekeeping-phone"].width}
+                  height={slots["housekeeping-phone"].posterHeight ?? slots["housekeeping-phone"].height}
                   alt={c.media.alt.housekeepingApp}
                   loading="lazy"
                   className="block h-auto w-full"
@@ -365,7 +367,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 10. Fit */}
-        <section id="fit" className="section-y bg-cream">
+        {lang === "lt" && <section id="fit" className="section-y bg-cream">
           <div className="container-page">
             <Reveal>
               <Eyebrow>{c.fit.eyebrow}</Eyebrow>
@@ -405,6 +407,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
+        }
         {/* 11. Getting started */}
         <section className="section-y bg-teal-900">
           <div className="container-page">
@@ -484,7 +487,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 12. Demo */}
-        <section id="demo" className="section-y bg-cream-deep">
+        {lang === "lt" && <section id="demo" className="section-y bg-cream-deep">
           <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.1fr]">
             <Reveal>
               <Eyebrow>{c.demo.eyebrow}</Eyebrow>
@@ -512,6 +515,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
+        }
         {/* 13. FAQ */}
         <section id="faq" className="section-y bg-white">
           <div className="container-page">
@@ -526,6 +530,14 @@ export function HomePage({ lang }: { lang: Lang }) {
             </Reveal>
           </div>
         </section>
+        {lang === "en" && <section id="start" className="bg-primary py-16 text-center text-primary-foreground">
+          <div className="container-page">
+            <h2 className="text-primary-foreground"><Signature text={c.demo.h2} /></h2>
+            <p className="mx-auto mt-4 max-w-[55ch]">{c.demo.lede}</p>
+            <CtaLink href={demoHref} tone="cream" className="mt-7">{c.nav.cta}</CtaLink>
+            <p className="mt-4 text-sm">{c.hero.status}</p>
+          </div>
+        </section>}
       </main>
 
       <Footer lang={lang} altHref={altHref} />

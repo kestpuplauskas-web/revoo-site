@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 /** Renders text where exactly one *word* becomes the italic serif signature. */
 export function Signature({ text, className }: { text: string; className?: string }) {
@@ -119,17 +120,16 @@ export function CtaLink({
   className?: string;
 }) {
   return (
-    <a
-      href={href}
+    <Button asChild variant="ghost"
       className={cn(
-        "inline-flex items-center justify-center rounded-full font-medium transition-all duration-200 hover:-translate-y-0.5",
+        "h-auto min-h-11 whitespace-normal rounded-full font-medium transition-all duration-200 hover:-translate-y-0.5",
         size === "sm" ? "px-4 py-2 text-[0.9rem]" : "px-6 py-3 text-[0.95rem]",
         toneClass[tone],
         className,
       )}
     >
-      {children}
-    </a>
+      <a href={href}>{children}</a>
+    </Button>
   );
 }
 
