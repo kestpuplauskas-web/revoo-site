@@ -127,7 +127,7 @@
     font-family: var(--font-display);
     font-weight: 600;
     line-height: 1.08;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   h1 {
@@ -263,4 +263,27 @@
   background: var(--color-amber);
   border: 2px solid var(--color-cream);
   cursor: pointer;
+}
+
+/* Self-service homepage retains the established palette with readable headings. */
+.trial-page h1,
+.trial-page h2,
+.trial-page h3 {
+  color: inherit;
+  letter-spacing: 0;
+}
+.trial-page h2 { font-size: 2.25rem; }
+.trial-page .trial-title { font-size: 2.5rem; line-height: 1.12; }
+.trial-page .section-y { padding-block: 56px; }
+.trial-hero { overflow: hidden; }
+.trial-hero img { aspect-ratio: 2.05; object-fit: cover; object-position: top; }
+@media (min-width: 768px) {
+  .trial-page .trial-title { font-size: 3.75rem; }
+  .trial-page h2 { font-size: 3rem; }
+  .trial-page .section-y { padding-block: 80px; }
+  .trial-hero img { aspect-ratio: 2.4; }
+}
+@media (max-width: 480px) {
+  .trial-page .container-page { padding-inline: 20px; }
+  .trial-page .trial-title { font-size: 2rem; }
 }

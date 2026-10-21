@@ -171,7 +171,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </Reveal>
               <Reveal delay={120}>
                 <article className="card-lift h-full rounded-2xl bg-teal-700 p-8 text-cream">
-                  <h3>{c.approach.cardB.title}</h3>
+                  <h3 className="text-cream">{c.approach.cardB.title}</h3>
                   <p className="mt-4 text-cream/85">{c.approach.cardB.body}</p>
                 </article>
               </Reveal>
@@ -179,7 +179,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
-        </>}
+        }
         {/* 3. The week */}
         <section id="product" className="section-y bg-white">
           <div className="container-page grid items-center gap-14 lg:grid-cols-2">
@@ -367,7 +367,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 10. Fit */}
-        <section id="fit" className="section-y bg-cream">
+        {lang === "lt" && <section id="fit" className="section-y bg-cream">
           <div className="container-page">
             <Reveal>
               <Eyebrow>{c.fit.eyebrow}</Eyebrow>
@@ -407,6 +407,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
+        }
         {/* 11. Getting started */}
         <section className="section-y bg-teal-900">
           <div className="container-page">
@@ -486,7 +487,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 12. Demo */}
-        <section id="demo" className="section-y bg-cream-deep">
+        {lang === "lt" && <section id="demo" className="section-y bg-cream-deep">
           <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.1fr]">
             <Reveal>
               <Eyebrow>{c.demo.eyebrow}</Eyebrow>
@@ -514,6 +515,7 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
+        }
         {/* 13. FAQ */}
         <section id="faq" className="section-y bg-white">
           <div className="container-page">
@@ -528,6 +530,14 @@ export function HomePage({ lang }: { lang: Lang }) {
             </Reveal>
           </div>
         </section>
+        {lang === "en" && <section id="start" className="bg-primary py-16 text-center text-primary-foreground">
+          <div className="container-page">
+            <h2 className="text-primary-foreground"><Signature text={c.demo.h2} /></h2>
+            <p className="mx-auto mt-4 max-w-[55ch]">{c.demo.lede}</p>
+            <CtaLink href={demoHref} tone="cream" className="mt-7">{c.nav.cta}</CtaLink>
+            <p className="mt-4 text-sm">{c.hero.status}</p>
+          </div>
+        </section>}
       </main>
 
       <Footer lang={lang} altHref={altHref} />

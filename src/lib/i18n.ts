@@ -174,9 +174,9 @@ export function breadcrumbLd(items: { name: string; url: string }[]) {
 
 export const homeSeo: Record<Lang, { title: string; description: string }> = {
   en: {
-    title: "Revoo | Property Management System & Booking Website",
+    title: "Revoo | Hotel Management & Booking Website — 2-Month Free Trial",
     description:
-      "Revoo is a property management system and booking website in one. Manage bookings, invoices and housekeeping for small hotels and guesthouses.",
+      "Manage hotel bookings, housekeeping and invoices with Revoo, plus your own booking website. Start a two-month free trial online. No credit card needed.",
   },
   lt: {
     title: "Revoo | Apgyvendinimo valdymo ir rezervacijų sistema",
