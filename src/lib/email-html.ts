@@ -31,13 +31,14 @@ export function plainToHtml(text: string): string {
 
 function cleanStyle(style: string): string {
   const out: string[] = [];
-  for (const decl of style.split(";")) {
+  for (const decl of style.replace(/&quot;/g, '"').replace(/&#39;/g, "'").split(";")) {
     const i = decl.indexOf(":");
     if (i < 0) continue;
     const prop = decl.slice(0, i).trim().toLowerCase();
     let val = decl.slice(i + 1).trim().replace(/!important/gi, "").trim();
     if (!ALLOWED_STYLES.has(prop) || !val) continue;
-    if (/url\(|expression|javascript:|[<>"]/i.test(val)) continue;
+    if (/url\(|expression|javascript:|[<>]/i.test(val)) continue;
+    if (prop !== "font-family" && /["']/.test(val)) continue;
     if (prop === "font-family") {
       const fonts = val.split(",").map((f) => f.trim().replace(/^['"]|['"]$/g, "")).filter((f) => SAFE_FONTS.test(f));
       if (!fonts.length) continue;
