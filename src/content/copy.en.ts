@@ -17,7 +17,7 @@ export const en: Copy = {
   },
   hero: {
     eyebrow: "HOTEL MANAGEMENT + YOUR OWN BOOKING WEBSITE",
-    h1: "Revoo. Your property, *under control*.",
+    h1: "Revoo. Your property, *under control*",
     sub: "Bookings, housekeeping and invoices in one place — with your own booking website. Create your hotel account and start working, without waiting for a sales call.",
     primary: "2-months free trial",
     secondary: "See how it works",

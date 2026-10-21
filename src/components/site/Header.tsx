@@ -47,7 +47,7 @@ export function Header({
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-[250ms] ease-out",
         scrolled
-          ? "border-b border-ink/10 bg-cream/[0.82] backdrop-blur-md"
+          ? "border-b border-ink/10 bg-background"
           : "border-b border-transparent bg-transparent",
       )}
     >
