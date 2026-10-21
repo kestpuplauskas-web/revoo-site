@@ -1,3 +1,6 @@
 - [x] Replace English demo invitations with the two-month trial and direct registration links.
 - [x] Verify website links and the destination registration page.
-- [ ] Align the destination app's trial duration with two months; blocked because this chat cannot modify the other project (its page currently advertises 14 days).
+- [x] Verify the destination app now advertises two months free and no card needed.
+- [ ] Refocus the English homepage on immediate free-trial registration, without changing independent Lithuanian copy.
+- [ ] Improve heading contrast, mobile navigation and registration visibility.
+- [ ] Verify desktop/mobile rendering and the real registration destination.
