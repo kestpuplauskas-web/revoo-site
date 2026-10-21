@@ -13,6 +13,7 @@ const filtersSchema = z.object({
   countries: z.array(z.string().max(80)).max(50).default([]),
   minUnits: z.number().int().min(0).nullable().default(null),
   maxUnits: z.number().int().min(0).nullable().default(null),
+  created: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable().default(null),
 });
 export type AudienceFilters = z.infer<typeof filtersSchema>;
 
@@ -21,10 +22,13 @@ async function assertAdmin(supabase: any, userId: string) {
   if (!data) throw new Error("Neturite teisių");
 }
 
+/** Kontaktų sukurimo data taip, kaip rodo registro lentelė (Lietuvos laiku). */
+const VILNIUS_DAY = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Vilnius" });
+
 async function audience(supabase: any, f: AudienceFilters) {
   let q = supabase
     .from("clients")
-    .select("id, name, contact_name, contact_email, country, status")
+    .select("id, name, contact_name, contact_email, country, status, created_at")
     .not("contact_email", "is", null)
     .limit(20000);
   if (f.statuses.length) q = q.in("status", f.statuses);
@@ -33,11 +37,14 @@ async function audience(supabase: any, f: AudienceFilters) {
   if (f.maxUnits !== null) q = q.lte("units_count", f.maxUnits);
   const { data, error } = await q;
   if (error) throw new Error("Nepavyko atrinkti klientų");
+  const rows = f.created
+    ? (data ?? []).filter((c: { created_at: string }) => VILNIUS_DAY.format(new Date(c.created_at)) === f.created)
+    : (data ?? []);
   const { data: unsubs } = await supabase.from("email_unsubscribes").select("email");
   const blocked = new Set((unsubs ?? []).map((u: { email: string }) => u.email));
   const seen = new Set<string>();
   const out: { id: string; name: string; email: string; contact_name: string | null }[] = [];
-  for (const c of data ?? []) {
+  for (const c of rows) {
     const email = String(c.contact_email).trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || seen.has(email) || blocked.has(email)) continue;
     seen.add(email);
