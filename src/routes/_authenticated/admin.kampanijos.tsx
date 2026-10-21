@@ -22,6 +22,7 @@ import {
 import { listTemplates } from "@/lib/templates.functions";
 import { REGISTRY_STATUSES } from "@/lib/registry.functions";
 import { CLIENT_STATUS_LABELS, formatDate } from "@/lib/admin-format";
+import { RichEmailEditor } from "@/components/admin/RichEmailEditor";
 import { BTN, BTN_GHOST, CARD, Field, INPUT, Pill } from "@/components/admin/ui";
 
 export const Route = createFileRoute("/_authenticated/admin/kampanijos")({
@@ -412,7 +413,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
           label="Laiško tekstas"
           hint="Kintamieji: {{vardas}}, {{imone}}, {{miestas}}, {{salis}}, {{objektu_skaicius}}. Variacijos: {Sveiki|Laba diena}. Atsisakymo nuoroda pridedama automatiškai."
         >
-          <textarea className={`${INPUT} min-h-56`} value={body} onChange={(e) => setBody(e.target.value)} />
+          <RichEmailEditor value={body} onChange={setBody} ariaLabel="Laiško tekstas" />
         </Field>
         <div className="flex flex-wrap items-end gap-2">
           <div className="min-w-64 flex-1">
