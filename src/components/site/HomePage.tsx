@@ -128,7 +128,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 2b. Pricing calculator */}
-        <section id="pricing" className="section-y bg-teal-900">
+        <section id="pricing" className={`section-y bg-teal-900 ${lang === "en" ? "trial-offer" : ""}`}>
           <div className="container-page">
             <Reveal className="text-cream">
               <Eyebrow tone="dark">{c.pricing.eyebrow}</Eyebrow>
@@ -220,9 +220,9 @@ export function HomePage({ lang }: { lang: Lang }) {
               />
               <PhoneFrame className="relative w-[250px]">
                 <img
-                  src={slots["housekeeping-phone"].posterUrl!}
-                  width={slots["housekeeping-phone"].posterWidth!}
-                  height={slots["housekeeping-phone"].posterHeight!}
+                  src={slots["housekeeping-phone"].posterUrl ?? slots["housekeeping-phone"].url}
+                  width={slots["housekeeping-phone"].posterWidth ?? slots["housekeeping-phone"].width}
+                  height={slots["housekeeping-phone"].posterHeight ?? slots["housekeeping-phone"].height}
                   alt={c.media.alt.housekeepingApp}
                   loading="lazy"
                   className="block h-auto w-full"

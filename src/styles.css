@@ -269,7 +269,6 @@
 .trial-page h1,
 .trial-page h2,
 .trial-page h3 {
-  color: inherit;
   letter-spacing: 0;
 }
 .trial-page h2 { font-size: 2.25rem; }
