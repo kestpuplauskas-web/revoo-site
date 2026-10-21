@@ -289,7 +289,7 @@ function RecipientsList({ id, senders }: { id: string; senders: SenderRow[] }) {
   );
 }
 
-const EMPTY_FILTERS: AudienceFilters = { statuses: [], countries: [], minUnits: null, maxUnits: null };
+const EMPTY_FILTERS: AudienceFilters = { statuses: [], countries: [], minUnits: null, maxUnits: null, created: null };
 
 function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }) {
   const qc = useQueryClient();
@@ -456,6 +456,14 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
               </Chip>
             ))}
           </div>
+        </Field>
+        <Field label="Sukurta" hint="Įtraukiami tik kontaktai, sukurti šią dieną.">
+          <input
+            type="date"
+            className={INPUT}
+            value={filters.created ?? ""}
+            onChange={(e) => setFilters((f) => ({ ...f, created: e.target.value || null }))}
+          />
         </Field>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Objektų nuo">
