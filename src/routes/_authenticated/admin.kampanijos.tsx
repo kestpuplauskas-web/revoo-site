@@ -205,7 +205,7 @@ function CampaignsTab({ data, done }: { data: Overview; done: boolean }) {
               ))}
             </dl>
             <p className="mt-2 text-xs text-ink-soft">
-              Limitas {c.daily_limit}/d., {c.per_minute}/min. Atidarymai ir paspaudimai nesekami.
+              Limitas {c.daily_limit}/d., 1 laiškas kas {c.per_minute} min. iš kiekvienos dėžutės. Atidarymai ir paspaudimai nesekami.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {c.status === "draft" || c.status === "paused" ? (
@@ -538,15 +538,15 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
               onChange={(e) => setDailyLimit(Math.max(1, Number(e.target.value) || 1))}
             />
           </Field>
-          <Field label="Daugiausia per minutę">
+          <Field label="Siųsti kas (min.)" hint="1 laiškas kas tiek minučių iš kiekvienos aktyvios pašto dėžutės.">
             <input
               type="number"
               inputMode="numeric"
               min={1}
-              max={30}
+              max={1440}
               className={INPUT}
               value={perMinute}
-              onChange={(e) => setPerMinute(Math.min(30, Math.max(1, Number(e.target.value) || 1)))}
+              onChange={(e) => setPerMinute(Math.min(1440, Math.max(1, Number(e.target.value) || 1)))}
             />
           </Field>
         </div>

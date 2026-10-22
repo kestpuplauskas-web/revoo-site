@@ -73,7 +73,8 @@ const createSchema = z.object({
   filters: filtersSchema,
   exclude_ids: z.array(z.string().uuid()).max(20000).default([]),
   daily_limit: z.number().int().min(1).max(20000),
-  per_minute: z.number().int().min(1).max(30),
+  // Siuntimo intervalas minutėmis (1 laiškas kas X min. iš kiekvienos dėžutės).
+  per_minute: z.number().int().min(1).max(1440),
 });
 
 export const createCampaign = createServerFn({ method: "POST" })
