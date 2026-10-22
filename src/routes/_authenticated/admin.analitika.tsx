@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Eye, Inbox, TrendingDown, TrendingUp, Users } from "lucide-react";
+import { Eye, Inbox, MousePointerClick, TrendingDown, TrendingUp, Users } from "lucide-react";
 
 import { CARD } from "@/components/admin/ui";
 import { Progress } from "@/components/ui/progress";
@@ -173,6 +173,8 @@ function AnalyticsPage() {
   const leads = Number(data?.leads ?? 0);
   const conversion = totalVisitors ? ((leads / totalVisitors) * 100).toFixed(1) : "0.0";
   const bots = Number(data?.bots ?? 0);
+  const trialClicks = Number(data?.trialClicks ?? 0);
+  const trialConversion = totalVisitors ? ((trialClicks / totalVisitors) * 100).toFixed(1) : "0.0";
 
   return (
     <main className="px-4 py-8 lg:px-10">
@@ -215,7 +217,7 @@ function AnalyticsPage() {
         <div className={`${CARD} p-10 text-center text-sm text-ink-soft`}>Kraunama…</div>
       ) : (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <StatCard
               label="Puslapių peržiūros"
               value={totalViews}
@@ -228,8 +230,10 @@ function AnalyticsPage() {
               change={percentChange(totalVisitors, Number(data?.previous?.visitors ?? 0))}
               icon={Users}
             />
+            <StatCard label="„Free trial“ paspaudimai" value={trialClicks} icon={MousePointerClick} />
+            <StatCard label="„Free trial“ konversija" value={trialConversion} suffix="%" icon={TrendingUp} />
             <StatCard label="Užklausos" value={leads} icon={Inbox} />
-            <StatCard label="Konversija" value={conversion} suffix="%" icon={TrendingUp} />
+            <StatCard label="Užklausų konversija" value={conversion} suffix="%" icon={TrendingUp} />
           </div>
 
           <div className={`${CARD} mt-6 p-5`}>
