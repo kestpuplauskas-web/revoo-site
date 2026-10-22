@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AtsisakytiRouteImport } from './routes/atsisakyti'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrisijungimasRouteImport } from './routes/prisijungimas'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SlaptazodisRouteImport } from './routes/slaptazodis'
@@ -58,6 +59,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AtsisakytiRoute = AtsisakytiRouteImport.update({
   id: '/atsisakyti',
   path: '/atsisakyti',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrisijungimasRoute = PrisijungimasRouteImport.update({
@@ -246,6 +252,7 @@ const ApiPublicCampaignsTickRoute = ApiPublicCampaignsTickRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/atsisakyti': typeof AtsisakytiRoute
+  '/pricing': typeof PricingRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/slaptazodis': typeof SlaptazodisRoute
@@ -283,6 +290,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/atsisakyti': typeof AtsisakytiRoute
+  '/pricing': typeof PricingRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/slaptazodis': typeof SlaptazodisRoute
@@ -321,6 +329,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/atsisakyti': typeof AtsisakytiRoute
+  '/pricing': typeof PricingRoute
   '/prisijungimas': typeof PrisijungimasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/slaptazodis': typeof SlaptazodisRoute
@@ -360,6 +369,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/atsisakyti'
+    | '/pricing'
     | '/prisijungimas'
     | '/sitemap.xml'
     | '/slaptazodis'
@@ -397,6 +407,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/atsisakyti'
+    | '/pricing'
     | '/prisijungimas'
     | '/sitemap.xml'
     | '/slaptazodis'
@@ -434,6 +445,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/atsisakyti'
+    | '/pricing'
     | '/prisijungimas'
     | '/sitemap.xml'
     | '/slaptazodis'
@@ -473,6 +485,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AtsisakytiRoute: typeof AtsisakytiRoute
+  PricingRoute: typeof PricingRoute
   PrisijungimasRoute: typeof PrisijungimasRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SlaptazodisRoute: typeof SlaptazodisRoute
@@ -510,6 +523,13 @@ declare module '@tanstack/react-router' {
       path: '/atsisakyti'
       fullPath: '/atsisakyti'
       preLoaderRoute: typeof AtsisakytiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prisijungimas': {
@@ -809,6 +829,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AtsisakytiRoute: AtsisakytiRoute,
+  PricingRoute: PricingRoute,
   PrisijungimasRoute: PrisijungimasRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SlaptazodisRoute: SlaptazodisRoute,
