@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Eye, Inbox, TrendingDown, TrendingUp, Users } from "lucide-react";
+import { Eye, Inbox, MousePointerClick, TrendingDown, TrendingUp, Users } from "lucide-react";
 
 import { CARD } from "@/components/admin/ui";
 import { Progress } from "@/components/ui/progress";
