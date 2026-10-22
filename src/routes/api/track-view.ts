@@ -117,7 +117,7 @@ export const Route = createFileRoute("/api/track-view")({
             visitor_hash: visitorHash,
             day: utcDay,
             user_agent: userAgent.slice(0, 500),
-            is_bot: isBot,
+            is_bot: isBot || isTrialClick,
           });
           if (error) console.error("track-view insert failed:", error.message);
         } catch (err) {
