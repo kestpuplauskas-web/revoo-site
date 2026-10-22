@@ -73,9 +73,10 @@ const createSchema = z.object({
   filters: filtersSchema,
   exclude_ids: z.array(z.string().uuid()).max(20000).default([]),
   daily_limit: z.number().int().min(1).max(20000),
-  // Siuntimo intervalas minutėmis (1 laiškas kas X min. iš kiekvienos dėžutės).
+  // Atsitiktinio intervalo ribos minutėmis (1 laiškas kas X–Y min. iš kiekvienos dėžutės).
   per_minute: z.number().int().min(1).max(1440),
-});
+  interval_max_minutes: z.number().int().min(1).max(1440),
+}).refine((d) => d.interval_max_minutes >= d.per_minute, { message: "Intervalo „iki“ reikšmė turi būti ne mažesnė už „nuo“" });
 
 export const createCampaign = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

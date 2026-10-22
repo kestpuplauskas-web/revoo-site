@@ -115,15 +115,22 @@ export async function processTick(admin: Admin) {
   }
 
   const now = Date.now();
-  // per_minute laukas saugo intervalą minutėmis: 1 laiškas kas X min. iš kiekvienos dėžutės.
+  // Intervalas: nuo per_minute iki interval_max_minutes min.; kitas laikas parenkamas atsitiktinai su sekundėmis.
   let eligible: typeof senders = [];
+  let rangeMin = 1;
+  let rangeMax = 1;
   const pickSender = () => {
     const avail = eligible.filter((s) => s.sent_today < s.daily_limit);
     if (!avail.length) return null;
     avail.sort((a, b) => a.sent_today / a.daily_limit - b.sent_today / b.daily_limit);
-    const chosen = avail[0]!;
+    const chosen = avail[0];
+    if (!chosen) return null;
     eligible = eligible.filter((s) => s !== chosen);
     chosen.lastSentMs = now;
+    const delayMs = Math.round((rangeMin + Math.random() * (rangeMax - rangeMin)) * 60000);
+    const next = new Date(now + delayMs).toISOString();
+    chosen.next_send_at = next;
+    void admin.from("email_senders").update({ next_send_at: next }).eq("id", chosen.id);
     return chosen;
   };
 
@@ -131,8 +138,14 @@ export async function processTick(admin: Admin) {
   for (const c of campaigns) {
     if (budget <= 0) break;
     const sentToday = c.sent_day === today ? c.sent_today : 0;
-    const intervalMs = Math.max(1, c.per_minute) * 60000 - 20000; // 20 s tolerancija ciklo svyravimui
-    eligible = senders.filter((s) => s.sent_today < s.daily_limit && now - s.lastSentMs >= intervalMs);
+    rangeMin = Math.max(1, c.per_minute);
+    rangeMax = Math.max(rangeMin, c.interval_max_minutes ?? rangeMin);
+    const fixedMs = rangeMin * 60000 - 20000;
+    eligible = senders.filter((s) => {
+      if (s.sent_today >= s.daily_limit) return false;
+      if (s.next_send_at) return now >= new Date(s.next_send_at).getTime() - 5000;
+      return now - s.lastSentMs >= fixedMs;
+    });
     const allowed = Math.min(eligible.length, c.daily_limit - sentToday, budget);
     if (allowed <= 0) continue;
 

@@ -332,6 +332,7 @@ export type Database = {
           daily_limit: number
           filters: Json
           id: string
+          interval_max_minutes: number | null
           name: string
           per_minute: number
           sent_day: string | null
@@ -350,6 +351,7 @@ export type Database = {
           daily_limit?: number
           filters?: Json
           id?: string
+          interval_max_minutes?: number | null
           name: string
           per_minute?: number
           sent_day?: string | null
@@ -368,6 +370,7 @@ export type Database = {
           daily_limit?: number
           filters?: Json
           id?: string
+          interval_max_minutes?: number | null
           name?: string
           per_minute?: number
           sent_day?: string | null
@@ -403,6 +406,7 @@ export type Database = {
           from_name: string
           id: string
           is_active: boolean
+          next_send_at: string | null
           sent_day: string | null
           sent_today: number
         }
@@ -413,6 +417,7 @@ export type Database = {
           from_name?: string
           id?: string
           is_active?: boolean
+          next_send_at?: string | null
           sent_day?: string | null
           sent_today?: number
         }
@@ -423,6 +428,7 @@ export type Database = {
           from_name?: string
           id?: string
           is_active?: boolean
+          next_send_at?: string | null
           sent_day?: string | null
           sent_today?: number
         }
