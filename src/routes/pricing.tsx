@@ -9,6 +9,7 @@ import { submitLead } from "@/lib/leads.functions";
 import { TRIAL_REGISTRATION_URL } from "@/lib/trial";
 import { earnFee, unitDisplayPrice, type Billing } from "@/lib/pricing-plans";
 import { cn } from "@/lib/utils";
+import { Header } from "@/components/site/Header";
 
 const TITLE = "Pricing — Revoo PMS & booking system";
 const DESC =
@@ -131,14 +132,8 @@ function PricingPage() {
 
   return (
     <div className="min-h-screen bg-cream font-sans text-ink">
-      <header className="flex items-center justify-between border-b border-ink/10 px-6 py-5 md:px-16">
-        <a href="/" className="text-[22px] font-semibold text-ink">
-          Revoo<span className="text-amber">.</span>
-        </a>
-        <a href="/" className="text-sm text-ink-soft hover:text-teal-900">
-          ← Back to revoostay.com
-        </a>
-      </header>
+      <Header lang="en" altHref="/lt" variant="solid" />
+      <div className="h-20" aria-hidden="true" />
 
       <main>
         <section className="mx-auto max-w-[780px] px-6 pt-16 pb-10 text-center md:pt-20">
