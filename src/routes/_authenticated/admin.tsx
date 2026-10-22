@@ -31,7 +31,15 @@ function AdminLayout() {
   const fetchUnread = useServerFn(getUnreadCount);
   const bootstrapProfile = useServerFn(ensureProfile);
 
-  const role = useQuery({ queryKey: ["my-role"], queryFn: () => fetchRole() });
+  const role = useQuery({
+    queryKey: ["my-role"],
+    queryFn: () => fetchRole(),
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
+    retry: 4,
+    retryDelay: (n) => Math.min(1000 * 2 ** n, 8000),
+    refetchOnWindowFocus: false,
+  });
   const unread = useQuery({
     queryKey: ["leads-unread"],
     queryFn: () => fetchUnread(),
@@ -63,6 +71,20 @@ function AdminLayout() {
     await supabase.auth.signOut();
     await navigate({ to: "/prisijungimas/", replace: true });
   };
+
+  if (role.isError && !role.data) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-cream/60 px-4 text-center">
+        <div>
+          <p className="font-display text-2xl text-ink">Sistema šiuo metu apkrauta</p>
+          <p className="mt-2 text-sm text-ink-soft">Nepavyko patikrinti prisijungimo. Pabandykite dar kartą.</p>
+          <button onClick={() => role.refetch()} className="mt-6 text-sm text-teal-700 underline">
+            Bandyti dar kartą
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   if (role.isLoading) {
     return (

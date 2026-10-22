@@ -91,7 +91,8 @@ export const getMyRole = createServerFn({ method: "GET" })
     });
     if (error) {
       console.error("getMyRole failed", error.message);
-      return { isAdmin: false };
+      // Laikina klaida (pvz., apkrova) – metame, kad klientas pakartotų, o ne rodytų „neturite teisių“.
+      throw new Error("Nepavyko patikrinti teisių");
     }
     return { isAdmin: data === true };
   });
