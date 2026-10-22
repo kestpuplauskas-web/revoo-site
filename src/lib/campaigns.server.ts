@@ -121,7 +121,7 @@ export async function processTick(admin: Admin) {
     const avail = eligible.filter((s) => s.sent_today < s.daily_limit);
     if (!avail.length) return null;
     avail.sort((a, b) => a.sent_today / a.daily_limit - b.sent_today / b.daily_limit);
-    const chosen = avail[0];
+    const chosen = avail[0]!;
     eligible = eligible.filter((s) => s !== chosen);
     chosen.lastSentMs = now;
     return chosen;

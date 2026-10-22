@@ -307,7 +307,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
   const [body, setBody] = useState("");
   const [filters, setFilters] = useState<AudienceFilters>(EMPTY_FILTERS);
   const [dailyLimit, setDailyLimit] = useState(300);
-  const [perMinute, setPerMinute] = useState(5);
+  const [perMinute, setPerMinute] = useState(10);
   const [testTo, setTestTo] = useState("");
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
 
