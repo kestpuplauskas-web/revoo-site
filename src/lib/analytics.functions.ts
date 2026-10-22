@@ -14,6 +14,7 @@ export interface AnalyticsSummary {
   countries: { country: string; views: number; visitors: number }[];
   leads: number;
   bots: number;
+  trialClicks: number;
 }
 
 const EMPTY: AnalyticsSummary = {
@@ -26,6 +27,7 @@ const EMPTY: AnalyticsSummary = {
   countries: [],
   leads: 0,
   bots: 0,
+  trialClicks: 0,
 };
 
 const rangeSchema = z.object({ range: z.union([z.literal(7), z.literal(30), z.literal(90)]) });
@@ -51,7 +53,16 @@ export const getAnalyticsSummary = createServerFn({ method: "GET" })
       throw new Error("Nepavyko įkelti analitikos duomenų.");
     }
 
-    return { ...EMPTY, ...((result as Partial<AnalyticsSummary> | null) ?? {}) };
+    const { count: trialClicks } = await context.supabase
+      .from("page_views")
+      .select("id", { count: "exact", head: true })
+      .like("path", "/__event/trial-click%")
+      .gte("day", isoDay(data.range - 1))
+      .lte("day", isoDay(0));
+
+    const merged = { ...EMPTY, ...((result as Partial<AnalyticsSummary> | null) ?? {}) };
+    const clicks = trialClicks ?? 0;
+    return { ...merged, trialClicks: clicks, bots: Math.max(0, Number(merged.bots) - clicks) };
   });
 
 export function percentChange(current: number, previous: number): number | null {
