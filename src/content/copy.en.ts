@@ -236,7 +236,6 @@ export const en: Copy = {
       "A single property run as a side income rather than a business",
       "You're a larger hotel group",
       "You need full two-way channel management across many OTAs on day one",
-      "You want to sign up online tonight and configure it yourself — we don't work that way",
     ],
   },
   start: {
@@ -335,6 +334,10 @@ export const en: Copy = {
       {
         q: "Can I start without talking to sales?",
         a: "Yes. Every free-trial button takes you straight to registration. Create your hotel account and enter your own control panel. A conversation with our team is optional, not a requirement for access.",
+      },
+      {
+        q: "What happens to my existing bookings?",
+        a: "Nothing is lost and nothing moves without your approval. You can bring your current bookings over yourself, let our assistant Eva do it with you, or have a person from our team handle it. Either way, you review and confirm before anything is transferred.",
       },
       {
         q: "What happens if I decide to move to another solution?",
