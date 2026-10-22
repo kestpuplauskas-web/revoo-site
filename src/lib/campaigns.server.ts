@@ -97,26 +97,43 @@ export async function processTick(admin: Admin) {
   if (!campaigns?.length) return summary;
 
   const { data: sendersRaw } = await admin.from("email_senders").select("*").eq("is_active", true);
-  const senders: Sender[] = (sendersRaw ?? []).map((s) =>
-    s.sent_day === today ? s : { ...s, sent_today: 0, sent_day: today },
-  );
+  const senders: (Sender & { lastSentMs: number })[] = [];
+  for (const s of sendersRaw ?? []) {
+    const { data: last } = await admin
+      .from("campaign_recipients")
+      .select("sent_at")
+      .eq("sender_id", s.id)
+      .not("sent_at", "is", null)
+      .order("sent_at", { ascending: false })
+      .limit(1);
+    const lastSentMs = last?.[0]?.sent_at ? new Date(last[0].sent_at).getTime() : 0;
+    senders.push({ ...(s.sent_day === today ? s : { ...s, sent_today: 0, sent_day: today }), lastSentMs });
+  }
   if (!senders.length) {
     summary.note = "Nėra aktyvių siuntėjų";
     return summary;
   }
 
+  const now = Date.now();
+  // per_minute laukas saugo intervalą minutėmis: 1 laiškas kas X min. iš kiekvienos dėžutės.
+  let eligible: typeof senders = [];
   const pickSender = () => {
-    const avail = senders.filter((s) => s.sent_today < s.daily_limit);
+    const avail = eligible.filter((s) => s.sent_today < s.daily_limit);
     if (!avail.length) return null;
     avail.sort((a, b) => a.sent_today / a.daily_limit - b.sent_today / b.daily_limit);
-    return avail[0];
+    const chosen = avail[0]!;
+    eligible = eligible.filter((s) => s !== chosen);
+    chosen.lastSentMs = now;
+    return chosen;
   };
 
   let budget = MAX_PER_TICK;
   for (const c of campaigns) {
     if (budget <= 0) break;
     const sentToday = c.sent_day === today ? c.sent_today : 0;
-    const allowed = Math.min(c.per_minute, c.daily_limit - sentToday, budget);
+    const intervalMs = Math.max(1, c.per_minute) * 60000 - 20000; // 20 s tolerancija ciklo svyravimui
+    eligible = senders.filter((s) => s.sent_today < s.daily_limit && now - s.lastSentMs >= intervalMs);
+    const allowed = Math.min(eligible.length, c.daily_limit - sentToday, budget);
     if (allowed <= 0) continue;
 
     const { data: batch } = await admin
