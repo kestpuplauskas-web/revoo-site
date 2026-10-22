@@ -205,7 +205,11 @@ function CampaignsTab({ data, done }: { data: Overview; done: boolean }) {
               ))}
             </dl>
             <p className="mt-2 text-xs text-ink-soft">
-              Limitas {c.daily_limit}/d., 1 laiškas kas {c.per_minute} min. iš kiekvienos dėžutės. Atidarymai ir paspaudimai nesekami.
+              Limitas {c.daily_limit}/d., 1 laiškas kas{" "}
+              {c.interval_max_minutes && c.interval_max_minutes > c.per_minute
+                ? `${c.per_minute}–${c.interval_max_minutes} min. (atsitiktinai)`
+                : `${c.per_minute} min.`}{" "}
+              iš kiekvienos dėžutės. Atidarymai ir paspaudimai nesekami.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {c.status === "draft" || c.status === "paused" ? (
@@ -307,7 +311,8 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
   const [body, setBody] = useState("");
   const [filters, setFilters] = useState<AudienceFilters>(EMPTY_FILTERS);
   const [dailyLimit, setDailyLimit] = useState(300);
-  const [perMinute, setPerMinute] = useState(10);
+  const [perMinute, setPerMinute] = useState(5);
+  const [intervalMax, setIntervalMax] = useState(30);
   const [testTo, setTestTo] = useState("");
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
 
@@ -347,6 +352,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
           exclude_ids: [...excluded],
           daily_limit: dailyLimit,
           per_minute: perMinute,
+          interval_max_minutes: Math.max(intervalMax, perMinute),
         },
       }),
     onSuccess: (r) => {
@@ -538,7 +544,7 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
               onChange={(e) => setDailyLimit(Math.max(1, Number(e.target.value) || 1))}
             />
           </Field>
-          <Field label="Siųsti kas (min.)" hint="1 laiškas kas tiek minučių iš kiekvienos aktyvios pašto dėžutės.">
+          <Field label="Intervalas nuo (min.)" hint="Kitas laiškas siunčiamas atsitiktiniu laiku tarp „nuo“ ir „iki“, pvz., po 14 min. 36 s.">
             <input
               type="number"
               inputMode="numeric"
@@ -547,6 +553,18 @@ function CampaignForm({ data, onClose }: { data: Overview; onClose: () => void }
               className={INPUT}
               value={perMinute}
               onChange={(e) => setPerMinute(Math.min(1440, Math.max(1, Number(e.target.value) || 1)))}
+            />
+          </Field>
+          <Field label="Intervalas iki (min.)" hint="Taikoma kiekvienai aktyviai pašto dėžutei atskirai.">
+            <input
+              type="number"
+              inputMode="numeric"
+              min={perMinute}
+              max={1440}
+              className={INPUT}
+              value={intervalMax}
+              onChange={(e) => setIntervalMax(Math.min(1440, Math.max(1, Number(e.target.value) || 1)))}
+              onBlur={() => setIntervalMax((v) => Math.max(v, perMinute))}
             />
           </Field>
         </div>
