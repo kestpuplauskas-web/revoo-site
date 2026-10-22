@@ -15,6 +15,7 @@ export interface AnalyticsSummary {
   leads: number;
   bots: number;
   trialClicks: number;
+  trialUniqueVisitors: number;
 }
 
 const EMPTY: AnalyticsSummary = {
@@ -28,6 +29,7 @@ const EMPTY: AnalyticsSummary = {
   leads: 0,
   bots: 0,
   trialClicks: 0,
+  trialUniqueVisitors: 0,
 };
 
 const rangeSchema = z.object({ range: z.union([z.literal(7), z.literal(30), z.literal(90)]) });
@@ -60,9 +62,25 @@ export const getAnalyticsSummary = createServerFn({ method: "GET" })
       .gte("day", isoDay(data.range - 1))
       .lte("day", isoDay(0));
 
+    const { data: trialVisitorRows } = await context.supabase
+      .from("page_views")
+      .select("visitor_hash")
+      .like("path", "/__event/trial-click%")
+      .gte("day", isoDay(data.range - 1))
+      .lte("day", isoDay(0))
+      .range(0, 9999);
+    const trialUniqueVisitors = new Set(
+      ((trialVisitorRows as { visitor_hash: string }[] | null) ?? []).map((r) => r.visitor_hash),
+    ).size;
+
     const merged = { ...EMPTY, ...((result as Partial<AnalyticsSummary> | null) ?? {}) };
     const clicks = trialClicks ?? 0;
-    return { ...merged, trialClicks: clicks, bots: Math.max(0, Number(merged.bots) - clicks) };
+    return {
+      ...merged,
+      trialClicks: clicks,
+      trialUniqueVisitors,
+      bots: Math.max(0, Number(merged.bots) - clicks),
+    };
   });
 
 export function percentChange(current: number, previous: number): number | null {

@@ -174,7 +174,8 @@ function AnalyticsPage() {
   const conversion = totalVisitors ? ((leads / totalVisitors) * 100).toFixed(1) : "0.0";
   const bots = Number(data?.bots ?? 0);
   const trialClicks = Number(data?.trialClicks ?? 0);
-  const trialConversion = totalVisitors ? ((trialClicks / totalVisitors) * 100).toFixed(1) : "0.0";
+  const trialVisitors = Number(data?.trialUniqueVisitors ?? 0);
+  const trialConversion = totalVisitors ? ((trialVisitors / totalVisitors) * 100).toFixed(1) : "0.0";
 
   return (
     <main className="px-4 py-8 lg:px-10">
@@ -231,6 +232,7 @@ function AnalyticsPage() {
               icon={Users}
             />
             <StatCard label="„Free trial“ paspaudimai" value={trialClicks} icon={MousePointerClick} />
+            <StatCard label="Unikalūs „Free trial“ lankytojai" value={trialVisitors} icon={Users} />
             <StatCard label="„Free trial“ konversija" value={trialConversion} suffix="%" icon={TrendingUp} />
             <StatCard label="Užklausos" value={leads} icon={Inbox} />
             <StatCard label="Užklausų konversija" value={conversion} suffix="%" icon={TrendingUp} />
