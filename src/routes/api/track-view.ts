@@ -70,7 +70,7 @@ export const Route = createFileRoute("/api/track-view")({
           const isBot = BOT_PATTERN.test(userAgent);
 
           const raw = await request.text().catch(() => "");
-          let body: { path?: unknown; referrer?: unknown } | null = null;
+          let body: { path?: unknown; referrer?: unknown; event?: unknown } | null = null;
           try {
             body = raw ? JSON.parse(raw) : null;
           } catch {
@@ -78,8 +78,12 @@ export const Route = createFileRoute("/api/track-view")({
           }
           if (!body) return noContent();
 
-          const path = typeof body.path === "string" ? body.path.slice(0, 300) : "";
-          if (!path.startsWith("/") || path.startsWith("/admin")) return noContent();
+          const rawPath = typeof body.path === "string" ? body.path.slice(0, 280) : "";
+          if (!rawPath.startsWith("/") || rawPath.startsWith("/admin")) return noContent();
+          const isTrialClick = body.event === "trial_click";
+          if (isTrialClick && isBot) return noContent();
+          // Paspaudimas saugomas kaip įvykis (pažymėtas, kad neįsiskaičiuotų į peržiūras).
+          const path = isTrialClick ? `/__event/trial-click${rawPath}` : rawPath;
 
           let referrerHost: string | null = null;
           if (typeof body.referrer === "string" && body.referrer) {
