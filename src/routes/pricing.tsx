@@ -89,7 +89,7 @@ function Gift({ children, strong }: { children: React.ReactNode; strong?: boolea
 
 function PricingPage() {
   const [billing, setBilling] = useState<Billing>("monthly");
-  const [units, setUnits] = useState(20);
+  const [units, setUnits] = useState(1);
   const [revenue, setRevenue] = useState(3000);
   const [plan, setPlan] = useState<Plan>(null);
   const [email, setEmail] = useState("");
