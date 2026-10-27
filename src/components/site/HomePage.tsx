@@ -41,7 +41,7 @@ export function HomePage({ lang }: { lang: Lang }) {
       >
         {c.nav.skip}
       </a>
-      <Header lang={lang} altHref={altHref} variant={lang === "en" ? "solid" : "overlay"} />
+      <Header lang={lang} altHref={altHref} variant="overlay" />
 
       <main id="hero">
         {/* 1. Hero */}
