@@ -10,7 +10,7 @@ export const homeExtrasLt = {
       {
         name: "Mokate, kai uždirbate",
         price: "0 €/mėn. + 2 %",
-        body: "Tik nuo tiesioginių rezervacijų per jūsų Revoo rezervacijų sistemą. 0 % nuo Booking.com ir Airbnb.",
+        body: "Tik nuo tiesioginių rezervacijų per jūsų svetainę. 0 % nuo Booking.com ir Airbnb.",
       },
       {
         name: "Individualus",
