@@ -88,7 +88,7 @@ export function Header({
             <span className="sr-only">{c.nav.langLabel}:</span>
             {lang === "en" ? (
               <>
-                <span aria-current="true" className="text-teal-500">
+                <span aria-current="true" className={scrolled ? "text-teal-500" : "text-amber-light"}>
                   EN
                 </span>
                 <span aria-hidden="true">/</span>
@@ -102,7 +102,7 @@ export function Header({
                   EN
                 </a>
                 <span aria-hidden="true">/</span>
-                <span aria-current="true" className="text-teal-500">
+                <span aria-current="true" className={scrolled ? "text-teal-500" : "text-amber-light"}>
                   LT
                 </span>
               </>
