@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowDown, ArrowRight, Check } from "lucide-react";
 import type { Copy } from "@/content/copy.types";
 import type { SlotMedia } from "@/content/media-slots";
+import type { Lang } from "@/lib/i18n";
 import { demoCtaHref } from "@/lib/trial";
 import { CtaLink, SignatureUnderlined } from "./primitives";
 import { useMinPrice, withMin } from "@/hooks/useMinPrice";
@@ -10,12 +11,18 @@ const DURATION = 4500;
 
 type Tab = { label: string; src: string; alt: string; phone?: { src: string; alt: string } };
 
-export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: Copy; image: SlotMedia; dashboard: SlotMedia; siteCalendar: SlotMedia }) {
+const T = {
+  en: { tabs: ["Multi-calendar", "Dashboard", "Housekeeping app", "Direct booking engine"], dashAlt: "Revoo business dashboard with occupancy and revenue", hkAlt: "Revoo housekeeping schedule", hkPhoneAlt: "Revoo housekeeping app on a phone", engineAlt: "Revoo direct booking engine on a property website", tour: "Product tour", proof: "Results and integrations", direct: "Increase in direct bookings", admin: "Less time spent on daily admin", works: "Works with", sync: "Channel sync and secure card payments" },
+  lt: { tabs: ["Rezervacijų kalendorius", "Skydelis", "Tvarkymo programėlė", "Tiesioginių rezervacijų sistema"], dashAlt: "Revoo verslo skydelis su užimtumu ir pajamomis", hkAlt: "Revoo kambarių tvarkymo grafikas", hkPhoneAlt: "Revoo tvarkymo programėlė telefone", engineAlt: "Revoo tiesioginių rezervacijų sistema objekto svetainėje", tour: "Produkto apžvalga", proof: "Rezultatai ir integracijos", direct: "Daugiau tiesioginių rezervacijų", admin: "Mažiau laiko kasdieniam administravimui", works: "Veikia su", sync: "Kanalų sinchronizavimas ir saugūs mokėjimai kortele" },
+} as const;
+
+export function TrialHero({ lang = "en", copy: c, image, dashboard, siteCalendar }: { lang?: Lang; copy: Copy; image: SlotMedia; dashboard: SlotMedia; siteCalendar: SlotMedia }) {
+  const L = T[lang];
   const tabs: Tab[] = [
-    { label: "Multi-calendar", src: image.url, alt: c.media.alt.calendar },
-    { label: "Dashboard", src: dashboard.url, alt: "Revoo business dashboard with occupancy and revenue" },
-    { label: "Housekeeping app", src: "/media/8_housekeeping.webp", alt: "Revoo housekeeping schedule", phone: { src: "/media/7_housekeeping_app.webp", alt: "Revoo housekeeping app on a phone" } },
-    { label: "Direct booking engine", src: siteCalendar.url, alt: "Revoo direct booking engine on a property website" },
+    { label: L.tabs[0], src: image.url, alt: c.media.alt.calendar },
+    { label: L.tabs[1], src: dashboard.url, alt: L.dashAlt },
+    { label: L.tabs[2], src: "/media/8_housekeeping.webp", alt: L.hkAlt, phone: { src: "/media/7_housekeeping_app.webp", alt: L.hkPhoneAlt } },
+    { label: L.tabs[3], src: siteCalendar.url, alt: L.engineAlt },
   ];
   const minPrice = useMinPrice();
   const [active, setActive] = useState(0);
@@ -46,7 +53,7 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
         </h1>
         <p className="mx-auto mt-5 max-w-[660px] text-base leading-relaxed text-primary-foreground/90 sm:text-lg">{c.hero.sub}</p>
         <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <CtaLink href={demoCtaHref("en")} tone="cream" className="min-h-12 gap-3">
+          <CtaLink href={demoCtaHref(lang)} tone="cream" className="min-h-12 gap-3">
             {c.hero.primary}<ArrowRight aria-hidden="true" className="h-4 w-4" />
           </CtaLink>
           <a href="#product" className="inline-flex min-h-11 items-center gap-2 px-3 text-sm underline underline-offset-4">
@@ -56,7 +63,7 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
         <p className="mt-4 text-sm text-primary-foreground/90">{c.hero.status}</p>
 
         <div className="mx-auto mt-9 max-w-[1060px]">
-          <div role="tablist" aria-label="Product tour" className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div role="tablist" aria-label={L.tour} className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {tabs.map((t, i) => (
               <button key={t.label} role="tab" type="button" aria-selected={i === active} aria-controls="rv-tour-panel"
                 onClick={() => { setActive(i); setAuto(false); }}
@@ -97,22 +104,22 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
         </li>)}
       </ul>
       <div aria-labelledby="proof-title" className="bg-teal-900 px-6 pb-14 pt-10" role="region">
-        <h2 id="proof-title" className="sr-only">Results and integrations</h2>
+        <h2 id="proof-title" className="sr-only">{L.proof}</h2>
         <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-[1fr_1fr_1.3fr] md:divide-x md:divide-primary-foreground/15">
           <div className="text-center md:px-6">
             <p className="font-display text-5xl text-amber-light">+27%</p>
-            <p className="mt-2 text-sm text-primary-foreground/80">Increase in direct bookings</p>
+            <p className="mt-2 text-sm text-primary-foreground/80">{L.direct}</p>
           </div>
           <div className="text-center md:px-6">
             <p className="font-display text-5xl text-amber-light">72%</p>
-            <p className="mt-2 text-sm text-primary-foreground/80">Less time spent on daily admin</p>
+            <p className="mt-2 text-sm text-primary-foreground/80">{L.admin}</p>
           </div>
           <div className="text-center md:px-6">
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-primary-foreground/60">Works with</p>
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-primary-foreground/60">{L.works}</p>
             <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-lg font-semibold text-primary-foreground">
               <li>Booking.com</li><li>Airbnb</li><li>Stripe</li>
             </ul>
-            <p className="mt-2 text-xs text-primary-foreground/60">Channel sync and secure card payments</p>
+            <p className="mt-2 text-xs text-primary-foreground/60">{L.sync}</p>
           </div>
         </div>
       </div>

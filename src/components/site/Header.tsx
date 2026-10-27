@@ -40,7 +40,7 @@ export function Header({
     { label: c.nav.who, href: `${home}#fit` },
     { label: c.nav.pricing, href: lang === "en" ? "/pricing/" : `${home}#pricing` },
     { label: c.nav.blog, href: href(lang, "blog") },
-  ].filter((link) => lang === "lt" || ![`${home}#approach`, `${home}#fit`, home].includes(link.href));
+  ].filter((link) => ![`${home}#approach`, `${home}#fit`, home].includes(link.href));
 
   return (
     <header

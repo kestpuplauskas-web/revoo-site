@@ -11,8 +11,8 @@
 
 ## Kalbos
 
-- Keep trial CTA destinations in the shared browser-safe trial helper so English registration and independent Lithuanian contact links remain consistent across pages.
-- The English homepage uses a dedicated trial hero with the admin-managed booking-calendar asset; keep the legacy carousel and sales flow for Lithuanian so independent content and animation behavior remain intact.
+- Keep trial CTA destinations in the shared browser-safe trial helper so every language's registration links stay consistent across pages.
+- Both homepages share one trial-hero layout; per-language text lives in separate copy/extras files so languages stay independent without diverging structure.
 
 Svetainė turi dvi nepriklausomas kalbas: `en` (`src/content/copy.en.ts`) ir
 `lt` (`src/content/copy.lt.ts`). Tai NE originalas ir vertimas — tai du
