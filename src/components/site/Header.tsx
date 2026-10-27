@@ -31,6 +31,8 @@ export function Header({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const loginHref = "https://app.revoostay.com/auth";
+  const loginLabel = lang === "en" ? "Log in" : "Prisijungti";
   const links = [
     { label: c.nav.home, href: home },
     { label: c.nav.product, href: `${home}#product` },
@@ -38,8 +40,6 @@ export function Header({
     { label: c.nav.who, href: `${home}#fit` },
     { label: c.nav.pricing, href: lang === "en" ? "/pricing/" : `${home}#pricing` },
     { label: c.nav.blog, href: href(lang, "blog") },
-    { label: c.nav.faq, href: `${home}#faq` },
-    { label: c.nav.contact, href: `${home}#contacts` },
   ].filter((link) => lang === "lt" || ![`${home}#approach`, `${home}#fit`, home].includes(link.href));
 
   return (
@@ -47,7 +47,7 @@ export function Header({
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-[250ms] ease-out",
         scrolled
-          ? "border-b border-ink/10 bg-background"
+          ? "border-b border-ink/10 bg-background/90 backdrop-blur-md"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -88,7 +88,7 @@ export function Header({
             <span className="sr-only">{c.nav.langLabel}:</span>
             {lang === "en" ? (
               <>
-                <span aria-current="true" className="text-teal-500">
+                <span aria-current="true" className={scrolled ? "text-teal-500" : "text-amber-light"}>
                   EN
                 </span>
                 <span aria-hidden="true">/</span>
@@ -102,12 +102,21 @@ export function Header({
                   EN
                 </a>
                 <span aria-hidden="true">/</span>
-                <span aria-current="true" className="text-teal-500">
+                <span aria-current="true" className={scrolled ? "text-teal-500" : "text-amber-light"}>
                   LT
                 </span>
               </>
             )}
           </div>
+          <a
+            href={loginHref}
+            className={cn(
+              "hidden min-h-11 items-center px-2 text-[0.85rem] font-medium transition-colors hover:text-teal-500 sm:inline-flex",
+              scrolled ? "text-ink" : "text-cream",
+            )}
+          >
+            {loginLabel}
+          </a>
           <CtaLink href={demoCtaHref(lang)} tone={scrolled ? "solid" : "cream"} size="sm">
             {c.nav.cta}
           </CtaLink>
@@ -124,12 +133,13 @@ export function Header({
                   <DialogTitle className="font-display text-3xl">Revoo</DialogTitle>
                   <DialogClose asChild><Button variant="ghost" size="icon" className="h-11 w-11" aria-label={lang === "en" ? "Close menu" : "Uždaryti meniu"}><X /></Button></DialogClose>
                 </div>
+                <CtaLink href={demoCtaHref(lang)} className="mt-6 w-full">{c.nav.cta}</CtaLink>
+                <a href={loginHref} className="mt-3 flex min-h-11 items-center justify-center rounded-full border border-border font-medium">{loginLabel}</a>
                 <a href="tel:+37065287044" className="mt-6 block min-h-11 text-primary">{c.nav.contactPhone}</a>
                 <nav aria-label={c.nav.home} className="mt-3 flex flex-col border-t border-border">
                   {links.map(link => <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center border-b border-border py-3">{link.label}</a>)}
                 </nav>
                 <div className="mt-6 flex items-center gap-4"><span>{lang.toUpperCase()}</span><a href={altHref} className="flex min-h-11 items-center underline">{lang === "en" ? "Lietuvių" : "English"}</a></div>
-                <CtaLink href={demoCtaHref(lang)} className="mt-6 w-full">{c.nav.cta}</CtaLink>
               </DialogPrimitive.Content>
             </DialogPortal>
           </Dialog>
