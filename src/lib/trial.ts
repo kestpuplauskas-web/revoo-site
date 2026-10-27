@@ -1,8 +1,9 @@
-import { href, type Lang } from "./i18n";
+import type { Lang } from "./i18n";
 
 export const TRIAL_REGISTRATION_URL = "https://app.revoostay.com/register";
 
-/** English trial links go directly to the hotel app; LT keeps its independent contact flow. */
+/** Trial links in both languages go directly to hotel registration. */
 export function demoCtaHref(lang: Lang): string {
-  return lang === "en" ? TRIAL_REGISTRATION_URL : `${href(lang)}#demo`;
+  void lang;
+  return TRIAL_REGISTRATION_URL;
 }

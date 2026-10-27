@@ -492,7 +492,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 {x.testimonials.items.map((item, i) => (
                   <Reveal key={item.name} delay={i * 60}>
                     <figure className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
-                      <p className="text-amber" aria-label="5 out of 5 stars">★★★★★</p>
+                      <p className="text-amber" aria-label={lang === "en" ? "5 out of 5 stars" : "5 iš 5 žvaigždučių"}>★★★★★</p>
                       <blockquote className="mt-4 flex-1 text-[1rem] leading-relaxed text-ink">“{item.quote}”</blockquote>
                       <p className="mt-6 font-semibold text-ink">{item.name}</p>
                       <figcaption className="text-[0.9rem] text-ink-soft">{item.role} · {item.place}</figcaption>

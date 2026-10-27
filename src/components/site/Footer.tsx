@@ -9,12 +9,6 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
   const product = [
     { label: c.nav.product, href: `${home}#product` },
     { label: c.nav.pricing, href: lang === "en" ? "/pricing/" : `${home}#pricing` },
-    ...(lang === "lt"
-      ? [
-          { label: c.nav.approach, href: `${home}#approach` },
-          { label: c.nav.who, href: `${home}#fit` },
-        ]
-      : []),
     { label: c.nav.cta, href: demoCtaHref(lang) },
   ];
 
@@ -56,7 +50,7 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
         <Col title={c.footer.linksTitle} items={product} />
         <Col title={c.footer.resourcesTitle} items={resources} />
 
-        <div id={lang === "en" ? "contacts" : undefined} className="scroll-mt-24">
+        <div id="contacts" className="scroll-mt-24">
           <h2 className={heading}>{c.footer.contactTitle}</h2>
           <ul className="space-y-3 text-[0.95rem]">
             <li className="flex gap-3">
