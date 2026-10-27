@@ -24,7 +24,7 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
     { label: c.nav.contact, href: `${home}#contacts` },
   ];
 
-  const heading = "mb-4 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-amber/90";
+  const heading = "mb-4 font-sans text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-amber/90";
   const linkCls = "inline-block py-1 transition-colors hover:text-cream focus-visible:text-cream";
 
   const Col = ({ title, items }: { title: string; items: { label: string; href: string }[] }) => (

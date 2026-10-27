@@ -28,7 +28,15 @@ sinchronizavimo tarp šių dviejų failų.
 Nenaudok fallback kalbos. Jei rakto trūksta, tai turi būti kompiliavimo
 klaida, o ne kitos kalbos tekstas puslapyje.
 
+## Tipografija
+
+Puslapio lygmens šriftų taisykles (pvz. `.trial-page h2`) rašyk tik su `<main>`
+ribotuve, kad jos nepakeistų bendrų komponentų (antraštės, poraštės) dydžių —
+nelayered CSS taisyklė laimi prieš Tailwind naudingąsias klases ir užgožia jų
+dydį.
+
 ## Administravimo meniu
+
 
 Administravimo navigaciją grupuok į „Darbo sritis“, „Valdymas“ ir „Nustatymai“, nes pastovi hierarchija sumažina modulio paieškos laiką.
 
