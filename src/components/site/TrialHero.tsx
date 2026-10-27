@@ -64,7 +64,7 @@ export function TrialHero({ copy: c, image }: { copy: Copy; image: SlotMedia }) 
           </div>
 
           <div className="relative mt-4">
-            <div id="rv-tour-panel" role="tabpanel" aria-label={tabs[active].label}
+            <div id="rv-tour-panel" role="tabpanel" aria-label={tabs[active]?.label}
               className="relative aspect-[16/10] overflow-hidden rounded-t-lg border border-primary-foreground/20 bg-teal-900">
               {tabs.map((t, i) => (
                 <img key={t.src} src={t.src} alt={i === active ? t.alt : ""} aria-hidden={i !== active}
