@@ -349,8 +349,10 @@ export const lt: Copy = {
   footer: {
     tagline:
       "Apgyvendinimo vietų valdymo sistema ir rezervacijų svetainė nepriklausomiems viešbučiams, nameliams, svečių namams ir aparatamentams.",
-    linksTitle: "Svetainė",
+    linksTitle: "Produktas",
     langTitle: "Kalba",
+    resourcesTitle: "Ištekliai",
+    contactTitle: "Kontaktai",
     rights: "© 2026 Revoo",
     contact: "revoostay.com · hello@revoostay.com · +370 (652) 87 044",
   },

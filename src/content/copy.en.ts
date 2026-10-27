@@ -352,8 +352,10 @@ export const en: Copy = {
   footer: {
     tagline:
       "A property management system and a booking website for independent hotels, cabins, guesthouses and apartments.",
-    linksTitle: "Site",
+    linksTitle: "Product",
     langTitle: "Language",
+    resourcesTitle: "Resources",
+    contactTitle: "Contact",
     rights: "© 2026 Revoo",
     contact: "revoostay.com · hello@revoostay.com · +370 (652) 87 044",
   },

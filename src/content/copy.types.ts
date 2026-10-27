@@ -170,6 +170,8 @@ export type Copy = {
     tagline: string;
     linksTitle: string;
     langTitle: string;
+    resourcesTitle: string;
+    contactTitle: string;
     rights: string;
     contact: string;
   };
