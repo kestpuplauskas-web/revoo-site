@@ -484,18 +484,18 @@ export function HomePage({ lang }: { lang: Lang }) {
                   <Signature text={x.testimonials.h2} />
                 </h2>
               </Reveal>
-              <ul className="mt-12 grid gap-6 md:grid-cols-3">
+              <div className="mt-12 grid gap-6 md:grid-cols-3">
                 {x.testimonials.items.map((item, i) => (
                   <Reveal key={item.name} delay={i * 60}>
-                    <li className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
+                    <figure className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
                       <p className="text-amber" aria-label="5 out of 5 stars">★★★★★</p>
                       <blockquote className="mt-4 flex-1 text-[1rem] leading-relaxed text-ink">“{item.quote}”</blockquote>
                       <p className="mt-6 font-semibold text-ink">{item.name}</p>
-                      <p className="text-[0.9rem] text-ink-soft">{item.role} · {item.place}</p>
-                    </li>
+                      <figcaption className="text-[0.9rem] text-ink-soft">{item.role} · {item.place}</figcaption>
+                    </figure>
                   </Reveal>
                 ))}
-              </ul>
+              </div>
             </div>
           </section>
         )}
