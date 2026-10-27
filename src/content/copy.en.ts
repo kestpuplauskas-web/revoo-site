@@ -159,7 +159,7 @@ export const en: Copy = {
   pricing: {
     eyebrow: "PRICING",
     h2: "Start free. Decide after you’ve *tried it*.",
-    lede: "Your first two months are free. No credit card and no enquiry form before you start. Explore the system with your own property before deciding whether it fits your business. Contact us if you want to discuss ongoing pricing.",
+    lede: "Your first two months are free. No credit card and no enquiry form before you start. Explore the system with your own property before deciding whether it fits your business. After the trial, pick the plan that matches how you earn.",
     badges: [
       "2 months free",
       "No credit card needed",
