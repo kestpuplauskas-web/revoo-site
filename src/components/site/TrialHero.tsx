@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowRight, BellRing, Check, CircleDollarSign } from "lucide-react";
+import { ArrowDown, ArrowRight, Check } from "lucide-react";
 import type { Copy } from "@/content/copy.types";
 import type { SlotMedia } from "@/content/media-slots";
 import { demoCtaHref } from "@/lib/trial";
@@ -85,16 +85,6 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
                   )}
                 </div>
               ))}
-            </div>
-            <div aria-hidden="true" className="rv-float pointer-events-none absolute -left-4 top-8 hidden items-center gap-3 rounded-lg bg-background px-4 py-3 text-left text-foreground shadow-xl md:flex"
-              style={{ animation: "rv-float 5s ease-in-out infinite" }}>
-              <CircleDollarSign className="h-6 w-6 text-primary" />
-              <span className="text-sm leading-tight"><b>+€420 direct booking</b><br /><span className="text-muted-foreground">0% commission</span></span>
-            </div>
-            <div aria-hidden="true" className="rv-float pointer-events-none absolute -right-4 bottom-10 hidden items-center gap-3 rounded-lg bg-background px-4 py-3 text-left text-foreground shadow-xl md:flex"
-              style={{ animation: "rv-float 5s ease-in-out 1.5s infinite" }}>
-              <BellRing className="h-6 w-6 text-primary" />
-              <span className="text-sm leading-tight"><b>Room 4 cleaned</b><br /><span className="text-muted-foreground">Ready for check-in</span></span>
             </div>
           </div>
         </div>
