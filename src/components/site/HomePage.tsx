@@ -26,7 +26,8 @@ import { useCopyOverrides } from "@/hooks/useCopyOverrides";
 import { useMinPrice, withMin } from "@/hooks/useMinPrice";
 import { href, t, type Lang } from "@/lib/i18n";
 import { demoCtaHref } from "@/lib/trial";
-import { homeExtrasEn as x } from "@/content/home-extras.en";
+import { homeExtrasEn } from "@/content/home-extras.en";
+import { homeExtrasLt } from "@/content/home-extras.lt";
 
 export function HomePage({ lang }: { lang: Lang }) {
   const minPrice = useMinPrice();
@@ -35,9 +36,10 @@ export function HomePage({ lang }: { lang: Lang }) {
   const home = href(lang);
   const demoHref = demoCtaHref(lang);
   const altHref = lang === "en" ? "/lt/" : "/";
+  const x = lang === "en" ? homeExtrasEn : homeExtrasLt;
 
   return (
-    <div className={`min-h-screen bg-cream ${lang === "en" ? "trial-page" : ""}`}>
+    <div className={`min-h-screen bg-cream trial-page`}>
       <a
         href="#hero"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-cream focus:px-4 focus:py-2"
@@ -48,7 +50,7 @@ export function HomePage({ lang }: { lang: Lang }) {
 
       <main id="hero">
         {/* 1. Hero */}
-        {lang === "en" ? <TrialHero copy={c} image={slots["booking-calendar"]} dashboard={slots["dashboard"]} siteCalendar={slots["site-calendar"]} /> : <section className="grid min-h-[88vh] grid-cols-1 lg:grid-cols-[55fr_45fr]">
+        {true ? <TrialHero lang={lang} copy={c} image={slots["booking-calendar"]} dashboard={slots["dashboard"]} siteCalendar={slots["site-calendar"]} /> : <section className="grid min-h-[88vh] grid-cols-1 lg:grid-cols-[55fr_45fr]">
           <div className="flex flex-col justify-center bg-teal-700 px-6 pb-16 pt-28 sm:px-10 lg:px-14 lg:py-32">
             <div className="mx-auto w-full max-w-[640px]">
               <p className="eyebrow mb-5 whitespace-pre-wrap text-amber-light">{c.hero.eyebrow}</p>
@@ -131,7 +133,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 2b. Pricing calculator */}
-        <section id="pricing" className={`section-y bg-teal-900 ${lang === "en" ? "trial-offer" : ""}`}>
+        <section id="pricing" className={`section-y bg-teal-900 trial-offer`}>
           <div className="container-page">
             <Reveal className="text-cream">
               <Eyebrow tone="dark">{c.pricing.eyebrow}</Eyebrow>
@@ -139,7 +141,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 <SignatureUnderlined text={c.pricing.h2} />
               </h2>
               <p className="measure mt-5 text-cream/80">{c.pricing.lede}</p>
-              {lang === "lt" && <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+              {false && <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
                 {c.pricing.badges.map((badge) => (
                   <li key={badge} className="flex items-center gap-2 text-[0.95rem] text-cream/90">
                     <Check aria-hidden="true" className="h-4 w-4 shrink-0 text-amber" />
@@ -149,7 +151,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </ul>}
             </Reveal>
             <Reveal delay={80} className="mt-12">
-              {lang === "en" ? (
+              {true ? (
                 <div>
                   <ul className="grid gap-4 md:grid-cols-3">
                     {x.plans.items.map((plan) => (
@@ -162,9 +164,9 @@ export function HomePage({ lang }: { lang: Lang }) {
                   </ul>
                   <div className="mt-8 flex flex-wrap items-center gap-6">
                     <CtaLink href={demoHref} tone="cream">{c.pricing.cta}</CtaLink>
-                    <Link to="/pricing/" className="inline-flex min-h-11 items-center gap-2 font-medium text-cream underline-offset-4 hover:underline">
+                    {lang === "en" && <Link to="/pricing/" className="inline-flex min-h-11 items-center gap-2 font-medium text-cream underline-offset-4 hover:underline">
                       {x.plans.link} <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                    </Link>
+                    </Link>}
                   </div>
                 </div>
               ) : <PricingCalculator lang={lang} copy={c} ctaHref={demoHref} />}
@@ -173,7 +175,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 2. Approach */}
-        {lang === "lt" && <section id="approach" className="section-y bg-cream">
+        {false && <section id="approach" className="section-y bg-cream">
           <div className="container-page">
             <Reveal>
               <SectionHead
@@ -312,7 +314,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </div>
             </Reveal>
             <Reveal delay={120}>
-              {lang === "en" && (
+              {(
                 <div className="mx-auto mt-10 max-w-[900px]">
                   <h3 className="text-center text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-amber">{x.guest.title}</h3>
                   <ul className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -401,7 +403,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>
 
         {/* 10. Fit */}
-        {lang === "lt" && <section id="fit" className="section-y bg-cream">
+        {false && <section id="fit" className="section-y bg-cream">
           <div className="container-page">
             <Reveal>
               <Eyebrow>{c.fit.eyebrow}</Eyebrow>
@@ -476,8 +478,8 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
-        {/* 11a. Testimonials (EN) */}
-        {lang === "en" && (
+        {/* 11a. Testimonials */}
+        {(
           <section className="section-y bg-cream-deep">
             <div className="container-page">
               <Reveal className="mx-auto max-w-[820px] text-center">
@@ -503,7 +505,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         )}
 
         {/* 11b. Contacts */}
-        {lang === "lt" && <section id="contacts" className="section-y bg-white">
+        {false && <section id="contacts" className="section-y bg-white">
           <div className="container-page grid gap-12 lg:grid-cols-[1fr_1fr]">
             <Reveal>
               <Eyebrow>{c.contacts.eyebrow}</Eyebrow>
@@ -547,7 +549,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         </section>}
 
         {/* 12. Demo */}
-        {lang === "lt" && <section id="demo" className="section-y bg-cream-deep">
+        {false && <section id="demo" className="section-y bg-cream-deep">
           <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.1fr]">
             <Reveal>
               <Eyebrow>{c.demo.eyebrow}</Eyebrow>
@@ -590,7 +592,7 @@ export function HomePage({ lang }: { lang: Lang }) {
             </Reveal>
           </div>
         </section>
-        {lang === "en" && <section id="start" className="bg-primary py-16 text-center text-primary-foreground">
+        {<section id="start" className="bg-primary py-16 text-center text-primary-foreground">
           <div className="container-page">
             <h2 className="text-primary-foreground"><Signature text={c.demo.h2} /></h2>
             <p className="mx-auto mt-4 max-w-[55ch]">{c.demo.lede}</p>

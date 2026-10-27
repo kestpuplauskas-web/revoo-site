@@ -33,7 +33,7 @@ export const homeExtrasLt = {
       },
       {
         quote:
-          "Anksčiau tvarkymas buvo skambučiai ir raštelai. Dabar komanda ryte atsidaro programėlę ir tiesiog žino, kuriuos kambarius tvarkyti pirmiausia.",
+          "Anksčiau tvarkymas buvo skambučiai ir rašteliai. Dabar komanda ryte atsidaro programėlę ir tiesiog žino, kuriuos kambarius tvarkyti pirmiausia.",
         name: "Remigijus J.",
         role: "Boutique viešbutis Dharma Stay",
         place: "Telšiai",
