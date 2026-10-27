@@ -4,6 +4,7 @@ import { earnFee, unitDisplayPrice, unitMonthlyPrice } from "./pricing-plans";
 
 describe("pricing plans", () => {
   test("applies €79 minimum", () => strictEqual(unitMonthlyPrice(3), 79));
+  test("applies admin minimum", () => strictEqual(unitMonthlyPrice(1, 28), 28));
   test("uses €12 up to 10 units", () => strictEqual(unitMonthlyPrice(10), 120));
   test("uses €9.5 up to 30 units", () => strictEqual(unitMonthlyPrice(20), 190));
   test("uses €7.5 up to 60 units", () => strictEqual(unitMonthlyPrice(60), 450));

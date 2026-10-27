@@ -23,6 +23,7 @@ import {
 } from "./primitives";
 import { useSlotOverrides } from "@/hooks/useSlotOverrides";
 import { useCopyOverrides } from "@/hooks/useCopyOverrides";
+import { useMinPrice, withMin } from "@/hooks/useMinPrice";
 import { href, t, type Lang } from "@/lib/i18n";
 import { demoCtaHref } from "@/lib/trial";
 import { homeExtrasEn as x } from "@/content/home-extras.en";
@@ -141,7 +142,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                 {c.pricing.badges.map((badge) => (
                   <li key={badge} className="flex items-center gap-2 text-[0.95rem] text-cream/90">
                     <Check aria-hidden="true" className="h-4 w-4 shrink-0 text-amber" />
-                    <span>{badge}</span>
+                    <span>{withMin(badge, minPrice)}</span>
                   </li>
                 ))}
               </ul>}
@@ -153,7 +154,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                     {x.plans.items.map((plan) => (
                       <li key={plan.name} className="rounded-2xl border border-cream/15 bg-cream/5 p-6">
                         <p className="text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-amber">{plan.name}</p>
-                        <p className="mt-2 font-display text-2xl text-cream">{plan.price}</p>
+                        <p className="mt-2 font-display text-2xl text-cream">{withMin(plan.price, minPrice)}</p>
                         <p className="mt-3 text-[0.95rem] text-cream/75">{plan.body}</p>
                       </li>
                     ))}
