@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BedDouble, CalendarDays, Check, FileText, Mail, MapPin, Phone, TrendingUp, Users, X } from "lucide-react";
+import { ArrowRight, BedDouble, CalendarDays, Check, FileText, Mail, MapPin, Phone, TrendingUp, Users, X } from "lucide-react";
 
 import { featureCopy, featureHref } from "@/content/features";
 
@@ -25,6 +25,7 @@ import { useSlotOverrides } from "@/hooks/useSlotOverrides";
 import { useCopyOverrides } from "@/hooks/useCopyOverrides";
 import { href, t, type Lang } from "@/lib/i18n";
 import { demoCtaHref } from "@/lib/trial";
+import { homeExtrasEn as x } from "@/content/home-extras.en";
 
 export function HomePage({ lang }: { lang: Lang }) {
   const c = useCopyOverrides(lang);
@@ -146,7 +147,25 @@ export function HomePage({ lang }: { lang: Lang }) {
               </ul>}
             </Reveal>
             <Reveal delay={80} className="mt-12">
-              {lang === "en" ? <CtaLink href={demoHref} tone="cream">{c.pricing.cta}</CtaLink> : <PricingCalculator lang={lang} copy={c} ctaHref={demoHref} />}
+              {lang === "en" ? (
+                <div>
+                  <ul className="grid gap-4 md:grid-cols-3">
+                    {x.plans.items.map((plan) => (
+                      <li key={plan.name} className="rounded-2xl border border-cream/15 bg-cream/5 p-6">
+                        <p className="text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-amber">{plan.name}</p>
+                        <p className="mt-2 font-display text-2xl text-cream">{plan.price}</p>
+                        <p className="mt-3 text-[0.95rem] text-cream/75">{plan.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-8 flex flex-wrap items-center gap-6">
+                    <CtaLink href={demoHref} tone="cream">{c.pricing.cta}</CtaLink>
+                    <Link to="/pricing/" className="inline-flex min-h-11 items-center gap-2 font-medium text-cream underline-offset-4 hover:underline">
+                      {x.plans.link} <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              ) : <PricingCalculator lang={lang} copy={c} ctaHref={demoHref} />}
             </Reveal>
           </div>
         </section>
@@ -291,6 +310,19 @@ export function HomePage({ lang }: { lang: Lang }) {
               </div>
             </Reveal>
             <Reveal delay={120}>
+              {lang === "en" && (
+                <div className="mx-auto mt-10 max-w-[900px]">
+                  <h3 className="text-center text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-amber">{x.guest.title}</h3>
+                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {x.guest.points.map((point) => (
+                      <li key={point} className="flex items-start gap-2 text-[0.95rem] text-cream/90">
+                        <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-amber" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <p className="measure mx-auto mt-8 text-center text-[0.92rem] text-cream/70">{c.channel.note}</p>
             </Reveal>
           </div>
@@ -442,8 +474,34 @@ export function HomePage({ lang }: { lang: Lang }) {
           </div>
         </section>
 
+        {/* 11a. Testimonials (EN) */}
+        {lang === "en" && (
+          <section className="section-y bg-cream-deep">
+            <div className="container-page">
+              <Reveal className="mx-auto max-w-[820px] text-center">
+                <Eyebrow>{x.testimonials.eyebrow}</Eyebrow>
+                <h2>
+                  <Signature text={x.testimonials.h2} />
+                </h2>
+              </Reveal>
+              <div className="mt-12 grid gap-6 md:grid-cols-3">
+                {x.testimonials.items.map((item, i) => (
+                  <Reveal key={item.name} delay={i * 60}>
+                    <figure className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm">
+                      <p className="text-amber" aria-label="5 out of 5 stars">★★★★★</p>
+                      <blockquote className="mt-4 flex-1 text-[1rem] leading-relaxed text-ink">“{item.quote}”</blockquote>
+                      <p className="mt-6 font-semibold text-ink">{item.name}</p>
+                      <figcaption className="text-[0.9rem] text-ink-soft">{item.role} · {item.place}</figcaption>
+                    </figure>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* 11b. Contacts */}
-        <section id="contacts" className="section-y bg-white">
+        {lang === "lt" && <section id="contacts" className="section-y bg-white">
           <div className="container-page grid gap-12 lg:grid-cols-[1fr_1fr]">
             <Reveal>
               <Eyebrow>{c.contacts.eyebrow}</Eyebrow>
@@ -484,7 +542,7 @@ export function HomePage({ lang }: { lang: Lang }) {
               </CtaLink>
             </Reveal>
           </div>
-        </section>
+        </section>}
 
         {/* 12. Demo */}
         {lang === "lt" && <section id="demo" className="section-y bg-cream-deep">
