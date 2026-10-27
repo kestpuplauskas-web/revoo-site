@@ -29,6 +29,7 @@ import { demoCtaHref } from "@/lib/trial";
 import { homeExtrasEn as x } from "@/content/home-extras.en";
 
 export function HomePage({ lang }: { lang: Lang }) {
+  const minPrice = useMinPrice();
   const c = useCopyOverrides(lang);
   const slots = useSlotOverrides();
   const home = href(lang);
