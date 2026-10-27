@@ -5,27 +5,34 @@ import type { SlotMedia } from "@/content/media-slots";
 import { demoCtaHref } from "@/lib/trial";
 import { CtaLink, SignatureUnderlined } from "./primitives";
 
-const DURATION = 6000;
+const DURATION = 4500;
+
+type Tab = { label: string; src: string; alt: string; phone?: { src: string; alt: string } };
 
 export function TrialHero({ copy: c, image }: { copy: Copy; image: SlotMedia }) {
-  const tabs = [
+  const tabs: Tab[] = [
     { label: "Multi-calendar", src: image.url, alt: c.media.alt.calendar },
-    { label: "Housekeeping app", src: "/media/7_housekeeping_app.webp", alt: "Revoo housekeeping app on a phone" },
-    { label: "Direct booking engine", src: "/media/6_booking_v2.webp", alt: "Revoo direct booking engine for guests" },
-    { label: "Invoices & finance", src: "/media/9_invoice.webp", alt: "Automated invoice in Revoo" },
+    { label: "Dashboard", src: "/media/11_dashboard.webp", alt: "Revoo business dashboard with occupancy and revenue" },
+    { label: "Housekeeping app", src: "/media/8_housekeeping.webp", alt: "Revoo housekeeping schedule", phone: { src: "/media/7_housekeeping_app.webp", alt: "Revoo housekeeping app on a phone" } },
+    { label: "Direct booking engine", src: "/media/1_homepage_calendar.webp", alt: "Revoo direct booking engine on a property website" },
   ];
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
+  const [hover, setHover] = useState(false);
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
   useEffect(() => {
-    if (!auto || reduced) return;
-    const t = window.setTimeout(() => setActive((a) => (a + 1) % tabs.length), DURATION);
+    if (reduced || hover) return;
+    const t = window.setTimeout(() => {
+      if (!auto) setAuto(true);
+      else setActive((a) => (a + 1) % tabs.length);
+    }, auto ? DURATION : 12000);
     return () => window.clearTimeout(t);
-  }, [active, auto, reduced, tabs.length]);
+  }, [active, auto, reduced, hover, tabs.length]);
+  const running = auto && !reduced && !hover;
 
   return (
     <section className="trial-hero bg-primary text-primary-foreground">
@@ -56,20 +63,27 @@ export function TrialHero({ copy: c, image }: { copy: Copy; image: SlotMedia }) 
                 <span className="mt-2 block h-0.5 overflow-hidden rounded bg-primary-foreground/20">
                   {i === active && (
                     <span key={`${active}-${auto}`} className="block h-full origin-left bg-amber-light"
-                      style={auto && !reduced ? { animation: `rv-progress ${DURATION}ms linear forwards` } : undefined} />
+                      style={auto && !reduced ? { animation: `rv-progress ${DURATION}ms linear forwards`, animationPlayState: running ? "running" : "paused" } : undefined} />
                   )}
                 </span>
               </button>
             ))}
           </div>
 
-          <div className="relative mt-4">
+          <div className="relative mt-4" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <div id="rv-tour-panel" role="tabpanel" aria-label={tabs[active]?.label}
               className="relative aspect-[16/10] overflow-hidden rounded-t-lg border border-primary-foreground/20 bg-teal-900">
               {tabs.map((t, i) => (
-                <img key={t.src} src={t.src} alt={i === active ? t.alt : ""} aria-hidden={i !== active}
-                  fetchPriority={i === 0 ? "high" : "low"} loading={i === 0 ? "eager" : "lazy"}
-                  className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`} />
+                <div key={t.src} aria-hidden={i !== active}
+                  className={`absolute inset-0 transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}>
+                  <img src={t.src} alt={i === active ? t.alt : ""}
+                    fetchPriority={i === 0 ? "high" : "low"} loading={i === 0 ? "eager" : "lazy"}
+                    className={`h-full w-full object-contain ${t.phone ? "opacity-40" : ""}`} />
+                  {t.phone && (
+                    <img src={t.phone.src} alt={i === active ? t.phone.alt : ""} loading="lazy" width={738} height={1600}
+                      style={{ width: "auto", height: "92%", maxWidth: "none", aspectRatio: "738 / 1600" }} className="absolute left-1/2 top-[4%] -translate-x-1/2 rounded-[1.75rem] border-4 border-foreground/80 shadow-2xl" />
+                  )}
+                </div>
               ))}
             </div>
             <div aria-hidden="true" className="rv-float pointer-events-none absolute -left-4 top-8 hidden items-center gap-3 rounded-lg bg-background px-4 py-3 text-left text-foreground shadow-xl md:flex"
