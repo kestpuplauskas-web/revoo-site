@@ -227,7 +227,8 @@ function PricingPage() {
               <h2 className="mb-1.5 font-display text-2xl font-semibold text-cream">Nothing fixed, ever.</h2>
               <p className="mb-5 text-sm leading-normal text-teal-100">
                 For properties just starting out, or unsure of volume. No monthly bill — you only pay when a guest books
-                directly through your Revoo website.
+                directly through the Revoo booking engine on your own website. No website yet? We build one on your
+                domain.
               </p>
               <div className="mb-1.5">
                 <span className="text-[38px] font-semibold text-cream">€0</span>
@@ -354,6 +355,7 @@ function PricingPage() {
                     <button type="submit" disabled={!canSend} className={cn(btn, "bg-cream-deep text-ink")}>
                       {status === "busy" ? "Sending…" : "Send"}
                     </button>
+                    <p className="text-center text-xs text-ink-soft">We reply within 24 hours · No spam</p>
                   </form>
                 )}
               </div>

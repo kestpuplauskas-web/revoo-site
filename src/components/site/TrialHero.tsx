@@ -94,6 +94,26 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
           <Check aria-hidden="true" className="h-4 w-4 text-amber-light" />{badge}
         </li>)}
       </ul>
+      <div aria-labelledby="proof-title" className="bg-teal-900 px-6 pb-14 pt-10" role="region">
+        <h2 id="proof-title" className="sr-only">Results and integrations</h2>
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-[1fr_1fr_1.3fr] md:divide-x md:divide-primary-foreground/15">
+          <div className="text-center md:px-6">
+            <p className="font-display text-5xl text-amber-light">+27%</p>
+            <p className="mt-2 text-sm text-primary-foreground/80">Increase in direct bookings</p>
+          </div>
+          <div className="text-center md:px-6">
+            <p className="font-display text-5xl text-amber-light">72%</p>
+            <p className="mt-2 text-sm text-primary-foreground/80">Less time spent on daily admin</p>
+          </div>
+          <div className="text-center md:px-6">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-primary-foreground/60">Works with</p>
+            <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-lg font-semibold text-primary-foreground">
+              <li>Booking.com</li><li>Airbnb</li><li>Stripe</li>
+            </ul>
+            <p className="mt-2 text-xs text-primary-foreground/60">Channel sync and secure card payments</p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
