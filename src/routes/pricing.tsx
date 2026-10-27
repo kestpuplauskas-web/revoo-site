@@ -47,7 +47,7 @@ const PLATFORM = [
 const FAQ = [
   [
     "Do you take a commission on OTA bookings?",
-    "Never. Booking.com, Airbnb and similar channels are yours — we don't touch that revenue on any plan. The 2% fee on Pay as you earn applies only to bookings made directly through your own Revoo website.",
+    "Never. Booking.com, Airbnb and similar channels are yours — we don't touch that revenue on any plan. The 2% fee on Pay as you earn applies only to bookings made directly through the Revoo booking engine on your own website or domain.",
   ],
   [
     "Why three plans instead of one fixed price?",
@@ -234,7 +234,7 @@ function PricingPage() {
                 <span className="text-[38px] font-semibold text-cream">€0</span>
                 <span className="text-sm text-teal-100">/month</span>
               </div>
-              <p className="mb-3.5 text-sm font-semibold text-amber-light">+ 2% of direct bookings only</p>
+              <p className="mb-3.5 text-sm font-semibold text-amber-light">+ 2% of direct bookings only · 0% on Booking.com &amp; Airbnb</p>
               <Gift strong>First 2 months free — zero fee, zero bill</Gift>
               <div className="mb-5 rounded-2xl bg-cream/10 px-4 py-3.5">
                 <label htmlFor="revenue" className="mb-2 block text-xs text-teal-100">
@@ -258,7 +258,7 @@ function PricingPage() {
               <ul className="mb-5 flex flex-1 flex-col gap-2.5 text-sm leading-snug">
                 {[
                   "Full PMS — calendar, housekeeping, invoicing",
-                  "Your own booking website, on your domain",
+                  "Booking engine on your website — or a new site on your domain",
                   "No setup fee, no monthly bill",
                   "2 months free before any fee applies",
                 ].map((t) => (
