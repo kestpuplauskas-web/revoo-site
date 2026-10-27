@@ -8,7 +8,7 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
 
   const product = [
     { label: c.nav.product, href: `${home}#product` },
-    { label: c.nav.pricing, href: lang === "en" ? "/pricing/" : `${home}#pricing` },
+    { label: c.nav.pricing, href: lang === "en" ? "/pricing/" : "/lt/kainos/" },
     { label: c.nav.cta, href: demoCtaHref(lang) },
   ];
 

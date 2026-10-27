@@ -47,7 +47,18 @@ function buildSitemap(posts: SitemapPost[]): string {
     {
       loc: absUrl("en", "pricing"),
       lastmod: anyLatest,
-      alternates: [{ lang: "en", href: absUrl("en", "pricing") }],
+      alternates: [
+        { lang: "en", href: absUrl("en", "pricing") },
+        { lang: "lt", href: absUrl("lt", "kainos") },
+      ],
+    },
+    {
+      loc: absUrl("lt", "kainos"),
+      lastmod: anyLatest,
+      alternates: [
+        { lang: "en", href: absUrl("en", "pricing") },
+        { lang: "lt", href: absUrl("lt", "kainos") },
+      ],
     },
     {
       loc: enBlog,

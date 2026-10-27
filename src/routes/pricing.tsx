@@ -134,7 +134,7 @@ function PricingPage() {
 
   return (
     <div className="min-h-screen bg-cream font-sans text-ink">
-      <Header lang="en" altHref="/lt" variant="solid" />
+      <Header lang="en" altHref="/lt/kainos/" variant="solid" />
       <div className="h-20" aria-hidden="true" />
 
       <main>
