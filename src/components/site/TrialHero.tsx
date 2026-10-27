@@ -81,7 +81,7 @@ export function TrialHero({ copy: c, image }: { copy: Copy; image: SlotMedia }) 
                     className={`h-full w-full object-contain ${t.phone ? "opacity-40" : ""}`} />
                   {t.phone && (
                     <img src={t.phone.src} alt={i === active ? t.phone.alt : ""} loading="lazy" width={738} height={1600}
-                      className="absolute left-1/2 top-[4%] h-[92%] w-auto -translate-x-1/2 rounded-[1.75rem] border-4 border-foreground/80 shadow-2xl" />
+                      style={{ width: "auto", height: "92%", maxWidth: "none", aspectRatio: "738 / 1600" }} className="absolute left-1/2 top-[4%] -translate-x-1/2 rounded-[1.75rem] border-4 border-foreground/80 shadow-2xl" />
                   )}
                 </div>
               ))}
