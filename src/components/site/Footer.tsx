@@ -56,7 +56,7 @@ export function Footer({ lang, altHref }: { lang: Lang; altHref: string }) {
         <Col title={c.footer.linksTitle} items={product} />
         <Col title={c.footer.resourcesTitle} items={resources} />
 
-        <div>
+        <div id={lang === "en" ? "contacts" : undefined} className="scroll-mt-24">
           <h2 className={heading}>{c.footer.contactTitle}</h2>
           <ul className="space-y-3 text-[0.95rem]">
             <li className="flex gap-3">
