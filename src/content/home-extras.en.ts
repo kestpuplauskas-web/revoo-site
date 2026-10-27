@@ -34,9 +34,9 @@ export const homeExtrasEn = {
       {
         quote:
           "Housekeeping used to be phone calls and notes. Now the team opens the app in the morning and simply knows which rooms come first.",
-        name: "Tomas K.",
-        role: "Manager, seaside cabins",
-        place: "Lithuanian coast",
+        name: "Remigijus J.",
+        role: "Boutique hotel, Dharma Stay",
+        place: "Klaipėda",
       },
       {
         quote:
