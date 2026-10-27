@@ -23,6 +23,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as FeaturesIndexRouteImport } from './routes/features/index'
 import { Route as FeaturesSlugRouteImport } from './routes/features/$slug'
 import { Route as LtIndexRouteImport } from './routes/lt/index'
+import { Route as LtKainosRouteImport } from './routes/lt/kainos'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authenticated/admin.analitika'
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
@@ -114,6 +115,11 @@ const FeaturesSlugRoute = FeaturesSlugRouteImport.update({
 const LtIndexRoute = LtIndexRouteImport.update({
   id: '/lt/',
   path: '/lt/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LtKainosRoute = LtKainosRouteImport.update({
+  id: '/lt/kainos',
+  path: '/lt/kainos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
@@ -260,6 +266,7 @@ export interface FileRoutesByFullPath {
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/lt/kainos': typeof LtKainosRoute
   '/blog/': typeof BlogIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
@@ -297,6 +304,7 @@ export interface FileRoutesByTo {
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/lt/kainos': typeof LtKainosRoute
   '/blog': typeof BlogIndexRoute
   '/features': typeof FeaturesIndexRoute
   '/lt': typeof LtIndexRoute
@@ -337,6 +345,7 @@ export interface FileRoutesById {
   '/api/track-view': typeof ApiTrackViewRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/features/$slug': typeof FeaturesSlugRoute
+  '/lt/kainos': typeof LtKainosRoute
   '/blog/': typeof BlogIndexRoute
   '/features/': typeof FeaturesIndexRoute
   '/lt/': typeof LtIndexRoute
@@ -377,6 +386,7 @@ export interface FileRouteTypes {
     | '/api/track-view'
     | '/blog/$slug'
     | '/features/$slug'
+    | '/lt/kainos'
     | '/blog/'
     | '/features/'
     | '/lt/'
@@ -414,6 +424,7 @@ export interface FileRouteTypes {
     | '/api/track-view'
     | '/blog/$slug'
     | '/features/$slug'
+    | '/lt/kainos'
     | '/blog'
     | '/features'
     | '/lt'
@@ -453,6 +464,7 @@ export interface FileRouteTypes {
     | '/api/track-view'
     | '/blog/$slug'
     | '/features/$slug'
+    | '/lt/kainos'
     | '/blog/'
     | '/features/'
     | '/lt/'
@@ -492,6 +504,7 @@ export interface RootRouteChildren {
   ApiTrackViewRoute: typeof ApiTrackViewRoute
   BlogSlugRoute: typeof BlogSlugRoute
   FeaturesSlugRoute: typeof FeaturesSlugRoute
+  LtKainosRoute: typeof LtKainosRoute
   BlogIndexRoute: typeof BlogIndexRoute
   FeaturesIndexRoute: typeof FeaturesIndexRoute
   LtIndexRoute: typeof LtIndexRoute
@@ -600,6 +613,13 @@ declare module '@tanstack/react-router' {
       path: '/lt'
       fullPath: '/lt/'
       preLoaderRoute: typeof LtIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lt/kainos': {
+      id: '/lt/kainos'
+      path: '/lt/kainos'
+      fullPath: '/lt/kainos'
+      preLoaderRoute: typeof LtKainosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/': {
@@ -836,6 +856,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTrackViewRoute: ApiTrackViewRoute,
   BlogSlugRoute: BlogSlugRoute,
   FeaturesSlugRoute: FeaturesSlugRoute,
+  LtKainosRoute: LtKainosRoute,
   BlogIndexRoute: BlogIndexRoute,
   FeaturesIndexRoute: FeaturesIndexRoute,
   LtIndexRoute: LtIndexRoute,
