@@ -164,7 +164,7 @@ export function HomePage({ lang }: { lang: Lang }) {
                   </ul>
                   <div className="mt-8 flex flex-wrap items-center gap-6">
                     <CtaLink href={demoHref} tone="cream">{c.pricing.cta}</CtaLink>
-                    {lang === "en" && <Link to="/pricing/" className="inline-flex min-h-11 items-center gap-2 font-medium text-cream underline-offset-4 hover:underline">
+                    {<Link to={lang === "en" ? "/pricing/" : "/lt/kainos/"} className="inline-flex min-h-11 items-center gap-2 font-medium text-cream underline-offset-4 hover:underline">
                       {x.plans.link} <ArrowRight aria-hidden="true" className="h-4 w-4" />
                     </Link>}
                   </div>
