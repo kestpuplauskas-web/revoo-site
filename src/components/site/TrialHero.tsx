@@ -63,20 +63,27 @@ export function TrialHero({ copy: c, image }: { copy: Copy; image: SlotMedia }) 
                 <span className="mt-2 block h-0.5 overflow-hidden rounded bg-primary-foreground/20">
                   {i === active && (
                     <span key={`${active}-${auto}`} className="block h-full origin-left bg-amber-light"
-                      style={auto && !reduced ? { animation: `rv-progress ${DURATION}ms linear forwards` } : undefined} />
+                      style={auto && !reduced ? { animation: `rv-progress ${DURATION}ms linear forwards`, animationPlayState: running ? "running" : "paused" } : undefined} />
                   )}
                 </span>
               </button>
             ))}
           </div>
 
-          <div className="relative mt-4">
+          <div className="relative mt-4" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <div id="rv-tour-panel" role="tabpanel" aria-label={tabs[active]?.label}
               className="relative aspect-[16/10] overflow-hidden rounded-t-lg border border-primary-foreground/20 bg-teal-900">
               {tabs.map((t, i) => (
-                <img key={t.src} src={t.src} alt={i === active ? t.alt : ""} aria-hidden={i !== active}
-                  fetchPriority={i === 0 ? "high" : "low"} loading={i === 0 ? "eager" : "lazy"}
-                  className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`} />
+                <div key={t.src} aria-hidden={i !== active}
+                  className={`absolute inset-0 transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}>
+                  <img src={t.src} alt={i === active ? t.alt : ""}
+                    fetchPriority={i === 0 ? "high" : "low"} loading={i === 0 ? "eager" : "lazy"}
+                    className={`h-full w-full object-contain ${t.phone ? "opacity-40" : ""}`} />
+                  {t.phone && (
+                    <img src={t.phone.src} alt={i === active ? t.phone.alt : ""} loading="lazy" width={738} height={1600}
+                      className="absolute left-1/2 top-[4%] h-[92%] w-auto -translate-x-1/2 rounded-[1.75rem] border-4 border-foreground/80 shadow-2xl" />
+                  )}
+                </div>
               ))}
             </div>
             <div aria-hidden="true" className="rv-float pointer-events-none absolute -left-4 top-8 hidden items-center gap-3 rounded-lg bg-background px-4 py-3 text-left text-foreground shadow-xl md:flex"
