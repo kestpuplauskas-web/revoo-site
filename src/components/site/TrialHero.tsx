@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowRight, BellRing, Check, CircleDollarSign } from "lucide-react";
+import { ArrowDown, ArrowRight, Check } from "lucide-react";
 import type { Copy } from "@/content/copy.types";
 import type { SlotMedia } from "@/content/media-slots";
 import { demoCtaHref } from "@/lib/trial";
