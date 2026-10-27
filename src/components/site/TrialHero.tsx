@@ -9,12 +9,12 @@ const DURATION = 4500;
 
 type Tab = { label: string; src: string; alt: string; phone?: { src: string; alt: string } };
 
-export function TrialHero({ copy: c, image }: { copy: Copy; image: SlotMedia }) {
+export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: Copy; image: SlotMedia; dashboard: SlotMedia; siteCalendar: SlotMedia }) {
   const tabs: Tab[] = [
     { label: "Multi-calendar", src: image.url, alt: c.media.alt.calendar },
-    { label: "Dashboard", src: "/media/11_dashboard.webp", alt: "Revoo business dashboard with occupancy and revenue" },
+    { label: "Dashboard", src: dashboard.url, alt: "Revoo business dashboard with occupancy and revenue" },
     { label: "Housekeeping app", src: "/media/8_housekeeping.webp", alt: "Revoo housekeeping schedule", phone: { src: "/media/7_housekeeping_app.webp", alt: "Revoo housekeeping app on a phone" } },
-    { label: "Direct booking engine", src: "/media/1_homepage_calendar.webp", alt: "Revoo direct booking engine on a property website" },
+    { label: "Direct booking engine", src: siteCalendar.url, alt: "Revoo direct booking engine on a property website" },
   ];
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);

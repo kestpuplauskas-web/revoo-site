@@ -45,7 +45,7 @@ export function HomePage({ lang }: { lang: Lang }) {
 
       <main id="hero">
         {/* 1. Hero */}
-        {lang === "en" ? <TrialHero copy={c} image={slots["booking-calendar"]} /> : <section className="grid min-h-[88vh] grid-cols-1 lg:grid-cols-[55fr_45fr]">
+        {lang === "en" ? <TrialHero copy={c} image={slots["booking-calendar"]} dashboard={slots["dashboard"]} siteCalendar={slots["site-calendar"]} /> : <section className="grid min-h-[88vh] grid-cols-1 lg:grid-cols-[55fr_45fr]">
           <div className="flex flex-col justify-center bg-teal-700 px-6 pb-16 pt-28 sm:px-10 lg:px-14 lg:py-32">
             <div className="mx-auto w-full max-w-[640px]">
               <p className="eyebrow mb-5 whitespace-pre-wrap text-amber-light">{c.hero.eyebrow}</p>
