@@ -4,7 +4,7 @@ export const homeExtrasEn = {
     items: [
       {
         name: "Per unit",
-        price: "from €79/mo",
+        price: "from €{min}/mo",
         body: "One flat monthly price based on your number of units. Every module included.",
       },
       {

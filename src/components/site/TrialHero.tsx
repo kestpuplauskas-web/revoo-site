@@ -4,6 +4,7 @@ import type { Copy } from "@/content/copy.types";
 import type { SlotMedia } from "@/content/media-slots";
 import { demoCtaHref } from "@/lib/trial";
 import { CtaLink, SignatureUnderlined } from "./primitives";
+import { useMinPrice, withMin } from "@/hooks/useMinPrice";
 
 const DURATION = 4500;
 
@@ -16,6 +17,7 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
     { label: "Housekeeping app", src: "/media/8_housekeeping.webp", alt: "Revoo housekeeping schedule", phone: { src: "/media/7_housekeeping_app.webp", alt: "Revoo housekeeping app on a phone" } },
     { label: "Direct booking engine", src: siteCalendar.url, alt: "Revoo direct booking engine on a property website" },
   ];
+  const minPrice = useMinPrice();
   const [active, setActive] = useState(0);
   const [auto, setAuto] = useState(true);
   const [hover, setHover] = useState(false);
@@ -91,7 +93,7 @@ export function TrialHero({ copy: c, image, dashboard, siteCalendar }: { copy: C
       </div>
       <ul className="flex flex-wrap justify-center gap-x-10 gap-y-3 border-t border-primary-foreground/15 bg-teal-900 px-6 py-5">
         {c.pricing.badges.map((badge) => <li key={badge} className="flex items-center gap-2 text-sm">
-          <Check aria-hidden="true" className="h-4 w-4 text-amber-light" />{badge}
+          <Check aria-hidden="true" className="h-4 w-4 text-amber-light" />{withMin(badge, minPrice)}
         </li>)}
       </ul>
       <div aria-labelledby="proof-title" className="bg-teal-900 px-6 pb-14 pt-10" role="region">

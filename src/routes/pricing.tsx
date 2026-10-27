@@ -9,6 +9,7 @@ import { submitLead } from "@/lib/leads.functions";
 import { TRIAL_REGISTRATION_URL } from "@/lib/trial";
 import { earnFee, unitDisplayPrice, type Billing } from "@/lib/pricing-plans";
 import { cn } from "@/lib/utils";
+import { useMinPrice } from "@/hooks/useMinPrice";
 import { Header } from "@/components/site/Header";
 
 const TITLE = "Pricing — Revoo PMS & booking system";
@@ -100,7 +101,8 @@ function PricingPage() {
   const [emailError, setEmailError] = useState(false);
   const send = useServerFn(submitLead);
 
-  const price = unitDisplayPrice(units, billing);
+  const minPrice = useMinPrice();
+  const price = unitDisplayPrice(units, billing, minPrice);
   const perUnit = Math.round((price / units) * 10) / 10;
   const emailValid = z.string().email().safeParse(email.trim()).success;
   const canSend = emailValid && hotel.trim().length > 0 && status !== "busy";
