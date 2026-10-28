@@ -47,6 +47,7 @@ import { Route as AuthenticatedAdminRegistrasImportasRouteImport } from './route
 import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
 import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
 import { Route as ApiPublicCampaignsTickRouteImport } from './routes/api/public/campaigns/tick'
+import { Route as ApiPublicScrapeTickRouteImport } from './routes/api/public/scrape/tick'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -254,6 +255,11 @@ const ApiPublicCampaignsTickRoute = ApiPublicCampaignsTickRouteImport.update({
   path: '/api/public/campaigns/tick',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicScrapeTickRoute = ApiPublicScrapeTickRouteImport.update({
+  id: '/api/public/scrape/tick',
+  path: '/api/public/scrape/tick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -290,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
+  '/api/public/scrape/tick': typeof ApiPublicScrapeTickRoute
   '/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
   '/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -328,6 +335,7 @@ export interface FileRoutesByTo {
   '/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
+  '/api/public/scrape/tick': typeof ApiPublicScrapeTickRoute
   '/admin/projektai': typeof AuthenticatedAdminProjektaiIndexRoute
   '/admin/registras': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -369,6 +377,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
+  '/api/public/scrape/tick': typeof ApiPublicScrapeTickRoute
   '/_authenticated/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
   '/_authenticated/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -410,6 +419,7 @@ export interface FileRouteTypes {
     | '/admin/registras/importas'
     | '/admin/straipsniai/$id'
     | '/api/public/campaigns/tick'
+    | '/api/public/scrape/tick'
     | '/admin/projektai/'
     | '/admin/registras/'
     | '/admin/straipsniai/'
@@ -448,6 +458,7 @@ export interface FileRouteTypes {
     | '/admin/registras/importas'
     | '/admin/straipsniai/$id'
     | '/api/public/campaigns/tick'
+    | '/api/public/scrape/tick'
     | '/admin/projektai'
     | '/admin/registras'
     | '/admin/straipsniai'
@@ -488,6 +499,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/registras/importas'
     | '/_authenticated/admin/straipsniai/$id'
     | '/api/public/campaigns/tick'
+    | '/api/public/scrape/tick'
     | '/_authenticated/admin/projektai/'
     | '/_authenticated/admin/registras/'
     | '/_authenticated/admin/straipsniai/'
@@ -513,6 +525,7 @@ export interface RootRouteChildren {
   LtBlogIndexRoute: typeof LtBlogIndexRoute
   LtFunkcijosIndexRoute: typeof LtFunkcijosIndexRoute
   ApiPublicCampaignsTickRoute: typeof ApiPublicCampaignsTickRoute
+  ApiPublicScrapeTickRoute: typeof ApiPublicScrapeTickRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -783,6 +796,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicCampaignsTickRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/scrape/tick': {
+      id: '/api/public/scrape/tick'
+      path: '/api/public/scrape/tick'
+      fullPath: '/api/public/scrape/tick'
+      preLoaderRoute: typeof ApiPublicScrapeTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -865,6 +885,7 @@ const rootRouteChildren: RootRouteChildren = {
   LtBlogIndexRoute: LtBlogIndexRoute,
   LtFunkcijosIndexRoute: LtFunkcijosIndexRoute,
   ApiPublicCampaignsTickRoute: ApiPublicCampaignsTickRoute,
+  ApiPublicScrapeTickRoute: ApiPublicScrapeTickRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
