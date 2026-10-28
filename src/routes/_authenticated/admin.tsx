@@ -10,6 +10,7 @@ import {
   Inbox,
   NotepadText,
   Send,
+  Search,
   Tag,
   Type,
   Users,

@@ -29,6 +29,7 @@ import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as AuthenticatedAdminKainodaraRouteImport } from './routes/_authenticated/admin.kainodara'
 import { Route as AuthenticatedAdminKampanijosRouteImport } from './routes/_authenticated/admin.kampanijos'
+import { Route as AuthenticatedAdminKontaktuRinkimasRouteImport } from './routes/_authenticated/admin.kontaktu-rinkimas'
 import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
 import { Route as AuthenticatedAdminTekstaiRouteImport } from './routes/_authenticated/admin.tekstai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
@@ -150,6 +151,12 @@ const AuthenticatedAdminKampanijosRoute =
   AuthenticatedAdminKampanijosRouteImport.update({
     id: '/kampanijos',
     path: '/kampanijos',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminKontaktuRinkimasRoute =
+  AuthenticatedAdminKontaktuRinkimasRouteImport.update({
+    id: '/kontaktu-rinkimas',
+    path: '/kontaktu-rinkimas',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminSablonaiRoute =
@@ -280,6 +287,7 @@ export interface FileRoutesByFullPath {
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
+  '/admin/kontaktu-rinkimas': typeof AuthenticatedAdminKontaktuRinkimasRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -319,6 +327,7 @@ export interface FileRoutesByTo {
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
+  '/admin/kontaktu-rinkimas': typeof AuthenticatedAdminKontaktuRinkimasRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -361,6 +370,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/_authenticated/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
+  '/_authenticated/admin/kontaktu-rinkimas': typeof AuthenticatedAdminKontaktuRinkimasRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -403,6 +413,7 @@ export interface FileRouteTypes {
     | '/admin/homepage'
     | '/admin/kainodara'
     | '/admin/kampanijos'
+    | '/admin/kontaktu-rinkimas'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -442,6 +453,7 @@ export interface FileRouteTypes {
     | '/admin/homepage'
     | '/admin/kainodara'
     | '/admin/kampanijos'
+    | '/admin/kontaktu-rinkimas'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -483,6 +495,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/kainodara'
     | '/_authenticated/admin/kampanijos'
+    | '/_authenticated/admin/kontaktu-rinkimas'
     | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/tekstai'
     | '/_authenticated/admin/uzklausos'
@@ -670,6 +683,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminKampanijosRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/kontaktu-rinkimas': {
+      id: '/_authenticated/admin/kontaktu-rinkimas'
+      path: '/kontaktu-rinkimas'
+      fullPath: '/admin/kontaktu-rinkimas'
+      preLoaderRoute: typeof AuthenticatedAdminKontaktuRinkimasRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/sablonai': {
       id: '/_authenticated/admin/sablonai'
       path: '/sablonai'
@@ -811,6 +831,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminKainodaraRoute: typeof AuthenticatedAdminKainodaraRoute
   AuthenticatedAdminKampanijosRoute: typeof AuthenticatedAdminKampanijosRoute
+  AuthenticatedAdminKontaktuRinkimasRoute: typeof AuthenticatedAdminKontaktuRinkimasRoute
   AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
   AuthenticatedAdminTekstaiRoute: typeof AuthenticatedAdminTekstaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
@@ -832,6 +853,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminKainodaraRoute: AuthenticatedAdminKainodaraRoute,
   AuthenticatedAdminKampanijosRoute: AuthenticatedAdminKampanijosRoute,
+  AuthenticatedAdminKontaktuRinkimasRoute:
+    AuthenticatedAdminKontaktuRinkimasRoute,
   AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
   AuthenticatedAdminTekstaiRoute: AuthenticatedAdminTekstaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,

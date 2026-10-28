@@ -46,3 +46,7 @@ Kampanijų laiškai siunčiami per Amazon SES (SigV4, `aws4fetch`) iš serverio;
 Siuntėjai rotuojami pagal mažiausią dienos limito išnaudojimą, kad nė vienas adresas neviršytų savo saugaus limito.
 
 - Campaign audience selection uses a shared helper for preview and creation, with database-side Lithuanian date bounds and stable paginated reads; this prevents the Data API row ceiling from hiding contacts, unsubscribes, or campaign statistics.
+
+## Kontaktų rinkimas
+
+- The contact scraper runs as a DB-backed site queue processed by a minute tick route (`/api/public/scrape/tick`) scheduled only while a job runs; target counting happens in one locking SQL function so parallel workers never overshoot the goal.
