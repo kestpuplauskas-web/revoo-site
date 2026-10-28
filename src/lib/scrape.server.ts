@@ -79,17 +79,44 @@ async function mxStatus(domain: string): Promise<string> {
 // ---------- discovery ----------
 type Found = { domain: string; url: string; name: string | null; country: string | null; city: string | null; email: string | null; source: string };
 
+const OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"];
+
+async function cityBox(city: string, country: string): Promise<string | null> {
+  const u = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&countrycodes=${country.toLowerCase()}&format=json&limit=1`;
+  const r = await fetch(u, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(10_000) });
+  if (!r.ok) return null;
+  const j = (await r.json()) as { boundingbox?: string[] }[];
+  const b = j[0]?.boundingbox;
+  return b && b.length === 4 ? `(${b[0]},${b[2]},${b[1]},${b[3]})` : null;
+}
+
 async function discoverOsm(job: Job, country: string): Promise<Found[]> {
-  const tag = CATEGORY_OSM[job.category] ?? CATEGORY_OSM.accommodation!;
-  const cityPart = job.city ? `area["name"~"${job.city.replace(/["\\]/g, "")}",i](area.c)->.a;` : `(.c;)->.a;`;
-  const q = `[out:json][timeout:50];area["ISO3166-1"="${country}"][admin_level=2]->.c;${cityPart}nwr(area.a)${tag}[~"^(website|contact:website|url)$"~"."];out tags center 4000;`;
-  const res = await fetch("https://overpass-api.de/api/interpreter", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": UA },
-    body: `data=${encodeURIComponent(q)}`,
-    signal: AbortSignal.timeout(55_000),
-  });
-  if (!res.ok) throw new Error(`OpenStreetMap atsakė ${res.status}`);
+  const tag = CATEGORY_OSM[job.category] ?? CATEGORY_OSM["accommodation"]!;
+  let scope = `area["ISO3166-1"="${country}"][admin_level=2]->.a;nwr(area.a)`;
+  if (job.city) {
+    const box = await cityBox(job.city, country);
+    if (!box) throw new Error(`Miestas „${job.city}“ nerastas žemėlapyje`);
+    scope = `nwr${box}`;
+  }
+  const q = `[out:json][timeout:50];${scope}${tag}[~"^(website|contact:website|url)$"~"."];out tags center 4000;`;
+  let res: Response | null = null;
+  let lastErr = "";
+  for (const ep of OVERPASS) {
+    try {
+      res = await fetch(ep, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": UA },
+        body: `data=${encodeURIComponent(q)}`,
+        signal: AbortSignal.timeout(50_000),
+      });
+      if (res.ok) break;
+      lastErr = `atsakė ${res.status}`;
+      res = null;
+    } catch (e) {
+      lastErr = (e as Error).name === "TimeoutError" ? "per ilgai neatsakė" : (e as Error).message;
+    }
+  }
+  if (!res) throw new Error(`OpenStreetMap ${lastErr}`);
   const data = (await res.json()) as { elements: { tags?: Record<string, string> }[] };
   const out: Found[] = [];
   for (const el of data.elements ?? []) {
