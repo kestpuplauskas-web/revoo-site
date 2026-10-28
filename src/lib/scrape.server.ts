@@ -94,13 +94,13 @@ async function discoverOsm(job: Job, country: string): Promise<Found[]> {
   const out: Found[] = [];
   for (const el of data.elements ?? []) {
     const t = el.tags ?? {};
-    const w = t.website ?? t["contact:website"] ?? t.url;
+    const w = t["website"] ?? t["contact:website"] ?? t["url"];
     const domain = w ? normalizeDomain(w) : null;
     if (!domain || /facebook\.com|instagram\.com|booking\.com|airbnb\./.test(domain)) continue;
     out.push({
       domain, url: /^https?:/i.test(w!) ? w! : `https://${w}`,
-      name: t.name ?? null, country, city: t["addr:city"] ?? job.city ?? null,
-      email: (t.email ?? t["contact:email"] ?? null)?.split(/[;,\s]/)[0]?.toLowerCase() ?? null, source: "osm",
+      name: t["name"] ?? null, country, city: t["addr:city"] ?? job.city ?? null,
+      email: (t["email"] ?? t["contact:email"] ?? null)?.split(/[;,\s]/)[0]?.toLowerCase() ?? null, source: "osm",
     });
   }
   return out;
@@ -112,8 +112,8 @@ async function discoverWeb(job: Job, phrase: string): Promise<Found[]> {
   const gateway = key.startsWith("lovc_");
   const url = gateway ? "https://connector-gateway.lovable.dev/firecrawl/v2/search" : "https://api.firecrawl.dev/v2/search";
   const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (gateway) { headers.Authorization = `Bearer ${process.env["LOVABLE_API_KEY"] ?? ""}`; headers["X-Connection-Api-Key"] = key; }
-  else headers.Authorization = `Bearer ${key}`;
+  if (gateway) { headers["Authorization"] = `Bearer ${process.env["LOVABLE_API_KEY"] ?? ""}`; headers["X-Connection-Api-Key"] = key; }
+  else headers["Authorization"] = `Bearer ${key}`;
   const where = [job.city, ...job.countries].filter(Boolean).join(" ");
   const res = await fetch(url, { method: "POST", headers, body: JSON.stringify({ query: `${phrase} ${where}`.trim(), limit: 30 }), signal: AbortSignal.timeout(30_000) });
   if (!res.ok) throw new Error(`Paieška internete atsakė ${res.status}: ${(await res.text()).slice(0, 200)}`);
