@@ -81,7 +81,7 @@ type Found = { domain: string; url: string; name: string | null; country: string
 
 async function discoverOsm(job: Job, country: string): Promise<Found[]> {
   const tag = CATEGORY_OSM[job.category] ?? CATEGORY_OSM.accommodation!;
-  const cityPart = job.city ? `area["name"="${job.city.replace(/"/g, "")}"](area.c)->.a;` : `(.c;)->.a;`;
+  const cityPart = job.city ? `area["name"~"${job.city.replace(/["\\]/g, "")}",i](area.c)->.a;` : `(.c;)->.a;`;
   const q = `[out:json][timeout:50];area["ISO3166-1"="${country}"][admin_level=2]->.c;${cityPart}nwr(area.a)${tag}[~"^(website|contact:website|url)$"~"."];out tags center 4000;`;
   const res = await fetch("https://overpass-api.de/api/interpreter", {
     method: "POST",
