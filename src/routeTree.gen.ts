@@ -29,6 +29,7 @@ import { Route as AuthenticatedAdminAnalitikaRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminHomepageRouteImport } from './routes/_authenticated/admin.homepage'
 import { Route as AuthenticatedAdminKainodaraRouteImport } from './routes/_authenticated/admin.kainodara'
 import { Route as AuthenticatedAdminKampanijosRouteImport } from './routes/_authenticated/admin.kampanijos'
+import { Route as AuthenticatedAdminKontaktuRinkimasRouteImport } from './routes/_authenticated/admin.kontaktu-rinkimas'
 import { Route as AuthenticatedAdminSablonaiRouteImport } from './routes/_authenticated/admin.sablonai'
 import { Route as AuthenticatedAdminTekstaiRouteImport } from './routes/_authenticated/admin.tekstai'
 import { Route as AuthenticatedAdminUzklausosRouteImport } from './routes/_authenticated/admin.uzklausos'
@@ -47,6 +48,7 @@ import { Route as AuthenticatedAdminRegistrasImportasRouteImport } from './route
 import { Route as AuthenticatedAdminStraipsniaiIndexRouteImport } from './routes/_authenticated/admin.straipsniai.index'
 import { Route as AuthenticatedAdminStraipsniaiIdRouteImport } from './routes/_authenticated/admin.straipsniai.$id'
 import { Route as ApiPublicCampaignsTickRouteImport } from './routes/api/public/campaigns/tick'
+import { Route as ApiPublicScrapeTickRouteImport } from './routes/api/public/scrape/tick'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -149,6 +151,12 @@ const AuthenticatedAdminKampanijosRoute =
   AuthenticatedAdminKampanijosRouteImport.update({
     id: '/kampanijos',
     path: '/kampanijos',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminKontaktuRinkimasRoute =
+  AuthenticatedAdminKontaktuRinkimasRouteImport.update({
+    id: '/kontaktu-rinkimas',
+    path: '/kontaktu-rinkimas',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminSablonaiRoute =
@@ -254,6 +262,11 @@ const ApiPublicCampaignsTickRoute = ApiPublicCampaignsTickRouteImport.update({
   path: '/api/public/campaigns/tick',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicScrapeTickRoute = ApiPublicScrapeTickRouteImport.update({
+  id: '/api/public/scrape/tick',
+  path: '/api/public/scrape/tick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -274,6 +287,7 @@ export interface FileRoutesByFullPath {
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
+  '/admin/kontaktu-rinkimas': typeof AuthenticatedAdminKontaktuRinkimasRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -290,6 +304,7 @@ export interface FileRoutesByFullPath {
   '/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
+  '/api/public/scrape/tick': typeof ApiPublicScrapeTickRoute
   '/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
   '/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -312,6 +327,7 @@ export interface FileRoutesByTo {
   '/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
+  '/admin/kontaktu-rinkimas': typeof AuthenticatedAdminKontaktuRinkimasRoute
   '/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -328,6 +344,7 @@ export interface FileRoutesByTo {
   '/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
+  '/api/public/scrape/tick': typeof ApiPublicScrapeTickRoute
   '/admin/projektai': typeof AuthenticatedAdminProjektaiIndexRoute
   '/admin/registras': typeof AuthenticatedAdminRegistrasIndexRoute
   '/admin/straipsniai': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -353,6 +370,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/homepage': typeof AuthenticatedAdminHomepageRoute
   '/_authenticated/admin/kainodara': typeof AuthenticatedAdminKainodaraRoute
   '/_authenticated/admin/kampanijos': typeof AuthenticatedAdminKampanijosRoute
+  '/_authenticated/admin/kontaktu-rinkimas': typeof AuthenticatedAdminKontaktuRinkimasRoute
   '/_authenticated/admin/sablonai': typeof AuthenticatedAdminSablonaiRoute
   '/_authenticated/admin/tekstai': typeof AuthenticatedAdminTekstaiRoute
   '/_authenticated/admin/uzklausos': typeof AuthenticatedAdminUzklausosRoute
@@ -369,6 +387,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/registras/importas': typeof AuthenticatedAdminRegistrasImportasRoute
   '/_authenticated/admin/straipsniai/$id': typeof AuthenticatedAdminStraipsniaiIdRoute
   '/api/public/campaigns/tick': typeof ApiPublicCampaignsTickRoute
+  '/api/public/scrape/tick': typeof ApiPublicScrapeTickRoute
   '/_authenticated/admin/projektai/': typeof AuthenticatedAdminProjektaiIndexRoute
   '/_authenticated/admin/registras/': typeof AuthenticatedAdminRegistrasIndexRoute
   '/_authenticated/admin/straipsniai/': typeof AuthenticatedAdminStraipsniaiIndexRoute
@@ -394,6 +413,7 @@ export interface FileRouteTypes {
     | '/admin/homepage'
     | '/admin/kainodara'
     | '/admin/kampanijos'
+    | '/admin/kontaktu-rinkimas'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -410,6 +430,7 @@ export interface FileRouteTypes {
     | '/admin/registras/importas'
     | '/admin/straipsniai/$id'
     | '/api/public/campaigns/tick'
+    | '/api/public/scrape/tick'
     | '/admin/projektai/'
     | '/admin/registras/'
     | '/admin/straipsniai/'
@@ -432,6 +453,7 @@ export interface FileRouteTypes {
     | '/admin/homepage'
     | '/admin/kainodara'
     | '/admin/kampanijos'
+    | '/admin/kontaktu-rinkimas'
     | '/admin/sablonai'
     | '/admin/tekstai'
     | '/admin/uzklausos'
@@ -448,6 +470,7 @@ export interface FileRouteTypes {
     | '/admin/registras/importas'
     | '/admin/straipsniai/$id'
     | '/api/public/campaigns/tick'
+    | '/api/public/scrape/tick'
     | '/admin/projektai'
     | '/admin/registras'
     | '/admin/straipsniai'
@@ -472,6 +495,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/homepage'
     | '/_authenticated/admin/kainodara'
     | '/_authenticated/admin/kampanijos'
+    | '/_authenticated/admin/kontaktu-rinkimas'
     | '/_authenticated/admin/sablonai'
     | '/_authenticated/admin/tekstai'
     | '/_authenticated/admin/uzklausos'
@@ -488,6 +512,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/registras/importas'
     | '/_authenticated/admin/straipsniai/$id'
     | '/api/public/campaigns/tick'
+    | '/api/public/scrape/tick'
     | '/_authenticated/admin/projektai/'
     | '/_authenticated/admin/registras/'
     | '/_authenticated/admin/straipsniai/'
@@ -513,6 +538,7 @@ export interface RootRouteChildren {
   LtBlogIndexRoute: typeof LtBlogIndexRoute
   LtFunkcijosIndexRoute: typeof LtFunkcijosIndexRoute
   ApiPublicCampaignsTickRoute: typeof ApiPublicCampaignsTickRoute
+  ApiPublicScrapeTickRoute: typeof ApiPublicScrapeTickRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -657,6 +683,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminKampanijosRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/kontaktu-rinkimas': {
+      id: '/_authenticated/admin/kontaktu-rinkimas'
+      path: '/kontaktu-rinkimas'
+      fullPath: '/admin/kontaktu-rinkimas'
+      preLoaderRoute: typeof AuthenticatedAdminKontaktuRinkimasRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/sablonai': {
       id: '/_authenticated/admin/sablonai'
       path: '/sablonai'
@@ -783,6 +816,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicCampaignsTickRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/scrape/tick': {
+      id: '/api/public/scrape/tick'
+      path: '/api/public/scrape/tick'
+      fullPath: '/api/public/scrape/tick'
+      preLoaderRoute: typeof ApiPublicScrapeTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -791,6 +831,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminHomepageRoute: typeof AuthenticatedAdminHomepageRoute
   AuthenticatedAdminKainodaraRoute: typeof AuthenticatedAdminKainodaraRoute
   AuthenticatedAdminKampanijosRoute: typeof AuthenticatedAdminKampanijosRoute
+  AuthenticatedAdminKontaktuRinkimasRoute: typeof AuthenticatedAdminKontaktuRinkimasRoute
   AuthenticatedAdminSablonaiRoute: typeof AuthenticatedAdminSablonaiRoute
   AuthenticatedAdminTekstaiRoute: typeof AuthenticatedAdminTekstaiRoute
   AuthenticatedAdminUzklausosRoute: typeof AuthenticatedAdminUzklausosRoute
@@ -812,6 +853,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminHomepageRoute: AuthenticatedAdminHomepageRoute,
   AuthenticatedAdminKainodaraRoute: AuthenticatedAdminKainodaraRoute,
   AuthenticatedAdminKampanijosRoute: AuthenticatedAdminKampanijosRoute,
+  AuthenticatedAdminKontaktuRinkimasRoute:
+    AuthenticatedAdminKontaktuRinkimasRoute,
   AuthenticatedAdminSablonaiRoute: AuthenticatedAdminSablonaiRoute,
   AuthenticatedAdminTekstaiRoute: AuthenticatedAdminTekstaiRoute,
   AuthenticatedAdminUzklausosRoute: AuthenticatedAdminUzklausosRoute,
@@ -865,6 +908,7 @@ const rootRouteChildren: RootRouteChildren = {
   LtBlogIndexRoute: LtBlogIndexRoute,
   LtFunkcijosIndexRoute: LtFunkcijosIndexRoute,
   ApiPublicCampaignsTickRoute: ApiPublicCampaignsTickRoute,
+  ApiPublicScrapeTickRoute: ApiPublicScrapeTickRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

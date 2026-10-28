@@ -10,6 +10,7 @@ import {
   Inbox,
   NotepadText,
   Send,
+  Search,
   Tag,
   Type,
   Users,
@@ -132,6 +133,9 @@ function AdminLayout() {
             <NavItem to="/admin/kampanijos/" icon={<Send className="h-4 w-4" aria-hidden="true" />}>
               Kampanijos
             </NavItem>
+            <NavItem to="/admin/kontaktu-rinkimas/" icon={<Search className="h-4 w-4" aria-hidden="true" />}>
+              Kontaktų rinkimas
+            </NavItem>
           </NavGroup>
 
           <NavGroup label="Valdymas">
@@ -211,7 +215,8 @@ function NavItem({
     | "/admin/tekstai/"
     | "/admin/kainodara/"
     | "/admin/homepage/"
-    | "/admin/kampanijos/";
+    | "/admin/kampanijos/"
+    | "/admin/kontaktu-rinkimas/";
   icon: React.ReactNode;
   badge?: number;
   children: React.ReactNode;

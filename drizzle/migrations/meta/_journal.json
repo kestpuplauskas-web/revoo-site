@@ -43,6 +43,13 @@
       "when": 1792661939402,
       "tag": "0005_campaign_random_interval",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793206454627,
+      "tag": "0006_migration",
+      "breakpoints": true
     }
   ]
 }

@@ -961,6 +961,283 @@ export type Database = {
           },
         ]
       }
+      scrape_contacts: {
+        Row: {
+          category: string | null
+          check_method: string
+          city: string | null
+          company_name: string | null
+          confidence: string
+          contact_type: string
+          country: string | null
+          created_at: string
+          domain: string | null
+          email: string
+          email_lower: string | null
+          id: string
+          imported_client_id: string | null
+          job_id: string | null
+          mx_status: string
+          source_url: string | null
+          syntax_ok: boolean
+        }
+        Insert: {
+          category?: string | null
+          check_method?: string
+          city?: string | null
+          company_name?: string | null
+          confidence?: string
+          contact_type?: string
+          country?: string | null
+          created_at?: string
+          domain?: string | null
+          email: string
+          email_lower?: string | null
+          id?: string
+          imported_client_id?: string | null
+          job_id?: string | null
+          mx_status?: string
+          source_url?: string | null
+          syntax_ok?: boolean
+        }
+        Update: {
+          category?: string | null
+          check_method?: string
+          city?: string | null
+          company_name?: string | null
+          confidence?: string
+          contact_type?: string
+          country?: string | null
+          created_at?: string
+          domain?: string | null
+          email?: string
+          email_lower?: string | null
+          id?: string
+          imported_client_id?: string | null
+          job_id?: string | null
+          mx_status?: string
+          source_url?: string | null
+          syntax_ok?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scrape_contacts_imported_client_id_fkey"
+            columns: ["imported_client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scrape_contacts_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "scrape_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scrape_job_logs: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          level: string
+          message: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          level?: string
+          message: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          level?: string
+          message?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scrape_job_logs_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "scrape_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scrape_jobs: {
+        Row: {
+          category: string
+          city: string | null
+          contact_types: string[]
+          countries: string[]
+          created_at: string
+          created_by: string | null
+          discovered_count: number
+          discovery: Json
+          duplicate_count: number
+          finished_at: string | null
+          found_count: number
+          id: string
+          last_activity_at: string | null
+          max_pages: number
+          name: string
+          new_count: number
+          phrases: string[]
+          rejected_count: number
+          rescan: boolean
+          sites_done: number
+          sites_failed: number
+          start_urls: string[]
+          started_at: string
+          status: string
+          status_reason: string | null
+          target: number
+        }
+        Insert: {
+          category?: string
+          city?: string | null
+          contact_types?: string[]
+          countries?: string[]
+          created_at?: string
+          created_by?: string | null
+          discovered_count?: number
+          discovery?: Json
+          duplicate_count?: number
+          finished_at?: string | null
+          found_count?: number
+          id?: string
+          last_activity_at?: string | null
+          max_pages?: number
+          name: string
+          new_count?: number
+          phrases?: string[]
+          rejected_count?: number
+          rescan?: boolean
+          sites_done?: number
+          sites_failed?: number
+          start_urls?: string[]
+          started_at?: string
+          status?: string
+          status_reason?: string | null
+          target: number
+        }
+        Update: {
+          category?: string
+          city?: string | null
+          contact_types?: string[]
+          countries?: string[]
+          created_at?: string
+          created_by?: string | null
+          discovered_count?: number
+          discovery?: Json
+          duplicate_count?: number
+          finished_at?: string | null
+          found_count?: number
+          id?: string
+          last_activity_at?: string | null
+          max_pages?: number
+          name?: string
+          new_count?: number
+          phrases?: string[]
+          rejected_count?: number
+          rescan?: boolean
+          sites_done?: number
+          sites_failed?: number
+          start_urls?: string[]
+          started_at?: string
+          status?: string
+          status_reason?: string | null
+          target?: number
+        }
+        Relationships: []
+      }
+      scrape_runtime: {
+        Row: {
+          singleton: boolean
+          tick_token: string
+        }
+        Insert: {
+          singleton?: boolean
+          tick_token?: string
+        }
+        Update: {
+          singleton?: boolean
+          tick_token?: string
+        }
+        Relationships: []
+      }
+      scrape_sites: {
+        Row: {
+          attempts: number
+          city: string | null
+          company_name: string | null
+          country: string | null
+          created_at: string
+          domain: string
+          emails_found: number
+          error: string | null
+          id: string
+          job_id: string
+          known_email: string | null
+          locked_until: string | null
+          next_attempt_at: string
+          processed_at: string | null
+          source: string
+          status: string
+          url: string
+        }
+        Insert: {
+          attempts?: number
+          city?: string | null
+          company_name?: string | null
+          country?: string | null
+          created_at?: string
+          domain: string
+          emails_found?: number
+          error?: string | null
+          id?: string
+          job_id: string
+          known_email?: string | null
+          locked_until?: string | null
+          next_attempt_at?: string
+          processed_at?: string | null
+          source: string
+          status?: string
+          url: string
+        }
+        Update: {
+          attempts?: number
+          city?: string | null
+          company_name?: string | null
+          country?: string | null
+          created_at?: string
+          domain?: string
+          emails_found?: number
+          error?: string | null
+          id?: string
+          job_id?: string
+          known_email?: string | null
+          locked_until?: string | null
+          next_attempt_at?: string
+          processed_at?: string | null
+          source?: string
+          status?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scrape_sites_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "scrape_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       support_tickets: {
         Row: {
           category: Database["public"]["Enums"]["ticket_category"]
@@ -1121,6 +1398,51 @@ export type Database = {
         }
         Returns: boolean
       }
+      scrape_add_contact: {
+        Args: {
+          _category: string
+          _city: string
+          _company: string
+          _confidence: string
+          _country: string
+          _domain: string
+          _email: string
+          _job: string
+          _mx: string
+          _source: string
+          _type: string
+        }
+        Returns: string
+      }
+      scrape_claim_sites: {
+        Args: { _limit: number }
+        Returns: {
+          attempts: number
+          city: string | null
+          company_name: string | null
+          country: string | null
+          created_at: string
+          domain: string
+          emails_found: number
+          error: string | null
+          id: string
+          job_id: string
+          known_email: string | null
+          locked_until: string | null
+          next_attempt_at: string
+          processed_at: string | null
+          source: string
+          status: string
+          url: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "scrape_sites"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      scrape_cron_ensure: { Args: never; Returns: undefined }
     }
     Enums: {
       activity_kind: "manual" | "system"
