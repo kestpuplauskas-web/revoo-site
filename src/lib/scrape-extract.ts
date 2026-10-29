@@ -28,8 +28,36 @@ function decodeEntities(s: string) {
     .replace(/\s*\[\s*dot\s*\]\s*|\s*\(\s*dot\s*\)\s*/gi, ".");
 }
 
+/** Decode Cloudflare `data-cfemail` / `/cdn-cgi/l/email-protection#hex` XOR-encoded emails. */
+export function decodeCfEmail(hex: string): string | null {
+  if (!/^[0-9a-f]+$/i.test(hex) || hex.length < 4 || hex.length % 2) return null;
+  const key = parseInt(hex.slice(0, 2), 16);
+  let s = "";
+  for (let i = 2; i < hex.length; i += 2) s += String.fromCharCode(parseInt(hex.slice(i, i + 2), 16) ^ key);
+  return s.includes("@") ? s : null;
+}
+
+/** Reveal common hidden-email tricks so the regular matcher can find them. */
+export function deobfuscateEmails(html: string): string {
+  const extra: string[] = [];
+  for (const m of html.matchAll(/data-cfemail=["']([0-9a-fA-F]+)["']/g)) {
+    const d = decodeCfEmail(m[1] ?? ""); if (d) extra.push(d);
+  }
+  for (const m of html.matchAll(/email-protection#([0-9a-fA-F]+)/g)) {
+    const d = decodeCfEmail(m[1] ?? ""); if (d) extra.push(d);
+  }
+  let t = decodeEntities(html);
+  try { t = t.replace(/mailto:([^"'\s>]+)/gi, (_, a) => `mailto:${decodeURIComponent(a)}`); } catch { /* ignore */ }
+  // "info [at] hotel [dot] com", "info(at)hotel(dot)com", "info at hotel dot com"
+  t = t
+    .replace(/\s*[[({]\s*(?:at|eta|@)\s*[\])}]\s*/gi, "@")
+    .replace(/\s*[[({]\s*(?:dot|taškas|punktas|\.)\s*[\])}]\s*/gi, ".")
+    .replace(/([a-z0-9._-]+)\s+(?:at)\s+([a-z0-9-]+)\s+(?:dot)\s+([a-z]{2,})/gi, "$1@$2.$3");
+  return `${t}\n${extra.join("\n")}`;
+}
+
 export function extractEmails(html: string): string[] {
-  const text = decodeEntities(html);
+  const text = deobfuscateEmails(html);
   const out = new Set<string>();
   for (const m of text.matchAll(EMAIL_RE)) {
     const e = m[0].toLowerCase().replace(/^[._-]+|[._-]+$/g, "");
