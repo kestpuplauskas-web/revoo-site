@@ -41,10 +41,10 @@ export function decodeCfEmail(hex: string): string | null {
 export function deobfuscateEmails(html: string): string {
   const extra: string[] = [];
   for (const m of html.matchAll(/data-cfemail=["']([0-9a-fA-F]+)["']/g)) {
-    const d = decodeCfEmail(m[1]); if (d) extra.push(d);
+    const d = decodeCfEmail(m[1] ?? ""); if (d) extra.push(d);
   }
   for (const m of html.matchAll(/email-protection#([0-9a-fA-F]+)/g)) {
-    const d = decodeCfEmail(m[1]); if (d) extra.push(d);
+    const d = decodeCfEmail(m[1] ?? ""); if (d) extra.push(d);
   }
   let t = decodeEntities(html);
   try { t = t.replace(/mailto:([^"'\s>]+)/gi, (_, a) => `mailto:${decodeURIComponent(a)}`); } catch { /* ignore */ }
