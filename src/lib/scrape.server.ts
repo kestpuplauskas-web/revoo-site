@@ -7,6 +7,7 @@ import {
   matchesTypes,
   normalizeDomain,
   robotsDisallowsAll,
+  isPlatformDomain,
 } from "./scrape-extract";
 
 type Sb = any;
@@ -15,12 +16,13 @@ type Job = {
   phrases: string[]; start_urls: string[]; max_pages: number; rescan: boolean;
   contact_types: string[]; discovery: Discovery; new_count: number;
 };
-type Discovery = { urlsDone?: boolean; osmDone?: string[]; osmFailed?: Record<string, number>; webIdx?: number; webDone?: boolean };
+type Discovery = { urlsDone?: boolean; osmDone?: string[]; osmFailed?: Record<string, number>; webIdx?: number; webDone?: boolean;
+  aiDone?: boolean; aiAreas?: string[]; aiIdx?: number; aiMiss?: number; aiCalls?: number; aiFailed?: number };
 type Site = { id: string; job_id: string; domain: string; url: string; company_name: string | null; country: string | null; city: string | null; known_email: string | null; attempts: number };
 
 const UA = "RevooContactBot/1.0 (+https://revoostay.com)";
 const TICK_BUDGET_MS = 40_000;
-const QUEUE_LOW = 25;
+const QUEUE_LOW = 60;
 
 export const CATEGORY_OSM: Record<string, string> = {
   accommodation: `["tourism"~"^(hotel|guest_house|apartment|hostel|motel|chalet|camp_site)$"]`,
@@ -201,8 +203,61 @@ async function discoverWeb(job: Job, phrase: string): Promise<Found[]> {
   const out: Found[] = [];
   for (const it of items) {
     const domain = normalizeDomain(it.url);
-    if (!domain || /facebook|instagram|booking\.com|airbnb|tripadvisor|expedia|google\.|wikipedia|youtube/.test(domain)) continue;
+    if (!domain || isPlatformDomain(domain)) continue;
     out.push({ domain, url: `https://${domain}/`, name: it.title?.slice(0, 120) ?? null, country: job.countries[0] ?? null, city: job.city, email: null, source: "web" });
+  }
+  return out;
+}
+
+
+// ---------- AI discovery (Lovable AI Gateway) ----------
+const CATEGORY_LABEL: Record<string, string> = {
+  accommodation: "independent accommodation businesses (hotels, guesthouses, B&Bs, vacation rentals, apartments, motels, hostels, cabins)",
+  hotel: "independent hotels", apartment: "vacation rental apartments", guest_house: "guesthouses and B&Bs",
+  car_rental: "car rental companies", restaurant: "restaurants",
+};
+const COUNTRY_NAME: Record<string, string> = { LT: "Lithuania", IS: "Iceland", LV: "Latvia", EE: "Estonia", PL: "Poland", DE: "Germany", NO: "Norway", FI: "Finland", US: "United States" };
+
+async function aiJson(prompt: string): Promise<any> {
+  const key = process.env["LOVABLE_API_KEY"];
+  if (!key) throw new Error("Dirbtinio intelekto raktas nesukonfigūruotas");
+  const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    body: JSON.stringify({ model: "google/gemini-3.8-flash", messages: [{ role: "user", content: prompt }], response_format: { type: "json_object" } }),
+    signal: AbortSignal.timeout(60_000),
+  });
+  if (!res.ok) { const t = await res.text(); const err = new Error(`DI atsakė ${res.status}: ${t.slice(0, 200)}`); (err as any).status = res.status; throw err; }
+  const j = await res.json();
+  const txt: string = j.choices?.[0]?.message?.content ?? "{}";
+  return JSON.parse(txt.replace(/^```(json)?|```$/g, "").trim());
+}
+
+async function aiAreas(job: Job): Promise<string[]> {
+  const country = job.countries.map((c) => COUNTRY_NAME[c] ?? c).join(", ");
+  const where = job.city ? `${job.city}, ${country}` : country;
+  const q = job.city
+    ? `List up to 25 neighborhoods, districts and nearby towns in and around ${where} where ${CATEGORY_LABEL[job.category] ?? job.category} operate. Start with "${job.city}" itself. Return JSON {"areas": ["..."]}.`
+    : `List the 40 cities and tourist towns in ${where} with the most ${CATEGORY_LABEL[job.category] ?? job.category}. Return JSON {"areas": ["..."]}.`;
+  const r = await aiJson(q);
+  const list = (Array.isArray(r.areas) ? r.areas : []).map((x: unknown) => String(x).trim()).filter(Boolean).slice(0, 40);
+  return list.length ? list : [job.city ?? country];
+}
+
+async function discoverAi(sb: Sb, job: Job, area: string): Promise<Found[]> {
+  const { data: have } = await sb.from("scrape_sites").select("domain").eq("job_id", job.id).limit(400);
+  const known = (have ?? []).map((r: { domain: string }) => r.domain);
+  const country = job.countries.map((c) => COUNTRY_NAME[c] ?? c).join(", ");
+  const r = await aiJson(
+    `List 60 real ${CATEGORY_LABEL[job.category] ?? job.category} located in ${area}, ${country}, that have their OWN website (not Booking.com, Airbnb, TripAdvisor, Facebook or big hotel chains). ` +
+    `Only include businesses you are confident exist. Skip these domains: ${known.join(", ") || "none"}. ` +
+    `Return JSON {"items": [{"name": "...", "website": "https://...", "city": "..."}]}.`,
+  );
+  const out: Found[] = [];
+  for (const it of Array.isArray(r.items) ? r.items : []) {
+    const domain = normalizeDomain(String(it?.website ?? ""));
+    if (!domain || isPlatformDomain(domain)) continue;
+    out.push({ domain, url: `https://${domain}/`, name: it?.name ? String(it.name).slice(0, 120) : null, country: job.countries[0] ?? null, city: it?.city ? String(it.city).slice(0, 80) : (job.city ?? area), email: null, source: "ai" });
   }
   return out;
 }
@@ -237,6 +292,28 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
       d.urlsDone = true;
       const found = job.start_urls.map((u) => normalizeDomain(u)).filter(Boolean).map((domain) => ({ domain: domain!, url: `https://${domain}/`, name: null, country: job.countries[0] ?? null, city: job.city, email: null, source: "user" }));
       if (found.length) { const n = await enqueue(sb, job, found); await log(sb, job.id, "info", `Įtraukta ${n} jūsų pateiktų svetainių`); }
+    } else if (!d.aiDone) {
+      try {
+        if (!d.aiAreas) { d.aiAreas = await aiAreas(job); d.aiIdx = 0; d.aiCalls = (d.aiCalls ?? 0) + 1;
+          await log(sb, job.id, "info", `Paieškos vietovės: ${d.aiAreas.slice(0, 12).join(", ")}${d.aiAreas.length > 12 ? "…" : ""}`); }
+        const area = d.aiAreas[d.aiIdx ?? 0];
+        if (!area) d.aiDone = true;
+        else {
+          const found = await discoverAi(sb, job, area);
+          d.aiCalls = (d.aiCalls ?? 0) + 1;
+          const n = await enqueue(sb, job, found);
+          await log(sb, job.id, "info", `DI paieška „${area}“: pasiūlyta ${found.length} svetainių, nauja eilėje ${n}`);
+          // Ask the same area once more if it was productive, then move on.
+          if (n >= 15 && (d.aiMiss ?? 0) === 0) d.aiMiss = 1;
+          else { d.aiIdx = (d.aiIdx ?? 0) + 1; d.aiMiss = 0; }
+          if ((d.aiIdx ?? 0) >= d.aiAreas.length) d.aiDone = true;
+        }
+      } catch (e) {
+        const st = (e as any).status;
+        d.aiFailed = (d.aiFailed ?? 0) + 1;
+        if (st === 402 || st === 403 || d.aiFailed >= 4) d.aiDone = true;
+        await log(sb, job.id, "warn", `DI paieška nepavyko: ${(e as Error).message}${d.aiDone ? " – pereinama prie žemėlapio" : " – bus bandoma vėl"}`);
+      }
     } else {
       const next = job.countries.find((c) => !(d.osmDone ?? []).includes(c));
       if (next && CATEGORY_OSM[job.category]) {
@@ -283,7 +360,7 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
   await sb.from("scrape_jobs").update({ discovery: d, last_activity_at: new Date().toISOString() }).eq("id", job.id);
   job.discovery = d;
   const osmLeft = CATEGORY_OSM[job.category] ? job.countries.some((c) => !(d.osmDone ?? []).includes(c)) : false;
-  return !!d.urlsDone && !osmLeft && !!d.webDone;
+  return !!d.urlsDone && !!d.aiDone && !osmLeft && !!d.webDone;
 }
 
 // ---------- site processing ----------
@@ -360,7 +437,7 @@ export async function processScrapeTick(sb: Sb) {
 
   let processed = 0;
   while (Date.now() - started < TICK_BUDGET_MS - 12_000) {
-    const { data: sites } = await sb.rpc("scrape_claim_sites", { _limit: 8 });
+    const { data: sites } = await sb.rpc("scrape_claim_sites", { _limit: 20 });
     if (!sites?.length) break;
     await Promise.allSettled((sites as Site[]).map((s) => { const j = byId.get(s.job_id); return j ? processSite(sb, j, s, j.category) : Promise.resolve(); }));
     processed += sites.length;
