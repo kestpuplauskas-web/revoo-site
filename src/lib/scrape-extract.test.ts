@@ -22,3 +22,12 @@ describe("scraper extraction", () => {
     strictEqual(robotsDisallowsAll("User-agent: *\nDisallow: /admin"), false);
   });
 });
+
+describe("platform filter", () => {
+  it("rejects booking platforms but keeps small hotel sites", async () => {
+    const { isPlatformDomain } = await import("./scrape-extract");
+    strictEqual(isPlatformDomain("booking.com"), true);
+    strictEqual(isPlatformDomain("www.airbnb.co.uk"), true);
+    strictEqual(isPlatformDomain("miamibeachinn.com"), false);
+  });
+});

@@ -124,3 +124,9 @@ export function confidenceFor(email: string, siteDomain: string, mx: string): st
   if (d === siteDomain || d.endsWith(`.${siteDomain}`) || siteDomain.endsWith(`.${d}`)) return mx === "ok" ? "high" : "medium";
   return "medium";
 }
+
+// Big platforms / directories whose pages never yield the business's own contact.
+const PLATFORM_RE = /(^|\.)(booking\.com|airbnb\.[a-z.]+|tripadvisor\.[a-z.]+|expedia\.[a-z.]+|hotels\.com|agoda\.com|trivago\.[a-z.]+|vrbo\.com|kayak\.[a-z.]+|facebook\.com|instagram\.com|google\.[a-z.]+|wikipedia\.org|youtube\.com|yelp\.[a-z.]+|linkedin\.com|tiktok\.com|x\.com|twitter\.com|marriott\.com|hilton\.com|ihg\.com|hyatt\.com|wyndhamhotels\.com|choicehotels\.com|accor\.com|bestwestern\.com)$/i;
+export function isPlatformDomain(domain: string): boolean {
+  return PLATFORM_RE.test(domain.toLowerCase());
+}
