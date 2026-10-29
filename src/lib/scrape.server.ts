@@ -133,6 +133,58 @@ async function discoverOsm(job: Job, country: string): Promise<Found[]> {
   return out;
 }
 
+const NOMINATIM_KW: Record<string, string[]> = {
+  accommodation: ["hotel", "guest house", "apartment", "hostel", "motel"],
+  hotel: ["hotel"], apartment: ["apartment"], guest_house: ["guest house"],
+  car_rental: ["car rental"], restaurant: ["restaurant"],
+};
+
+/** Lightweight fallback: Nominatim search with extratags, paged via exclude_place_ids. */
+async function discoverNominatim(job: Job, country: string): Promise<Found[]> {
+  const kws = NOMINATIM_KW[job.category] ?? NOMINATIM_KW["accommodation"]!;
+  const out: Found[] = [];
+  const seen = new Set<string>();
+  let ok = 0;
+  let lastErr = "";
+  const started = Date.now();
+  for (const kw of kws) {
+    const exclude: number[] = [];
+    for (let page = 0; page < 3; page++) {
+      if (Date.now() - started > 25_000) break;
+      const q = job.city ? `${kw} ${job.city}` : kw;
+      const u = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&countrycodes=${country.toLowerCase()}&format=json&limit=50&extratags=1&addressdetails=1${exclude.length ? `&exclude_place_ids=${exclude.join(",")}` : ""}`;
+      try {
+        const r = await fetch(u, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(10_000) });
+        if (!r.ok) { lastErr = `atsakė ${r.status}`; break; }
+        ok++;
+        const j = (await r.json()) as { place_id: number; name?: string; extratags?: Record<string, string>; address?: Record<string, string> }[];
+        if (!j.length) break;
+        for (const it of j) {
+          exclude.push(it.place_id);
+          const t = it.extratags ?? {};
+          const w = t["website"] ?? t["contact:website"] ?? t["url"];
+          const domain = w ? normalizeDomain(w) : null;
+          if (!domain || seen.has(domain) || /facebook\.com|instagram\.com|booking\.com|airbnb\./.test(domain)) continue;
+          seen.add(domain);
+          const a = it.address ?? {};
+          out.push({
+            domain, url: /^https?:/i.test(w!) ? w! : `https://${w}`, name: it.name ?? null, country,
+            city: a["city"] ?? a["town"] ?? a["village"] ?? job.city ?? null,
+            email: (t["email"] ?? t["contact:email"] ?? null)?.split(/[;,\s]/)[0]?.toLowerCase() ?? null, source: "osm",
+          });
+        }
+        if (j.length < 50) break;
+      } catch (e) {
+        lastErr = (e as Error).name === "TimeoutError" ? "per ilgai neatsakė" : (e as Error).message;
+        break;
+      }
+      await new Promise((res) => setTimeout(res, 1100)); // Nominatim usage policy: max 1 req/s
+    }
+  }
+  if (!ok) throw new Error(lastErr || "nepasiekiama");
+  return out;
+}
+
 async function discoverWeb(job: Job, phrase: string): Promise<Found[]> {
   const key = process.env["FIRECRAWL_API_KEY"];
   if (!key) return [];
@@ -188,16 +240,26 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
     } else {
       const next = job.countries.find((c) => !(d.osmDone ?? []).includes(c));
       if (next && CATEGORY_OSM[job.category]) {
-        try {
-          const found = await discoverOsm(job, next);
+        let found: Found[] | null = null;
+        let src = "OpenStreetMap";
+        // Whole-country Overpass queries are too heavy for public servers; go straight to the light search.
+        if (job.city) {
+          try { found = await discoverOsm(job, next); } catch (e) {
+            await log(sb, job.id, "info", `Žemėlapio serveris užimtas (${(e as Error).message}) – naudojama greitoji paieška`);
+          }
+        }
+        if (!found) {
+          try { found = await discoverNominatim(job, next); src = "Žemėlapio paieška"; } catch (e) {
+            const fails = (d.osmFailed?.[next] ?? 0) + 1;
+            d.osmFailed = { ...(d.osmFailed ?? {}), [next]: fails };
+            if (fails >= 3) d.osmDone = [...(d.osmDone ?? []), next];
+            await log(sb, job.id, "warn", `Žemėlapio šaltinis (${next}) nepavyko: ${(e as Error).message}${fails >= 3 ? " – šaltinis praleidžiamas" : " – bus bandoma vėl"}`);
+          }
+        }
+        if (found) {
           const n = await enqueue(sb, job, found);
           d.osmDone = [...(d.osmDone ?? []), next];
-          await log(sb, job.id, "info", `OpenStreetMap (${next}): rasta ${found.length} įmonių su svetainėmis, nauja eilėje ${n}`);
-        } catch (e) {
-          const fails = (d.osmFailed?.[next] ?? 0) + 1;
-          d.osmFailed = { ...(d.osmFailed ?? {}), [next]: fails };
-          if (fails >= 3) d.osmDone = [...(d.osmDone ?? []), next];
-          await log(sb, job.id, "warn", `OpenStreetMap (${next}) nepavyko: ${(e as Error).message}${fails >= 3 ? " – šaltinis praleidžiamas" : " – bus bandoma vėl"}`);
+          await log(sb, job.id, "info", `${src} (${next}): rasta ${found.length} įmonių su svetainėmis, nauja eilėje ${n}`);
         }
       } else if (!d.webDone) {
         if (!process.env["FIRECRAWL_API_KEY"] || job.phrases.length === 0) {
