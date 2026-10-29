@@ -1,20 +1,21 @@
-# Kodėl Miami davė tik 36 kontaktus ir kaip pataisyti
+# Daugiau kontaktų: mokama paieška + pataisyta miesto paieška
 
 ## Ką radau
-- Paskutinėje užduotyje **miestas neišsaugotas** – sistema ieškojo „visoje JAV“, o ne Miami.
-- Greitoji visos šalies paieška grąžino tik 11 įmonių su svetainėmis, iš jų surinkta 36 el. paštai. Todėl rodoma „Šaltiniai išseko“.
+- Paskutinėje Miami užduotyje **miestas nebuvo išsaugotas**, todėl sistema ieškojo visoje JAV per greitąją paiešką. Rado tik 11 įmonių su svetainėmis, iš jų gavo 36 el. paštus, tada parašė „Šaltiniai išseko“.
+- Pats rinkimo principas tinkamas: randamos įmonės, aplankomos jų svetainės, surenkami el. paštai. Bėda ta, kad nemokamame žemėlapyje yra per mažai įmonių. Todėl reikia papildomo šaltinio.
 
 ## Ką padarysiu
-1. **Miestas visada išsaugomas ir naudojamas.** Patikrinsiu formą: įrašytas miestas (pvz., Miami) privalo patekti į užduotį. Santraukoje prieš paleidimą bus aiškiai parodyta „Ieškoma: Miami, JAV“.
-2. **Didesnė miesto paieška.** Miesto plotą sistema padalins į kelias dalis ir ieškos kiekvienoje atskirai, taip pat įtrauks platesnes apgyvendinimo rūšis (viešbučiai, apartamentai, svečių namai, moteliai, hosteliai, kempingai). Jei tikslas nepasiektas, paieškos ratas automatiškai išplečiamas į aplinkines vietoves.
-3. **Aiškesnis žurnalas.** Bus rodoma, kokiame mieste ir kokiame plote ieškota, ir kiek rasta kiekviename žingsnyje.
-4. **Galimybė tęsti.** Pasibaigusią užduotį galėsite „Tęsti su didesniu plotu“, nekuriant naujos.
-
-## Ką verta žinoti
-- Nemokamas žemėlapio šaltinis Miami rajone realiai gali duoti apie 60–150 kontaktų. Patikimai 100+ kiekvienam miestui reikėtų prijungti mokamą paiešką pagal frazes – tai atskiras žingsnis, jei norėsite.
-- Po pakeitimų išbandysiu Miami su tikslu 100 ir pranešiu tikrą rezultatą.
+1. **Prijungsiu mokamą interneto paiešką (Firecrawl).** Pamatysite langelį prijungimui. Ji naudoja kreditus – maždaug 1 kreditas už paieškos rezultatą ir 1 už aplankytą puslapį.
+2. **Paiešką pagal frazes įjungsiu automatiškai.** Jei frazių neįrašysite, sistema pati sudarys jas pagal veiklą ir miestą, pvz., „hotel Miami“, „vacation rental Miami“, „guesthouse Miami“, „boutique hotel Miami Beach“. Paieška eis puslapiais, kol pasieksite tikslą.
+3. **Miestas visada išsaugomas.** Santraukoje prieš paleidimą bus parodyta „Ieškoma: Miami, JAV“.
+4. **Didesnis žemėlapio plotas.** Miestas bus padalintas į dalis, į paiešką įtrauksiu daugiau apgyvendinimo rūšių.
+5. **Atmesiu didžiąsias platformas** (Booking, Airbnb, Tripadvisor, Expedia ir pan.), kad kreditai nebūtų išleisti jų puslapiams.
+6. **Kreditų saugiklis.** Užduotis sustos, kai bus pasiektas tikslas arba išleistas nustatytas kreditų limitas. Žurnale matysite, kiek kreditų panaudota.
+7. **Tęsti užduotį.** Jei šaltinių pritrūko, užduotį galėsite tęsti nekurdami naujos.
+8. **Išbandysiu Miami su tikslu 100** ir pranešiu tikrą rezultatą.
 
 ## Techninės detalės
-- Patikrinti `city` perdavimą forma → server function → `scrape_jobs.city`.
-- `scrape.server.ts`: Nominatim bbox → tinklelis (pvz. 3×3) Overpass užklausoms, išplėsti `tourism=*` tagus, bbox didinimas kai išsenka; fallback taip pat pagal miestą.
-- Pridėti „resume with expanded area“ veiksmą statusui `exhausted`.
+- Prijungti Firecrawl ir pasirinkti būdą pagal `uses_connector_gateway` – per gateway arba tiesiogiai.
+- `scrape.server.ts`: `/v2/search` su `limit` ir puslapiavimu per frazių variantus; rezultatai keliauja į `scrape_sites` eilę; neleidžiamų domenų sąrašas; kreditų skaitiklis `discovery`.
+- Patikrinti, kaip miestas keliauja iš formos į `scrape_jobs.city`; Overpass bbox tinklelis + platesni `tourism` tagai.
+- Veiksmas „tęsti“, kai užduoties būsena `exhausted`.
