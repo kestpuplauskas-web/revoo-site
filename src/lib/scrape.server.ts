@@ -224,7 +224,7 @@ async function aiJson(prompt: string): Promise<any> {
   const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({ model: "google/gemini-2.5-flash", messages: [{ role: "user", content: prompt }], response_format: { type: "json_object" } }),
+    body: JSON.stringify({ model: "google/gemini-3.8-flash", messages: [{ role: "user", content: prompt }], response_format: { type: "json_object" } }),
     signal: AbortSignal.timeout(60_000),
   });
   if (!res.ok) { const t = await res.text(); const err = new Error(`DI atsakė ${res.status}: ${t.slice(0, 200)}`); (err as any).status = res.status; throw err; }
