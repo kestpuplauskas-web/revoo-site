@@ -5,7 +5,7 @@
 - Pats rinkimo principas tinkamas: randamos įmonės, aplankomos jų svetainės, surenkami el. paštai. Bėda ta, kad nemokamame žemėlapyje yra per mažai įmonių. Todėl reikia papildomo šaltinio.
 
 ## Ką padarysiu
-1. **Prijungsiu mokamą interneto paiešką (Firecrawl).** Pamatysite langelį prijungimui. Ji naudoja kreditus – maždaug 1 kreditas už paieškos rezultatą ir 1 už aplankytą puslapį.
+1. **Prijungsiu mokamą interneto paiešką (Firecrawl).** Pamatysite langelį prijungimui. Mokama bus tik paieška: maždaug 2 kreditai už 10 rastų svetainių. Svetaines aplankys mūsų sistema nemokamai, todėl 100 kontaktų kainuos apytiksliai 40–60 kreditų.
 2. **Paiešką pagal frazes įjungsiu automatiškai.** Jei frazių neįrašysite, sistema pati sudarys jas pagal veiklą ir miestą, pvz., „hotel Miami“, „vacation rental Miami“, „guesthouse Miami“, „boutique hotel Miami Beach“. Paieška eis puslapiais, kol pasieksite tikslą.
 3. **Miestas visada išsaugomas.** Santraukoje prieš paleidimą bus parodyta „Ieškoma: Miami, JAV“.
 4. **Didesnis žemėlapio plotas.** Miestas bus padalintas į dalis, į paiešką įtrauksiu daugiau apgyvendinimo rūšių.
