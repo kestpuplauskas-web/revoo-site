@@ -225,7 +225,7 @@ async function aiJson(prompt: string): Promise<any> {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
     body: JSON.stringify({ model: "google/gemini-3.8-flash", messages: [{ role: "user", content: prompt }], response_format: { type: "json_object" } }),
-    signal: AbortSignal.timeout(60_000),
+    signal: AbortSignal.timeout(90_000),
   });
   if (!res.ok) { const t = await res.text(); const err = new Error(`DI atsakė ${res.status}: ${t.slice(0, 200)}`); (err as any).status = res.status; throw err; }
   const j = await res.json();
@@ -249,8 +249,8 @@ async function discoverAi(sb: Sb, job: Job, area: string): Promise<Found[]> {
   const known = (have ?? []).map((r: { domain: string }) => r.domain);
   const country = job.countries.map((c) => COUNTRY_NAME[c] ?? c).join(", ");
   const r = await aiJson(
-    `List 60 real ${CATEGORY_LABEL[job.category] ?? job.category} located in ${area}, ${country}, that have their OWN website (not Booking.com, Airbnb, TripAdvisor, Facebook or big hotel chains). ` +
-    `Only include businesses you are confident exist. Skip these domains: ${known.join(", ") || "none"}. ` +
+    `List 35 real ${CATEGORY_LABEL[job.category] ?? job.category} located in ${area}, ${country}, that have their OWN website (not Booking.com, Airbnb, TripAdvisor, Facebook or big hotel chains). ` +
+    `Only include businesses you are confident exist. Skip these domains: ${known.slice(-120).join(", ") || "none"}. ` +
     `Return JSON {"items": [{"name": "...", "website": "https://...", "city": "..."}]}.`,
   );
   const out: Found[] = [];
@@ -301,6 +301,7 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
         else {
           const found = await discoverAi(sb, job, area);
           d.aiCalls = (d.aiCalls ?? 0) + 1;
+          d.aiFailed = 0;
           const n = await enqueue(sb, job, found);
           await log(sb, job.id, "info", `DI paieška „${area}“: pasiūlyta ${found.length} svetainių, nauja eilėje ${n}`);
           // Ask the same area once more if it was productive, then move on.
@@ -311,7 +312,9 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
       } catch (e) {
         const st = (e as any).status;
         d.aiFailed = (d.aiFailed ?? 0) + 1;
-        if (st === 402 || st === 403 || d.aiFailed >= 4) d.aiDone = true;
+        // Skip the slow area after two consecutive failures; stop AI only after many in a row.
+        if (d.aiAreas && d.aiFailed % 2 === 0) { d.aiIdx = (d.aiIdx ?? 0) + 1; d.aiMiss = 0; if (d.aiIdx >= d.aiAreas.length) d.aiDone = true; }
+        if (st === 402 || st === 403 || d.aiFailed >= 8) d.aiDone = true;
         await log(sb, job.id, "warn", `DI paieška nepavyko: ${(e as Error).message}${d.aiDone ? " – pereinama prie žemėlapio" : " – bus bandoma vėl"}`);
       }
     } else {
