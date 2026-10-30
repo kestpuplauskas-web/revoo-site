@@ -16,7 +16,7 @@ type Job = {
   phrases: string[]; start_urls: string[]; max_pages: number; rescan: boolean;
   contact_types: string[]; discovery: Discovery; new_count: number;
 };
-type Discovery = { urlsDone?: boolean; osmDone?: string[]; osmFailed?: Record<string, number>; webIdx?: number; webDone?: boolean;
+type Discovery = { urlsDone?: boolean; osmDone?: string[]; osmFailed?: Record<string, number>; webIdx?: number; webDone?: boolean; webFailed?: number;
   aiDone?: boolean; aiAreas?: string[]; aiIdx?: number; aiMiss?: number; aiCalls?: number; aiFailed?: number };
 type Site = { id: string; job_id: string; domain: string; url: string; company_name: string | null; country: string | null; city: string | null; known_email: string | null; attempts: number };
 
