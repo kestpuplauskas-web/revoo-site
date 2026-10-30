@@ -25,7 +25,14 @@ const TICK_BUDGET_MS = 40_000;
 const QUEUE_LOW = 60;
 
 export const CATEGORY_OSM: Record<string, string> = {
-  accommodation: `["tourism"~"^(hotel|guest_house|apartment|hostel|motel|chalet|camp_site)$"]`,
+  accommodation: `["tourism"~"^(hotel|guest_house|apartment|hostel|motel|chalet|camp_site|alpine_hut)$"]`,
+  boutique_hotel: `["tourism"="hotel"]`,
+  hostel: `["tourism"="hostel"]`,
+  motel: `["tourism"="motel"]`,
+  cabin: `["tourism"~"^(chalet|alpine_hut|wilderness_hut)$"]`,
+  camping: `["tourism"~"^(camp_site|caravan_site)$"]`,
+  farm_stay: `["tourism"~"^(guest_house|chalet)$"]`,
+  villa: `["tourism"~"^(chalet|apartment)$"]`,
   hotel: `["tourism"="hotel"]`,
   apartment: `["tourism"="apartment"]`,
   guest_house: `["tourism"="guest_house"]`,
@@ -136,8 +143,10 @@ async function discoverOsm(job: Job, country: string): Promise<Found[]> {
 }
 
 const NOMINATIM_KW: Record<string, string[]> = {
-  accommodation: ["hotel", "guest house", "apartment", "hostel", "motel"],
+  accommodation: ["hotel", "guest house", "apartment", "hostel", "motel", "cabin", "camping"],
   hotel: ["hotel"], apartment: ["apartment"], guest_house: ["guest house"],
+  boutique_hotel: ["boutique hotel"], hostel: ["hostel"], motel: ["motel"], cabin: ["cabin", "chalet"],
+  camping: ["camping", "glamping"], farm_stay: ["farm stay", "country house"], villa: ["villa"],
   car_rental: ["car rental"], restaurant: ["restaurant"],
 };
 
@@ -212,7 +221,9 @@ async function discoverWeb(job: Job, phrase: string): Promise<Found[]> {
 
 // ---------- AI discovery (Lovable AI Gateway) ----------
 const CATEGORY_LABEL: Record<string, string> = {
-  accommodation: "independent accommodation businesses (hotels, guesthouses, B&Bs, vacation rentals, apartments, motels, hostels, cabins)",
+  accommodation: "independent accommodation businesses (hotels, guesthouses, B&Bs, vacation rentals, apartments, motels, hostels, cabins, chalets, campgrounds, glamping, villas, farm stays)",
+  boutique_hotel: "independent boutique hotels", hostel: "hostels", motel: "motels",
+  cabin: "cabin and chalet rentals", camping: "campgrounds and glamping sites", farm_stay: "farm stays and countryside guesthouses", villa: "villa rentals",
   hotel: "independent hotels", apartment: "vacation rental apartments", guest_house: "guesthouses and B&Bs",
   car_rental: "car rental companies", restaurant: "restaurants",
 };
