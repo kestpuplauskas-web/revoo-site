@@ -27,12 +27,17 @@ export const Route = createFileRoute("/_authenticated/admin/kontaktu-rinkimas")(
 });
 
 const CATEGORIES = [
-  { v: "accommodation", l: "Visas apgyvendinimas" },
+  { v: "accommodation", l: "Apgyvendinimas (visi tipai)" },
   { v: "hotel", l: "Viešbučiai" },
-  { v: "apartment", l: "Apartamentai" },
-  { v: "guest_house", l: "Svečių namai" },
-  { v: "car_rental", l: "Automobilių nuoma" },
-  { v: "restaurant", l: "Restoranai" },
+  { v: "boutique_hotel", l: "Butikiniai viešbučiai" },
+  { v: "guest_house", l: "Svečių namai / B&B" },
+  { v: "apartment", l: "Apartamentai / trumpalaikė nuoma" },
+  { v: "hostel", l: "Hosteliai" },
+  { v: "motel", l: "Moteliai" },
+  { v: "cabin", l: "Nameliai / kotedžai" },
+  { v: "camping", l: "Kempingai / glamping" },
+  { v: "farm_stay", l: "Sodybos / kaimo turizmas" },
+  { v: "villa", l: "Vilos" },
 ] as const;
 const TYPES = [
   { v: "all", l: "Visi verslo kontaktai" },

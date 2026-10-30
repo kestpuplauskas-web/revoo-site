@@ -60,7 +60,7 @@ const createSchema = z.object({
   target: z.number().int().min(1).max(20000),
   countries: z.array(z.string().length(2)).min(1).max(10),
   city: z.string().trim().max(80).nullable(),
-  category: z.enum(["accommodation", "hotel", "apartment", "guest_house", "car_rental", "restaurant"]),
+  category: z.enum(["accommodation", "hotel", "apartment", "guest_house", "boutique_hotel", "hostel", "motel", "cabin", "camping", "farm_stay", "villa"]),
   phrases: z.array(z.string().trim().min(2).max(120)).max(20),
   startUrls: z.array(z.string().trim().max(300)).max(2000),
   maxPages: z.number().int().min(1).max(20),
