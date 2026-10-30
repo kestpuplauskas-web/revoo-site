@@ -84,7 +84,7 @@ function ScrapePage() {
         </p>
       </header>
 
-      <NewJobForm webReady={!!q.data?.webSearchReady} onCreated={(id) => { setSelected(id); qc.invalidateQueries({ queryKey: ["scrape-overview"] }); }} />
+      <NewJobForm webReady={!!q.data?.webSearchReady} onCreated={(id) => { setSelected(id); setTab("active"); qc.invalidateQueries({ queryKey: ["scrape-overview"] }); }} />
 
       <section className="space-y-3">
         <h2 className="font-display text-xl text-ink">Užduotys</h2>
