@@ -66,9 +66,13 @@ function ScrapePage() {
   });
   const [selected, setSelected] = useState<string | null>(null);
   const jobs = q.data?.jobs ?? [];
+  const [tab, setTab] = useState<"active" | "archive">("active");
+  const activeJobs = jobs.filter((j) => ["running", "paused"].includes(j.status));
+  const archivedJobs = jobs.filter((j) => !["running", "paused"].includes(j.status));
+  const shown = tab === "active" ? activeJobs : archivedJobs;
   useEffect(() => {
-    if (!selected && jobs[0]) setSelected(jobs[0].id);
-  }, [jobs, selected]);
+    if (!selected && activeJobs[0]) setSelected(activeJobs[0].id);
+  }, [activeJobs, selected]);
 
   return (
     <div className="space-y-8">
@@ -84,10 +88,18 @@ function ScrapePage() {
 
       <section className="space-y-3">
         <h2 className="font-display text-xl text-ink">Užduotys</h2>
+        <div role="tablist" className="flex gap-2 border-b border-border">
+          {([["active", "Aktyvios", activeJobs.length], ["archive", "Archyvas", archivedJobs.length]] as const).map(([k, l, n]) => (
+            <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
+              className={`-mb-px min-h-11 border-b-2 px-4 text-sm font-medium ${tab === k ? "border-primary text-ink" : "border-transparent text-ink-soft hover:text-ink"}`}>
+              {l} <span className="ml-1 rounded-full bg-muted px-2 py-0.5 text-xs">{n}</span>
+            </button>
+          ))}
+        </div>
         {q.isLoading ? <p className="text-sm text-ink-soft"><Loader2 className="mr-2 inline h-4 w-4 animate-spin" />Kraunama…</p> : null}
-        {jobs.length === 0 && !q.isLoading ? <p className="text-sm text-ink-soft">Dar nėra užduočių.</p> : null}
+        {shown.length === 0 && !q.isLoading ? <p className="text-sm text-ink-soft">{tab === "active" ? "Šiuo metu aktyvių užduočių nėra." : "Archyvas tuščias."}</p> : null}
         <div className="grid gap-3">
-          {jobs.map((j) => (
+          {shown.map((j) => (
             <JobCard key={j.id} job={j} queue={q.data?.queue[j.id]} open={selected === j.id} onOpen={() => setSelected(selected === j.id ? null : j.id)} />
           ))}
         </div>
