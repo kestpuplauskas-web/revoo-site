@@ -244,12 +244,12 @@ async function aiAreas(job: Job): Promise<string[]> {
   return list.length ? list : [job.city ?? country];
 }
 
-async function discoverAi(sb: Sb, job: Job, area: string): Promise<Found[]> {
+async function discoverAi(sb: Sb, job: Job, area: string, phrase?: string): Promise<Found[]> {
   const { data: have } = await sb.from("scrape_sites").select("domain").eq("job_id", job.id).limit(400);
   const known = (have ?? []).map((r: { domain: string }) => r.domain);
   const country = job.countries.map((c) => COUNTRY_NAME[c] ?? c).join(", ");
   const r = await aiJson(
-    `List 35 real ${CATEGORY_LABEL[job.category] ?? job.category} located in ${area}, ${country}, that have their OWN website (not Booking.com, Airbnb, TripAdvisor, Facebook or big hotel chains). ` +
+    `List 35 real ${phrase ? `businesses matching "${phrase}" (${CATEGORY_LABEL[job.category] ?? job.category})` : (CATEGORY_LABEL[job.category] ?? job.category)} located in ${area}, ${country}, that have their OWN website (not Booking.com, Airbnb, TripAdvisor, Facebook or big hotel chains). ` +
     `Only include businesses you are confident exist. Skip these domains: ${known.slice(-120).join(", ") || "none"}. ` +
     `Return JSON {"items": [{"name": "...", "website": "https://...", "city": "..."}]}.`,
   );
@@ -342,9 +342,31 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
           await log(sb, job.id, "info", `${src} (${next}): rasta ${found.length} įmonių su svetainėmis, nauja eilėje ${n}`);
         }
       } else if (!d.webDone) {
-        if (!process.env["FIRECRAWL_API_KEY"] || job.phrases.length === 0) {
+        if (job.phrases.length === 0) {
           d.webDone = true;
-          if (job.phrases.length && !process.env["FIRECRAWL_API_KEY"]) await log(sb, job.id, "warn", "Paieška internete pagal frazes neprijungta – naudojami tik kiti šaltiniai");
+        } else if (!process.env["FIRECRAWL_API_KEY"]) {
+          // Phrase search through the AI discovery: rotate phrase × area combinations.
+          const areas = d.aiAreas?.length ? d.aiAreas : [job.city ?? job.countries.map((c) => COUNTRY_NAME[c] ?? c).join(", ")];
+          const total = Math.min(job.phrases.length * areas.length, 300);
+          const idx = d.webIdx ?? 0;
+          if (idx === 0) await log(sb, job.id, "info", "Paieška pagal frazes vykdoma per DI paiešką");
+          if (idx >= total) d.webDone = true;
+          else {
+            const phrase = job.phrases[idx % job.phrases.length]!;
+            const area = areas[Math.floor(idx / job.phrases.length) % areas.length]!;
+            d.webIdx = idx + 1;
+            try {
+              const found = await discoverAi(sb, job, area, phrase);
+              d.webFailed = 0;
+              const n = await enqueue(sb, job, found);
+              await log(sb, job.id, "info", `DI paieška „${phrase}“ (${area}): pasiūlyta ${found.length}, nauja eilėje ${n}`);
+            } catch (e) {
+              d.webFailed = (d.webFailed ?? 0) + 1;
+              if (d.webFailed >= 8) d.webDone = true;
+              await log(sb, job.id, "warn", `DI paieška pagal frazę nepavyko: ${(e as Error).message}`);
+            }
+            if ((d.webIdx ?? 0) >= total) d.webDone = true;
+          }
         } else {
           const idx = d.webIdx ?? 0;
           const phrase = job.phrases[idx]!;
@@ -358,7 +380,7 @@ async function runDiscovery(sb: Sb, job: Job): Promise<boolean> {
     }
   } catch (e) {
     await log(sb, job.id, "error", `Šaltinio klaida: ${(e as Error).message}`);
-    d.webDone = d.webDone || (d.webIdx ?? 0) >= job.phrases.length;
+    if (process.env["FIRECRAWL_API_KEY"]) d.webDone = d.webDone || (d.webIdx ?? 0) >= job.phrases.length;
   }
   await sb.from("scrape_jobs").update({ discovery: d, last_activity_at: new Date().toISOString() }).eq("id", job.id);
   job.discovery = d;
